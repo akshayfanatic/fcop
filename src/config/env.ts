@@ -14,5 +14,5 @@ export const env = {
   betterAuthUrl: process.env.BETTER_AUTH_URL ?? "http://localhost:5000",
   betterAuthSecret:
     process.env.BETTER_AUTH_SECRET ?? "dev-better-auth-secret-change-before-production",
-  databaseUrl: process.env.DATABASE_URL ?? "mysql://root:password@localhost:3306/fcop"
+  databaseUrl: process.env.DATABASE_URL ?? "mysql://root@localhost:3306/fcop"
 };

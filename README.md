@@ -1,84 +1,46 @@
 # FCOP Backend
 
-Express + TypeScript + ESM backend with Prisma, MySQL, and Better Auth.
+Express + TypeScript backend for FCOP.
 
-## Local Setup
+## Stack
 
-Use Node 22:
+- Node.js
+- Express
+- TypeScript
+- Prisma
+- MySQL
+- Better Auth
+
+## Setup
 
 ```bash
 nvm use
-```
-
-Install deps:
-
-```bash
 npm install
 ```
 
-Create a local MySQL database:
+Create a `.env` file from `.env.example` and fill in local values.
 
-```sql
-CREATE DATABASE fcop;
-```
-
-Set `DATABASE_URL` in `.env`:
-
-```env
-DATABASE_URL=mysql://root:password@localhost:3306/fcop
-BETTER_AUTH_URL=http://localhost:5000
-BETTER_AUTH_SECRET=change-this-secret-at-least-32-chars
-```
-
-Create tables with Prisma:
+## Database
 
 ```bash
+npm run prisma:generate
 npm run prisma:migrate -- --name init
 ```
 
-Run backend:
+## Development
 
 ```bash
 npm run dev
 ```
 
-API runs on:
+## Scripts
 
-```txt
-http://localhost:5000
-```
-
-## Auth Routes
-
-Register:
-
-```http
-POST /api/auth/sign-up/email
-```
-
-```json
-{
-  "name": "Test User",
-  "email": "test@example.com",
-  "password": "password123"
-}
-```
-
-Login:
-
-```http
-POST /api/auth/sign-in/email
-```
-
-```json
-{
-  "email": "test@example.com",
-  "password": "password123"
-}
-```
-
-Current user:
-
-```http
-GET /api/auth/get-session
+```bash
+npm run dev
+npm run build
+npm run start
+npm run typecheck
+npm run prisma:generate
+npm run prisma:migrate
+npm run prisma:studio
 ```
