@@ -17,7 +17,7 @@ const authHandler = toNodeHandler(auth);
 // Configures CORS for the frontend origin and credential-based auth.
 app.use(
   cors({
-    origin: env.corsOrigin,
+    origin: env.corsOrigins,
     credentials: true
   })
 );

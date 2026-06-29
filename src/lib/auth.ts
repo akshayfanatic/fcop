@@ -7,7 +7,7 @@ export const auth = betterAuth({
   appName: "FCOP",
   baseURL: env.betterAuthUrl,
   secret: env.betterAuthSecret,
-  trustedOrigins: [env.corsOrigin],
+  trustedOrigins: env.corsOrigins,
   database: prismaAdapter(prisma, {
     provider: "mysql"
   }),

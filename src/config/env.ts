@@ -1,31 +1,16 @@
 import dotenv from "dotenv";
+import { toLogLevel, toOrigins, toPort } from "../utils/env-parser.js";
 
 dotenv.config();
-
-const toPort = (value: string | undefined, fallback: number) => {
-  const port = Number(value);
-  return Number.isInteger(port) && port > 0 ? port : fallback;
-};
-
-const toLogLevel = (value: string | undefined) => {
-  const logLevel = value?.toLowerCase();
-
-  if (logLevel === "all") {
-    return "trace";
-  }
-
-  if (logLevel === "info" || logLevel === "error") {
-    return logLevel;
-  }
-
-  return "info";
-};
 
 export const env = {
   nodeEnv: process.env.NODE_ENV ?? "development",
   logLevel: toLogLevel(process.env.LOG_LEVEL),
   port: toPort(process.env.PORT, 5000),
-  corsOrigin: process.env.CORS_ORIGIN ?? "http://192.168.29.204:3000",
+  corsOrigins: toOrigins(process.env.CORS_ORIGIN, [
+    "http://192.168.29.204:3000",
+    "http://localhost:3000"
+  ]),
   betterAuthUrl: process.env.BETTER_AUTH_URL ?? "http://localhost:5000",
   betterAuthSecret:
     process.env.BETTER_AUTH_SECRET ?? "dev-better-auth-secret-change-before-production",
