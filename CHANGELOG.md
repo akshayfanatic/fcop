@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/akshayfanatic/fcop/compare/v1.0.1...v1.0.2) (2026-06-29)
+
+### Features
+
+- **factory:** addded necessary factory functions ([6c3de8b](https://github.com/akshayfanatic/fcop/commit/6c3de8bb71c56bc592ecf8904810be0d9824fd54))
+- **logger:** setup logger configuratiaon to check logs what request is coming ([192fc47](https://github.com/akshayfanatic/fcop/commit/192fc47bec8eedb0b20da2245628a9f455c4cdb6))
+
+### Code Refactoring
+
+- **formatting:** setup formatting rule ([4d53f81](https://github.com/akshayfanatic/fcop/commit/4d53f810e4a58610b2937f10df169a241f5bce93))
+
 ### 1.0.1 (2026-06-27)
 
 ### Features
