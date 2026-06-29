@@ -15,7 +15,7 @@ export interface ApiResponse<T> {
   error?: ApiError;
 }
 
-type ApiResponseParams<T> = Omit<ApiResponse<T>, "data"> & {
+type ApiResponseParams<T> = Omit<ApiResponse<T>, 'data'> & {
   data?: T | null;
 };
 

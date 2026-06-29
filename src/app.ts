@@ -1,12 +1,13 @@
-import cors from "cors";
-import express from "express";
-import { toNodeHandler } from "better-auth/node";
-import { env } from "./config/env.js";
-import { auth } from "./lib/auth.js";
-import { errorHandler } from "./middleware/error-handler.js";
-import { notFoundHandler } from "./middleware/not-found-handler.js";
-import { requestLogger } from "./middleware/request-logger.js";
-import { healthRouter } from "./routes/health.js";
+import cors from 'cors';
+import express from 'express';
+import { toNodeHandler } from 'better-auth/node';
+import { env } from './config/env.js';
+import { auth } from './lib/auth.js';
+import { errorHandler } from './middleware/error-handler.js';
+import { notFoundHandler } from './middleware/not-found-handler.js';
+import { requestLogger } from './middleware/request-logger.js';
+import { healthRouter } from './routes/health.js';
+import { openApiRouter } from './routes/openapi.js';
 
 // Creates the Express application instance.
 export const app = express();
@@ -26,7 +27,7 @@ app.use(
 app.use(requestLogger);
 
 // Mounts Better Auth routes before body parsers because Better Auth handles raw requests.
-app.all("/api/auth/*", async (req, res) => {
+app.all('/api/auth/*', async (req, res) => {
   await authHandler(req, res);
 });
 
@@ -35,7 +36,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Registers application routes.
-app.use("/api/health", healthRouter);
+app.use('/api/health', healthRouter);
+app.use('/api/openapi.json', openApiRouter);
 
 // Handles unmatched routes and centralized errors.
 app.use(notFoundHandler);

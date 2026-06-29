@@ -6,20 +6,20 @@ export const toPort = (value: string | undefined, fallback: number) => {
 export const toLogLevel = (value: string | undefined) => {
   const logLevel = value?.toLowerCase();
 
-  if (logLevel === "all") {
-    return "trace";
+  if (logLevel === 'all') {
+    return 'trace';
   }
 
-  if (logLevel === "info" || logLevel === "error") {
+  if (logLevel === 'info' || logLevel === 'error') {
     return logLevel;
   }
 
-  return "info";
+  return 'info';
 };
 
 export const toOrigins = (value: string | undefined, fallback: string[]) => {
   const origins = value
-    ?.split(",")
+    ?.split(',')
     .map((origin) => origin.trim())
     .filter(Boolean);
 
