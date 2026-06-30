@@ -13,6 +13,18 @@
       "skillPath": "skills/nodejs-express-server/SKILL.md",
       "computedHash": "94af4eda308df6d27b94cc866de0d3d857755c91da01808d3d8130d91ebaf231"
     },
+    "prisma-cli": {
+      "source": "prisma/skills",
+      "sourceType": "github",
+      "skillPath": "prisma-cli/SKILL.md",
+      "computedHash": "1cfdc0011df8699a2ece587f229a1e892df2a9a3eec40b5407492cb4c6570e95"
+    },
+    "prisma-client-api": {
+      "source": "prisma/skills",
+      "sourceType": "github",
+      "skillPath": "prisma-client-api/SKILL.md",
+      "computedHash": "0434410e48fb796bbdc3ad0050654bfc9cf72c89b30dbad098ee5c9f655b7f85"
+    },
     "prisma-database-setup": {
       "source": "prisma/skills",
       "sourceType": "github",
