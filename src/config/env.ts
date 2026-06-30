@@ -16,5 +16,6 @@ export const env = {
     process.env.BETTER_AUTH_SECRET ?? 'dev-better-auth-secret-change-before-production',
   databaseUrl: process.env.DATABASE_URL ?? 'mysql://root@localhost:3306/fcop',
   resendApiKey: process.env.RESEND_API_KEY ?? '',
-  emailFrom: process.env.EMAIL_FROM ?? 'FCOP <onboarding@resend.dev>'
+  emailFrom: process.env.EMAIL_FROM ?? 'FCOP <onboarding@resend.dev>',
+  adminEmail: process.env.ADMIN_EMAIL ?? ''
 };

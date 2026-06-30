@@ -19,6 +19,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     {
       name: 'System',
       description: 'System health and metadata endpoints.'
+    },
+    {
+      name: 'Public Leads',
+      description: 'Public lead capture endpoints for unauthenticated website forms.'
     }
   ],
   paths: {
@@ -34,6 +38,45 @@ export const createOpenApiDocument = (baseUrl: string) => ({
               'application/json': {
                 schema: {
                   $ref: '#/components/schemas/HealthResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/leads/public': {
+      post: {
+        tags: ['Public Leads'],
+        summary: 'Capture a public website lead',
+        operationId: 'createPublicLead',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateLeadRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Lead captured successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LeadResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid lead payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
                 }
               }
             }
@@ -337,6 +380,57 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             example: '2026-06-29T06:30:00.000Z'
           }
         }
+      },
+      CreateLeadRequest: {
+        type: 'object',
+        required: ['name', 'email', 'serviceInterest'],
+        properties: {
+          name: {
+            type: 'string',
+            minLength: 2,
+            maxLength: 255,
+            example: 'Akshay Kumar'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+            example: 'akshay@example.com'
+          },
+          companyName: {
+            type: 'string',
+            nullable: true,
+            minLength: 1,
+            maxLength: 255,
+            example: 'Fanatic Coders'
+          },
+          serviceInterest: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          budgetRange: {
+            type: 'string',
+            nullable: true,
+            minLength: 1,
+            maxLength: 255,
+            example: 'AED 10,000 - AED 25,000'
+          }
+        }
+      },
+      LeadResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/Lead'
+              }
+            }
+          }
+        ]
       },
       HealthResponse: {
         allOf: [
