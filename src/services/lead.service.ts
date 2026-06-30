@@ -3,37 +3,101 @@ import { env } from '../config/env.js';
 import { createNewLeadEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
-import type { CreatePublicLeadInput } from '../validators/lead.validator.js';
+import { HttpStatus } from '../utils/api-response.js';
+import { createHttpError } from '../utils/http-error.js';
+import type { CreateLeadInput, UpdateLeadInput } from '../validators/lead.validator.js';
 
 export const leadService = {
-  createPublicLead: async (payload: CreatePublicLeadInput) => {
-    const data = {
-      name: payload.name,
-      email: payload.email,
-      companyName: payload.companyName,
-      serviceInterest: payload.serviceInterest,
-      budgetRange: payload.budgetRange
-    } satisfies Prisma.LeadCreateInput;
-
-    const lead = await prisma.lead.create({
-      data
-    });
-
-    if (!env.adminEmail) {
-      logger.warn('ADMIN_EMAIL is not configured. Skipping new lead email notification.');
-      return lead;
-    }
-
+  getLeads: async () => {
     try {
-      await sendTemplateEmail({
-        to: env.adminEmail,
-        replyTo: lead.email,
-        template: createNewLeadEmailTemplate({ lead })
+      return await prisma.lead.findMany({
+        orderBy: {
+          createdAt: 'desc'
+        }
       });
     } catch (error) {
-      logger.error({ error, leadId: lead.id }, 'Failed to send new lead email notification.');
+      logger.error({ error }, 'Failed to fetch leads.');
+      throw error;
     }
+  },
 
-    return lead;
+  getLeadById: async (id: string) => {
+    try {
+      const lead = await prisma.lead.findUnique({
+        where: { id }
+      });
+
+      if (!lead) {
+        throw createHttpError(HttpStatus.NOT_FOUND, 'Lead not found.', 'NOT_FOUND');
+      }
+
+      return lead;
+    } catch (error) {
+      logger.error({ error, leadId: id }, 'Failed to fetch lead by id.');
+      throw error;
+    }
+  },
+
+  createLead: async (payload: CreateLeadInput) => {
+    try {
+      const data = {
+        name: payload.name,
+        email: payload.email,
+        companyName: payload.companyName,
+        serviceInterest: payload.serviceInterest,
+        budgetRange: payload.budgetRange
+      } satisfies Prisma.LeadCreateInput;
+
+      const lead = await prisma.lead.create({
+        data
+      });
+
+      if (!env.adminEmail) {
+        logger.warn('ADMIN_EMAIL is not configured. Skipping new lead email notification.');
+        return lead;
+      }
+
+      try {
+        await sendTemplateEmail({
+          to: env.adminEmail,
+          replyTo: lead.email,
+          template: createNewLeadEmailTemplate({ lead })
+        });
+      } catch (error) {
+        logger.error({ error, leadId: lead.id }, 'Failed to send new lead email notification.');
+      }
+
+      return lead;
+    } catch (error) {
+      logger.error({ error, email: payload.email }, 'Failed to create lead.');
+      throw error;
+    }
+  },
+
+  updateLeadById: async (id: string, payload: UpdateLeadInput) => {
+    try {
+      await leadService.getLeadById(id);
+
+      return await prisma.lead.update({
+        where: { id },
+        data: payload
+      });
+    } catch (error) {
+      logger.error({ error, leadId: id }, 'Failed to update lead by id.');
+      throw error;
+    }
+  },
+
+  deleteLeadById: async (id: string) => {
+    try {
+      await leadService.getLeadById(id);
+
+      return await prisma.lead.delete({
+        where: { id }
+      });
+    } catch (error) {
+      logger.error({ error, leadId: id }, 'Failed to delete lead by id.');
+      throw error;
+    }
   }
 };

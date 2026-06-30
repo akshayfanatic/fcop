@@ -21,8 +21,8 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       description: 'System health and metadata endpoints.'
     },
     {
-      name: 'Public Leads',
-      description: 'Public lead capture endpoints for unauthenticated website forms.'
+      name: 'Leads',
+      description: 'Lead management endpoints.'
     }
   ],
   paths: {
@@ -45,11 +45,12 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
-    '/api/v1/leads/public': {
+    '/api/v1/leads': {
       post: {
-        tags: ['Public Leads'],
-        summary: 'Capture a public website lead',
-        operationId: 'createPublicLead',
+        tags: ['Leads'],
+        summary: 'Create a lead',
+        description: 'Creates a lead from an unauthenticated website form submission.',
+        operationId: 'createLead',
         requestBody: {
           required: true,
           content: {
@@ -82,10 +83,238 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             }
           }
         }
+      },
+      get: {
+        tags: ['Leads'],
+        summary: 'Fetch all leads',
+        description: 'Requires an authenticated user with ADMIN or MANAGER role.',
+        operationId: 'getLeads',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-allowedRoles': [Role.ADMIN, Role.MANAGER],
+        responses: {
+          '200': {
+            description: 'Leads fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LeadsResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          }
+        }
+      }
+    },
+    '/api/v1/leads/{id}': {
+      get: {
+        tags: ['Leads'],
+        summary: 'Fetch a lead by id',
+        description: 'Requires an authenticated user with ADMIN or MANAGER role.',
+        operationId: 'getLeadById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-allowedRoles': [Role.ADMIN, Role.MANAGER],
+        parameters: [
+          {
+            $ref: '#/components/parameters/LeadId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Lead fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LeadResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Lead was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      put: {
+        tags: ['Leads'],
+        summary: 'Update a lead by id',
+        description: 'Requires an authenticated user with ADMIN or MANAGER role.',
+        operationId: 'updateLeadById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-allowedRoles': [Role.ADMIN, Role.MANAGER],
+        parameters: [
+          {
+            $ref: '#/components/parameters/LeadId'
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/UpdateLeadRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '200': {
+            description: 'Lead updated successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LeadResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid lead payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Lead was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      delete: {
+        tags: ['Leads'],
+        summary: 'Delete a lead by id',
+        description: 'Requires an authenticated user with ADMIN or MANAGER role.',
+        operationId: 'deleteLeadById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-allowedRoles': [Role.ADMIN, Role.MANAGER],
+        parameters: [
+          {
+            $ref: '#/components/parameters/LeadId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Lead deleted successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LeadResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Lead was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
   components: {
+    securitySchemes: {
+      cookieAuth: {
+        type: 'apiKey',
+        in: 'cookie',
+        name: 'better-auth.session_token'
+      }
+    },
+    responses: {
+      Unauthorized: {
+        description: 'Authentication is required.',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/ApiResponse'
+            }
+          }
+        }
+      },
+      Forbidden: {
+        description: 'Authenticated user does not have an allowed role.',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/ApiResponse'
+            }
+          }
+        }
+      }
+    },
+    parameters: {
+      LeadId: {
+        name: 'id',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000004'
+      }
+    },
     schemas: {
       Role: {
         type: 'string',
@@ -415,6 +644,63 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             example: 'AED 10,000 - AED 25,000'
           }
         }
+      },
+      UpdateLeadRequest: {
+        type: 'object',
+        minProperties: 1,
+        properties: {
+          name: {
+            type: 'string',
+            minLength: 2,
+            maxLength: 255,
+            example: 'Akshay Kumar'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+            example: 'akshay@example.com'
+          },
+          companyName: {
+            type: 'string',
+            nullable: true,
+            minLength: 1,
+            maxLength: 255,
+            example: 'Fanatic Coders'
+          },
+          serviceInterest: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          budgetRange: {
+            type: 'string',
+            nullable: true,
+            minLength: 1,
+            maxLength: 255,
+            example: 'AED 10,000 - AED 25,000'
+          },
+          status: {
+            $ref: '#/components/schemas/LeadStatus'
+          }
+        }
+      },
+      LeadsResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/Lead'
+                }
+              }
+            }
+          }
+        ]
       },
       LeadResponse: {
         allOf: [

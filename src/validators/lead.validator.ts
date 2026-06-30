@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ServiceInterest } from '../generated/prisma/client.js';
+import { LeadStatus, ServiceInterest } from '../generated/prisma/client.js';
 
 const optionalText = z
   .string()
@@ -9,7 +9,7 @@ const optionalText = z
   .optional()
   .transform((value) => value ?? null);
 
-export const createPublicLeadSchema = z.object({
+export const createLeadSchema = z.object({
   name: z.string().trim().min(2).max(255),
   email: z.string().trim().toLowerCase().email().max(255),
   companyName: optionalText,
@@ -17,4 +17,19 @@ export const createPublicLeadSchema = z.object({
   budgetRange: optionalText
 });
 
-export type CreatePublicLeadInput = z.infer<typeof createPublicLeadSchema>;
+export const leadIdParamsSchema = z.object({
+  id: z.string().trim().min(1)
+});
+
+export const updateLeadSchema = createLeadSchema
+  .extend({
+    status: z.enum(LeadStatus).optional()
+  })
+  .partial()
+  .refine((payload) => Object.keys(payload).length > 0, {
+    message: 'At least one field is required.'
+  });
+
+export type CreateLeadInput = z.infer<typeof createLeadSchema>;
+export type LeadIdParamsInput = z.infer<typeof leadIdParamsSchema>;
+export type UpdateLeadInput = z.infer<typeof updateLeadSchema>;

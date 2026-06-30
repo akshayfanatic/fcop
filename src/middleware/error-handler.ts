@@ -32,7 +32,12 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
       status: statusCode,
       message: err.message ?? 'Internal server error',
       error: {
-        code: statusCode === HttpStatus.INTERNAL_ERROR ? 'INTERNAL_ERROR' : 'REQUEST_ERROR',
+        code:
+          typeof err.code === 'string'
+            ? err.code
+            : statusCode === HttpStatus.INTERNAL_ERROR
+              ? 'INTERNAL_ERROR'
+              : 'REQUEST_ERROR',
         ...(env.nodeEnv === 'development' && { details: err.stack })
       }
     })
