@@ -14,6 +14,25 @@ enum Role {
   MEMBER
 }
 
+enum LeadStatus {
+  NEW
+  IN_PROGRESS
+  DEAD
+}
+
+enum LeadSource {
+  CONTACT_FORM
+}
+
+enum ServiceInterest {
+  GOOGLE_ADS
+  SEO
+  WEB_DEVELOPMENT
+  MOBILE_APP_DEVELOPMENT
+  GENERAL_MARKETING
+  OTHER
+}
+
 model User {
   id            String    @id @default(cuid()) @db.VarChar(36)
   name          String
@@ -74,4 +93,23 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Lead {
+  id              String          @id @default(cuid())
+  name            String
+  email           String
+  companyName     String?
+  serviceInterest ServiceInterest
+  budgetRange     String?
+  status          LeadStatus      @default(NEW)
+  source          LeadSource      @default(CONTACT_FORM)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([serviceInterest])
+  @@map("leads")
 }

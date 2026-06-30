@@ -1,3 +1,7 @@
+import { LeadSource, LeadStatus, Role, ServiceInterest } from '../generated/prisma/enums.js';
+
+const enumValues = <T extends Record<string, string>>(values: T) => Object.values(values);
+
 export const createOpenApiDocument = (baseUrl: string) => ({
   openapi: '3.0.3',
   info: {
@@ -42,8 +46,23 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     schemas: {
       Role: {
         type: 'string',
-        enum: ['ADMIN', 'CLIENT', 'MANAGER', 'MEMBER'],
-        example: 'CLIENT'
+        enum: enumValues(Role),
+        example: Role.CLIENT
+      },
+      LeadStatus: {
+        type: 'string',
+        enum: enumValues(LeadStatus),
+        example: LeadStatus.NEW
+      },
+      LeadSource: {
+        type: 'string',
+        enum: enumValues(LeadSource),
+        example: LeadSource.CONTACT_FORM
+      },
+      ServiceInterest: {
+        type: 'string',
+        enum: enumValues(ServiceInterest),
+        example: ServiceInterest.WEB_DEVELOPMENT
       },
       ApiResponse: {
         type: 'object',
@@ -107,6 +126,205 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           },
           role: {
             $ref: '#/components/schemas/Role'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          }
+        }
+      },
+      Session: {
+        type: 'object',
+        required: ['id', 'expiresAt', 'token', 'createdAt', 'updatedAt', 'userId'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000001'
+          },
+          expiresAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-06T06:30:00.000Z'
+          },
+          token: {
+            type: 'string',
+            example: 'session-token'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          ipAddress: {
+            type: 'string',
+            nullable: true,
+            example: '127.0.0.1'
+          },
+          userAgent: {
+            type: 'string',
+            nullable: true,
+            example: 'Mozilla/5.0'
+          },
+          userId: {
+            type: 'string',
+            example: 'clx0000000000000000000000'
+          }
+        }
+      },
+      Account: {
+        type: 'object',
+        required: ['id', 'accountId', 'providerId', 'userId', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000002'
+          },
+          accountId: {
+            type: 'string',
+            example: 'akshay@example.com'
+          },
+          providerId: {
+            type: 'string',
+            example: 'credential'
+          },
+          userId: {
+            type: 'string',
+            example: 'clx0000000000000000000000'
+          },
+          accessToken: {
+            type: 'string',
+            nullable: true
+          },
+          refreshToken: {
+            type: 'string',
+            nullable: true
+          },
+          idToken: {
+            type: 'string',
+            nullable: true
+          },
+          accessTokenExpiresAt: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true,
+            example: '2026-07-06T06:30:00.000Z'
+          },
+          refreshTokenExpiresAt: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true,
+            example: '2026-07-06T06:30:00.000Z'
+          },
+          scope: {
+            type: 'string',
+            nullable: true,
+            example: 'openid email profile'
+          },
+          password: {
+            type: 'string',
+            nullable: true,
+            writeOnly: true
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          }
+        }
+      },
+      Verification: {
+        type: 'object',
+        required: ['id', 'identifier', 'value', 'expiresAt', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000003'
+          },
+          identifier: {
+            type: 'string',
+            example: 'akshay@example.com'
+          },
+          value: {
+            type: 'string',
+            example: 'verification-token'
+          },
+          expiresAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:45:00.000Z'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          }
+        }
+      },
+      Lead: {
+        type: 'object',
+        required: [
+          'id',
+          'name',
+          'email',
+          'serviceInterest',
+          'status',
+          'source',
+          'createdAt',
+          'updatedAt'
+        ],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000004'
+          },
+          name: {
+            type: 'string',
+            example: 'Akshay Kumar'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'akshay@example.com'
+          },
+          companyName: {
+            type: 'string',
+            nullable: true,
+            example: 'Fanatic Coders'
+          },
+          serviceInterest: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          budgetRange: {
+            type: 'string',
+            nullable: true,
+            example: 'AED 10,000 - AED 25,000'
+          },
+          status: {
+            $ref: '#/components/schemas/LeadStatus'
+          },
+          source: {
+            $ref: '#/components/schemas/LeadSource'
           },
           createdAt: {
             type: 'string',

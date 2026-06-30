@@ -16,3 +16,28 @@ export const Role = {
 } as const;
 
 export type Role = (typeof Role)[keyof typeof Role];
+
+export const LeadStatus = {
+  NEW: 'NEW',
+  IN_PROGRESS: 'IN_PROGRESS',
+  DEAD: 'DEAD'
+} as const;
+
+export type LeadStatus = (typeof LeadStatus)[keyof typeof LeadStatus];
+
+export const LeadSource = {
+  CONTACT_FORM: 'CONTACT_FORM'
+} as const;
+
+export type LeadSource = (typeof LeadSource)[keyof typeof LeadSource];
+
+export const ServiceInterest = {
+  GOOGLE_ADS: 'GOOGLE_ADS',
+  SEO: 'SEO',
+  WEB_DEVELOPMENT: 'WEB_DEVELOPMENT',
+  MOBILE_APP_DEVELOPMENT: 'MOBILE_APP_DEVELOPMENT',
+  GENERAL_MARKETING: 'GENERAL_MARKETING',
+  OTHER: 'OTHER'
+} as const;
+
+export type ServiceInterest = (typeof ServiceInterest)[keyof typeof ServiceInterest];
