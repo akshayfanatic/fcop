@@ -16,6 +16,7 @@
     "email:test": "tsx src/scripts/test-email.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "prisma db seed",
     "prisma:studio": "prisma studio",
     "release": "standard-version",
     "release:patch": "standard-version --release-as patch",
