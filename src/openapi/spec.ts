@@ -40,6 +40,11 @@ export const createOpenApiDocument = (baseUrl: string) => ({
   },
   components: {
     schemas: {
+      Role: {
+        type: 'string',
+        enum: ['ADMIN', 'CLIENT', 'MANAGER', 'MEMBER'],
+        example: 'CLIENT'
+      },
       ApiResponse: {
         type: 'object',
         required: ['success', 'status', 'message'],
@@ -71,6 +76,47 @@ export const createOpenApiDocument = (baseUrl: string) => ({
                 type: 'string'
               }
             }
+          }
+        }
+      },
+      User: {
+        type: 'object',
+        required: ['id', 'name', 'email', 'emailVerified', 'role', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000000'
+          },
+          name: {
+            type: 'string',
+            example: 'Akshay'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'akshay@example.com'
+          },
+          emailVerified: {
+            type: 'boolean',
+            example: true
+          },
+          image: {
+            type: 'string',
+            nullable: true,
+            example: 'https://example.com/avatar.png'
+          },
+          role: {
+            $ref: '#/components/schemas/Role'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
           }
         }
       },
