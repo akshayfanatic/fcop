@@ -1,6 +1,6 @@
 {
   "name": "fcop-backend",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Express backend for FCOP.",
   "type": "module",
   "main": "dist/server.js",
