@@ -1,6 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { env } from '../config/env.js';
+import { sendResetPasswordEmail } from './email/index.js';
 import { prisma } from './prisma.js';
 
 export const auth = betterAuth({
@@ -13,7 +14,9 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
-    minPasswordLength: 8
+    minPasswordLength: 8,
+    revokeSessionsOnPasswordReset: true,
+    sendResetPassword: sendResetPasswordEmail
   },
   user: {
     additionalFields: {

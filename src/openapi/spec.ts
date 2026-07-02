@@ -21,6 +21,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       description: 'System health and metadata endpoints.'
     },
     {
+      name: 'Auth',
+      description: 'Authentication helper endpoints.'
+    },
+    {
       name: 'Leads',
       description: 'Lead management endpoints.'
     }
@@ -38,6 +42,47 @@ export const createOpenApiDocument = (baseUrl: string) => ({
               'application/json': {
                 schema: {
                   $ref: '#/components/schemas/HealthResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/auth/request-password-reset': {
+      post: {
+        tags: ['Auth'],
+        summary: 'Request a password reset email',
+        description:
+          'Triggers Better Auth password reset flow and sends the customer a reset email from the backend email service.',
+        operationId: 'requestPasswordReset',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/RequestPasswordResetRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '200': {
+            description: 'Request accepted. The response does not reveal whether the email exists.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/RequestPasswordResetResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid email or redirect URL.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
                 }
               }
             }
@@ -682,6 +727,44 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             $ref: '#/components/schemas/LeadStatus'
           }
         }
+      },
+      RequestPasswordResetRequest: {
+        type: 'object',
+        required: ['email'],
+        properties: {
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'customer@example.com'
+          },
+          redirectTo: {
+            type: 'string',
+            format: 'uri',
+            description:
+              'Optional frontend reset password page. Origin must be configured as a trusted frontend origin.',
+            example: 'http://localhost:3000/reset-password'
+          }
+        }
+      },
+      RequestPasswordResetResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            properties: {
+              data: {
+                nullable: true,
+                example: null
+              },
+              message: {
+                type: 'string',
+                example: 'If an account exists for this email, a password reset link has been sent.'
+              }
+            }
+          }
+        ]
       },
       LeadsResponse: {
         allOf: [

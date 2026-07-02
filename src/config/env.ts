@@ -11,6 +11,7 @@ export const env = {
     'http://192.168.29.204:3000',
     'http://localhost:3000'
   ]),
+  frontendUrl: process.env.FRONTEND_URL ?? 'http://localhost:3000',
   betterAuthUrl: process.env.BETTER_AUTH_URL ?? 'http://localhost:5000',
   betterAuthSecret:
     process.env.BETTER_AUTH_SECRET ?? 'dev-better-auth-secret-change-before-production',
