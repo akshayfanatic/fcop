@@ -8,15 +8,6 @@
  * 🟢 You can import this file directly.
  */
 
-export const Role = {
-  ADMIN: 'ADMIN',
-  CLIENT: 'CLIENT',
-  MANAGER: 'MANAGER',
-  MEMBER: 'MEMBER'
-} as const;
-
-export type Role = (typeof Role)[keyof typeof Role];
-
 export const LeadStatus = {
   NEW: 'NEW',
   IN_PROGRESS: 'IN_PROGRESS',

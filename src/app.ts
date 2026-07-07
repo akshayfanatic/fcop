@@ -2,7 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import { toNodeHandler } from 'better-auth/node';
 import { env } from './config/env.js';
-import { auth } from './lib/auth.js';
+import { auth } from './lib/auth/auth.js';
 import { errorHandler } from './middleware/error-handler.js';
 import { notFoundHandler } from './middleware/not-found-handler.js';
 import { requestLogger } from './middleware/request-logger.js';

@@ -1,4 +1,4 @@
-import { LeadSource, LeadStatus, Role, ServiceInterest } from '../generated/prisma/enums.js';
+import { LeadSource, LeadStatus, ServiceInterest } from '../generated/prisma/enums.js';
 
 const enumValues = <T extends Record<string, string>>(values: T) => Object.values(values);
 
@@ -23,6 +23,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     {
       name: 'Auth',
       description: 'Authentication helper endpoints.'
+    },
+    {
+      name: 'Invitations',
+      description: 'Organization member invitation endpoints.'
     },
     {
       name: 'Leads',
@@ -90,6 +94,71 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/invitations': {
+      post: {
+        tags: ['Invitations'],
+        summary: 'Invite an organization member',
+        description:
+          'Creates a Better Auth organization invitation for the FCOP organization and sends an invitation email. Requires invitation:create permission in the active organization.',
+        operationId: 'inviteMember',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          invitation: ['create']
+        },
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/InviteMemberRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Invitation created and invitation email queued/sent.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/InvitationResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid invitation payload or Better Auth rejected the invitation.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'FCOP organization has not been bootstrapped.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     '/api/v1/leads': {
       post: {
         tags: ['Leads'],
@@ -132,14 +201,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       get: {
         tags: ['Leads'],
         summary: 'Fetch all leads',
-        description: 'Requires an authenticated user with ADMIN or MANAGER role.',
+        description: 'Requires lead:read permission in the active organization.',
         operationId: 'getLeads',
         security: [
           {
             cookieAuth: []
           }
         ],
-        'x-allowedRoles': [Role.ADMIN, Role.MANAGER],
+        'x-requiredPermissions': {
+          lead: ['read']
+        },
         responses: {
           '200': {
             description: 'Leads fetched successfully.',
@@ -164,14 +235,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       get: {
         tags: ['Leads'],
         summary: 'Fetch a lead by id',
-        description: 'Requires an authenticated user with ADMIN or MANAGER role.',
+        description: 'Requires lead:read permission in the active organization.',
         operationId: 'getLeadById',
         security: [
           {
             cookieAuth: []
           }
         ],
-        'x-allowedRoles': [Role.ADMIN, Role.MANAGER],
+        'x-requiredPermissions': {
+          lead: ['read']
+        },
         parameters: [
           {
             $ref: '#/components/parameters/LeadId'
@@ -209,14 +282,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       put: {
         tags: ['Leads'],
         summary: 'Update a lead by id',
-        description: 'Requires an authenticated user with ADMIN or MANAGER role.',
+        description: 'Requires lead:update permission in the active organization.',
         operationId: 'updateLeadById',
         security: [
           {
             cookieAuth: []
           }
         ],
-        'x-allowedRoles': [Role.ADMIN, Role.MANAGER],
+        'x-requiredPermissions': {
+          lead: ['update']
+        },
         parameters: [
           {
             $ref: '#/components/parameters/LeadId'
@@ -274,14 +349,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       delete: {
         tags: ['Leads'],
         summary: 'Delete a lead by id',
-        description: 'Requires an authenticated user with ADMIN or MANAGER role.',
+        description: 'Requires lead:delete permission in the active organization.',
         operationId: 'deleteLeadById',
         security: [
           {
             cookieAuth: []
           }
         ],
-        'x-allowedRoles': [Role.ADMIN, Role.MANAGER],
+        'x-requiredPermissions': {
+          lead: ['delete']
+        },
         parameters: [
           {
             $ref: '#/components/parameters/LeadId'
@@ -338,7 +415,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       },
       Forbidden: {
-        description: 'Authenticated user does not have an allowed role.',
+        description: 'Authenticated user does not have the required permission.',
         content: {
           'application/json': {
             schema: {
@@ -361,11 +438,6 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       }
     },
     schemas: {
-      Role: {
-        type: 'string',
-        enum: enumValues(Role),
-        example: Role.CLIENT
-      },
       LeadStatus: {
         type: 'string',
         enum: enumValues(LeadStatus),
@@ -417,7 +489,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       },
       User: {
         type: 'object',
-        required: ['id', 'name', 'email', 'emailVerified', 'role', 'createdAt', 'updatedAt'],
+        required: ['id', 'name', 'email', 'emailVerified', 'createdAt', 'updatedAt'],
         properties: {
           id: {
             type: 'string',
@@ -440,9 +512,6 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             type: 'string',
             nullable: true,
             example: 'https://example.com/avatar.png'
-          },
-          role: {
-            $ref: '#/components/schemas/Role'
           },
           createdAt: {
             type: 'string',
@@ -761,6 +830,88 @@ export const createOpenApiDocument = (baseUrl: string) => ({
               message: {
                 type: 'string',
                 example: 'If an account exists for this email, a password reset link has been sent.'
+              }
+            }
+          }
+        ]
+      },
+      InviteMemberRole: {
+        type: 'string',
+        enum: ['MANAGER', 'MEMBER', 'CLIENT'],
+        example: 'CLIENT'
+      },
+      InviteMemberRequest: {
+        type: 'object',
+        required: ['email', 'role'],
+        properties: {
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+            example: 'client@example.com'
+          },
+          role: {
+            $ref: '#/components/schemas/InviteMemberRole'
+          },
+          resend: {
+            type: 'boolean',
+            description: 'Resend the invitation email if a pending invitation already exists.',
+            example: true
+          }
+        }
+      },
+      Invitation: {
+        type: 'object',
+        required: ['id', 'email', 'role', 'organizationId', 'inviterId', 'status', 'expiresAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000005'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'client@example.com'
+          },
+          role: {
+            type: 'string',
+            example: 'CLIENT'
+          },
+          organizationId: {
+            type: 'string',
+            example: 'seed-org-fanatic-coders'
+          },
+          inviterId: {
+            type: 'string',
+            example: 'seed-user-admin'
+          },
+          status: {
+            type: 'string',
+            example: 'pending'
+          },
+          expiresAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-08T06:30:00.000Z'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-06T06:30:00.000Z'
+          }
+        }
+      },
+      InvitationResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/Invitation'
               }
             }
           }

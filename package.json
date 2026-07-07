@@ -13,7 +13,6 @@
     "format": "prettier \"src/*.{ts,tsx}\" \"src/{config,lib,lib/email,lib/email/components,lib/email/services,lib/email/templates,middleware,routes,utils,openapi,scripts}/*.{ts,tsx}\" \"*.{js,json,md,ts}\" \".*.json\" \"prisma/**/*.prisma\" --write",
     "format:check": "prettier \"src/*.{ts,tsx}\" \"src/{config,lib,lib/email,lib/email/components,lib/email/services,lib/email/templates,middleware,routes,utils,openapi,scripts}/*.{ts,tsx}\" \"*.{js,json,md,ts}\" \".*.json\" \"prisma/**/*.prisma\" --check",
     "typecheck": "tsc --noEmit",
-    "email:test": "tsx src/scripts/test-email.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:seed": "prisma db seed",

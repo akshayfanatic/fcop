@@ -65,6 +65,36 @@ export type Account = Prisma.AccountModel;
  */
 export type Verification = Prisma.VerificationModel;
 /**
+ * Model Organization
+ *
+ */
+export type Organization = Prisma.OrganizationModel;
+/**
+ * Model Member
+ *
+ */
+export type Member = Prisma.MemberModel;
+/**
+ * Model Invitation
+ *
+ */
+export type Invitation = Prisma.InvitationModel;
+/**
+ * Model Team
+ *
+ */
+export type Team = Prisma.TeamModel;
+/**
+ * Model TeamMember
+ *
+ */
+export type TeamMember = Prisma.TeamMemberModel;
+/**
+ * Model OrganizationRole
+ *
+ */
+export type OrganizationRole = Prisma.OrganizationRoleModel;
+/**
  * Model Lead
  *
  */

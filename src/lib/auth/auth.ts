@@ -1,8 +1,10 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { env } from '../config/env.js';
-import { sendResetPasswordEmail } from './email/index.js';
-import { prisma } from './prisma.js';
+import { organization } from 'better-auth/plugins';
+import { env } from '../../config/env.js';
+import { sendInvitationEmail, sendResetPasswordEmail } from '../email/index.js';
+import { prisma } from '../prisma.js';
+import { ac, organizationRoles, Role } from './permissions.js';
 
 export const auth = betterAuth({
   appName: 'FCOP',
@@ -18,14 +20,15 @@ export const auth = betterAuth({
     revokeSessionsOnPasswordReset: true,
     sendResetPassword: sendResetPasswordEmail
   },
-  user: {
-    additionalFields: {
-      role: {
-        type: 'string',
-        required: false,
-        defaultValue: 'CLIENT',
-        input: false
+  plugins: [
+    organization({
+      ac,
+      roles: organizationRoles,
+      creatorRole: Role.ADMIN,
+      sendInvitationEmail,
+      teams: {
+        enabled: true
       }
-    }
-  }
+    })
+  ]
 });

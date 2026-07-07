@@ -1,7 +1,7 @@
 import type { RequestHandler } from 'express';
 import { z } from 'zod';
 import { env } from '../config/env.js';
-import { auth } from '../lib/auth.js';
+import { auth } from '../lib/auth/auth.js';
 import { ApiResponse, HttpStatus } from '../utils/api-response.js';
 import { sendValidationError } from '../utils/http-error.js';
 import { requestPasswordResetSchema } from '../validators/auth.validator.js';
