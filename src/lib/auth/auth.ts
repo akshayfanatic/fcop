@@ -2,7 +2,11 @@ import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { organization } from 'better-auth/plugins';
 import { env } from '../../config/env.js';
-import { sendInvitationEmail, sendResetPasswordEmail } from '../email/index.js';
+import {
+  sendInvitationEmail,
+  sendMemberAcceptedInvitationEmail,
+  sendResetPasswordEmail
+} from '../email/index.js';
 import { prisma } from '../prisma.js';
 import { ac, organizationRoles, Role } from './permissions.js';
 
@@ -26,6 +30,9 @@ export const auth = betterAuth({
       roles: organizationRoles,
       creatorRole: Role.ADMIN,
       sendInvitationEmail,
+      organizationHooks: {
+        afterAcceptInvitation: sendMemberAcceptedInvitationEmail
+      },
       teams: {
         enabled: true
       }

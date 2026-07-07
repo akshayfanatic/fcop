@@ -1,6 +1,7 @@
 import { logger } from '../../logger.js';
 import { env } from '../../../config/env.js';
 import { createInvitationEmailTemplate } from '../templates/invitation-email.js';
+import { createMemberAcceptedInvitationEmailTemplate } from '../templates/member-accepted-invitation-email.js';
 import { createResetPasswordEmailTemplate } from '../templates/reset-password-email.js';
 import { sendTemplateEmail } from './email.service.js';
 
@@ -23,6 +24,23 @@ type SendInvitationEmailParams = {
     user: {
       name: string;
     };
+  };
+};
+
+type SendMemberAcceptedInvitationEmailParams = {
+  invitation: {
+    id: string;
+  };
+  member: {
+    id: string;
+    role: string;
+  };
+  user: {
+    name: string;
+    email: string;
+  };
+  organization: {
+    name: string;
   };
 };
 
@@ -74,6 +92,49 @@ export const sendInvitationEmail = async ({
         invitationId: id
       },
       'Failed to send invitation email.'
+    );
+  }
+};
+
+export const sendMemberAcceptedInvitationEmail = async ({
+  invitation,
+  member,
+  user,
+  organization
+}: SendMemberAcceptedInvitationEmailParams) => {
+  if (!env.adminEmail) {
+    logger.warn(
+      {
+        invitationId: invitation.id,
+        memberId: member.id,
+        userEmail: user.email
+      },
+      'ADMIN_EMAIL is not configured. Skipping member accepted invitation email.'
+    );
+    return;
+  }
+
+  try {
+    await sendTemplateEmail({
+      to: env.adminEmail,
+      template: createMemberAcceptedInvitationEmailTemplate({
+        userName: user.name,
+        userEmail: user.email,
+        organizationName: organization.name,
+        role: member.role,
+        memberId: member.id,
+        invitationId: invitation.id
+      })
+    });
+  } catch (error) {
+    logger.error(
+      {
+        err: error,
+        invitationId: invitation.id,
+        memberId: member.id,
+        userEmail: user.email
+      },
+      'Failed to send member accepted invitation email.'
     );
   }
 };
