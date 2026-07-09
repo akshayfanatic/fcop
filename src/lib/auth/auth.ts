@@ -29,6 +29,7 @@ export const auth = betterAuth({
       ac,
       roles: organizationRoles,
       creatorRole: Role.ADMIN,
+      cancelPendingInvitationsOnReInvite: true,
       sendInvitationEmail,
       organizationHooks: {
         afterAcceptInvitation: sendMemberAcceptedInvitationEmail
