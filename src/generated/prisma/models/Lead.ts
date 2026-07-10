@@ -421,10 +421,6 @@ export type LeadMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder;
 };
 
-export type EnumServiceInterestFieldUpdateOperationsInput = {
-  set?: $Enums.ServiceInterest;
-};
-
 export type EnumLeadStatusFieldUpdateOperationsInput = {
   set?: $Enums.LeadStatus;
 };

@@ -32,3 +32,12 @@ export const ServiceInterest = {
 } as const;
 
 export type ServiceInterest = (typeof ServiceInterest)[keyof typeof ServiceInterest];
+
+export const ServiceRequestStatus = {
+  NEW: 'NEW',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const;
+
+export type ServiceRequestStatus = (typeof ServiceRequestStatus)[keyof typeof ServiceRequestStatus];

@@ -26,6 +26,13 @@ enum ServiceInterest {
   OTHER
 }
 
+enum ServiceRequestStatus {
+  NEW
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
 model User {
   id            String       @id @default(cuid()) @db.VarChar(36)
   name          String
@@ -115,6 +122,7 @@ model Member {
   createdAt      DateTime     @default(now())
   user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client         Client?
 
   @@index([userId])
   @@index([organizationId])
@@ -177,6 +185,34 @@ model OrganizationRole {
 
   @@index([organizationId])
   @@map("organizationRole")
+}
+
+model Client {
+  id        String           @id @default(cuid()) @db.VarChar(36)
+  memberId  String           @unique @db.VarChar(36)
+  name      String
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  member    Member           @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  requests  ServiceRequest[]
+
+  @@map("clients")
+}
+
+model ServiceRequest {
+  id        String               @id @default(cuid()) @db.VarChar(36)
+  clientId  String               @db.VarChar(36)
+  service   ServiceInterest
+  status    ServiceRequestStatus @default(NEW)
+  data      Json?
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+  client    Client               @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId])
+  @@index([service])
+  @@index([status])
+  @@map("serviceRequests")
 }
 
 model Lead {

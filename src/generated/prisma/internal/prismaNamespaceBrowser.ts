@@ -58,6 +58,8 @@ export const ModelName = {
   Team: 'Team',
   TeamMember: 'TeamMember',
   OrganizationRole: 'OrganizationRole',
+  Client: 'Client',
+  ServiceRequest: 'ServiceRequest',
   Lead: 'Lead'
 } as const;
 
@@ -206,6 +208,30 @@ export const OrganizationRoleScalarFieldEnum = {
 export type OrganizationRoleScalarFieldEnum =
   (typeof OrganizationRoleScalarFieldEnum)[keyof typeof OrganizationRoleScalarFieldEnum];
 
+export const ClientScalarFieldEnum = {
+  id: 'id',
+  memberId: 'memberId',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type ClientScalarFieldEnum =
+  (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum];
+
+export const ServiceRequestScalarFieldEnum = {
+  id: 'id',
+  clientId: 'clientId',
+  service: 'service',
+  status: 'status',
+  data: 'data',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type ServiceRequestScalarFieldEnum =
+  (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum];
+
 export const LeadScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -227,6 +253,14 @@ export const SortOrder = {
 } as const;
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const;
+
+export type NullableJsonNullValueInput =
+  (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
 
 export const NullsOrder = {
   first: 'first',
@@ -343,6 +377,38 @@ export const OrganizationRoleOrderByRelevanceFieldEnum = {
 
 export type OrganizationRoleOrderByRelevanceFieldEnum =
   (typeof OrganizationRoleOrderByRelevanceFieldEnum)[keyof typeof OrganizationRoleOrderByRelevanceFieldEnum];
+
+export const ClientOrderByRelevanceFieldEnum = {
+  id: 'id',
+  memberId: 'memberId',
+  name: 'name'
+} as const;
+
+export type ClientOrderByRelevanceFieldEnum =
+  (typeof ClientOrderByRelevanceFieldEnum)[keyof typeof ClientOrderByRelevanceFieldEnum];
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const;
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter];
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const;
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode];
+
+export const ServiceRequestOrderByRelevanceFieldEnum = {
+  id: 'id',
+  clientId: 'clientId'
+} as const;
+
+export type ServiceRequestOrderByRelevanceFieldEnum =
+  (typeof ServiceRequestOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestOrderByRelevanceFieldEnum];
 
 export const LeadOrderByRelevanceFieldEnum = {
   id: 'id',

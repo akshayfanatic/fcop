@@ -385,6 +385,8 @@ export const ModelName = {
   Team: 'Team',
   TeamMember: 'TeamMember',
   OrganizationRole: 'OrganizationRole',
+  Client: 'Client',
+  ServiceRequest: 'ServiceRequest',
   Lead: 'Lead'
 } as const;
 
@@ -416,6 +418,8 @@ export type TypeMap<
       | 'team'
       | 'teamMember'
       | 'organizationRole'
+      | 'client'
+      | 'serviceRequest'
       | 'lead';
     txIsolationLevel: TransactionIsolationLevel;
   };
@@ -1086,6 +1090,140 @@ export type TypeMap<
         };
       };
     };
+    Client: {
+      payload: Prisma.$ClientPayload<ExtArgs>;
+      fields: Prisma.ClientFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.ClientFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.ClientFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>;
+        };
+        findFirst: {
+          args: Prisma.ClientFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.ClientFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>;
+        };
+        findMany: {
+          args: Prisma.ClientFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>[];
+        };
+        create: {
+          args: Prisma.ClientCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>;
+        };
+        createMany: {
+          args: Prisma.ClientCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.ClientDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>;
+        };
+        update: {
+          args: Prisma.ClientUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>;
+        };
+        deleteMany: {
+          args: Prisma.ClientDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.ClientUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.ClientUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPayload>;
+        };
+        aggregate: {
+          args: Prisma.ClientAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClient>;
+        };
+        groupBy: {
+          args: Prisma.ClientGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.ClientGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.ClientCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.ClientCountAggregateOutputType> | number;
+        };
+      };
+    };
+    ServiceRequest: {
+      payload: Prisma.$ServiceRequestPayload<ExtArgs>;
+      fields: Prisma.ServiceRequestFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceRequestFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.ServiceRequestFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>;
+        };
+        findFirst: {
+          args: Prisma.ServiceRequestFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.ServiceRequestFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>;
+        };
+        findMany: {
+          args: Prisma.ServiceRequestFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>[];
+        };
+        create: {
+          args: Prisma.ServiceRequestCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>;
+        };
+        createMany: {
+          args: Prisma.ServiceRequestCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.ServiceRequestDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>;
+        };
+        update: {
+          args: Prisma.ServiceRequestUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>;
+        };
+        deleteMany: {
+          args: Prisma.ServiceRequestDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.ServiceRequestUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.ServiceRequestUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestPayload>;
+        };
+        aggregate: {
+          args: Prisma.ServiceRequestAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceRequest>;
+        };
+        groupBy: {
+          args: Prisma.ServiceRequestGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.ServiceRequestGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.ServiceRequestCountArgs<ExtArgs>;
+          result:
+            | runtime.Types.Utils.Optional<Prisma.ServiceRequestCountAggregateOutputType>
+            | number;
+        };
+      };
+    };
     Lead: {
       payload: Prisma.$LeadPayload<ExtArgs>;
       fields: Prisma.LeadFieldRefs;
@@ -1320,6 +1458,30 @@ export const OrganizationRoleScalarFieldEnum = {
 export type OrganizationRoleScalarFieldEnum =
   (typeof OrganizationRoleScalarFieldEnum)[keyof typeof OrganizationRoleScalarFieldEnum];
 
+export const ClientScalarFieldEnum = {
+  id: 'id',
+  memberId: 'memberId',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type ClientScalarFieldEnum =
+  (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum];
+
+export const ServiceRequestScalarFieldEnum = {
+  id: 'id',
+  clientId: 'clientId',
+  service: 'service',
+  status: 'status',
+  data: 'data',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type ServiceRequestScalarFieldEnum =
+  (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum];
+
 export const LeadScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1341,6 +1503,14 @@ export const SortOrder = {
 } as const;
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const;
+
+export type NullableJsonNullValueInput =
+  (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
 
 export const NullsOrder = {
   first: 'first',
@@ -1458,6 +1628,38 @@ export const OrganizationRoleOrderByRelevanceFieldEnum = {
 export type OrganizationRoleOrderByRelevanceFieldEnum =
   (typeof OrganizationRoleOrderByRelevanceFieldEnum)[keyof typeof OrganizationRoleOrderByRelevanceFieldEnum];
 
+export const ClientOrderByRelevanceFieldEnum = {
+  id: 'id',
+  memberId: 'memberId',
+  name: 'name'
+} as const;
+
+export type ClientOrderByRelevanceFieldEnum =
+  (typeof ClientOrderByRelevanceFieldEnum)[keyof typeof ClientOrderByRelevanceFieldEnum];
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const;
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter];
+
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const;
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode];
+
+export const ServiceRequestOrderByRelevanceFieldEnum = {
+  id: 'id',
+  clientId: 'clientId'
+} as const;
+
+export type ServiceRequestOrderByRelevanceFieldEnum =
+  (typeof ServiceRequestOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestOrderByRelevanceFieldEnum];
+
 export const LeadOrderByRelevanceFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1495,6 +1697,24 @@ export type EnumServiceInterestFieldRefInput<$PrismaModel> = FieldRefInputType<
   $PrismaModel,
   'ServiceInterest'
 >;
+
+/**
+ * Reference to a field of type 'ServiceRequestStatus'
+ */
+export type EnumServiceRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
+  $PrismaModel,
+  'ServiceRequestStatus'
+>;
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>;
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>;
 
 /**
  * Reference to a field of type 'LeadStatus'
@@ -1645,6 +1865,8 @@ export type GlobalOmitConfig = {
   team?: Prisma.TeamOmit;
   teamMember?: Prisma.TeamMemberOmit;
   organizationRole?: Prisma.OrganizationRoleOmit;
+  client?: Prisma.ClientOmit;
+  serviceRequest?: Prisma.ServiceRequestOmit;
   lead?: Prisma.LeadOmit;
 };
 

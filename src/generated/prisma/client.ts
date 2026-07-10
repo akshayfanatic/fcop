@@ -95,6 +95,16 @@ export type TeamMember = Prisma.TeamMemberModel;
  */
 export type OrganizationRole = Prisma.OrganizationRoleModel;
 /**
+ * Model Client
+ *
+ */
+export type Client = Prisma.ClientModel;
+/**
+ * Model ServiceRequest
+ *
+ */
+export type ServiceRequest = Prisma.ServiceRequestModel;
+/**
  * Model Lead
  *
  */

@@ -180,6 +180,7 @@ export type MemberWhereInput = {
   createdAt?: Prisma.DateTimeFilter<'Member'> | Date | string;
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>;
+  client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null;
 };
 
 export type MemberOrderByWithRelationInput = {
@@ -190,6 +191,7 @@ export type MemberOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder;
   user?: Prisma.UserOrderByWithRelationInput;
   organization?: Prisma.OrganizationOrderByWithRelationInput;
+  client?: Prisma.ClientOrderByWithRelationInput;
   _relevance?: Prisma.MemberOrderByRelevanceInput;
 };
 
@@ -208,6 +210,7 @@ export type MemberWhereUniqueInput = Prisma.AtLeast<
       Prisma.OrganizationScalarRelationFilter,
       Prisma.OrganizationWhereInput
     >;
+    client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null;
   },
   'id'
 >;
@@ -240,6 +243,7 @@ export type MemberCreateInput = {
   createdAt?: Date | string;
   user: Prisma.UserCreateNestedOneWithoutMembersInput;
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
+  client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
 };
 
 export type MemberUncheckedCreateInput = {
@@ -248,6 +252,7 @@ export type MemberUncheckedCreateInput = {
   organizationId: string;
   role: string;
   createdAt?: Date | string;
+  client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
 };
 
 export type MemberUpdateInput = {
@@ -256,6 +261,7 @@ export type MemberUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
+  client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
 };
 
 export type MemberUncheckedUpdateInput = {
@@ -264,6 +270,7 @@ export type MemberUncheckedUpdateInput = {
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string;
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
 };
 
 export type MemberCreateManyInput = {
@@ -326,6 +333,11 @@ export type MemberMinOrderByAggregateInput = {
   organizationId?: Prisma.SortOrder;
   role?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
+};
+
+export type MemberScalarRelationFilter = {
+  is?: Prisma.MemberWhereInput;
+  isNot?: Prisma.MemberWhereInput;
 };
 
 export type MemberCreateNestedManyWithoutUserInput = {
@@ -488,11 +500,38 @@ export type MemberUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.MemberScalarWhereInput | Prisma.MemberScalarWhereInput[];
 };
 
+export type MemberCreateNestedOneWithoutClientInput = {
+  create?: Prisma.XOR<
+    Prisma.MemberCreateWithoutClientInput,
+    Prisma.MemberUncheckedCreateWithoutClientInput
+  >;
+  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutClientInput;
+  connect?: Prisma.MemberWhereUniqueInput;
+};
+
+export type MemberUpdateOneRequiredWithoutClientNestedInput = {
+  create?: Prisma.XOR<
+    Prisma.MemberCreateWithoutClientInput,
+    Prisma.MemberUncheckedCreateWithoutClientInput
+  >;
+  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutClientInput;
+  upsert?: Prisma.MemberUpsertWithoutClientInput;
+  connect?: Prisma.MemberWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<
+      Prisma.MemberUpdateToOneWithWhereWithoutClientInput,
+      Prisma.MemberUpdateWithoutClientInput
+    >,
+    Prisma.MemberUncheckedUpdateWithoutClientInput
+  >;
+};
+
 export type MemberCreateWithoutUserInput = {
   id?: string;
   role: string;
   createdAt?: Date | string;
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
+  client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
 };
 
 export type MemberUncheckedCreateWithoutUserInput = {
@@ -500,6 +539,7 @@ export type MemberUncheckedCreateWithoutUserInput = {
   organizationId: string;
   role: string;
   createdAt?: Date | string;
+  client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
 };
 
 export type MemberCreateOrConnectWithoutUserInput = {
@@ -559,6 +599,7 @@ export type MemberCreateWithoutOrganizationInput = {
   role: string;
   createdAt?: Date | string;
   user: Prisma.UserCreateNestedOneWithoutMembersInput;
+  client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
 };
 
 export type MemberUncheckedCreateWithoutOrganizationInput = {
@@ -566,6 +607,7 @@ export type MemberUncheckedCreateWithoutOrganizationInput = {
   userId: string;
   role: string;
   createdAt?: Date | string;
+  client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
 };
 
 export type MemberCreateOrConnectWithoutOrganizationInput = {
@@ -609,6 +651,66 @@ export type MemberUpdateManyWithWhereWithoutOrganizationInput = {
   >;
 };
 
+export type MemberCreateWithoutClientInput = {
+  id?: string;
+  role: string;
+  createdAt?: Date | string;
+  user: Prisma.UserCreateNestedOneWithoutMembersInput;
+  organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
+};
+
+export type MemberUncheckedCreateWithoutClientInput = {
+  id?: string;
+  userId: string;
+  organizationId: string;
+  role: string;
+  createdAt?: Date | string;
+};
+
+export type MemberCreateOrConnectWithoutClientInput = {
+  where: Prisma.MemberWhereUniqueInput;
+  create: Prisma.XOR<
+    Prisma.MemberCreateWithoutClientInput,
+    Prisma.MemberUncheckedCreateWithoutClientInput
+  >;
+};
+
+export type MemberUpsertWithoutClientInput = {
+  update: Prisma.XOR<
+    Prisma.MemberUpdateWithoutClientInput,
+    Prisma.MemberUncheckedUpdateWithoutClientInput
+  >;
+  create: Prisma.XOR<
+    Prisma.MemberCreateWithoutClientInput,
+    Prisma.MemberUncheckedCreateWithoutClientInput
+  >;
+  where?: Prisma.MemberWhereInput;
+};
+
+export type MemberUpdateToOneWithWhereWithoutClientInput = {
+  where?: Prisma.MemberWhereInput;
+  data: Prisma.XOR<
+    Prisma.MemberUpdateWithoutClientInput,
+    Prisma.MemberUncheckedUpdateWithoutClientInput
+  >;
+};
+
+export type MemberUpdateWithoutClientInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  role?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
+};
+
+export type MemberUncheckedUpdateWithoutClientInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  userId?: Prisma.StringFieldUpdateOperationsInput | string;
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string;
+  role?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+
 export type MemberCreateManyUserInput = {
   id?: string;
   organizationId: string;
@@ -621,6 +723,7 @@ export type MemberUpdateWithoutUserInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
+  client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
 };
 
 export type MemberUncheckedUpdateWithoutUserInput = {
@@ -628,6 +731,7 @@ export type MemberUncheckedUpdateWithoutUserInput = {
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string;
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
 };
 
 export type MemberUncheckedUpdateManyWithoutUserInput = {
@@ -649,6 +753,7 @@ export type MemberUpdateWithoutOrganizationInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
+  client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
 };
 
 export type MemberUncheckedUpdateWithoutOrganizationInput = {
@@ -656,6 +761,7 @@ export type MemberUncheckedUpdateWithoutOrganizationInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string;
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
 };
 
 export type MemberUncheckedUpdateManyWithoutOrganizationInput = {
@@ -676,6 +782,7 @@ export type MemberSelect<
     createdAt?: boolean;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>;
+    client?: boolean | Prisma.Member$clientArgs<ExtArgs>;
   },
   ExtArgs['result']['member']
 >;
@@ -699,6 +806,7 @@ export type MemberInclude<
 > = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>;
+  client?: boolean | Prisma.Member$clientArgs<ExtArgs>;
 };
 
 export type $MemberPayload<
@@ -708,6 +816,7 @@ export type $MemberPayload<
   objects: {
     user: Prisma.$UserPayload<ExtArgs>;
     organization: Prisma.$OrganizationPayload<ExtArgs>;
+    client: Prisma.$ClientPayload<ExtArgs> | null;
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -1182,6 +1291,19 @@ export interface Prisma__MemberClient<
     ExtArgs,
     GlobalOmitOptions
   >;
+  client<T extends Prisma.Member$clientArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Member$clientArgs<ExtArgs>>
+  ): Prisma.Prisma__ClientClient<
+    runtime.Types.Result.GetResult<
+      Prisma.$ClientPayload<ExtArgs>,
+      T,
+      'findUniqueOrThrow',
+      GlobalOmitOptions
+    > | null,
+    null,
+    ExtArgs,
+    GlobalOmitOptions
+  >;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1586,6 +1708,27 @@ export type MemberDeleteManyArgs<
    * Limit how many Members to delete.
    */
   limit?: number;
+};
+
+/**
+ * Member.client
+ */
+export type Member$clientArgs<
+  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
+> = {
+  /**
+   * Select specific fields to fetch from the Client
+   */
+  select?: Prisma.ClientSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the Client
+   */
+  omit?: Prisma.ClientOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClientInclude<ExtArgs> | null;
+  where?: Prisma.ClientWhereInput;
 };
 
 /**
