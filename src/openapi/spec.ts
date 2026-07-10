@@ -1,4 +1,9 @@
-import { LeadSource, LeadStatus, ServiceInterest } from '../generated/prisma/enums.js';
+import {
+  LeadSource,
+  LeadStatus,
+  ServiceInterest,
+  ServiceRequestStatus
+} from '../generated/prisma/enums.js';
 
 const enumValues = <T extends Record<string, string>>(values: T) => Object.values(values);
 
@@ -31,6 +36,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     {
       name: 'Leads',
       description: 'Lead management endpoints.'
+    },
+    {
+      name: 'Service Requests',
+      description: 'Client service request endpoints.'
     }
   ],
   paths: {
@@ -393,6 +402,259 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       }
+    },
+    '/api/v1/service-requests': {
+      post: {
+        tags: ['Service Requests'],
+        summary: 'Create a service request',
+        description: 'Creates a service request for the authenticated client.',
+        operationId: 'createServiceRequest',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateServiceRequestRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Service request created successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid service request payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '404': {
+            description: 'Client profile has not been created.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      get: {
+        tags: ['Service Requests'],
+        summary: 'Fetch service requests',
+        description: 'Requires serviceRequest:read permission in the active organization.',
+        operationId: 'getServiceRequests',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['read']
+        },
+        responses: {
+          '200': {
+            description: 'Service requests fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestsResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          }
+        }
+      }
+    },
+    '/api/v1/service-requests/{id}': {
+      get: {
+        tags: ['Service Requests'],
+        summary: 'Fetch a service request by id',
+        description: 'Requires serviceRequest:read permission in the active organization.',
+        operationId: 'getServiceRequestById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['read']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Service request fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      put: {
+        tags: ['Service Requests'],
+        summary: 'Update a service request by id',
+        description: 'Requires serviceRequest:update permission in the active organization.',
+        operationId: 'updateServiceRequestById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['update']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestId'
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/UpdateServiceRequestRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '200': {
+            description: 'Service request updated successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid service request payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      delete: {
+        tags: ['Service Requests'],
+        summary: 'Delete a service request by id',
+        description: 'Requires serviceRequest:delete permission in the active organization.',
+        operationId: 'deleteServiceRequestById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['delete']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Service request deleted successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   components: {
@@ -435,6 +697,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           minLength: 1
         },
         example: 'clx0000000000000000000004'
+      },
+      ServiceRequestId: {
+        name: 'id',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000006'
       }
     },
     schemas: {
@@ -452,6 +724,11 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         type: 'string',
         enum: enumValues(ServiceInterest),
         example: ServiceInterest.WEB_DEVELOPMENT
+      },
+      ServiceRequestStatus: {
+        type: 'string',
+        enum: enumValues(ServiceRequestStatus),
+        example: ServiceRequestStatus.NEW
       },
       ApiResponse: {
         type: 'object',
@@ -797,6 +1074,77 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       },
+      ServiceRequestData: {
+        type: 'object',
+        additionalProperties: true,
+        description: 'Service-specific answers collected from the selected service template.',
+        example: {
+          websiteUrl: 'https://example.com',
+          targetKeywords: ['seo agency', 'web development']
+        }
+      },
+      ServiceRequest: {
+        type: 'object',
+        required: ['id', 'clientId', 'service', 'status', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000006'
+          },
+          clientId: {
+            type: 'string',
+            example: 'clx0000000000000000000005'
+          },
+          service: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          status: {
+            $ref: '#/components/schemas/ServiceRequestStatus'
+          },
+          data: {
+            nullable: true,
+            allOf: [
+              {
+                $ref: '#/components/schemas/ServiceRequestData'
+              }
+            ]
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          }
+        }
+      },
+      CreateServiceRequestRequest: {
+        type: 'object',
+        required: ['service'],
+        properties: {
+          service: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          data: {
+            $ref: '#/components/schemas/ServiceRequestData'
+          }
+        }
+      },
+      UpdateServiceRequestRequest: {
+        type: 'object',
+        minProperties: 1,
+        properties: {
+          status: {
+            $ref: '#/components/schemas/ServiceRequestStatus'
+          },
+          data: {
+            $ref: '#/components/schemas/ServiceRequestData'
+          }
+        }
+      },
       RequestPasswordResetRequest: {
         type: 'object',
         required: ['email'],
@@ -947,6 +1295,41 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             properties: {
               data: {
                 $ref: '#/components/schemas/Lead'
+              }
+            }
+          }
+        ]
+      },
+      ServiceRequestsResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/ServiceRequest'
+                }
+              }
+            }
+          }
+        ]
+      },
+      ServiceRequestResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/ServiceRequest'
               }
             }
           }

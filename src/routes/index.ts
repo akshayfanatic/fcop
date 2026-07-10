@@ -5,6 +5,7 @@ import { healthRouter } from './health.js';
 import { invitationRouter } from './invitations.js';
 import { leadRouter } from './leads.js';
 import { openApiRouter } from './openapi.js';
+import { serviceRequestRouter } from './service-requests.js';
 
 export const apiRouter = Router();
 
@@ -14,3 +15,4 @@ apiRouter.use('/api/openapi.json', openApiRouter); // OPENAPISPECS
 apiRouter.use('/api/v1/auth', authRouter);
 apiRouter.use('/api/v1/invitations', invitationRouter);
 apiRouter.use('/api/v1/leads', leadRouter);
+apiRouter.use('/api/v1/service-requests', serviceRequestRouter);

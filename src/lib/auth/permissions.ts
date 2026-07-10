@@ -13,6 +13,7 @@ export type Role = (typeof Role)[keyof typeof Role];
 const statement = {
   ...defaultStatements,
   lead: ['create', 'read', 'update', 'delete'],
+  serviceRequest: ['create', 'read', 'update', 'delete'],
   project: ['create', 'read', 'update', 'delete'],
   task: ['create', 'read', 'update', 'delete', 'assign'],
   deliverable: ['create', 'read', 'update', 'delete', 'download'],
@@ -32,6 +33,7 @@ export type OrganizationPermission = {
 export const admin = ac.newRole({
   ...ownerAc.statements,
   lead: ['create', 'read', 'update', 'delete'],
+  serviceRequest: ['create', 'read', 'update', 'delete'],
   project: ['create', 'read', 'update', 'delete'],
   task: ['create', 'read', 'update', 'delete', 'assign'],
   deliverable: ['create', 'read', 'update', 'delete', 'download'],
@@ -49,6 +51,7 @@ export const manager = ac.newRole({
   team: ['create', 'update'],
   ac: ['read'],
   lead: ['read', 'update'],
+  serviceRequest: ['read', 'update'],
   project: ['create', 'read', 'update'],
   task: ['create', 'read', 'update', 'assign'],
   deliverable: ['create', 'read', 'update', 'download'],
@@ -73,6 +76,7 @@ export const member = ac.newRole({
 export const client = ac.newRole({
   ac: ['read'],
   project: ['read'],
+  serviceRequest: ['create', 'read'],
   deliverable: ['read', 'download'],
   comment: ['create', 'read'],
   file: ['read'],
