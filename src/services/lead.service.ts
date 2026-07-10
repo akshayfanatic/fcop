@@ -88,6 +88,32 @@ export const leadService = {
     }
   },
 
+  // Accepted invitations qualify matching leads captured with the same email.
+  updateLeadByEmail: async (email: string, payload: UpdateLeadInput) => {
+    try {
+      const result = await prisma.lead.updateMany({
+        where: {
+          email,
+          ...(payload.status ? { status: { not: payload.status } } : {})
+        },
+        data: payload
+      });
+
+      logger.info(
+        {
+          email,
+          updatedCount: result.count
+        },
+        'Qualified leads for accepted organization member.'
+      );
+
+      return result;
+    } catch (error) {
+      logger.error({ error, email }, 'Failed to qualify lead for accepted organization member.');
+      throw error;
+    }
+  },
+
   deleteLeadById: async (id: string) => {
     try {
       await leadService.getLeadById(id);
