@@ -10,6 +10,7 @@
 
 export const LeadStatus = {
   NEW: 'NEW',
+  QUALIFIED: 'QUALIFIED',
   IN_PROGRESS: 'IN_PROGRESS',
   DEAD: 'DEAD'
 } as const;

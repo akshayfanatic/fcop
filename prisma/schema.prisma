@@ -9,6 +9,7 @@ datasource db {
 
 enum LeadStatus {
   NEW
+  QUALIFIED
   IN_PROGRESS
   DEAD
 }
