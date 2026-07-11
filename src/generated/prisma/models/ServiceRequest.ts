@@ -574,10 +574,7 @@ export type ServiceRequestCountArgs<ExtArgs extends runtime.Types.Extensions.Int
 };
 
 export interface ServiceRequestDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-  [K: symbol]: {
-    types: Prisma.TypeMap<ExtArgs>['model']['ServiceRequest'];
-    meta: { name: 'ServiceRequest' };
-  };
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ServiceRequest']; meta: { name: 'ServiceRequest' } };
   /**
    * Find zero or one ServiceRequest that matches the filter.
    * @param {ServiceRequestFindUniqueArgs} args - Arguments to find a ServiceRequest

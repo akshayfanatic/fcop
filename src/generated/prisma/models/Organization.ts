@@ -803,10 +803,7 @@ export type OrganizationCountArgs<ExtArgs extends runtime.Types.Extensions.Inter
 };
 
 export interface OrganizationDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-  [K: symbol]: {
-    types: Prisma.TypeMap<ExtArgs>['model']['Organization'];
-    meta: { name: 'Organization' };
-  };
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Organization']; meta: { name: 'Organization' } };
   /**
    * Find zero or one Organization that matches the filter.
    * @param {OrganizationFindUniqueArgs} args - Arguments to find a Organization

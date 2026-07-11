@@ -1349,6 +1349,7 @@ export const InvitationScalarFieldEnum = {
   inviterId: 'inviterId',
   organizationId: 'organizationId',
   role: 'role',
+  serviceInterest: 'serviceInterest',
   status: 'status',
   teamId: 'teamId',
   createdAt: 'createdAt',
@@ -1513,6 +1514,7 @@ export const InvitationOrderByRelevanceFieldEnum = {
   inviterId: 'inviterId',
   organizationId: 'organizationId',
   role: 'role',
+  serviceInterest: 'serviceInterest',
   status: 'status',
   teamId: 'teamId'
 } as const;

@@ -540,10 +540,7 @@ export type OrganizationRoleCountArgs<ExtArgs extends runtime.Types.Extensions.I
 };
 
 export interface OrganizationRoleDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-  [K: symbol]: {
-    types: Prisma.TypeMap<ExtArgs>['model']['OrganizationRole'];
-    meta: { name: 'OrganizationRole' };
-  };
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OrganizationRole']; meta: { name: 'OrganizationRole' } };
   /**
    * Find zero or one OrganizationRole that matches the filter.
    * @param {OrganizationRoleFindUniqueArgs} args - Arguments to find a OrganizationRole

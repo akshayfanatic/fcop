@@ -131,17 +131,18 @@ model Member {
 }
 
 model Invitation {
-  id             String       @id @default(cuid()) @db.VarChar(36)
-  email          String
-  inviterId      String       @db.VarChar(36)
-  organizationId String       @db.VarChar(36)
-  role           String?
-  status         String
-  teamId         String?      @db.VarChar(36)
-  createdAt      DateTime     @default(now())
-  expiresAt      DateTime
-  inviter        User         @relation("InvitationInviter", fields: [inviterId], references: [id], onDelete: Cascade)
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  id              String       @id @default(cuid()) @db.VarChar(36)
+  email           String
+  inviterId       String       @db.VarChar(36)
+  organizationId  String       @db.VarChar(36)
+  role            String?
+  serviceInterest String?      @db.VarChar(64)
+  status          String
+  teamId          String?      @db.VarChar(36)
+  createdAt       DateTime     @default(now())
+  expiresAt       DateTime
+  inviter         User         @relation("InvitationInviter", fields: [inviterId], references: [id], onDelete: Cascade)
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@index([email])
   @@index([inviterId])

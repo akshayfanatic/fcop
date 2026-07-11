@@ -597,10 +597,7 @@ export type TeamMemberCountArgs<ExtArgs extends runtime.Types.Extensions.Interna
 };
 
 export interface TeamMemberDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-  [K: symbol]: {
-    types: Prisma.TypeMap<ExtArgs>['model']['TeamMember'];
-    meta: { name: 'TeamMember' };
-  };
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TeamMember']; meta: { name: 'TeamMember' } };
   /**
    * Find zero or one TeamMember that matches the filter.
    * @param {TeamMemberFindUniqueArgs} args - Arguments to find a TeamMember
