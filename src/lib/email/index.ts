@@ -5,6 +5,7 @@ export {
 } from './services/auth-email.service.js';
 export { sendEmail, sendReactEmail, sendTemplateEmail } from './services/email.service.js';
 export { createNewLeadEmailTemplate } from './templates/new-lead-email.js';
+export { createNewServiceRequestEmailTemplate } from './templates/new-service-request-email.js';
 export { createInvitationEmailTemplate } from './templates/invitation-email.js';
 export { createMemberAcceptedInvitationEmailTemplate } from './templates/member-accepted-invitation-email.js';
 export { createResetPasswordEmailTemplate } from './templates/reset-password-email.js';

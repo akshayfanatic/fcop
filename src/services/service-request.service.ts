@@ -1,6 +1,8 @@
 import type { IncomingHttpHeaders } from 'node:http';
 import { type Prisma } from '../generated/prisma/client.js';
+import { env } from '../config/env.js';
 import { getSessionMember } from '../lib/auth/session.js';
+import { createNewServiceRequestEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
 import { HttpStatus } from '../utils/api-response.js';
@@ -36,6 +38,7 @@ const includeClientRequestDetails = {
 } satisfies Prisma.ServiceRequestInclude;
 
 export const serviceRequestService = {
+  // Create a service request.
   createServiceRequest: async (
     payload: CreateServiceRequestInput,
     headers: IncomingHttpHeaders
@@ -52,19 +55,44 @@ export const serviceRequestService = {
         );
       }
 
-      return await prisma.serviceRequest.create({
+      const request = await prisma.serviceRequest.create({
         data: {
           clientId: client.id,
           service: payload.service,
           data: payload.data as Prisma.InputJsonValue
-        }
+        },
+        include: includeClientRequestDetails
       });
+
+      if (!env.adminEmail) {
+        logger.warn(
+          'ADMIN_EMAIL is not configured. Skipping new service request email notification.'
+        );
+        return request;
+      }
+
+      // Send email to tell admin about the new service request.
+      try {
+        await sendTemplateEmail({
+          to: env.adminEmail,
+          replyTo: request.client.member.user.email,
+          template: createNewServiceRequestEmailTemplate({ request })
+        });
+      } catch (error) {
+        logger.error(
+          { error, serviceRequestId: request.id },
+          'Failed to send new service request email notification.'
+        );
+      }
+
+      return request;
     } catch (error) {
       logger.error({ error, service: payload.service }, 'Failed to create service request.');
       throw error;
     }
   },
 
+  // Get service requests.
   getServiceRequests: async (headers: IncomingHttpHeaders) => {
     try {
       const member = await getSessionMember(headers);
@@ -92,6 +120,7 @@ export const serviceRequestService = {
     }
   },
 
+  // Get one service request.
   getServiceRequestById: async (id: string, headers: IncomingHttpHeaders) => {
     try {
       const member = await getSessionMember(headers);
@@ -137,6 +166,7 @@ export const serviceRequestService = {
     }
   },
 
+  // Update a service request.
   updateServiceRequestById: async (
     id: string,
     payload: UpdateServiceRequestInput,
@@ -173,6 +203,7 @@ export const serviceRequestService = {
     }
   },
 
+  // Delete a service request.
   deleteServiceRequestById: async (id: string, _headers: IncomingHttpHeaders) => {
     try {
       const request = await prisma.serviceRequest.findUnique({
