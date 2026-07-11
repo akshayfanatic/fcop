@@ -46,6 +46,7 @@ type SendMemberAcceptedInvitationEmailParams = {
 
 export const sendResetPasswordEmail = async ({ user, url, token }: SendResetPasswordParams) => {
   try {
+    // Send email to help user reset their password.
     await sendTemplateEmail({
       to: user.email,
       template: createResetPasswordEmailTemplate({
@@ -74,6 +75,7 @@ export const sendInvitationEmail = async ({
   const acceptUrl = `${env.frontendUrl}/accept-invitation?invitationId=${encodeURIComponent(id)}`;
 
   try {
+    // Send email to invite user into the organization.
     await sendTemplateEmail({
       to: email,
       template: createInvitationEmailTemplate({
@@ -115,6 +117,7 @@ export const sendMemberAcceptedInvitationEmail = async ({
   }
 
   try {
+    // Send email to tell admin that invitation was accepted.
     await sendTemplateEmail({
       to: env.adminEmail,
       template: createMemberAcceptedInvitationEmailTemplate({

@@ -26,6 +26,7 @@ export const auth = betterAuth({
     enabled: true,
     minPasswordLength: 8,
     revokeSessionsOnPasswordReset: true,
+    // Send email to help user reset their password.
     sendResetPassword: sendResetPasswordEmail
   },
   plugins: [
@@ -34,13 +35,15 @@ export const auth = betterAuth({
       roles: organizationRoles,
       creatorRole: Role.ADMIN,
       cancelPendingInvitationsOnReInvite: true,
+      // Send email to invite user into the organization.
       sendInvitationEmail,
       organizationHooks: {
-        // When an invitee accepts, notify admin, create client profile if needed, and qualify matching leads.
+        // Send email to tell admin that invitation was accepted.
         afterAcceptInvitation: async (payload) => {
           await sendMemberAcceptedInvitationEmail(payload);
 
           try {
+            // Create client profile after invitation is accepted.
             await clientService.createClient(payload);
           } catch (error) {
             logger.error(
@@ -54,6 +57,7 @@ export const auth = betterAuth({
           }
 
           try {
+            // Mark matching lead as qualified after user joins.
             await leadService.updateLeadByEmail(payload.user.email, {
               status: LeadStatus.QUALIFIED
             });

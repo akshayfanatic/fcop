@@ -10,9 +10,8 @@ type AcceptedMemberPayload = {
 };
 
 export const clientService = {
-  // Accepted CLIENT members get a client profile for portal-scoped resources.
   createClient: async ({ member, user }: AcceptedMemberPayload) => {
-    // check role is CLIENT
+    // Create client profile only for client members.
     if (!hasRole(member.role, Role.CLIENT)) {
       return null;
     }

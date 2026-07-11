@@ -38,7 +38,6 @@ const includeClientRequestDetails = {
 } satisfies Prisma.ServiceRequestInclude;
 
 export const serviceRequestService = {
-  // Create a service request.
   createServiceRequest: async (
     payload: CreateServiceRequestInput,
     headers: IncomingHttpHeaders
@@ -47,6 +46,7 @@ export const serviceRequestService = {
       const member = await getSessionMember(headers);
       const client = member.client;
 
+      // Make sure only clients can create service requests.
       if (!client) {
         throw createHttpError(
           HttpStatus.NOT_FOUND,
@@ -92,7 +92,6 @@ export const serviceRequestService = {
     }
   },
 
-  // Get service requests.
   getServiceRequests: async (headers: IncomingHttpHeaders) => {
     try {
       const member = await getSessionMember(headers);
@@ -120,7 +119,6 @@ export const serviceRequestService = {
     }
   },
 
-  // Get one service request.
   getServiceRequestById: async (id: string, headers: IncomingHttpHeaders) => {
     try {
       const member = await getSessionMember(headers);
@@ -166,7 +164,6 @@ export const serviceRequestService = {
     }
   },
 
-  // Update a service request.
   updateServiceRequestById: async (
     id: string,
     payload: UpdateServiceRequestInput,
@@ -179,6 +176,7 @@ export const serviceRequestService = {
         }
       });
 
+      // Make sure service request exists before update.
       if (!request) {
         throw createHttpError(
           HttpStatus.NOT_FOUND,
@@ -203,7 +201,6 @@ export const serviceRequestService = {
     }
   },
 
-  // Delete a service request.
   deleteServiceRequestById: async (id: string, _headers: IncomingHttpHeaders) => {
     try {
       const request = await prisma.serviceRequest.findUnique({
@@ -212,6 +209,7 @@ export const serviceRequestService = {
         }
       });
 
+      // Make sure service request exists before delete.
       if (!request) {
         throw createHttpError(
           HttpStatus.NOT_FOUND,

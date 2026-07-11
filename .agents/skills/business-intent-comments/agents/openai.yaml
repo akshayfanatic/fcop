@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Business Intent Comments'
+  short_description: 'Comment business intent around CRUD.'
+  default_prompt: 'Apply business-intent comment discipline to this code change.'

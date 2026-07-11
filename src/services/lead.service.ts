@@ -58,6 +58,7 @@ export const leadService = {
       }
 
       try {
+        // Send email to tell admin about the new lead.
         await sendTemplateEmail({
           to: env.adminEmail,
           replyTo: lead.email,
@@ -76,6 +77,7 @@ export const leadService = {
 
   updateLeadById: async (id: string, payload: UpdateLeadInput) => {
     try {
+      // Make sure lead exists before update.
       await leadService.getLeadById(id);
 
       return await prisma.lead.update({
@@ -116,6 +118,7 @@ export const leadService = {
 
   deleteLeadById: async (id: string) => {
     try {
+      // Make sure lead exists before delete.
       await leadService.getLeadById(id);
 
       return await prisma.lead.delete({
