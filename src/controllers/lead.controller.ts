@@ -3,11 +3,7 @@ import { z } from 'zod';
 import { leadService } from '../services/lead.service.js';
 import { ApiResponse, HttpStatus } from '../utils/api-response.js';
 import { sendValidationError } from '../utils/http-error.js';
-import {
-  createLeadSchema,
-  leadIdParamsSchema,
-  updateLeadSchema
-} from '../validators/lead.validator.js';
+import { createLeadSchema, leadIdParamsSchema, updateLeadSchema } from '../validators/lead.validator.js';
 
 export const leadController = {
   getLeads: (async (_req, res, next) => {

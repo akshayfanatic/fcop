@@ -21,13 +21,7 @@ const buttonStyle = {
   textDecoration: 'none'
 };
 
-export const createInvitationEmailTemplate = ({
-  acceptUrl,
-  invitedEmail,
-  inviterName,
-  organizationName,
-  role
-}: InvitationEmailProps): EmailTemplate => ({
+export const createInvitationEmailTemplate = ({ acceptUrl, invitedEmail, inviterName, organizationName, role }: InvitationEmailProps): EmailTemplate => ({
   subject: `You're invited to ${organizationName}`,
   react: (
     <BaseEmail previewText={`You've been invited to join ${organizationName}.`}>
@@ -40,9 +34,7 @@ export const createInvitationEmailTemplate = ({
           Accept invitation
         </a>
       </p>
-      <p style={emailStyles.lastText}>
-        If the button does not work, copy and paste this link into your browser: {acceptUrl}
-      </p>
+      <p style={emailStyles.lastText}>If the button does not work, copy and paste this link into your browser: {acceptUrl}</p>
     </BaseEmail>
   ),
   text: [

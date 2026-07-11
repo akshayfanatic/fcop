@@ -103,9 +103,7 @@ export type LeadCountAggregateInputType = {
   _all?: true;
 };
 
-export type LeadAggregateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which Lead to aggregate.
    */
@@ -155,16 +153,10 @@ export type LeadAggregateArgs<
 };
 
 export type GetLeadAggregateType<T extends LeadAggregateArgs> = {
-  [P in keyof T & keyof AggregateLead]: P extends '_count' | 'count'
-    ? T[P] extends true
-      ? number
-      : Prisma.GetScalarType<T[P], AggregateLead[P]>
-    : Prisma.GetScalarType<T[P], AggregateLead[P]>;
+  [P in keyof T & keyof AggregateLead]: P extends '_count' | 'count' ? (T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateLead[P]>) : Prisma.GetScalarType<T[P], AggregateLead[P]>;
 };
 
-export type LeadGroupByArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LeadWhereInput;
   orderBy?: Prisma.LeadOrderByWithAggregationInput | Prisma.LeadOrderByWithAggregationInput[];
   by: Prisma.LeadScalarFieldEnum[] | Prisma.LeadScalarFieldEnum;
@@ -429,9 +421,7 @@ export type EnumLeadSourceFieldUpdateOperationsInput = {
   set?: $Enums.LeadSource;
 };
 
-export type LeadSelect<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetSelect<
+export type LeadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
     name?: boolean;
@@ -460,25 +450,12 @@ export type LeadSelectScalar = {
   updatedAt?: boolean;
 };
 
-export type LeadOmit<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetOmit<
-  | 'id'
-  | 'name'
-  | 'email'
-  | 'companyName'
-  | 'serviceInterest'
-  | 'budgetRange'
-  | 'status'
-  | 'source'
-  | 'createdAt'
-  | 'updatedAt',
+export type LeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<
+  'id' | 'name' | 'email' | 'companyName' | 'serviceInterest' | 'budgetRange' | 'status' | 'source' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['lead']
 >;
 
-export type $LeadPayload<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type $LeadPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: 'Lead';
   objects: {};
   scalars: runtime.Types.Extensions.GetPayloadResult<
@@ -499,19 +476,13 @@ export type $LeadPayload<
   composites: {};
 };
 
-export type LeadGetPayload<S extends boolean | null | undefined | LeadDefaultArgs> =
-  runtime.Types.Result.GetResult<Prisma.$LeadPayload, S>;
+export type LeadGetPayload<S extends boolean | null | undefined | LeadDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$LeadPayload, S>;
 
-export type LeadCountArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = Omit<LeadFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+export type LeadCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<LeadFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
   select?: LeadCountAggregateInputType | true;
 };
 
-export interface LeadDelegate<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-  GlobalOmitOptions = {}
-> {
+export interface LeadDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Lead']; meta: { name: 'Lead' } };
   /**
    * Find zero or one Lead that matches the filter.
@@ -526,17 +497,7 @@ export interface LeadDelegate<
    */
   findUnique<T extends LeadFindUniqueArgs>(
     args: Prisma.SelectSubset<T, LeadFindUniqueArgs<ExtArgs>>
-  ): Prisma.Prisma__LeadClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$LeadPayload<ExtArgs>,
-      T,
-      'findUnique',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find one Lead that matches the filter or throw an error with `error.code='P2025'`
@@ -552,17 +513,7 @@ export interface LeadDelegate<
    */
   findUniqueOrThrow<T extends LeadFindUniqueOrThrowArgs>(
     args: Prisma.SelectSubset<T, LeadFindUniqueOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__LeadClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$LeadPayload<ExtArgs>,
-      T,
-      'findUniqueOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first Lead that matches the filter.
@@ -579,17 +530,7 @@ export interface LeadDelegate<
    */
   findFirst<T extends LeadFindFirstArgs>(
     args?: Prisma.SelectSubset<T, LeadFindFirstArgs<ExtArgs>>
-  ): Prisma.Prisma__LeadClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$LeadPayload<ExtArgs>,
-      T,
-      'findFirst',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first Lead that matches the filter or
@@ -607,17 +548,7 @@ export interface LeadDelegate<
    */
   findFirstOrThrow<T extends LeadFindFirstOrThrowArgs>(
     args?: Prisma.SelectSubset<T, LeadFindFirstOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__LeadClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$LeadPayload<ExtArgs>,
-      T,
-      'findFirstOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find zero or more Leads that matches the filter.
@@ -637,9 +568,7 @@ export interface LeadDelegate<
    */
   findMany<T extends LeadFindManyArgs>(
     args?: Prisma.SelectSubset<T, LeadFindManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<
-    runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
-  >;
+  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>;
 
   /**
    * Create a Lead.
@@ -655,12 +584,7 @@ export interface LeadDelegate<
    */
   create<T extends LeadCreateArgs>(
     args: Prisma.SelectSubset<T, LeadCreateArgs<ExtArgs>>
-  ): Prisma.Prisma__LeadClient<
-    runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Create many Leads.
@@ -674,9 +598,7 @@ export interface LeadDelegate<
    * })
    *
    */
-  createMany<T extends LeadCreateManyArgs>(
-    args?: Prisma.SelectSubset<T, LeadCreateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  createMany<T extends LeadCreateManyArgs>(args?: Prisma.SelectSubset<T, LeadCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Delete a Lead.
@@ -692,12 +614,7 @@ export interface LeadDelegate<
    */
   delete<T extends LeadDeleteArgs>(
     args: Prisma.SelectSubset<T, LeadDeleteArgs<ExtArgs>>
-  ): Prisma.Prisma__LeadClient<
-    runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Update one Lead.
@@ -716,12 +633,7 @@ export interface LeadDelegate<
    */
   update<T extends LeadUpdateArgs>(
     args: Prisma.SelectSubset<T, LeadUpdateArgs<ExtArgs>>
-  ): Prisma.Prisma__LeadClient<
-    runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Delete zero or more Leads.
@@ -735,9 +647,7 @@ export interface LeadDelegate<
    * })
    *
    */
-  deleteMany<T extends LeadDeleteManyArgs>(
-    args?: Prisma.SelectSubset<T, LeadDeleteManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  deleteMany<T extends LeadDeleteManyArgs>(args?: Prisma.SelectSubset<T, LeadDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Update zero or more Leads.
@@ -756,9 +666,7 @@ export interface LeadDelegate<
    * })
    *
    */
-  updateMany<T extends LeadUpdateManyArgs>(
-    args: Prisma.SelectSubset<T, LeadUpdateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  updateMany<T extends LeadUpdateManyArgs>(args: Prisma.SelectSubset<T, LeadUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Create or update one Lead.
@@ -779,12 +687,7 @@ export interface LeadDelegate<
    */
   upsert<T extends LeadUpsertArgs>(
     args: Prisma.SelectSubset<T, LeadUpsertArgs<ExtArgs>>
-  ): Prisma.Prisma__LeadClient<
-    runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__LeadClient<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Count the number of Leads.
@@ -801,13 +704,7 @@ export interface LeadDelegate<
    **/
   count<T extends LeadCountArgs>(
     args?: Prisma.Subset<T, LeadCountArgs>
-  ): Prisma.PrismaPromise<
-    T extends runtime.Types.Utils.Record<'select', any>
-      ? T['select'] extends true
-        ? number
-        : Prisma.GetScalarType<T['select'], LeadCountAggregateOutputType>
-      : number
-  >;
+  ): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? (T['select'] extends true ? number : Prisma.GetScalarType<T['select'], LeadCountAggregateOutputType>) : number>;
 
   /**
    * Allows you to perform aggregations operations on a Lead.
@@ -833,9 +730,7 @@ export interface LeadDelegate<
    *   take: 10,
    * })
    **/
-  aggregate<T extends LeadAggregateArgs>(
-    args: Prisma.Subset<T, LeadAggregateArgs>
-  ): Prisma.PrismaPromise<GetLeadAggregateType<T>>;
+  aggregate<T extends LeadAggregateArgs>(args: Prisma.Subset<T, LeadAggregateArgs>): Prisma.PrismaPromise<GetLeadAggregateType<T>>;
 
   /**
    * Group by Lead.
@@ -857,16 +752,9 @@ export interface LeadDelegate<
    **/
   groupBy<
     T extends LeadGroupByArgs,
-    HasSelectOrTake extends Prisma.Or<
-      Prisma.Extends<'skip', Prisma.Keys<T>>,
-      Prisma.Extends<'take', Prisma.Keys<T>>
-    >,
-    OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? { orderBy: LeadGroupByArgs['orderBy'] }
-      : { orderBy?: LeadGroupByArgs['orderBy'] },
-    OrderFields extends Prisma.ExcludeUnderscoreKeys<
-      Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>
-    >,
+    HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>,
+    OrderByArg extends Prisma.True extends HasSelectOrTake ? { orderBy: LeadGroupByArgs['orderBy'] } : { orderBy?: LeadGroupByArgs['orderBy'] },
+    OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>,
     ByFields extends Prisma.MaybeTupleToUnion<T['by']>,
     ByValid extends Prisma.Has<ByFields, OrderFields>,
     HavingFields extends Prisma.GetHavingFields<T['having']>,
@@ -887,9 +775,7 @@ export interface LeadDelegate<
             ? ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
             : 'Error: If you provide "take", you also need to provide "orderBy"'
           : 'skip' extends Prisma.Keys<T>
@@ -897,17 +783,13 @@ export interface LeadDelegate<
               ? ByValid extends Prisma.True
                 ? {}
                 : {
-                    [P in OrderFields]: P extends ByFields
-                      ? never
-                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                   }[OrderFields]
               : 'Error: If you provide "skip", you also need to provide "orderBy"'
             : ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
   >(
     args: Prisma.SubsetIntersection<T, LeadGroupByArgs, OrderByArg> & InputErrors
@@ -946,9 +828,7 @@ export interface Prisma__LeadClient<
    * @param onrejected The callback to execute when the Promise is rejected.
    * @returns A Promise for the completion of the callback.
    */
-  catch<TResult = never>(
-    onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
-  ): runtime.Types.Utils.JsPromise<T | TResult>;
+  catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
   /**
    * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
    * resolved value cannot be modified from the callback.
@@ -978,9 +858,7 @@ export interface LeadFieldRefs {
 /**
  * Lead findUnique
  */
-export type LeadFindUniqueArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Lead
    */
@@ -998,9 +876,7 @@ export type LeadFindUniqueArgs<
 /**
  * Lead findUniqueOrThrow
  */
-export type LeadFindUniqueOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Lead
    */
@@ -1018,9 +894,7 @@ export type LeadFindUniqueOrThrowArgs<
 /**
  * Lead findFirst
  */
-export type LeadFindFirstArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Lead
    */
@@ -1068,9 +942,7 @@ export type LeadFindFirstArgs<
 /**
  * Lead findFirstOrThrow
  */
-export type LeadFindFirstOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Lead
    */
@@ -1118,9 +990,7 @@ export type LeadFindFirstOrThrowArgs<
 /**
  * Lead findMany
  */
-export type LeadFindManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Lead
    */
@@ -1168,9 +1038,7 @@ export type LeadFindManyArgs<
 /**
  * Lead create
  */
-export type LeadCreateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Lead
    */
@@ -1188,9 +1056,7 @@ export type LeadCreateArgs<
 /**
  * Lead createMany
  */
-export type LeadCreateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to create many Leads.
    */
@@ -1201,9 +1067,7 @@ export type LeadCreateManyArgs<
 /**
  * Lead update
  */
-export type LeadUpdateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Lead
    */
@@ -1225,9 +1089,7 @@ export type LeadUpdateArgs<
 /**
  * Lead updateMany
  */
-export type LeadUpdateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to update Leads.
    */
@@ -1245,9 +1107,7 @@ export type LeadUpdateManyArgs<
 /**
  * Lead upsert
  */
-export type LeadUpsertArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Lead
    */
@@ -1273,9 +1133,7 @@ export type LeadUpsertArgs<
 /**
  * Lead delete
  */
-export type LeadDeleteArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Lead
    */
@@ -1293,9 +1151,7 @@ export type LeadDeleteArgs<
 /**
  * Lead deleteMany
  */
-export type LeadDeleteManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which Leads to delete
    */
@@ -1309,9 +1165,7 @@ export type LeadDeleteManyArgs<
 /**
  * Lead without action
  */
-export type LeadDefaultArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type LeadDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Lead
    */

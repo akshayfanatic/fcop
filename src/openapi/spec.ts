@@ -1,9 +1,4 @@
-import {
-  LeadSource,
-  LeadStatus,
-  ServiceInterest,
-  ServiceRequestStatus
-} from '../generated/prisma/enums.js';
+import { LeadSource, LeadStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/enums.js';
 
 const enumValues = <T extends Record<string, string>>(values: T) => Object.values(values);
 
@@ -66,8 +61,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       post: {
         tags: ['Auth'],
         summary: 'Request a password reset email',
-        description:
-          'Triggers Better Auth password reset flow and sends the customer a reset email from the backend email service.',
+        description: 'Triggers Better Auth password reset flow and sends the customer a reset email from the backend email service.',
         operationId: 'requestPasswordReset',
         requestBody: {
           required: true,
@@ -107,8 +101,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       post: {
         tags: ['Invitations'],
         summary: 'Invite an organization member',
-        description:
-          'Creates a Better Auth organization invitation for the FCOP organization and sends an invitation email. Requires invitation:create permission in the active organization.',
+        description: 'Creates a Better Auth organization invitation for the FCOP organization and sends an invitation email. Requires invitation:create permission in the active organization.',
         operationId: 'inviteMember',
         security: [
           {
@@ -946,16 +939,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       },
       Lead: {
         type: 'object',
-        required: [
-          'id',
-          'name',
-          'email',
-          'serviceInterest',
-          'status',
-          'source',
-          'createdAt',
-          'updatedAt'
-        ],
+        required: ['id', 'name', 'email', 'serviceInterest', 'status', 'source', 'createdAt', 'updatedAt'],
         properties: {
           id: {
             type: 'string',
@@ -1157,8 +1141,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           redirectTo: {
             type: 'string',
             format: 'uri',
-            description:
-              'Optional frontend reset password page. Origin must be configured as a trusted frontend origin.',
+            description: 'Optional frontend reset password page. Origin must be configured as a trusted frontend origin.',
             example: 'http://localhost:3000/reset-password'
           }
         }

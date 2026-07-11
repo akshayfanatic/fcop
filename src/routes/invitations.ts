@@ -4,8 +4,4 @@ import { requireOrgPermission } from '../middleware/require-org-permission.js';
 
 export const invitationRouter = Router();
 
-invitationRouter.post(
-  '/',
-  requireOrgPermission({ invitation: ['create'] }),
-  invitationController.inviteMember
-);
+invitationRouter.post('/', requireOrgPermission({ invitation: ['create'] }), invitationController.inviteMember);

@@ -7,11 +7,7 @@ export type HttpError = Error & {
   code: string;
 };
 
-export const createHttpError = (
-  statusCode: number,
-  message: string,
-  code = 'REQUEST_ERROR'
-): HttpError =>
+export const createHttpError = (statusCode: number, message: string, code = 'REQUEST_ERROR'): HttpError =>
   Object.assign(new Error(message), {
     statusCode,
     code

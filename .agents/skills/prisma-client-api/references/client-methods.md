@@ -170,10 +170,7 @@ console.log(user.fullName); // Computed field
 ### Chain extensions
 
 ```typescript
-const prisma = new PrismaClient({ adapter })
-  .$extends(loggingExtension)
-  .$extends(softDeleteExtension)
-  .$extends(computedFieldsExtension);
+const prisma = new PrismaClient({ adapter }).$extends(loggingExtension).$extends(softDeleteExtension).$extends(computedFieldsExtension);
 ```
 
 ## $transaction()

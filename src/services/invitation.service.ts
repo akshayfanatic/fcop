@@ -20,11 +20,7 @@ export const invitationService = {
     });
 
     if (!organization) {
-      throw createHttpError(
-        HttpStatus.NOT_FOUND,
-        'FCOP organization has not been bootstrapped.',
-        'ORGANIZATION_NOT_FOUND'
-      );
+      throw createHttpError(HttpStatus.NOT_FOUND, 'FCOP organization has not been bootstrapped.', 'ORGANIZATION_NOT_FOUND');
     }
 
     return auth.api.createInvitation({

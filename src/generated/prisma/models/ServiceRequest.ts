@@ -15,8 +15,7 @@ import type * as Prisma from '../internal/prismaNamespace.js';
  * Model ServiceRequest
  *
  */
-export type ServiceRequestModel =
-  runtime.Types.Result.DefaultSelection<Prisma.$ServiceRequestPayload>;
+export type ServiceRequestModel = runtime.Types.Result.DefaultSelection<Prisma.$ServiceRequestPayload>;
 
 export type AggregateServiceRequest = {
   _count: ServiceRequestCountAggregateOutputType | null;
@@ -82,9 +81,7 @@ export type ServiceRequestCountAggregateInputType = {
   _all?: true;
 };
 
-export type ServiceRequestAggregateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which ServiceRequest to aggregate.
    */
@@ -94,9 +91,7 @@ export type ServiceRequestAggregateArgs<
    *
    * Determine the order of ServiceRequests to fetch.
    */
-  orderBy?:
-    | Prisma.ServiceRequestOrderByWithRelationInput
-    | Prisma.ServiceRequestOrderByWithRelationInput[];
+  orderBy?: Prisma.ServiceRequestOrderByWithRelationInput | Prisma.ServiceRequestOrderByWithRelationInput[];
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    *
@@ -143,13 +138,9 @@ export type GetServiceRequestAggregateType<T extends ServiceRequestAggregateArgs
     : Prisma.GetScalarType<T[P], AggregateServiceRequest[P]>;
 };
 
-export type ServiceRequestGroupByArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ServiceRequestWhereInput;
-  orderBy?:
-    | Prisma.ServiceRequestOrderByWithAggregationInput
-    | Prisma.ServiceRequestOrderByWithAggregationInput[];
+  orderBy?: Prisma.ServiceRequestOrderByWithAggregationInput | Prisma.ServiceRequestOrderByWithAggregationInput[];
   by: Prisma.ServiceRequestScalarFieldEnum[] | Prisma.ServiceRequestScalarFieldEnum;
   having?: Prisma.ServiceRequestScalarWhereWithAggregatesInput;
   take?: number;
@@ -172,18 +163,17 @@ export type ServiceRequestGroupByOutputType = {
   _max: ServiceRequestMaxAggregateOutputType | null;
 };
 
-export type GetServiceRequestGroupByPayload<T extends ServiceRequestGroupByArgs> =
-  Prisma.PrismaPromise<
-    Array<
-      Prisma.PickEnumerable<ServiceRequestGroupByOutputType, T['by']> & {
-        [P in keyof T & keyof ServiceRequestGroupByOutputType]: P extends '_count'
-          ? T[P] extends boolean
-            ? number
-            : Prisma.GetScalarType<T[P], ServiceRequestGroupByOutputType[P]>
-          : Prisma.GetScalarType<T[P], ServiceRequestGroupByOutputType[P]>;
-      }
-    >
-  >;
+export type GetServiceRequestGroupByPayload<T extends ServiceRequestGroupByArgs> = Prisma.PrismaPromise<
+  Array<
+    Prisma.PickEnumerable<ServiceRequestGroupByOutputType, T['by']> & {
+      [P in keyof T & keyof ServiceRequestGroupByOutputType]: P extends '_count'
+        ? T[P] extends boolean
+          ? number
+          : Prisma.GetScalarType<T[P], ServiceRequestGroupByOutputType[P]>
+        : Prisma.GetScalarType<T[P], ServiceRequestGroupByOutputType[P]>;
+    }
+  >
+>;
 
 export type ServiceRequestWhereInput = {
   AND?: Prisma.ServiceRequestWhereInput | Prisma.ServiceRequestWhereInput[];
@@ -242,21 +232,13 @@ export type ServiceRequestOrderByWithAggregationInput = {
 };
 
 export type ServiceRequestScalarWhereWithAggregatesInput = {
-  AND?:
-    | Prisma.ServiceRequestScalarWhereWithAggregatesInput
-    | Prisma.ServiceRequestScalarWhereWithAggregatesInput[];
+  AND?: Prisma.ServiceRequestScalarWhereWithAggregatesInput | Prisma.ServiceRequestScalarWhereWithAggregatesInput[];
   OR?: Prisma.ServiceRequestScalarWhereWithAggregatesInput[];
-  NOT?:
-    | Prisma.ServiceRequestScalarWhereWithAggregatesInput
-    | Prisma.ServiceRequestScalarWhereWithAggregatesInput[];
+  NOT?: Prisma.ServiceRequestScalarWhereWithAggregatesInput | Prisma.ServiceRequestScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'ServiceRequest'> | string;
   clientId?: Prisma.StringWithAggregatesFilter<'ServiceRequest'> | string;
-  service?:
-    | Prisma.EnumServiceInterestWithAggregatesFilter<'ServiceRequest'>
-    | $Enums.ServiceInterest;
-  status?:
-    | Prisma.EnumServiceRequestStatusWithAggregatesFilter<'ServiceRequest'>
-    | $Enums.ServiceRequestStatus;
+  service?: Prisma.EnumServiceInterestWithAggregatesFilter<'ServiceRequest'> | $Enums.ServiceInterest;
+  status?: Prisma.EnumServiceRequestStatusWithAggregatesFilter<'ServiceRequest'> | $Enums.ServiceRequestStatus;
   data?: Prisma.JsonNullableWithAggregatesFilter<'ServiceRequest'>;
   createdAt?: Prisma.DateTimeWithAggregatesFilter<'ServiceRequest'> | Date | string;
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<'ServiceRequest'> | Date | string;
@@ -342,9 +324,7 @@ export type ServiceRequestOrderByRelationAggregateInput = {
 };
 
 export type ServiceRequestOrderByRelevanceInput = {
-  fields:
-    | Prisma.ServiceRequestOrderByRelevanceFieldEnum
-    | Prisma.ServiceRequestOrderByRelevanceFieldEnum[];
+  fields: Prisma.ServiceRequestOrderByRelevanceFieldEnum | Prisma.ServiceRequestOrderByRelevanceFieldEnum[];
   sort: Prisma.SortOrder;
   search: string;
 };
@@ -379,87 +359,55 @@ export type ServiceRequestMinOrderByAggregateInput = {
 
 export type ServiceRequestCreateNestedManyWithoutClientInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.ServiceRequestCreateWithoutClientInput,
-        Prisma.ServiceRequestUncheckedCreateWithoutClientInput
-      >
+    | Prisma.XOR<Prisma.ServiceRequestCreateWithoutClientInput, Prisma.ServiceRequestUncheckedCreateWithoutClientInput>
     | Prisma.ServiceRequestCreateWithoutClientInput[]
     | Prisma.ServiceRequestUncheckedCreateWithoutClientInput[];
-  connectOrCreate?:
-    | Prisma.ServiceRequestCreateOrConnectWithoutClientInput
-    | Prisma.ServiceRequestCreateOrConnectWithoutClientInput[];
+  connectOrCreate?: Prisma.ServiceRequestCreateOrConnectWithoutClientInput | Prisma.ServiceRequestCreateOrConnectWithoutClientInput[];
   createMany?: Prisma.ServiceRequestCreateManyClientInputEnvelope;
   connect?: Prisma.ServiceRequestWhereUniqueInput | Prisma.ServiceRequestWhereUniqueInput[];
 };
 
 export type ServiceRequestUncheckedCreateNestedManyWithoutClientInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.ServiceRequestCreateWithoutClientInput,
-        Prisma.ServiceRequestUncheckedCreateWithoutClientInput
-      >
+    | Prisma.XOR<Prisma.ServiceRequestCreateWithoutClientInput, Prisma.ServiceRequestUncheckedCreateWithoutClientInput>
     | Prisma.ServiceRequestCreateWithoutClientInput[]
     | Prisma.ServiceRequestUncheckedCreateWithoutClientInput[];
-  connectOrCreate?:
-    | Prisma.ServiceRequestCreateOrConnectWithoutClientInput
-    | Prisma.ServiceRequestCreateOrConnectWithoutClientInput[];
+  connectOrCreate?: Prisma.ServiceRequestCreateOrConnectWithoutClientInput | Prisma.ServiceRequestCreateOrConnectWithoutClientInput[];
   createMany?: Prisma.ServiceRequestCreateManyClientInputEnvelope;
   connect?: Prisma.ServiceRequestWhereUniqueInput | Prisma.ServiceRequestWhereUniqueInput[];
 };
 
 export type ServiceRequestUpdateManyWithoutClientNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.ServiceRequestCreateWithoutClientInput,
-        Prisma.ServiceRequestUncheckedCreateWithoutClientInput
-      >
+    | Prisma.XOR<Prisma.ServiceRequestCreateWithoutClientInput, Prisma.ServiceRequestUncheckedCreateWithoutClientInput>
     | Prisma.ServiceRequestCreateWithoutClientInput[]
     | Prisma.ServiceRequestUncheckedCreateWithoutClientInput[];
-  connectOrCreate?:
-    | Prisma.ServiceRequestCreateOrConnectWithoutClientInput
-    | Prisma.ServiceRequestCreateOrConnectWithoutClientInput[];
-  upsert?:
-    | Prisma.ServiceRequestUpsertWithWhereUniqueWithoutClientInput
-    | Prisma.ServiceRequestUpsertWithWhereUniqueWithoutClientInput[];
+  connectOrCreate?: Prisma.ServiceRequestCreateOrConnectWithoutClientInput | Prisma.ServiceRequestCreateOrConnectWithoutClientInput[];
+  upsert?: Prisma.ServiceRequestUpsertWithWhereUniqueWithoutClientInput | Prisma.ServiceRequestUpsertWithWhereUniqueWithoutClientInput[];
   createMany?: Prisma.ServiceRequestCreateManyClientInputEnvelope;
   set?: Prisma.ServiceRequestWhereUniqueInput | Prisma.ServiceRequestWhereUniqueInput[];
   disconnect?: Prisma.ServiceRequestWhereUniqueInput | Prisma.ServiceRequestWhereUniqueInput[];
   delete?: Prisma.ServiceRequestWhereUniqueInput | Prisma.ServiceRequestWhereUniqueInput[];
   connect?: Prisma.ServiceRequestWhereUniqueInput | Prisma.ServiceRequestWhereUniqueInput[];
-  update?:
-    | Prisma.ServiceRequestUpdateWithWhereUniqueWithoutClientInput
-    | Prisma.ServiceRequestUpdateWithWhereUniqueWithoutClientInput[];
-  updateMany?:
-    | Prisma.ServiceRequestUpdateManyWithWhereWithoutClientInput
-    | Prisma.ServiceRequestUpdateManyWithWhereWithoutClientInput[];
+  update?: Prisma.ServiceRequestUpdateWithWhereUniqueWithoutClientInput | Prisma.ServiceRequestUpdateWithWhereUniqueWithoutClientInput[];
+  updateMany?: Prisma.ServiceRequestUpdateManyWithWhereWithoutClientInput | Prisma.ServiceRequestUpdateManyWithWhereWithoutClientInput[];
   deleteMany?: Prisma.ServiceRequestScalarWhereInput | Prisma.ServiceRequestScalarWhereInput[];
 };
 
 export type ServiceRequestUncheckedUpdateManyWithoutClientNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.ServiceRequestCreateWithoutClientInput,
-        Prisma.ServiceRequestUncheckedCreateWithoutClientInput
-      >
+    | Prisma.XOR<Prisma.ServiceRequestCreateWithoutClientInput, Prisma.ServiceRequestUncheckedCreateWithoutClientInput>
     | Prisma.ServiceRequestCreateWithoutClientInput[]
     | Prisma.ServiceRequestUncheckedCreateWithoutClientInput[];
-  connectOrCreate?:
-    | Prisma.ServiceRequestCreateOrConnectWithoutClientInput
-    | Prisma.ServiceRequestCreateOrConnectWithoutClientInput[];
-  upsert?:
-    | Prisma.ServiceRequestUpsertWithWhereUniqueWithoutClientInput
-    | Prisma.ServiceRequestUpsertWithWhereUniqueWithoutClientInput[];
+  connectOrCreate?: Prisma.ServiceRequestCreateOrConnectWithoutClientInput | Prisma.ServiceRequestCreateOrConnectWithoutClientInput[];
+  upsert?: Prisma.ServiceRequestUpsertWithWhereUniqueWithoutClientInput | Prisma.ServiceRequestUpsertWithWhereUniqueWithoutClientInput[];
   createMany?: Prisma.ServiceRequestCreateManyClientInputEnvelope;
   set?: Prisma.ServiceRequestWhereUniqueInput | Prisma.ServiceRequestWhereUniqueInput[];
   disconnect?: Prisma.ServiceRequestWhereUniqueInput | Prisma.ServiceRequestWhereUniqueInput[];
   delete?: Prisma.ServiceRequestWhereUniqueInput | Prisma.ServiceRequestWhereUniqueInput[];
   connect?: Prisma.ServiceRequestWhereUniqueInput | Prisma.ServiceRequestWhereUniqueInput[];
-  update?:
-    | Prisma.ServiceRequestUpdateWithWhereUniqueWithoutClientInput
-    | Prisma.ServiceRequestUpdateWithWhereUniqueWithoutClientInput[];
-  updateMany?:
-    | Prisma.ServiceRequestUpdateManyWithWhereWithoutClientInput
-    | Prisma.ServiceRequestUpdateManyWithWhereWithoutClientInput[];
+  update?: Prisma.ServiceRequestUpdateWithWhereUniqueWithoutClientInput | Prisma.ServiceRequestUpdateWithWhereUniqueWithoutClientInput[];
+  updateMany?: Prisma.ServiceRequestUpdateManyWithWhereWithoutClientInput | Prisma.ServiceRequestUpdateManyWithWhereWithoutClientInput[];
   deleteMany?: Prisma.ServiceRequestScalarWhereInput | Prisma.ServiceRequestScalarWhereInput[];
 };
 
@@ -491,10 +439,7 @@ export type ServiceRequestUncheckedCreateWithoutClientInput = {
 
 export type ServiceRequestCreateOrConnectWithoutClientInput = {
   where: Prisma.ServiceRequestWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.ServiceRequestCreateWithoutClientInput,
-    Prisma.ServiceRequestUncheckedCreateWithoutClientInput
-  >;
+  create: Prisma.XOR<Prisma.ServiceRequestCreateWithoutClientInput, Prisma.ServiceRequestUncheckedCreateWithoutClientInput>;
 };
 
 export type ServiceRequestCreateManyClientInputEnvelope = {
@@ -504,30 +449,18 @@ export type ServiceRequestCreateManyClientInputEnvelope = {
 
 export type ServiceRequestUpsertWithWhereUniqueWithoutClientInput = {
   where: Prisma.ServiceRequestWhereUniqueInput;
-  update: Prisma.XOR<
-    Prisma.ServiceRequestUpdateWithoutClientInput,
-    Prisma.ServiceRequestUncheckedUpdateWithoutClientInput
-  >;
-  create: Prisma.XOR<
-    Prisma.ServiceRequestCreateWithoutClientInput,
-    Prisma.ServiceRequestUncheckedCreateWithoutClientInput
-  >;
+  update: Prisma.XOR<Prisma.ServiceRequestUpdateWithoutClientInput, Prisma.ServiceRequestUncheckedUpdateWithoutClientInput>;
+  create: Prisma.XOR<Prisma.ServiceRequestCreateWithoutClientInput, Prisma.ServiceRequestUncheckedCreateWithoutClientInput>;
 };
 
 export type ServiceRequestUpdateWithWhereUniqueWithoutClientInput = {
   where: Prisma.ServiceRequestWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.ServiceRequestUpdateWithoutClientInput,
-    Prisma.ServiceRequestUncheckedUpdateWithoutClientInput
-  >;
+  data: Prisma.XOR<Prisma.ServiceRequestUpdateWithoutClientInput, Prisma.ServiceRequestUncheckedUpdateWithoutClientInput>;
 };
 
 export type ServiceRequestUpdateManyWithWhereWithoutClientInput = {
   where: Prisma.ServiceRequestScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.ServiceRequestUpdateManyMutationInput,
-    Prisma.ServiceRequestUncheckedUpdateManyWithoutClientInput
-  >;
+  data: Prisma.XOR<Prisma.ServiceRequestUpdateManyMutationInput, Prisma.ServiceRequestUncheckedUpdateManyWithoutClientInput>;
 };
 
 export type ServiceRequestScalarWhereInput = {
@@ -579,9 +512,7 @@ export type ServiceRequestUncheckedUpdateManyWithoutClientInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type ServiceRequestSelect<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetSelect<
+export type ServiceRequestSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
     clientId?: boolean;
@@ -605,21 +536,15 @@ export type ServiceRequestSelectScalar = {
   updatedAt?: boolean;
 };
 
-export type ServiceRequestOmit<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetOmit<
+export type ServiceRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<
   'id' | 'clientId' | 'service' | 'status' | 'data' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['serviceRequest']
 >;
-export type ServiceRequestInclude<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>;
 };
 
-export type $ServiceRequestPayload<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type $ServiceRequestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: 'ServiceRequest';
   objects: {
     client: Prisma.$ClientPayload<ExtArgs>;
@@ -639,20 +564,16 @@ export type $ServiceRequestPayload<
   composites: {};
 };
 
-export type ServiceRequestGetPayload<
-  S extends boolean | null | undefined | ServiceRequestDefaultArgs
-> = runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload, S>;
+export type ServiceRequestGetPayload<S extends boolean | null | undefined | ServiceRequestDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload, S>;
 
-export type ServiceRequestCountArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = Omit<ServiceRequestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+export type ServiceRequestCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<
+  ServiceRequestFindManyArgs,
+  'select' | 'include' | 'distinct' | 'omit'
+> & {
   select?: ServiceRequestCountAggregateInputType | true;
 };
 
-export interface ServiceRequestDelegate<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-  GlobalOmitOptions = {}
-> {
+export interface ServiceRequestDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
   [K: symbol]: {
     types: Prisma.TypeMap<ExtArgs>['model']['ServiceRequest'];
     meta: { name: 'ServiceRequest' };
@@ -670,17 +591,7 @@ export interface ServiceRequestDelegate<
    */
   findUnique<T extends ServiceRequestFindUniqueArgs>(
     args: Prisma.SelectSubset<T, ServiceRequestFindUniqueArgs<ExtArgs>>
-  ): Prisma.Prisma__ServiceRequestClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ServiceRequestPayload<ExtArgs>,
-      T,
-      'findUnique',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ServiceRequestClient<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find one ServiceRequest that matches the filter or throw an error with `error.code='P2025'`
@@ -696,17 +607,7 @@ export interface ServiceRequestDelegate<
    */
   findUniqueOrThrow<T extends ServiceRequestFindUniqueOrThrowArgs>(
     args: Prisma.SelectSubset<T, ServiceRequestFindUniqueOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__ServiceRequestClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ServiceRequestPayload<ExtArgs>,
-      T,
-      'findUniqueOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ServiceRequestClient<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first ServiceRequest that matches the filter.
@@ -723,17 +624,7 @@ export interface ServiceRequestDelegate<
    */
   findFirst<T extends ServiceRequestFindFirstArgs>(
     args?: Prisma.SelectSubset<T, ServiceRequestFindFirstArgs<ExtArgs>>
-  ): Prisma.Prisma__ServiceRequestClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ServiceRequestPayload<ExtArgs>,
-      T,
-      'findFirst',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ServiceRequestClient<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first ServiceRequest that matches the filter or
@@ -751,17 +642,7 @@ export interface ServiceRequestDelegate<
    */
   findFirstOrThrow<T extends ServiceRequestFindFirstOrThrowArgs>(
     args?: Prisma.SelectSubset<T, ServiceRequestFindFirstOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__ServiceRequestClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ServiceRequestPayload<ExtArgs>,
-      T,
-      'findFirstOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ServiceRequestClient<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find zero or more ServiceRequests that matches the filter.
@@ -781,14 +662,7 @@ export interface ServiceRequestDelegate<
    */
   findMany<T extends ServiceRequestFindManyArgs>(
     args?: Prisma.SelectSubset<T, ServiceRequestFindManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<
-    runtime.Types.Result.GetResult<
-      Prisma.$ServiceRequestPayload<ExtArgs>,
-      T,
-      'findMany',
-      GlobalOmitOptions
-    >
-  >;
+  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>;
 
   /**
    * Create a ServiceRequest.
@@ -804,17 +678,7 @@ export interface ServiceRequestDelegate<
    */
   create<T extends ServiceRequestCreateArgs>(
     args: Prisma.SelectSubset<T, ServiceRequestCreateArgs<ExtArgs>>
-  ): Prisma.Prisma__ServiceRequestClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ServiceRequestPayload<ExtArgs>,
-      T,
-      'create',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ServiceRequestClient<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Create many ServiceRequests.
@@ -828,9 +692,7 @@ export interface ServiceRequestDelegate<
    * })
    *
    */
-  createMany<T extends ServiceRequestCreateManyArgs>(
-    args?: Prisma.SelectSubset<T, ServiceRequestCreateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  createMany<T extends ServiceRequestCreateManyArgs>(args?: Prisma.SelectSubset<T, ServiceRequestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Delete a ServiceRequest.
@@ -846,17 +708,7 @@ export interface ServiceRequestDelegate<
    */
   delete<T extends ServiceRequestDeleteArgs>(
     args: Prisma.SelectSubset<T, ServiceRequestDeleteArgs<ExtArgs>>
-  ): Prisma.Prisma__ServiceRequestClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ServiceRequestPayload<ExtArgs>,
-      T,
-      'delete',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ServiceRequestClient<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Update one ServiceRequest.
@@ -875,17 +727,7 @@ export interface ServiceRequestDelegate<
    */
   update<T extends ServiceRequestUpdateArgs>(
     args: Prisma.SelectSubset<T, ServiceRequestUpdateArgs<ExtArgs>>
-  ): Prisma.Prisma__ServiceRequestClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ServiceRequestPayload<ExtArgs>,
-      T,
-      'update',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ServiceRequestClient<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Delete zero or more ServiceRequests.
@@ -899,9 +741,7 @@ export interface ServiceRequestDelegate<
    * })
    *
    */
-  deleteMany<T extends ServiceRequestDeleteManyArgs>(
-    args?: Prisma.SelectSubset<T, ServiceRequestDeleteManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  deleteMany<T extends ServiceRequestDeleteManyArgs>(args?: Prisma.SelectSubset<T, ServiceRequestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Update zero or more ServiceRequests.
@@ -920,9 +760,7 @@ export interface ServiceRequestDelegate<
    * })
    *
    */
-  updateMany<T extends ServiceRequestUpdateManyArgs>(
-    args: Prisma.SelectSubset<T, ServiceRequestUpdateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  updateMany<T extends ServiceRequestUpdateManyArgs>(args: Prisma.SelectSubset<T, ServiceRequestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Create or update one ServiceRequest.
@@ -943,17 +781,7 @@ export interface ServiceRequestDelegate<
    */
   upsert<T extends ServiceRequestUpsertArgs>(
     args: Prisma.SelectSubset<T, ServiceRequestUpsertArgs<ExtArgs>>
-  ): Prisma.Prisma__ServiceRequestClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ServiceRequestPayload<ExtArgs>,
-      T,
-      'upsert',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ServiceRequestClient<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Count the number of ServiceRequests.
@@ -971,11 +799,7 @@ export interface ServiceRequestDelegate<
   count<T extends ServiceRequestCountArgs>(
     args?: Prisma.Subset<T, ServiceRequestCountArgs>
   ): Prisma.PrismaPromise<
-    T extends runtime.Types.Utils.Record<'select', any>
-      ? T['select'] extends true
-        ? number
-        : Prisma.GetScalarType<T['select'], ServiceRequestCountAggregateOutputType>
-      : number
+    T extends runtime.Types.Utils.Record<'select', any> ? (T['select'] extends true ? number : Prisma.GetScalarType<T['select'], ServiceRequestCountAggregateOutputType>) : number
   >;
 
   /**
@@ -1002,9 +826,7 @@ export interface ServiceRequestDelegate<
    *   take: 10,
    * })
    **/
-  aggregate<T extends ServiceRequestAggregateArgs>(
-    args: Prisma.Subset<T, ServiceRequestAggregateArgs>
-  ): Prisma.PrismaPromise<GetServiceRequestAggregateType<T>>;
+  aggregate<T extends ServiceRequestAggregateArgs>(args: Prisma.Subset<T, ServiceRequestAggregateArgs>): Prisma.PrismaPromise<GetServiceRequestAggregateType<T>>;
 
   /**
    * Group by ServiceRequest.
@@ -1026,16 +848,9 @@ export interface ServiceRequestDelegate<
    **/
   groupBy<
     T extends ServiceRequestGroupByArgs,
-    HasSelectOrTake extends Prisma.Or<
-      Prisma.Extends<'skip', Prisma.Keys<T>>,
-      Prisma.Extends<'take', Prisma.Keys<T>>
-    >,
-    OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? { orderBy: ServiceRequestGroupByArgs['orderBy'] }
-      : { orderBy?: ServiceRequestGroupByArgs['orderBy'] },
-    OrderFields extends Prisma.ExcludeUnderscoreKeys<
-      Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>
-    >,
+    HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>,
+    OrderByArg extends Prisma.True extends HasSelectOrTake ? { orderBy: ServiceRequestGroupByArgs['orderBy'] } : { orderBy?: ServiceRequestGroupByArgs['orderBy'] },
+    OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>,
     ByFields extends Prisma.MaybeTupleToUnion<T['by']>,
     ByValid extends Prisma.Has<ByFields, OrderFields>,
     HavingFields extends Prisma.GetHavingFields<T['having']>,
@@ -1056,9 +871,7 @@ export interface ServiceRequestDelegate<
             ? ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
             : 'Error: If you provide "take", you also need to provide "orderBy"'
           : 'skip' extends Prisma.Keys<T>
@@ -1066,23 +879,17 @@ export interface ServiceRequestDelegate<
               ? ByValid extends Prisma.True
                 ? {}
                 : {
-                    [P in OrderFields]: P extends ByFields
-                      ? never
-                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                   }[OrderFields]
               : 'Error: If you provide "skip", you also need to provide "orderBy"'
             : ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
   >(
     args: Prisma.SubsetIntersection<T, ServiceRequestGroupByArgs, OrderByArg> & InputErrors
-  ): {} extends InputErrors
-    ? GetServiceRequestGroupByPayload<T>
-    : Prisma.PrismaPromise<InputErrors>;
+  ): {} extends InputErrors ? GetServiceRequestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
   /**
    * Fields of the ServiceRequest model
    */
@@ -1104,18 +911,7 @@ export interface Prisma__ServiceRequestClient<
   readonly [Symbol.toStringTag]: 'PrismaPromise';
   client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>
-  ): Prisma.Prisma__ClientClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$ClientPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1131,9 +927,7 @@ export interface Prisma__ServiceRequestClient<
    * @param onrejected The callback to execute when the Promise is rejected.
    * @returns A Promise for the completion of the callback.
    */
-  catch<TResult = never>(
-    onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
-  ): runtime.Types.Utils.JsPromise<T | TResult>;
+  catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
   /**
    * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
    * resolved value cannot be modified from the callback.
@@ -1160,9 +954,7 @@ export interface ServiceRequestFieldRefs {
 /**
  * ServiceRequest findUnique
  */
-export type ServiceRequestFindUniqueArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ServiceRequest
    */
@@ -1184,9 +976,7 @@ export type ServiceRequestFindUniqueArgs<
 /**
  * ServiceRequest findUniqueOrThrow
  */
-export type ServiceRequestFindUniqueOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ServiceRequest
    */
@@ -1208,9 +998,7 @@ export type ServiceRequestFindUniqueOrThrowArgs<
 /**
  * ServiceRequest findFirst
  */
-export type ServiceRequestFindFirstArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ServiceRequest
    */
@@ -1232,9 +1020,7 @@ export type ServiceRequestFindFirstArgs<
    *
    * Determine the order of ServiceRequests to fetch.
    */
-  orderBy?:
-    | Prisma.ServiceRequestOrderByWithRelationInput
-    | Prisma.ServiceRequestOrderByWithRelationInput[];
+  orderBy?: Prisma.ServiceRequestOrderByWithRelationInput | Prisma.ServiceRequestOrderByWithRelationInput[];
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    *
@@ -1264,9 +1050,7 @@ export type ServiceRequestFindFirstArgs<
 /**
  * ServiceRequest findFirstOrThrow
  */
-export type ServiceRequestFindFirstOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ServiceRequest
    */
@@ -1288,9 +1072,7 @@ export type ServiceRequestFindFirstOrThrowArgs<
    *
    * Determine the order of ServiceRequests to fetch.
    */
-  orderBy?:
-    | Prisma.ServiceRequestOrderByWithRelationInput
-    | Prisma.ServiceRequestOrderByWithRelationInput[];
+  orderBy?: Prisma.ServiceRequestOrderByWithRelationInput | Prisma.ServiceRequestOrderByWithRelationInput[];
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    *
@@ -1320,9 +1102,7 @@ export type ServiceRequestFindFirstOrThrowArgs<
 /**
  * ServiceRequest findMany
  */
-export type ServiceRequestFindManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ServiceRequest
    */
@@ -1344,9 +1124,7 @@ export type ServiceRequestFindManyArgs<
    *
    * Determine the order of ServiceRequests to fetch.
    */
-  orderBy?:
-    | Prisma.ServiceRequestOrderByWithRelationInput
-    | Prisma.ServiceRequestOrderByWithRelationInput[];
+  orderBy?: Prisma.ServiceRequestOrderByWithRelationInput | Prisma.ServiceRequestOrderByWithRelationInput[];
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    *
@@ -1376,9 +1154,7 @@ export type ServiceRequestFindManyArgs<
 /**
  * ServiceRequest create
  */
-export type ServiceRequestCreateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ServiceRequest
    */
@@ -1400,9 +1176,7 @@ export type ServiceRequestCreateArgs<
 /**
  * ServiceRequest createMany
  */
-export type ServiceRequestCreateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to create many ServiceRequests.
    */
@@ -1413,9 +1187,7 @@ export type ServiceRequestCreateManyArgs<
 /**
  * ServiceRequest update
  */
-export type ServiceRequestUpdateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ServiceRequest
    */
@@ -1441,16 +1213,11 @@ export type ServiceRequestUpdateArgs<
 /**
  * ServiceRequest updateMany
  */
-export type ServiceRequestUpdateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to update ServiceRequests.
    */
-  data: Prisma.XOR<
-    Prisma.ServiceRequestUpdateManyMutationInput,
-    Prisma.ServiceRequestUncheckedUpdateManyInput
-  >;
+  data: Prisma.XOR<Prisma.ServiceRequestUpdateManyMutationInput, Prisma.ServiceRequestUncheckedUpdateManyInput>;
   /**
    * Filter which ServiceRequests to update
    */
@@ -1464,9 +1231,7 @@ export type ServiceRequestUpdateManyArgs<
 /**
  * ServiceRequest upsert
  */
-export type ServiceRequestUpsertArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ServiceRequest
    */
@@ -1496,9 +1261,7 @@ export type ServiceRequestUpsertArgs<
 /**
  * ServiceRequest delete
  */
-export type ServiceRequestDeleteArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ServiceRequest
    */
@@ -1520,9 +1283,7 @@ export type ServiceRequestDeleteArgs<
 /**
  * ServiceRequest deleteMany
  */
-export type ServiceRequestDeleteManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which ServiceRequests to delete
    */
@@ -1536,9 +1297,7 @@ export type ServiceRequestDeleteManyArgs<
 /**
  * ServiceRequest without action
  */
-export type ServiceRequestDefaultArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ServiceRequestDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ServiceRequest
    */

@@ -21,10 +21,7 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     return;
   }
 
-  const statusCode =
-    typeof err.statusCode === 'number' && err.statusCode >= 400
-      ? err.statusCode
-      : HttpStatus.INTERNAL_ERROR;
+  const statusCode = typeof err.statusCode === 'number' && err.statusCode >= 400 ? err.statusCode : HttpStatus.INTERNAL_ERROR;
 
   res.status(statusCode).json(
     ApiResponse({
@@ -32,12 +29,7 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
       status: statusCode,
       message: err.message ?? 'Internal server error',
       error: {
-        code:
-          typeof err.code === 'string'
-            ? err.code
-            : statusCode === HttpStatus.INTERNAL_ERROR
-              ? 'INTERNAL_ERROR'
-              : 'REQUEST_ERROR',
+        code: typeof err.code === 'string' ? err.code : statusCode === HttpStatus.INTERNAL_ERROR ? 'INTERNAL_ERROR' : 'REQUEST_ERROR',
         ...(env.nodeEnv === 'development' && { details: err.stack })
       }
     })

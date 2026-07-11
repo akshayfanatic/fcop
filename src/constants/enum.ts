@@ -1,9 +1,4 @@
-import type {
-  LeadSource,
-  LeadStatus,
-  ServiceInterest,
-  ServiceRequestStatus
-} from '../generated/prisma/client.js';
+import type { LeadSource, LeadStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/client.js';
 import type { Option } from '../utils/options.js';
 
 export const LEAD_STATUS_OPTIONS = [
@@ -13,9 +8,7 @@ export const LEAD_STATUS_OPTIONS = [
   { value: 'DEAD', label: 'Closed' }
 ] as const satisfies readonly Option<LeadStatus>[];
 
-export const LEAD_SOURCE_OPTIONS = [
-  { value: 'CONTACT_FORM', label: 'Contact form' }
-] as const satisfies readonly Option<LeadSource>[];
+export const LEAD_SOURCE_OPTIONS = [{ value: 'CONTACT_FORM', label: 'Contact form' }] as const satisfies readonly Option<LeadSource>[];
 
 export const SERVICE_INTEREST_OPTIONS = [
   { value: 'WEB_DEVELOPMENT', label: 'Web development' },

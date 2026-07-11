@@ -52,20 +52,18 @@ config.compilerWasm = {
   getRuntime: async () => await import('@prisma/client/runtime/query_compiler_fast_bg.mysql.mjs'),
 
   getQueryCompilerWasmModule: async () => {
-    const { wasm } =
-      await import('@prisma/client/runtime/query_compiler_fast_bg.mysql.wasm-base64.mjs');
+    const { wasm } = await import('@prisma/client/runtime/query_compiler_fast_bg.mysql.wasm-base64.mjs');
     return await decodeBase64AsWasm(wasm);
   },
 
   importName: './query_compiler_fast_bg.js'
 };
 
-export type LogOptions<ClientOptions extends Prisma.PrismaClientOptions> =
-  'log' extends keyof ClientOptions
-    ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition>
-      ? Prisma.GetEvents<ClientOptions['log']>
-      : never
-    : never;
+export type LogOptions<ClientOptions extends Prisma.PrismaClientOptions> = 'log' extends keyof ClientOptions
+  ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition>
+    ? Prisma.GetEvents<ClientOptions['log']>
+    : never
+  : never;
 
 export interface PrismaClientConstructor {
   /**
@@ -87,9 +85,7 @@ export interface PrismaClientConstructor {
   new <
     Options extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
     LogOpts extends LogOptions<Options> = LogOptions<Options>,
-    OmitOpts extends Prisma.PrismaClientOptions['omit'] = Options extends { omit: infer U }
-      ? U
-      : Prisma.PrismaClientOptions['omit'],
+    OmitOpts extends Prisma.PrismaClientOptions['omit'] = Options extends { omit: infer U } ? U : Prisma.PrismaClientOptions['omit'],
     ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
   >(
     options: Prisma.Subset<Options, Prisma.PrismaClientOptions>
@@ -115,15 +111,11 @@ export interface PrismaClientConstructor {
 export interface PrismaClient<
   in LogOpts extends Prisma.LogLevel = never,
   in out OmitOpts extends Prisma.PrismaClientOptions['omit'] = undefined,
-  in out ExtArgs extends runtime.Types.Extensions.InternalArgs =
-    runtime.Types.Extensions.DefaultArgs
+  in out ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] };
 
-  $on<V extends LogOpts>(
-    eventType: V,
-    callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void
-  ): PrismaClient;
+  $on<V extends LogOpts>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
 
   /**
    * Connect with the database
@@ -144,10 +136,7 @@ export interface PrismaClient<
    *
    * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
-  $executeRaw<T = unknown>(
-    query: TemplateStringsArray | Prisma.Sql,
-    ...values: any[]
-  ): Prisma.PrismaPromise<number>;
+  $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
   /**
    * Executes a raw query and returns the number of affected rows.
@@ -170,10 +159,7 @@ export interface PrismaClient<
    *
    * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
-  $queryRaw<T = unknown>(
-    query: TemplateStringsArray | Prisma.Sql,
-    ...values: any[]
-  ): Prisma.PrismaPromise<T>;
+  $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
   /**
    * Performs a raw query and returns the `SELECT` data.

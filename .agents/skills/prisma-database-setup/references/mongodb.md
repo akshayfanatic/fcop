@@ -37,8 +37,8 @@ MongoDB models **must** have a mapped `_id` field using `@id` and `@map("_id")`,
 
 ```prisma
 model User {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  email String @unique
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  email String  @unique
   name  String?
 }
 ```
@@ -84,7 +84,9 @@ DATABASE_URL="mongodb+srv://user:password@cluster.mongodb.net/mydb?retryWrites=t
 ## Common Issues
 
 ### "Transactions not supported"
+
 Ensure your MongoDB instance is a **Replica Set**. Standalone instances do not support transactions. Atlas clusters are replica sets by default.
 
 ### "Invalid ObjectID"
+
 Ensure fields referencing IDs are decorated with `@db.ObjectId` if the target is an ObjectID.

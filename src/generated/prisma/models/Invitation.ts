@@ -97,9 +97,7 @@ export type InvitationCountAggregateInputType = {
   _all?: true;
 };
 
-export type InvitationAggregateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which Invitation to aggregate.
    */
@@ -156,13 +154,9 @@ export type GetInvitationAggregateType<T extends InvitationAggregateArgs> = {
     : Prisma.GetScalarType<T[P], AggregateInvitation[P]>;
 };
 
-export type InvitationGroupByArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.InvitationWhereInput;
-  orderBy?:
-    | Prisma.InvitationOrderByWithAggregationInput
-    | Prisma.InvitationOrderByWithAggregationInput[];
+  orderBy?: Prisma.InvitationOrderByWithAggregationInput | Prisma.InvitationOrderByWithAggregationInput[];
   by: Prisma.InvitationScalarFieldEnum[] | Prisma.InvitationScalarFieldEnum;
   having?: Prisma.InvitationScalarWhereWithAggregatesInput;
   take?: number;
@@ -246,10 +240,7 @@ export type InvitationWhereUniqueInput = Prisma.AtLeast<
     createdAt?: Prisma.DateTimeFilter<'Invitation'> | Date | string;
     expiresAt?: Prisma.DateTimeFilter<'Invitation'> | Date | string;
     inviter?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
-    organization?: Prisma.XOR<
-      Prisma.OrganizationScalarRelationFilter,
-      Prisma.OrganizationWhereInput
-    >;
+    organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>;
   },
   'id'
 >;
@@ -270,13 +261,9 @@ export type InvitationOrderByWithAggregationInput = {
 };
 
 export type InvitationScalarWhereWithAggregatesInput = {
-  AND?:
-    | Prisma.InvitationScalarWhereWithAggregatesInput
-    | Prisma.InvitationScalarWhereWithAggregatesInput[];
+  AND?: Prisma.InvitationScalarWhereWithAggregatesInput | Prisma.InvitationScalarWhereWithAggregatesInput[];
   OR?: Prisma.InvitationScalarWhereWithAggregatesInput[];
-  NOT?:
-    | Prisma.InvitationScalarWhereWithAggregatesInput
-    | Prisma.InvitationScalarWhereWithAggregatesInput[];
+  NOT?: Prisma.InvitationScalarWhereWithAggregatesInput | Prisma.InvitationScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'Invitation'> | string;
   email?: Prisma.StringWithAggregatesFilter<'Invitation'> | string;
   inviterId?: Prisma.StringWithAggregatesFilter<'Invitation'> | string;
@@ -424,173 +411,109 @@ export type InvitationMinOrderByAggregateInput = {
 
 export type InvitationCreateNestedManyWithoutInviterInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.InvitationCreateWithoutInviterInput,
-        Prisma.InvitationUncheckedCreateWithoutInviterInput
-      >
+    | Prisma.XOR<Prisma.InvitationCreateWithoutInviterInput, Prisma.InvitationUncheckedCreateWithoutInviterInput>
     | Prisma.InvitationCreateWithoutInviterInput[]
     | Prisma.InvitationUncheckedCreateWithoutInviterInput[];
-  connectOrCreate?:
-    | Prisma.InvitationCreateOrConnectWithoutInviterInput
-    | Prisma.InvitationCreateOrConnectWithoutInviterInput[];
+  connectOrCreate?: Prisma.InvitationCreateOrConnectWithoutInviterInput | Prisma.InvitationCreateOrConnectWithoutInviterInput[];
   createMany?: Prisma.InvitationCreateManyInviterInputEnvelope;
   connect?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
 };
 
 export type InvitationUncheckedCreateNestedManyWithoutInviterInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.InvitationCreateWithoutInviterInput,
-        Prisma.InvitationUncheckedCreateWithoutInviterInput
-      >
+    | Prisma.XOR<Prisma.InvitationCreateWithoutInviterInput, Prisma.InvitationUncheckedCreateWithoutInviterInput>
     | Prisma.InvitationCreateWithoutInviterInput[]
     | Prisma.InvitationUncheckedCreateWithoutInviterInput[];
-  connectOrCreate?:
-    | Prisma.InvitationCreateOrConnectWithoutInviterInput
-    | Prisma.InvitationCreateOrConnectWithoutInviterInput[];
+  connectOrCreate?: Prisma.InvitationCreateOrConnectWithoutInviterInput | Prisma.InvitationCreateOrConnectWithoutInviterInput[];
   createMany?: Prisma.InvitationCreateManyInviterInputEnvelope;
   connect?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
 };
 
 export type InvitationUpdateManyWithoutInviterNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.InvitationCreateWithoutInviterInput,
-        Prisma.InvitationUncheckedCreateWithoutInviterInput
-      >
+    | Prisma.XOR<Prisma.InvitationCreateWithoutInviterInput, Prisma.InvitationUncheckedCreateWithoutInviterInput>
     | Prisma.InvitationCreateWithoutInviterInput[]
     | Prisma.InvitationUncheckedCreateWithoutInviterInput[];
-  connectOrCreate?:
-    | Prisma.InvitationCreateOrConnectWithoutInviterInput
-    | Prisma.InvitationCreateOrConnectWithoutInviterInput[];
-  upsert?:
-    | Prisma.InvitationUpsertWithWhereUniqueWithoutInviterInput
-    | Prisma.InvitationUpsertWithWhereUniqueWithoutInviterInput[];
+  connectOrCreate?: Prisma.InvitationCreateOrConnectWithoutInviterInput | Prisma.InvitationCreateOrConnectWithoutInviterInput[];
+  upsert?: Prisma.InvitationUpsertWithWhereUniqueWithoutInviterInput | Prisma.InvitationUpsertWithWhereUniqueWithoutInviterInput[];
   createMany?: Prisma.InvitationCreateManyInviterInputEnvelope;
   set?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
   disconnect?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
   delete?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
   connect?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
-  update?:
-    | Prisma.InvitationUpdateWithWhereUniqueWithoutInviterInput
-    | Prisma.InvitationUpdateWithWhereUniqueWithoutInviterInput[];
-  updateMany?:
-    | Prisma.InvitationUpdateManyWithWhereWithoutInviterInput
-    | Prisma.InvitationUpdateManyWithWhereWithoutInviterInput[];
+  update?: Prisma.InvitationUpdateWithWhereUniqueWithoutInviterInput | Prisma.InvitationUpdateWithWhereUniqueWithoutInviterInput[];
+  updateMany?: Prisma.InvitationUpdateManyWithWhereWithoutInviterInput | Prisma.InvitationUpdateManyWithWhereWithoutInviterInput[];
   deleteMany?: Prisma.InvitationScalarWhereInput | Prisma.InvitationScalarWhereInput[];
 };
 
 export type InvitationUncheckedUpdateManyWithoutInviterNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.InvitationCreateWithoutInviterInput,
-        Prisma.InvitationUncheckedCreateWithoutInviterInput
-      >
+    | Prisma.XOR<Prisma.InvitationCreateWithoutInviterInput, Prisma.InvitationUncheckedCreateWithoutInviterInput>
     | Prisma.InvitationCreateWithoutInviterInput[]
     | Prisma.InvitationUncheckedCreateWithoutInviterInput[];
-  connectOrCreate?:
-    | Prisma.InvitationCreateOrConnectWithoutInviterInput
-    | Prisma.InvitationCreateOrConnectWithoutInviterInput[];
-  upsert?:
-    | Prisma.InvitationUpsertWithWhereUniqueWithoutInviterInput
-    | Prisma.InvitationUpsertWithWhereUniqueWithoutInviterInput[];
+  connectOrCreate?: Prisma.InvitationCreateOrConnectWithoutInviterInput | Prisma.InvitationCreateOrConnectWithoutInviterInput[];
+  upsert?: Prisma.InvitationUpsertWithWhereUniqueWithoutInviterInput | Prisma.InvitationUpsertWithWhereUniqueWithoutInviterInput[];
   createMany?: Prisma.InvitationCreateManyInviterInputEnvelope;
   set?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
   disconnect?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
   delete?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
   connect?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
-  update?:
-    | Prisma.InvitationUpdateWithWhereUniqueWithoutInviterInput
-    | Prisma.InvitationUpdateWithWhereUniqueWithoutInviterInput[];
-  updateMany?:
-    | Prisma.InvitationUpdateManyWithWhereWithoutInviterInput
-    | Prisma.InvitationUpdateManyWithWhereWithoutInviterInput[];
+  update?: Prisma.InvitationUpdateWithWhereUniqueWithoutInviterInput | Prisma.InvitationUpdateWithWhereUniqueWithoutInviterInput[];
+  updateMany?: Prisma.InvitationUpdateManyWithWhereWithoutInviterInput | Prisma.InvitationUpdateManyWithWhereWithoutInviterInput[];
   deleteMany?: Prisma.InvitationScalarWhereInput | Prisma.InvitationScalarWhereInput[];
 };
 
 export type InvitationCreateNestedManyWithoutOrganizationInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.InvitationCreateWithoutOrganizationInput,
-        Prisma.InvitationUncheckedCreateWithoutOrganizationInput
-      >
+    | Prisma.XOR<Prisma.InvitationCreateWithoutOrganizationInput, Prisma.InvitationUncheckedCreateWithoutOrganizationInput>
     | Prisma.InvitationCreateWithoutOrganizationInput[]
     | Prisma.InvitationUncheckedCreateWithoutOrganizationInput[];
-  connectOrCreate?:
-    | Prisma.InvitationCreateOrConnectWithoutOrganizationInput
-    | Prisma.InvitationCreateOrConnectWithoutOrganizationInput[];
+  connectOrCreate?: Prisma.InvitationCreateOrConnectWithoutOrganizationInput | Prisma.InvitationCreateOrConnectWithoutOrganizationInput[];
   createMany?: Prisma.InvitationCreateManyOrganizationInputEnvelope;
   connect?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
 };
 
 export type InvitationUncheckedCreateNestedManyWithoutOrganizationInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.InvitationCreateWithoutOrganizationInput,
-        Prisma.InvitationUncheckedCreateWithoutOrganizationInput
-      >
+    | Prisma.XOR<Prisma.InvitationCreateWithoutOrganizationInput, Prisma.InvitationUncheckedCreateWithoutOrganizationInput>
     | Prisma.InvitationCreateWithoutOrganizationInput[]
     | Prisma.InvitationUncheckedCreateWithoutOrganizationInput[];
-  connectOrCreate?:
-    | Prisma.InvitationCreateOrConnectWithoutOrganizationInput
-    | Prisma.InvitationCreateOrConnectWithoutOrganizationInput[];
+  connectOrCreate?: Prisma.InvitationCreateOrConnectWithoutOrganizationInput | Prisma.InvitationCreateOrConnectWithoutOrganizationInput[];
   createMany?: Prisma.InvitationCreateManyOrganizationInputEnvelope;
   connect?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
 };
 
 export type InvitationUpdateManyWithoutOrganizationNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.InvitationCreateWithoutOrganizationInput,
-        Prisma.InvitationUncheckedCreateWithoutOrganizationInput
-      >
+    | Prisma.XOR<Prisma.InvitationCreateWithoutOrganizationInput, Prisma.InvitationUncheckedCreateWithoutOrganizationInput>
     | Prisma.InvitationCreateWithoutOrganizationInput[]
     | Prisma.InvitationUncheckedCreateWithoutOrganizationInput[];
-  connectOrCreate?:
-    | Prisma.InvitationCreateOrConnectWithoutOrganizationInput
-    | Prisma.InvitationCreateOrConnectWithoutOrganizationInput[];
-  upsert?:
-    | Prisma.InvitationUpsertWithWhereUniqueWithoutOrganizationInput
-    | Prisma.InvitationUpsertWithWhereUniqueWithoutOrganizationInput[];
+  connectOrCreate?: Prisma.InvitationCreateOrConnectWithoutOrganizationInput | Prisma.InvitationCreateOrConnectWithoutOrganizationInput[];
+  upsert?: Prisma.InvitationUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.InvitationUpsertWithWhereUniqueWithoutOrganizationInput[];
   createMany?: Prisma.InvitationCreateManyOrganizationInputEnvelope;
   set?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
   disconnect?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
   delete?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
   connect?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
-  update?:
-    | Prisma.InvitationUpdateWithWhereUniqueWithoutOrganizationInput
-    | Prisma.InvitationUpdateWithWhereUniqueWithoutOrganizationInput[];
-  updateMany?:
-    | Prisma.InvitationUpdateManyWithWhereWithoutOrganizationInput
-    | Prisma.InvitationUpdateManyWithWhereWithoutOrganizationInput[];
+  update?: Prisma.InvitationUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.InvitationUpdateWithWhereUniqueWithoutOrganizationInput[];
+  updateMany?: Prisma.InvitationUpdateManyWithWhereWithoutOrganizationInput | Prisma.InvitationUpdateManyWithWhereWithoutOrganizationInput[];
   deleteMany?: Prisma.InvitationScalarWhereInput | Prisma.InvitationScalarWhereInput[];
 };
 
 export type InvitationUncheckedUpdateManyWithoutOrganizationNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.InvitationCreateWithoutOrganizationInput,
-        Prisma.InvitationUncheckedCreateWithoutOrganizationInput
-      >
+    | Prisma.XOR<Prisma.InvitationCreateWithoutOrganizationInput, Prisma.InvitationUncheckedCreateWithoutOrganizationInput>
     | Prisma.InvitationCreateWithoutOrganizationInput[]
     | Prisma.InvitationUncheckedCreateWithoutOrganizationInput[];
-  connectOrCreate?:
-    | Prisma.InvitationCreateOrConnectWithoutOrganizationInput
-    | Prisma.InvitationCreateOrConnectWithoutOrganizationInput[];
-  upsert?:
-    | Prisma.InvitationUpsertWithWhereUniqueWithoutOrganizationInput
-    | Prisma.InvitationUpsertWithWhereUniqueWithoutOrganizationInput[];
+  connectOrCreate?: Prisma.InvitationCreateOrConnectWithoutOrganizationInput | Prisma.InvitationCreateOrConnectWithoutOrganizationInput[];
+  upsert?: Prisma.InvitationUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.InvitationUpsertWithWhereUniqueWithoutOrganizationInput[];
   createMany?: Prisma.InvitationCreateManyOrganizationInputEnvelope;
   set?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
   disconnect?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
   delete?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
   connect?: Prisma.InvitationWhereUniqueInput | Prisma.InvitationWhereUniqueInput[];
-  update?:
-    | Prisma.InvitationUpdateWithWhereUniqueWithoutOrganizationInput
-    | Prisma.InvitationUpdateWithWhereUniqueWithoutOrganizationInput[];
-  updateMany?:
-    | Prisma.InvitationUpdateManyWithWhereWithoutOrganizationInput
-    | Prisma.InvitationUpdateManyWithWhereWithoutOrganizationInput[];
+  update?: Prisma.InvitationUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.InvitationUpdateWithWhereUniqueWithoutOrganizationInput[];
+  updateMany?: Prisma.InvitationUpdateManyWithWhereWithoutOrganizationInput | Prisma.InvitationUpdateManyWithWhereWithoutOrganizationInput[];
   deleteMany?: Prisma.InvitationScalarWhereInput | Prisma.InvitationScalarWhereInput[];
 };
 
@@ -618,10 +541,7 @@ export type InvitationUncheckedCreateWithoutInviterInput = {
 
 export type InvitationCreateOrConnectWithoutInviterInput = {
   where: Prisma.InvitationWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.InvitationCreateWithoutInviterInput,
-    Prisma.InvitationUncheckedCreateWithoutInviterInput
-  >;
+  create: Prisma.XOR<Prisma.InvitationCreateWithoutInviterInput, Prisma.InvitationUncheckedCreateWithoutInviterInput>;
 };
 
 export type InvitationCreateManyInviterInputEnvelope = {
@@ -631,30 +551,18 @@ export type InvitationCreateManyInviterInputEnvelope = {
 
 export type InvitationUpsertWithWhereUniqueWithoutInviterInput = {
   where: Prisma.InvitationWhereUniqueInput;
-  update: Prisma.XOR<
-    Prisma.InvitationUpdateWithoutInviterInput,
-    Prisma.InvitationUncheckedUpdateWithoutInviterInput
-  >;
-  create: Prisma.XOR<
-    Prisma.InvitationCreateWithoutInviterInput,
-    Prisma.InvitationUncheckedCreateWithoutInviterInput
-  >;
+  update: Prisma.XOR<Prisma.InvitationUpdateWithoutInviterInput, Prisma.InvitationUncheckedUpdateWithoutInviterInput>;
+  create: Prisma.XOR<Prisma.InvitationCreateWithoutInviterInput, Prisma.InvitationUncheckedCreateWithoutInviterInput>;
 };
 
 export type InvitationUpdateWithWhereUniqueWithoutInviterInput = {
   where: Prisma.InvitationWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.InvitationUpdateWithoutInviterInput,
-    Prisma.InvitationUncheckedUpdateWithoutInviterInput
-  >;
+  data: Prisma.XOR<Prisma.InvitationUpdateWithoutInviterInput, Prisma.InvitationUncheckedUpdateWithoutInviterInput>;
 };
 
 export type InvitationUpdateManyWithWhereWithoutInviterInput = {
   where: Prisma.InvitationScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.InvitationUpdateManyMutationInput,
-    Prisma.InvitationUncheckedUpdateManyWithoutInviterInput
-  >;
+  data: Prisma.XOR<Prisma.InvitationUpdateManyMutationInput, Prisma.InvitationUncheckedUpdateManyWithoutInviterInput>;
 };
 
 export type InvitationScalarWhereInput = {
@@ -696,45 +604,28 @@ export type InvitationUncheckedCreateWithoutOrganizationInput = {
 
 export type InvitationCreateOrConnectWithoutOrganizationInput = {
   where: Prisma.InvitationWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.InvitationCreateWithoutOrganizationInput,
-    Prisma.InvitationUncheckedCreateWithoutOrganizationInput
-  >;
+  create: Prisma.XOR<Prisma.InvitationCreateWithoutOrganizationInput, Prisma.InvitationUncheckedCreateWithoutOrganizationInput>;
 };
 
 export type InvitationCreateManyOrganizationInputEnvelope = {
-  data:
-    | Prisma.InvitationCreateManyOrganizationInput
-    | Prisma.InvitationCreateManyOrganizationInput[];
+  data: Prisma.InvitationCreateManyOrganizationInput | Prisma.InvitationCreateManyOrganizationInput[];
   skipDuplicates?: boolean;
 };
 
 export type InvitationUpsertWithWhereUniqueWithoutOrganizationInput = {
   where: Prisma.InvitationWhereUniqueInput;
-  update: Prisma.XOR<
-    Prisma.InvitationUpdateWithoutOrganizationInput,
-    Prisma.InvitationUncheckedUpdateWithoutOrganizationInput
-  >;
-  create: Prisma.XOR<
-    Prisma.InvitationCreateWithoutOrganizationInput,
-    Prisma.InvitationUncheckedCreateWithoutOrganizationInput
-  >;
+  update: Prisma.XOR<Prisma.InvitationUpdateWithoutOrganizationInput, Prisma.InvitationUncheckedUpdateWithoutOrganizationInput>;
+  create: Prisma.XOR<Prisma.InvitationCreateWithoutOrganizationInput, Prisma.InvitationUncheckedCreateWithoutOrganizationInput>;
 };
 
 export type InvitationUpdateWithWhereUniqueWithoutOrganizationInput = {
   where: Prisma.InvitationWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.InvitationUpdateWithoutOrganizationInput,
-    Prisma.InvitationUncheckedUpdateWithoutOrganizationInput
-  >;
+  data: Prisma.XOR<Prisma.InvitationUpdateWithoutOrganizationInput, Prisma.InvitationUncheckedUpdateWithoutOrganizationInput>;
 };
 
 export type InvitationUpdateManyWithWhereWithoutOrganizationInput = {
   where: Prisma.InvitationScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.InvitationUpdateManyMutationInput,
-    Prisma.InvitationUncheckedUpdateManyWithoutOrganizationInput
-  >;
+  data: Prisma.XOR<Prisma.InvitationUpdateManyMutationInput, Prisma.InvitationUncheckedUpdateManyWithoutOrganizationInput>;
 };
 
 export type InvitationCreateManyInviterInput = {
@@ -825,9 +716,7 @@ export type InvitationUncheckedUpdateManyWithoutOrganizationInput = {
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type InvitationSelect<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetSelect<
+export type InvitationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
     email?: boolean;
@@ -856,30 +745,16 @@ export type InvitationSelectScalar = {
   expiresAt?: boolean;
 };
 
-export type InvitationOmit<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetOmit<
-  | 'id'
-  | 'email'
-  | 'inviterId'
-  | 'organizationId'
-  | 'role'
-  | 'status'
-  | 'teamId'
-  | 'createdAt'
-  | 'expiresAt',
+export type InvitationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<
+  'id' | 'email' | 'inviterId' | 'organizationId' | 'role' | 'status' | 'teamId' | 'createdAt' | 'expiresAt',
   ExtArgs['result']['invitation']
 >;
-export type InvitationInclude<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   inviter?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>;
 };
 
-export type $InvitationPayload<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type $InvitationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: 'Invitation';
   objects: {
     inviter: Prisma.$UserPayload<ExtArgs>;
@@ -902,19 +777,16 @@ export type $InvitationPayload<
   composites: {};
 };
 
-export type InvitationGetPayload<S extends boolean | null | undefined | InvitationDefaultArgs> =
-  runtime.Types.Result.GetResult<Prisma.$InvitationPayload, S>;
+export type InvitationGetPayload<S extends boolean | null | undefined | InvitationDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$InvitationPayload, S>;
 
-export type InvitationCountArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = Omit<InvitationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+export type InvitationCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<
+  InvitationFindManyArgs,
+  'select' | 'include' | 'distinct' | 'omit'
+> & {
   select?: InvitationCountAggregateInputType | true;
 };
 
-export interface InvitationDelegate<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-  GlobalOmitOptions = {}
-> {
+export interface InvitationDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
   [K: symbol]: {
     types: Prisma.TypeMap<ExtArgs>['model']['Invitation'];
     meta: { name: 'Invitation' };
@@ -932,17 +804,7 @@ export interface InvitationDelegate<
    */
   findUnique<T extends InvitationFindUniqueArgs>(
     args: Prisma.SelectSubset<T, InvitationFindUniqueArgs<ExtArgs>>
-  ): Prisma.Prisma__InvitationClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$InvitationPayload<ExtArgs>,
-      T,
-      'findUnique',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__InvitationClient<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find one Invitation that matches the filter or throw an error with `error.code='P2025'`
@@ -958,17 +820,7 @@ export interface InvitationDelegate<
    */
   findUniqueOrThrow<T extends InvitationFindUniqueOrThrowArgs>(
     args: Prisma.SelectSubset<T, InvitationFindUniqueOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__InvitationClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$InvitationPayload<ExtArgs>,
-      T,
-      'findUniqueOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__InvitationClient<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first Invitation that matches the filter.
@@ -985,17 +837,7 @@ export interface InvitationDelegate<
    */
   findFirst<T extends InvitationFindFirstArgs>(
     args?: Prisma.SelectSubset<T, InvitationFindFirstArgs<ExtArgs>>
-  ): Prisma.Prisma__InvitationClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$InvitationPayload<ExtArgs>,
-      T,
-      'findFirst',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__InvitationClient<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first Invitation that matches the filter or
@@ -1013,17 +855,7 @@ export interface InvitationDelegate<
    */
   findFirstOrThrow<T extends InvitationFindFirstOrThrowArgs>(
     args?: Prisma.SelectSubset<T, InvitationFindFirstOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__InvitationClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$InvitationPayload<ExtArgs>,
-      T,
-      'findFirstOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__InvitationClient<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find zero or more Invitations that matches the filter.
@@ -1043,14 +875,7 @@ export interface InvitationDelegate<
    */
   findMany<T extends InvitationFindManyArgs>(
     args?: Prisma.SelectSubset<T, InvitationFindManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<
-    runtime.Types.Result.GetResult<
-      Prisma.$InvitationPayload<ExtArgs>,
-      T,
-      'findMany',
-      GlobalOmitOptions
-    >
-  >;
+  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>;
 
   /**
    * Create a Invitation.
@@ -1066,17 +891,7 @@ export interface InvitationDelegate<
    */
   create<T extends InvitationCreateArgs>(
     args: Prisma.SelectSubset<T, InvitationCreateArgs<ExtArgs>>
-  ): Prisma.Prisma__InvitationClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$InvitationPayload<ExtArgs>,
-      T,
-      'create',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__InvitationClient<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Create many Invitations.
@@ -1090,9 +905,7 @@ export interface InvitationDelegate<
    * })
    *
    */
-  createMany<T extends InvitationCreateManyArgs>(
-    args?: Prisma.SelectSubset<T, InvitationCreateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  createMany<T extends InvitationCreateManyArgs>(args?: Prisma.SelectSubset<T, InvitationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Delete a Invitation.
@@ -1108,17 +921,7 @@ export interface InvitationDelegate<
    */
   delete<T extends InvitationDeleteArgs>(
     args: Prisma.SelectSubset<T, InvitationDeleteArgs<ExtArgs>>
-  ): Prisma.Prisma__InvitationClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$InvitationPayload<ExtArgs>,
-      T,
-      'delete',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__InvitationClient<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Update one Invitation.
@@ -1137,17 +940,7 @@ export interface InvitationDelegate<
    */
   update<T extends InvitationUpdateArgs>(
     args: Prisma.SelectSubset<T, InvitationUpdateArgs<ExtArgs>>
-  ): Prisma.Prisma__InvitationClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$InvitationPayload<ExtArgs>,
-      T,
-      'update',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__InvitationClient<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Delete zero or more Invitations.
@@ -1161,9 +954,7 @@ export interface InvitationDelegate<
    * })
    *
    */
-  deleteMany<T extends InvitationDeleteManyArgs>(
-    args?: Prisma.SelectSubset<T, InvitationDeleteManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  deleteMany<T extends InvitationDeleteManyArgs>(args?: Prisma.SelectSubset<T, InvitationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Update zero or more Invitations.
@@ -1182,9 +973,7 @@ export interface InvitationDelegate<
    * })
    *
    */
-  updateMany<T extends InvitationUpdateManyArgs>(
-    args: Prisma.SelectSubset<T, InvitationUpdateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  updateMany<T extends InvitationUpdateManyArgs>(args: Prisma.SelectSubset<T, InvitationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Create or update one Invitation.
@@ -1205,17 +994,7 @@ export interface InvitationDelegate<
    */
   upsert<T extends InvitationUpsertArgs>(
     args: Prisma.SelectSubset<T, InvitationUpsertArgs<ExtArgs>>
-  ): Prisma.Prisma__InvitationClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$InvitationPayload<ExtArgs>,
-      T,
-      'upsert',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__InvitationClient<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Count the number of Invitations.
@@ -1232,13 +1011,7 @@ export interface InvitationDelegate<
    **/
   count<T extends InvitationCountArgs>(
     args?: Prisma.Subset<T, InvitationCountArgs>
-  ): Prisma.PrismaPromise<
-    T extends runtime.Types.Utils.Record<'select', any>
-      ? T['select'] extends true
-        ? number
-        : Prisma.GetScalarType<T['select'], InvitationCountAggregateOutputType>
-      : number
-  >;
+  ): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? (T['select'] extends true ? number : Prisma.GetScalarType<T['select'], InvitationCountAggregateOutputType>) : number>;
 
   /**
    * Allows you to perform aggregations operations on a Invitation.
@@ -1264,9 +1037,7 @@ export interface InvitationDelegate<
    *   take: 10,
    * })
    **/
-  aggregate<T extends InvitationAggregateArgs>(
-    args: Prisma.Subset<T, InvitationAggregateArgs>
-  ): Prisma.PrismaPromise<GetInvitationAggregateType<T>>;
+  aggregate<T extends InvitationAggregateArgs>(args: Prisma.Subset<T, InvitationAggregateArgs>): Prisma.PrismaPromise<GetInvitationAggregateType<T>>;
 
   /**
    * Group by Invitation.
@@ -1288,16 +1059,9 @@ export interface InvitationDelegate<
    **/
   groupBy<
     T extends InvitationGroupByArgs,
-    HasSelectOrTake extends Prisma.Or<
-      Prisma.Extends<'skip', Prisma.Keys<T>>,
-      Prisma.Extends<'take', Prisma.Keys<T>>
-    >,
-    OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? { orderBy: InvitationGroupByArgs['orderBy'] }
-      : { orderBy?: InvitationGroupByArgs['orderBy'] },
-    OrderFields extends Prisma.ExcludeUnderscoreKeys<
-      Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>
-    >,
+    HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>,
+    OrderByArg extends Prisma.True extends HasSelectOrTake ? { orderBy: InvitationGroupByArgs['orderBy'] } : { orderBy?: InvitationGroupByArgs['orderBy'] },
+    OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>,
     ByFields extends Prisma.MaybeTupleToUnion<T['by']>,
     ByValid extends Prisma.Has<ByFields, OrderFields>,
     HavingFields extends Prisma.GetHavingFields<T['having']>,
@@ -1318,9 +1082,7 @@ export interface InvitationDelegate<
             ? ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
             : 'Error: If you provide "take", you also need to provide "orderBy"'
           : 'skip' extends Prisma.Keys<T>
@@ -1328,17 +1090,13 @@ export interface InvitationDelegate<
               ? ByValid extends Prisma.True
                 ? {}
                 : {
-                    [P in OrderFields]: P extends ByFields
-                      ? never
-                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                   }[OrderFields]
               : 'Error: If you provide "skip", you also need to provide "orderBy"'
             : ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
   >(
     args: Prisma.SubsetIntersection<T, InvitationGroupByArgs, OrderByArg> & InputErrors
@@ -1364,32 +1122,10 @@ export interface Prisma__InvitationClient<
   readonly [Symbol.toStringTag]: 'PrismaPromise';
   inviter<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>
-  ): Prisma.Prisma__UserClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$UserPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>
-  ): Prisma.Prisma__OrganizationClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$OrganizationPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1405,9 +1141,7 @@ export interface Prisma__InvitationClient<
    * @param onrejected The callback to execute when the Promise is rejected.
    * @returns A Promise for the completion of the callback.
    */
-  catch<TResult = never>(
-    onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
-  ): runtime.Types.Utils.JsPromise<T | TResult>;
+  catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
   /**
    * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
    * resolved value cannot be modified from the callback.
@@ -1436,9 +1170,7 @@ export interface InvitationFieldRefs {
 /**
  * Invitation findUnique
  */
-export type InvitationFindUniqueArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Invitation
    */
@@ -1460,9 +1192,7 @@ export type InvitationFindUniqueArgs<
 /**
  * Invitation findUniqueOrThrow
  */
-export type InvitationFindUniqueOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Invitation
    */
@@ -1484,9 +1214,7 @@ export type InvitationFindUniqueOrThrowArgs<
 /**
  * Invitation findFirst
  */
-export type InvitationFindFirstArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Invitation
    */
@@ -1538,9 +1266,7 @@ export type InvitationFindFirstArgs<
 /**
  * Invitation findFirstOrThrow
  */
-export type InvitationFindFirstOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Invitation
    */
@@ -1592,9 +1318,7 @@ export type InvitationFindFirstOrThrowArgs<
 /**
  * Invitation findMany
  */
-export type InvitationFindManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Invitation
    */
@@ -1646,9 +1370,7 @@ export type InvitationFindManyArgs<
 /**
  * Invitation create
  */
-export type InvitationCreateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Invitation
    */
@@ -1670,9 +1392,7 @@ export type InvitationCreateArgs<
 /**
  * Invitation createMany
  */
-export type InvitationCreateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to create many Invitations.
    */
@@ -1683,9 +1403,7 @@ export type InvitationCreateManyArgs<
 /**
  * Invitation update
  */
-export type InvitationUpdateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Invitation
    */
@@ -1711,16 +1429,11 @@ export type InvitationUpdateArgs<
 /**
  * Invitation updateMany
  */
-export type InvitationUpdateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to update Invitations.
    */
-  data: Prisma.XOR<
-    Prisma.InvitationUpdateManyMutationInput,
-    Prisma.InvitationUncheckedUpdateManyInput
-  >;
+  data: Prisma.XOR<Prisma.InvitationUpdateManyMutationInput, Prisma.InvitationUncheckedUpdateManyInput>;
   /**
    * Filter which Invitations to update
    */
@@ -1734,9 +1447,7 @@ export type InvitationUpdateManyArgs<
 /**
  * Invitation upsert
  */
-export type InvitationUpsertArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Invitation
    */
@@ -1766,9 +1477,7 @@ export type InvitationUpsertArgs<
 /**
  * Invitation delete
  */
-export type InvitationDeleteArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Invitation
    */
@@ -1790,9 +1499,7 @@ export type InvitationDeleteArgs<
 /**
  * Invitation deleteMany
  */
-export type InvitationDeleteManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which Invitations to delete
    */
@@ -1806,9 +1513,7 @@ export type InvitationDeleteManyArgs<
 /**
  * Invitation without action
  */
-export type InvitationDefaultArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type InvitationDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Invitation
    */

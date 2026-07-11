@@ -65,13 +65,7 @@ export const sendResetPasswordEmail = async ({ user, url, token }: SendResetPass
   }
 };
 
-export const sendInvitationEmail = async ({
-  id,
-  role,
-  email,
-  organization,
-  inviter
-}: SendInvitationEmailParams) => {
+export const sendInvitationEmail = async ({ id, role, email, organization, inviter }: SendInvitationEmailParams) => {
   const acceptUrl = `${env.frontendUrl}/accept-invitation?invitationId=${encodeURIComponent(id)}`;
 
   try {
@@ -98,12 +92,7 @@ export const sendInvitationEmail = async ({
   }
 };
 
-export const sendMemberAcceptedInvitationEmail = async ({
-  invitation,
-  member,
-  user,
-  organization
-}: SendMemberAcceptedInvitationEmailParams) => {
+export const sendMemberAcceptedInvitationEmail = async ({ invitation, member, user, organization }: SendMemberAcceptedInvitationEmailParams) => {
   if (!env.adminEmail) {
     logger.warn(
       {

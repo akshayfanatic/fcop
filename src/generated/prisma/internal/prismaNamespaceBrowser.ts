@@ -76,8 +76,7 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
   Serializable: 'Serializable'
 } as const);
 
-export type TransactionIsolationLevel =
-  (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel];
+export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel];
 
 export const UserScalarFieldEnum = {
   id: 'id',
@@ -104,8 +103,7 @@ export const SessionScalarFieldEnum = {
   activeTeamId: 'activeTeamId'
 } as const;
 
-export type SessionScalarFieldEnum =
-  (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum];
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum];
 
 export const AccountScalarFieldEnum = {
   id: 'id',
@@ -123,8 +121,7 @@ export const AccountScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const;
 
-export type AccountScalarFieldEnum =
-  (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum];
+export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum];
 
 export const VerificationScalarFieldEnum = {
   id: 'id',
@@ -135,8 +132,7 @@ export const VerificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const;
 
-export type VerificationScalarFieldEnum =
-  (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum];
+export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum];
 
 export const OrganizationScalarFieldEnum = {
   id: 'id',
@@ -147,8 +143,7 @@ export const OrganizationScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const;
 
-export type OrganizationScalarFieldEnum =
-  (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum];
+export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum];
 
 export const MemberScalarFieldEnum = {
   id: 'id',
@@ -158,8 +153,7 @@ export const MemberScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const;
 
-export type MemberScalarFieldEnum =
-  (typeof MemberScalarFieldEnum)[keyof typeof MemberScalarFieldEnum];
+export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof MemberScalarFieldEnum];
 
 export const InvitationScalarFieldEnum = {
   id: 'id',
@@ -173,8 +167,7 @@ export const InvitationScalarFieldEnum = {
   expiresAt: 'expiresAt'
 } as const;
 
-export type InvitationScalarFieldEnum =
-  (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum];
+export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum];
 
 export const TeamScalarFieldEnum = {
   id: 'id',
@@ -193,8 +186,7 @@ export const TeamMemberScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const;
 
-export type TeamMemberScalarFieldEnum =
-  (typeof TeamMemberScalarFieldEnum)[keyof typeof TeamMemberScalarFieldEnum];
+export type TeamMemberScalarFieldEnum = (typeof TeamMemberScalarFieldEnum)[keyof typeof TeamMemberScalarFieldEnum];
 
 export const OrganizationRoleScalarFieldEnum = {
   id: 'id',
@@ -205,8 +197,7 @@ export const OrganizationRoleScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const;
 
-export type OrganizationRoleScalarFieldEnum =
-  (typeof OrganizationRoleScalarFieldEnum)[keyof typeof OrganizationRoleScalarFieldEnum];
+export type OrganizationRoleScalarFieldEnum = (typeof OrganizationRoleScalarFieldEnum)[keyof typeof OrganizationRoleScalarFieldEnum];
 
 export const ClientScalarFieldEnum = {
   id: 'id',
@@ -216,8 +207,7 @@ export const ClientScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const;
 
-export type ClientScalarFieldEnum =
-  (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum];
+export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum];
 
 export const ServiceRequestScalarFieldEnum = {
   id: 'id',
@@ -229,8 +219,7 @@ export const ServiceRequestScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const;
 
-export type ServiceRequestScalarFieldEnum =
-  (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum];
+export type ServiceRequestScalarFieldEnum = (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum];
 
 export const LeadScalarFieldEnum = {
   id: 'id',
@@ -259,8 +248,7 @@ export const NullableJsonNullValueInput = {
   JsonNull: JsonNull
 } as const;
 
-export type NullableJsonNullValueInput =
-  (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
 
 export const NullsOrder = {
   first: 'first',
@@ -276,8 +264,7 @@ export const UserOrderByRelevanceFieldEnum = {
   image: 'image'
 } as const;
 
-export type UserOrderByRelevanceFieldEnum =
-  (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum];
+export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum];
 
 export const SessionOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -289,8 +276,7 @@ export const SessionOrderByRelevanceFieldEnum = {
   activeTeamId: 'activeTeamId'
 } as const;
 
-export type SessionOrderByRelevanceFieldEnum =
-  (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum];
+export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum];
 
 export const AccountOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -304,8 +290,7 @@ export const AccountOrderByRelevanceFieldEnum = {
   password: 'password'
 } as const;
 
-export type AccountOrderByRelevanceFieldEnum =
-  (typeof AccountOrderByRelevanceFieldEnum)[keyof typeof AccountOrderByRelevanceFieldEnum];
+export type AccountOrderByRelevanceFieldEnum = (typeof AccountOrderByRelevanceFieldEnum)[keyof typeof AccountOrderByRelevanceFieldEnum];
 
 export const VerificationOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -313,8 +298,7 @@ export const VerificationOrderByRelevanceFieldEnum = {
   value: 'value'
 } as const;
 
-export type VerificationOrderByRelevanceFieldEnum =
-  (typeof VerificationOrderByRelevanceFieldEnum)[keyof typeof VerificationOrderByRelevanceFieldEnum];
+export type VerificationOrderByRelevanceFieldEnum = (typeof VerificationOrderByRelevanceFieldEnum)[keyof typeof VerificationOrderByRelevanceFieldEnum];
 
 export const OrganizationOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -324,8 +308,7 @@ export const OrganizationOrderByRelevanceFieldEnum = {
   metadata: 'metadata'
 } as const;
 
-export type OrganizationOrderByRelevanceFieldEnum =
-  (typeof OrganizationOrderByRelevanceFieldEnum)[keyof typeof OrganizationOrderByRelevanceFieldEnum];
+export type OrganizationOrderByRelevanceFieldEnum = (typeof OrganizationOrderByRelevanceFieldEnum)[keyof typeof OrganizationOrderByRelevanceFieldEnum];
 
 export const MemberOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -334,8 +317,7 @@ export const MemberOrderByRelevanceFieldEnum = {
   role: 'role'
 } as const;
 
-export type MemberOrderByRelevanceFieldEnum =
-  (typeof MemberOrderByRelevanceFieldEnum)[keyof typeof MemberOrderByRelevanceFieldEnum];
+export type MemberOrderByRelevanceFieldEnum = (typeof MemberOrderByRelevanceFieldEnum)[keyof typeof MemberOrderByRelevanceFieldEnum];
 
 export const InvitationOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -347,8 +329,7 @@ export const InvitationOrderByRelevanceFieldEnum = {
   teamId: 'teamId'
 } as const;
 
-export type InvitationOrderByRelevanceFieldEnum =
-  (typeof InvitationOrderByRelevanceFieldEnum)[keyof typeof InvitationOrderByRelevanceFieldEnum];
+export type InvitationOrderByRelevanceFieldEnum = (typeof InvitationOrderByRelevanceFieldEnum)[keyof typeof InvitationOrderByRelevanceFieldEnum];
 
 export const TeamOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -356,8 +337,7 @@ export const TeamOrderByRelevanceFieldEnum = {
   organizationId: 'organizationId'
 } as const;
 
-export type TeamOrderByRelevanceFieldEnum =
-  (typeof TeamOrderByRelevanceFieldEnum)[keyof typeof TeamOrderByRelevanceFieldEnum];
+export type TeamOrderByRelevanceFieldEnum = (typeof TeamOrderByRelevanceFieldEnum)[keyof typeof TeamOrderByRelevanceFieldEnum];
 
 export const TeamMemberOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -365,8 +345,7 @@ export const TeamMemberOrderByRelevanceFieldEnum = {
   userId: 'userId'
 } as const;
 
-export type TeamMemberOrderByRelevanceFieldEnum =
-  (typeof TeamMemberOrderByRelevanceFieldEnum)[keyof typeof TeamMemberOrderByRelevanceFieldEnum];
+export type TeamMemberOrderByRelevanceFieldEnum = (typeof TeamMemberOrderByRelevanceFieldEnum)[keyof typeof TeamMemberOrderByRelevanceFieldEnum];
 
 export const OrganizationRoleOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -375,8 +354,7 @@ export const OrganizationRoleOrderByRelevanceFieldEnum = {
   permission: 'permission'
 } as const;
 
-export type OrganizationRoleOrderByRelevanceFieldEnum =
-  (typeof OrganizationRoleOrderByRelevanceFieldEnum)[keyof typeof OrganizationRoleOrderByRelevanceFieldEnum];
+export type OrganizationRoleOrderByRelevanceFieldEnum = (typeof OrganizationRoleOrderByRelevanceFieldEnum)[keyof typeof OrganizationRoleOrderByRelevanceFieldEnum];
 
 export const ClientOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -384,8 +362,7 @@ export const ClientOrderByRelevanceFieldEnum = {
   name: 'name'
 } as const;
 
-export type ClientOrderByRelevanceFieldEnum =
-  (typeof ClientOrderByRelevanceFieldEnum)[keyof typeof ClientOrderByRelevanceFieldEnum];
+export type ClientOrderByRelevanceFieldEnum = (typeof ClientOrderByRelevanceFieldEnum)[keyof typeof ClientOrderByRelevanceFieldEnum];
 
 export const JsonNullValueFilter = {
   DbNull: DbNull,
@@ -407,8 +384,7 @@ export const ServiceRequestOrderByRelevanceFieldEnum = {
   clientId: 'clientId'
 } as const;
 
-export type ServiceRequestOrderByRelevanceFieldEnum =
-  (typeof ServiceRequestOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestOrderByRelevanceFieldEnum];
+export type ServiceRequestOrderByRelevanceFieldEnum = (typeof ServiceRequestOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestOrderByRelevanceFieldEnum];
 
 export const LeadOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -418,5 +394,4 @@ export const LeadOrderByRelevanceFieldEnum = {
   budgetRange: 'budgetRange'
 } as const;
 
-export type LeadOrderByRelevanceFieldEnum =
-  (typeof LeadOrderByRelevanceFieldEnum)[keyof typeof LeadOrderByRelevanceFieldEnum];
+export type LeadOrderByRelevanceFieldEnum = (typeof LeadOrderByRelevanceFieldEnum)[keyof typeof LeadOrderByRelevanceFieldEnum];

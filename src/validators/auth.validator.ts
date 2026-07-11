@@ -8,8 +8,5 @@ export const requestPasswordResetSchema = z.object({
   redirectTo: z
     .url()
     .optional()
-    .refine(
-      (value) => !value || trustedResetOrigins.has(new URL(value).origin),
-      'redirectTo must use a trusted frontend origin.'
-    )
+    .refine((value) => !value || trustedResetOrigins.has(new URL(value).origin), 'redirectTo must use a trusted frontend origin.')
 });

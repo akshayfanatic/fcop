@@ -1,10 +1,5 @@
 import { hashPassword } from 'better-auth/crypto';
-import {
-  LeadSource,
-  LeadStatus,
-  type Prisma,
-  ServiceInterest
-} from '../generated/prisma/client.js';
+import { LeadSource, LeadStatus, type Prisma, ServiceInterest } from '../generated/prisma/client.js';
 import { Role } from '../lib/auth/permissions.js';
 import { prisma } from '../lib/prisma.js';
 
@@ -234,9 +229,7 @@ const main = async () => {
   const org = await seedOrganization();
   await seedLeads();
 
-  console.info(
-    `Seeded ${users.length} users, ${organizationMembers.length} organization members in ${org.name}, and ${leads.length} leads.`
-  );
+  console.info(`Seeded ${users.length} users, ${organizationMembers.length} organization members in ${org.name}, and ${leads.length} leads.`);
   console.info(`Seed user password: ${seedPassword}`);
 };
 

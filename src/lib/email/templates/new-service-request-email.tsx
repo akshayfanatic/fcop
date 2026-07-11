@@ -36,9 +36,7 @@ type NewServiceRequestEmailProps = {
   request: NewServiceRequest;
 };
 
-export const createNewServiceRequestEmailTemplate = ({
-  request
-}: NewServiceRequestEmailProps): EmailTemplate => {
+export const createNewServiceRequestEmailTemplate = ({ request }: NewServiceRequestEmailProps): EmailTemplate => {
   const user = request.client.member.user;
   const serviceLabel = getOptionLabel(SERVICE_INTEREST_OPTIONS, request.service);
   const createdAt = request.createdAt.toLocaleString('en-US', {
@@ -58,13 +56,6 @@ export const createNewServiceRequestEmailTemplate = ({
         <p style={emailStyles.lastText}>Request ID: {request.id}</p>
       </BaseEmail>
     ),
-    text: [
-      'New service request submitted',
-      `Client: ${request.client.name}`,
-      `Email: ${user.email}`,
-      `Service: ${serviceLabel}`,
-      `Submitted: ${createdAt}`,
-      `Request ID: ${request.id}`
-    ].join('\n')
+    text: ['New service request submitted', `Client: ${request.client.name}`, `Email: ${user.email}`, `Service: ${serviceLabel}`, `Submitted: ${createdAt}`, `Request ID: ${request.id}`].join('\n')
   };
 };

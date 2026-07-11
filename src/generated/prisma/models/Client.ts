@@ -73,9 +73,7 @@ export type ClientCountAggregateInputType = {
   _all?: true;
 };
 
-export type ClientAggregateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which Client to aggregate.
    */
@@ -125,16 +123,10 @@ export type ClientAggregateArgs<
 };
 
 export type GetClientAggregateType<T extends ClientAggregateArgs> = {
-  [P in keyof T & keyof AggregateClient]: P extends '_count' | 'count'
-    ? T[P] extends true
-      ? number
-      : Prisma.GetScalarType<T[P], AggregateClient[P]>
-    : Prisma.GetScalarType<T[P], AggregateClient[P]>;
+  [P in keyof T & keyof AggregateClient]: P extends '_count' | 'count' ? (T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateClient[P]>) : Prisma.GetScalarType<T[P], AggregateClient[P]>;
 };
 
-export type ClientGroupByArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ClientWhereInput;
   orderBy?: Prisma.ClientOrderByWithAggregationInput | Prisma.ClientOrderByWithAggregationInput[];
   by: Prisma.ClientScalarFieldEnum[] | Prisma.ClientScalarFieldEnum;
@@ -331,85 +323,49 @@ export type ClientScalarRelationFilter = {
 };
 
 export type ClientCreateNestedOneWithoutMemberInput = {
-  create?: Prisma.XOR<
-    Prisma.ClientCreateWithoutMemberInput,
-    Prisma.ClientUncheckedCreateWithoutMemberInput
-  >;
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutMemberInput, Prisma.ClientUncheckedCreateWithoutMemberInput>;
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutMemberInput;
   connect?: Prisma.ClientWhereUniqueInput;
 };
 
 export type ClientUncheckedCreateNestedOneWithoutMemberInput = {
-  create?: Prisma.XOR<
-    Prisma.ClientCreateWithoutMemberInput,
-    Prisma.ClientUncheckedCreateWithoutMemberInput
-  >;
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutMemberInput, Prisma.ClientUncheckedCreateWithoutMemberInput>;
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutMemberInput;
   connect?: Prisma.ClientWhereUniqueInput;
 };
 
 export type ClientUpdateOneWithoutMemberNestedInput = {
-  create?: Prisma.XOR<
-    Prisma.ClientCreateWithoutMemberInput,
-    Prisma.ClientUncheckedCreateWithoutMemberInput
-  >;
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutMemberInput, Prisma.ClientUncheckedCreateWithoutMemberInput>;
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutMemberInput;
   upsert?: Prisma.ClientUpsertWithoutMemberInput;
   disconnect?: Prisma.ClientWhereInput | boolean;
   delete?: Prisma.ClientWhereInput | boolean;
   connect?: Prisma.ClientWhereUniqueInput;
-  update?: Prisma.XOR<
-    Prisma.XOR<
-      Prisma.ClientUpdateToOneWithWhereWithoutMemberInput,
-      Prisma.ClientUpdateWithoutMemberInput
-    >,
-    Prisma.ClientUncheckedUpdateWithoutMemberInput
-  >;
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutMemberInput, Prisma.ClientUpdateWithoutMemberInput>, Prisma.ClientUncheckedUpdateWithoutMemberInput>;
 };
 
 export type ClientUncheckedUpdateOneWithoutMemberNestedInput = {
-  create?: Prisma.XOR<
-    Prisma.ClientCreateWithoutMemberInput,
-    Prisma.ClientUncheckedCreateWithoutMemberInput
-  >;
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutMemberInput, Prisma.ClientUncheckedCreateWithoutMemberInput>;
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutMemberInput;
   upsert?: Prisma.ClientUpsertWithoutMemberInput;
   disconnect?: Prisma.ClientWhereInput | boolean;
   delete?: Prisma.ClientWhereInput | boolean;
   connect?: Prisma.ClientWhereUniqueInput;
-  update?: Prisma.XOR<
-    Prisma.XOR<
-      Prisma.ClientUpdateToOneWithWhereWithoutMemberInput,
-      Prisma.ClientUpdateWithoutMemberInput
-    >,
-    Prisma.ClientUncheckedUpdateWithoutMemberInput
-  >;
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutMemberInput, Prisma.ClientUpdateWithoutMemberInput>, Prisma.ClientUncheckedUpdateWithoutMemberInput>;
 };
 
 export type ClientCreateNestedOneWithoutRequestsInput = {
-  create?: Prisma.XOR<
-    Prisma.ClientCreateWithoutRequestsInput,
-    Prisma.ClientUncheckedCreateWithoutRequestsInput
-  >;
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutRequestsInput, Prisma.ClientUncheckedCreateWithoutRequestsInput>;
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutRequestsInput;
   connect?: Prisma.ClientWhereUniqueInput;
 };
 
 export type ClientUpdateOneRequiredWithoutRequestsNestedInput = {
-  create?: Prisma.XOR<
-    Prisma.ClientCreateWithoutRequestsInput,
-    Prisma.ClientUncheckedCreateWithoutRequestsInput
-  >;
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutRequestsInput, Prisma.ClientUncheckedCreateWithoutRequestsInput>;
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutRequestsInput;
   upsert?: Prisma.ClientUpsertWithoutRequestsInput;
   connect?: Prisma.ClientWhereUniqueInput;
-  update?: Prisma.XOR<
-    Prisma.XOR<
-      Prisma.ClientUpdateToOneWithWhereWithoutRequestsInput,
-      Prisma.ClientUpdateWithoutRequestsInput
-    >,
-    Prisma.ClientUncheckedUpdateWithoutRequestsInput
-  >;
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutRequestsInput, Prisma.ClientUpdateWithoutRequestsInput>, Prisma.ClientUncheckedUpdateWithoutRequestsInput>;
 };
 
 export type ClientCreateWithoutMemberInput = {
@@ -430,30 +386,18 @@ export type ClientUncheckedCreateWithoutMemberInput = {
 
 export type ClientCreateOrConnectWithoutMemberInput = {
   where: Prisma.ClientWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.ClientCreateWithoutMemberInput,
-    Prisma.ClientUncheckedCreateWithoutMemberInput
-  >;
+  create: Prisma.XOR<Prisma.ClientCreateWithoutMemberInput, Prisma.ClientUncheckedCreateWithoutMemberInput>;
 };
 
 export type ClientUpsertWithoutMemberInput = {
-  update: Prisma.XOR<
-    Prisma.ClientUpdateWithoutMemberInput,
-    Prisma.ClientUncheckedUpdateWithoutMemberInput
-  >;
-  create: Prisma.XOR<
-    Prisma.ClientCreateWithoutMemberInput,
-    Prisma.ClientUncheckedCreateWithoutMemberInput
-  >;
+  update: Prisma.XOR<Prisma.ClientUpdateWithoutMemberInput, Prisma.ClientUncheckedUpdateWithoutMemberInput>;
+  create: Prisma.XOR<Prisma.ClientCreateWithoutMemberInput, Prisma.ClientUncheckedCreateWithoutMemberInput>;
   where?: Prisma.ClientWhereInput;
 };
 
 export type ClientUpdateToOneWithWhereWithoutMemberInput = {
   where?: Prisma.ClientWhereInput;
-  data: Prisma.XOR<
-    Prisma.ClientUpdateWithoutMemberInput,
-    Prisma.ClientUncheckedUpdateWithoutMemberInput
-  >;
+  data: Prisma.XOR<Prisma.ClientUpdateWithoutMemberInput, Prisma.ClientUncheckedUpdateWithoutMemberInput>;
 };
 
 export type ClientUpdateWithoutMemberInput = {
@@ -490,30 +434,18 @@ export type ClientUncheckedCreateWithoutRequestsInput = {
 
 export type ClientCreateOrConnectWithoutRequestsInput = {
   where: Prisma.ClientWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.ClientCreateWithoutRequestsInput,
-    Prisma.ClientUncheckedCreateWithoutRequestsInput
-  >;
+  create: Prisma.XOR<Prisma.ClientCreateWithoutRequestsInput, Prisma.ClientUncheckedCreateWithoutRequestsInput>;
 };
 
 export type ClientUpsertWithoutRequestsInput = {
-  update: Prisma.XOR<
-    Prisma.ClientUpdateWithoutRequestsInput,
-    Prisma.ClientUncheckedUpdateWithoutRequestsInput
-  >;
-  create: Prisma.XOR<
-    Prisma.ClientCreateWithoutRequestsInput,
-    Prisma.ClientUncheckedCreateWithoutRequestsInput
-  >;
+  update: Prisma.XOR<Prisma.ClientUpdateWithoutRequestsInput, Prisma.ClientUncheckedUpdateWithoutRequestsInput>;
+  create: Prisma.XOR<Prisma.ClientCreateWithoutRequestsInput, Prisma.ClientUncheckedCreateWithoutRequestsInput>;
   where?: Prisma.ClientWhereInput;
 };
 
 export type ClientUpdateToOneWithWhereWithoutRequestsInput = {
   where?: Prisma.ClientWhereInput;
-  data: Prisma.XOR<
-    Prisma.ClientUpdateWithoutRequestsInput,
-    Prisma.ClientUncheckedUpdateWithoutRequestsInput
-  >;
+  data: Prisma.XOR<Prisma.ClientUpdateWithoutRequestsInput, Prisma.ClientUncheckedUpdateWithoutRequestsInput>;
 };
 
 export type ClientUpdateWithoutRequestsInput = {
@@ -540,18 +472,14 @@ export type ClientCountOutputType = {
   requests: number;
 };
 
-export type ClientCountOutputTypeSelect<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   requests?: boolean | ClientCountOutputTypeCountRequestsArgs;
 };
 
 /**
  * ClientCountOutputType without action
  */
-export type ClientCountOutputTypeDefaultArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ClientCountOutputType
    */
@@ -561,15 +489,11 @@ export type ClientCountOutputTypeDefaultArgs<
 /**
  * ClientCountOutputType without action
  */
-export type ClientCountOutputTypeCountRequestsArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientCountOutputTypeCountRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ServiceRequestWhereInput;
 };
 
-export type ClientSelect<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetSelect<
+export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
     memberId?: boolean;
@@ -591,23 +515,17 @@ export type ClientSelectScalar = {
   updatedAt?: boolean;
 };
 
-export type ClientOmit<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetOmit<
+export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<
   'id' | 'memberId' | 'name' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['client']
 >;
-export type ClientInclude<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   member?: boolean | Prisma.MemberDefaultArgs<ExtArgs>;
   requests?: boolean | Prisma.Client$requestsArgs<ExtArgs>;
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>;
 };
 
-export type $ClientPayload<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: 'Client';
   objects: {
     member: Prisma.$MemberPayload<ExtArgs>;
@@ -626,19 +544,13 @@ export type $ClientPayload<
   composites: {};
 };
 
-export type ClientGetPayload<S extends boolean | null | undefined | ClientDefaultArgs> =
-  runtime.Types.Result.GetResult<Prisma.$ClientPayload, S>;
+export type ClientGetPayload<S extends boolean | null | undefined | ClientDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$ClientPayload, S>;
 
-export type ClientCountArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = Omit<ClientFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+export type ClientCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<ClientFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
   select?: ClientCountAggregateInputType | true;
 };
 
-export interface ClientDelegate<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-  GlobalOmitOptions = {}
-> {
+export interface ClientDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Client']; meta: { name: 'Client' } };
   /**
    * Find zero or one Client that matches the filter.
@@ -653,17 +565,7 @@ export interface ClientDelegate<
    */
   findUnique<T extends ClientFindUniqueArgs>(
     args: Prisma.SelectSubset<T, ClientFindUniqueArgs<ExtArgs>>
-  ): Prisma.Prisma__ClientClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ClientPayload<ExtArgs>,
-      T,
-      'findUnique',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find one Client that matches the filter or throw an error with `error.code='P2025'`
@@ -679,17 +581,7 @@ export interface ClientDelegate<
    */
   findUniqueOrThrow<T extends ClientFindUniqueOrThrowArgs>(
     args: Prisma.SelectSubset<T, ClientFindUniqueOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__ClientClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ClientPayload<ExtArgs>,
-      T,
-      'findUniqueOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first Client that matches the filter.
@@ -706,17 +598,7 @@ export interface ClientDelegate<
    */
   findFirst<T extends ClientFindFirstArgs>(
     args?: Prisma.SelectSubset<T, ClientFindFirstArgs<ExtArgs>>
-  ): Prisma.Prisma__ClientClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ClientPayload<ExtArgs>,
-      T,
-      'findFirst',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first Client that matches the filter or
@@ -734,17 +616,7 @@ export interface ClientDelegate<
    */
   findFirstOrThrow<T extends ClientFindFirstOrThrowArgs>(
     args?: Prisma.SelectSubset<T, ClientFindFirstOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__ClientClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ClientPayload<ExtArgs>,
-      T,
-      'findFirstOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find zero or more Clients that matches the filter.
@@ -764,9 +636,7 @@ export interface ClientDelegate<
    */
   findMany<T extends ClientFindManyArgs>(
     args?: Prisma.SelectSubset<T, ClientFindManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<
-    runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
-  >;
+  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>;
 
   /**
    * Create a Client.
@@ -782,12 +652,7 @@ export interface ClientDelegate<
    */
   create<T extends ClientCreateArgs>(
     args: Prisma.SelectSubset<T, ClientCreateArgs<ExtArgs>>
-  ): Prisma.Prisma__ClientClient<
-    runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Create many Clients.
@@ -801,9 +666,7 @@ export interface ClientDelegate<
    * })
    *
    */
-  createMany<T extends ClientCreateManyArgs>(
-    args?: Prisma.SelectSubset<T, ClientCreateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  createMany<T extends ClientCreateManyArgs>(args?: Prisma.SelectSubset<T, ClientCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Delete a Client.
@@ -819,12 +682,7 @@ export interface ClientDelegate<
    */
   delete<T extends ClientDeleteArgs>(
     args: Prisma.SelectSubset<T, ClientDeleteArgs<ExtArgs>>
-  ): Prisma.Prisma__ClientClient<
-    runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Update one Client.
@@ -843,12 +701,7 @@ export interface ClientDelegate<
    */
   update<T extends ClientUpdateArgs>(
     args: Prisma.SelectSubset<T, ClientUpdateArgs<ExtArgs>>
-  ): Prisma.Prisma__ClientClient<
-    runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Delete zero or more Clients.
@@ -862,9 +715,7 @@ export interface ClientDelegate<
    * })
    *
    */
-  deleteMany<T extends ClientDeleteManyArgs>(
-    args?: Prisma.SelectSubset<T, ClientDeleteManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  deleteMany<T extends ClientDeleteManyArgs>(args?: Prisma.SelectSubset<T, ClientDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Update zero or more Clients.
@@ -883,9 +734,7 @@ export interface ClientDelegate<
    * })
    *
    */
-  updateMany<T extends ClientUpdateManyArgs>(
-    args: Prisma.SelectSubset<T, ClientUpdateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  updateMany<T extends ClientUpdateManyArgs>(args: Prisma.SelectSubset<T, ClientUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Create or update one Client.
@@ -906,12 +755,7 @@ export interface ClientDelegate<
    */
   upsert<T extends ClientUpsertArgs>(
     args: Prisma.SelectSubset<T, ClientUpsertArgs<ExtArgs>>
-  ): Prisma.Prisma__ClientClient<
-    runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Count the number of Clients.
@@ -928,13 +772,7 @@ export interface ClientDelegate<
    **/
   count<T extends ClientCountArgs>(
     args?: Prisma.Subset<T, ClientCountArgs>
-  ): Prisma.PrismaPromise<
-    T extends runtime.Types.Utils.Record<'select', any>
-      ? T['select'] extends true
-        ? number
-        : Prisma.GetScalarType<T['select'], ClientCountAggregateOutputType>
-      : number
-  >;
+  ): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? (T['select'] extends true ? number : Prisma.GetScalarType<T['select'], ClientCountAggregateOutputType>) : number>;
 
   /**
    * Allows you to perform aggregations operations on a Client.
@@ -960,9 +798,7 @@ export interface ClientDelegate<
    *   take: 10,
    * })
    **/
-  aggregate<T extends ClientAggregateArgs>(
-    args: Prisma.Subset<T, ClientAggregateArgs>
-  ): Prisma.PrismaPromise<GetClientAggregateType<T>>;
+  aggregate<T extends ClientAggregateArgs>(args: Prisma.Subset<T, ClientAggregateArgs>): Prisma.PrismaPromise<GetClientAggregateType<T>>;
 
   /**
    * Group by Client.
@@ -984,16 +820,9 @@ export interface ClientDelegate<
    **/
   groupBy<
     T extends ClientGroupByArgs,
-    HasSelectOrTake extends Prisma.Or<
-      Prisma.Extends<'skip', Prisma.Keys<T>>,
-      Prisma.Extends<'take', Prisma.Keys<T>>
-    >,
-    OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? { orderBy: ClientGroupByArgs['orderBy'] }
-      : { orderBy?: ClientGroupByArgs['orderBy'] },
-    OrderFields extends Prisma.ExcludeUnderscoreKeys<
-      Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>
-    >,
+    HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>,
+    OrderByArg extends Prisma.True extends HasSelectOrTake ? { orderBy: ClientGroupByArgs['orderBy'] } : { orderBy?: ClientGroupByArgs['orderBy'] },
+    OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>,
     ByFields extends Prisma.MaybeTupleToUnion<T['by']>,
     ByValid extends Prisma.Has<ByFields, OrderFields>,
     HavingFields extends Prisma.GetHavingFields<T['having']>,
@@ -1014,9 +843,7 @@ export interface ClientDelegate<
             ? ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
             : 'Error: If you provide "take", you also need to provide "orderBy"'
           : 'skip' extends Prisma.Keys<T>
@@ -1024,17 +851,13 @@ export interface ClientDelegate<
               ? ByValid extends Prisma.True
                 ? {}
                 : {
-                    [P in OrderFields]: P extends ByFields
-                      ? never
-                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                   }[OrderFields]
               : 'Error: If you provide "skip", you also need to provide "orderBy"'
             : ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
   >(
     args: Prisma.SubsetIntersection<T, ClientGroupByArgs, OrderByArg> & InputErrors
@@ -1060,29 +883,10 @@ export interface Prisma__ClientClient<
   readonly [Symbol.toStringTag]: 'PrismaPromise';
   member<T extends Prisma.MemberDefaultArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.MemberDefaultArgs<ExtArgs>>
-  ): Prisma.Prisma__MemberClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$MemberPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
   requests<T extends Prisma.Client$requestsArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Client$requestsArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<
-    | runtime.Types.Result.GetResult<
-        Prisma.$ServiceRequestPayload<ExtArgs>,
-        T,
-        'findMany',
-        GlobalOmitOptions
-      >
-    | Null
-  >;
+  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1098,9 +902,7 @@ export interface Prisma__ClientClient<
    * @param onrejected The callback to execute when the Promise is rejected.
    * @returns A Promise for the completion of the callback.
    */
-  catch<TResult = never>(
-    onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
-  ): runtime.Types.Utils.JsPromise<T | TResult>;
+  catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
   /**
    * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
    * resolved value cannot be modified from the callback.
@@ -1125,9 +927,7 @@ export interface ClientFieldRefs {
 /**
  * Client findUnique
  */
-export type ClientFindUniqueArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Client
    */
@@ -1149,9 +949,7 @@ export type ClientFindUniqueArgs<
 /**
  * Client findUniqueOrThrow
  */
-export type ClientFindUniqueOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Client
    */
@@ -1173,9 +971,7 @@ export type ClientFindUniqueOrThrowArgs<
 /**
  * Client findFirst
  */
-export type ClientFindFirstArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Client
    */
@@ -1227,9 +1023,7 @@ export type ClientFindFirstArgs<
 /**
  * Client findFirstOrThrow
  */
-export type ClientFindFirstOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Client
    */
@@ -1281,9 +1075,7 @@ export type ClientFindFirstOrThrowArgs<
 /**
  * Client findMany
  */
-export type ClientFindManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Client
    */
@@ -1335,9 +1127,7 @@ export type ClientFindManyArgs<
 /**
  * Client create
  */
-export type ClientCreateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Client
    */
@@ -1359,9 +1149,7 @@ export type ClientCreateArgs<
 /**
  * Client createMany
  */
-export type ClientCreateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to create many Clients.
    */
@@ -1372,9 +1160,7 @@ export type ClientCreateManyArgs<
 /**
  * Client update
  */
-export type ClientUpdateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Client
    */
@@ -1400,9 +1186,7 @@ export type ClientUpdateArgs<
 /**
  * Client updateMany
  */
-export type ClientUpdateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to update Clients.
    */
@@ -1420,9 +1204,7 @@ export type ClientUpdateManyArgs<
 /**
  * Client upsert
  */
-export type ClientUpsertArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Client
    */
@@ -1452,9 +1234,7 @@ export type ClientUpsertArgs<
 /**
  * Client delete
  */
-export type ClientDeleteArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Client
    */
@@ -1476,9 +1256,7 @@ export type ClientDeleteArgs<
 /**
  * Client deleteMany
  */
-export type ClientDeleteManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which Clients to delete
    */
@@ -1492,9 +1270,7 @@ export type ClientDeleteManyArgs<
 /**
  * Client.requests
  */
-export type Client$requestsArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type Client$requestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the ServiceRequest
    */
@@ -1508,9 +1284,7 @@ export type Client$requestsArgs<
    */
   include?: Prisma.ServiceRequestInclude<ExtArgs> | null;
   where?: Prisma.ServiceRequestWhereInput;
-  orderBy?:
-    | Prisma.ServiceRequestOrderByWithRelationInput
-    | Prisma.ServiceRequestOrderByWithRelationInput[];
+  orderBy?: Prisma.ServiceRequestOrderByWithRelationInput | Prisma.ServiceRequestOrderByWithRelationInput[];
   cursor?: Prisma.ServiceRequestWhereUniqueInput;
   take?: number;
   skip?: number;
@@ -1520,9 +1294,7 @@ export type Client$requestsArgs<
 /**
  * Client without action
  */
-export type ClientDefaultArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type ClientDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Client
    */

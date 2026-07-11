@@ -15,8 +15,7 @@ import type * as Prisma from '../internal/prismaNamespace.js';
  * Model OrganizationRole
  *
  */
-export type OrganizationRoleModel =
-  runtime.Types.Result.DefaultSelection<Prisma.$OrganizationRolePayload>;
+export type OrganizationRoleModel = runtime.Types.Result.DefaultSelection<Prisma.$OrganizationRolePayload>;
 
 export type AggregateOrganizationRole = {
   _count: OrganizationRoleCountAggregateOutputType | null;
@@ -80,9 +79,7 @@ export type OrganizationRoleCountAggregateInputType = {
   _all?: true;
 };
 
-export type OrganizationRoleAggregateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which OrganizationRole to aggregate.
    */
@@ -92,9 +89,7 @@ export type OrganizationRoleAggregateArgs<
    *
    * Determine the order of OrganizationRoles to fetch.
    */
-  orderBy?:
-    | Prisma.OrganizationRoleOrderByWithRelationInput
-    | Prisma.OrganizationRoleOrderByWithRelationInput[];
+  orderBy?: Prisma.OrganizationRoleOrderByWithRelationInput | Prisma.OrganizationRoleOrderByWithRelationInput[];
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    *
@@ -141,13 +136,9 @@ export type GetOrganizationRoleAggregateType<T extends OrganizationRoleAggregate
     : Prisma.GetScalarType<T[P], AggregateOrganizationRole[P]>;
 };
 
-export type OrganizationRoleGroupByArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OrganizationRoleWhereInput;
-  orderBy?:
-    | Prisma.OrganizationRoleOrderByWithAggregationInput
-    | Prisma.OrganizationRoleOrderByWithAggregationInput[];
+  orderBy?: Prisma.OrganizationRoleOrderByWithAggregationInput | Prisma.OrganizationRoleOrderByWithAggregationInput[];
   by: Prisma.OrganizationRoleScalarFieldEnum[] | Prisma.OrganizationRoleScalarFieldEnum;
   having?: Prisma.OrganizationRoleScalarWhereWithAggregatesInput;
   take?: number;
@@ -169,18 +160,17 @@ export type OrganizationRoleGroupByOutputType = {
   _max: OrganizationRoleMaxAggregateOutputType | null;
 };
 
-export type GetOrganizationRoleGroupByPayload<T extends OrganizationRoleGroupByArgs> =
-  Prisma.PrismaPromise<
-    Array<
-      Prisma.PickEnumerable<OrganizationRoleGroupByOutputType, T['by']> & {
-        [P in keyof T & keyof OrganizationRoleGroupByOutputType]: P extends '_count'
-          ? T[P] extends boolean
-            ? number
-            : Prisma.GetScalarType<T[P], OrganizationRoleGroupByOutputType[P]>
-          : Prisma.GetScalarType<T[P], OrganizationRoleGroupByOutputType[P]>;
-      }
-    >
-  >;
+export type GetOrganizationRoleGroupByPayload<T extends OrganizationRoleGroupByArgs> = Prisma.PrismaPromise<
+  Array<
+    Prisma.PickEnumerable<OrganizationRoleGroupByOutputType, T['by']> & {
+      [P in keyof T & keyof OrganizationRoleGroupByOutputType]: P extends '_count'
+        ? T[P] extends boolean
+          ? number
+          : Prisma.GetScalarType<T[P], OrganizationRoleGroupByOutputType[P]>
+        : Prisma.GetScalarType<T[P], OrganizationRoleGroupByOutputType[P]>;
+    }
+  >
+>;
 
 export type OrganizationRoleWhereInput = {
   AND?: Prisma.OrganizationRoleWhereInput | Prisma.OrganizationRoleWhereInput[];
@@ -217,10 +207,7 @@ export type OrganizationRoleWhereUniqueInput = Prisma.AtLeast<
     permission?: Prisma.StringFilter<'OrganizationRole'> | string;
     createdAt?: Prisma.DateTimeFilter<'OrganizationRole'> | Date | string;
     updatedAt?: Prisma.DateTimeNullableFilter<'OrganizationRole'> | Date | string | null;
-    organization?: Prisma.XOR<
-      Prisma.OrganizationScalarRelationFilter,
-      Prisma.OrganizationWhereInput
-    >;
+    organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>;
   },
   'id'
 >;
@@ -238,23 +225,15 @@ export type OrganizationRoleOrderByWithAggregationInput = {
 };
 
 export type OrganizationRoleScalarWhereWithAggregatesInput = {
-  AND?:
-    | Prisma.OrganizationRoleScalarWhereWithAggregatesInput
-    | Prisma.OrganizationRoleScalarWhereWithAggregatesInput[];
+  AND?: Prisma.OrganizationRoleScalarWhereWithAggregatesInput | Prisma.OrganizationRoleScalarWhereWithAggregatesInput[];
   OR?: Prisma.OrganizationRoleScalarWhereWithAggregatesInput[];
-  NOT?:
-    | Prisma.OrganizationRoleScalarWhereWithAggregatesInput
-    | Prisma.OrganizationRoleScalarWhereWithAggregatesInput[];
+  NOT?: Prisma.OrganizationRoleScalarWhereWithAggregatesInput | Prisma.OrganizationRoleScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'OrganizationRole'> | string;
   organizationId?: Prisma.StringWithAggregatesFilter<'OrganizationRole'> | string;
   role?: Prisma.StringWithAggregatesFilter<'OrganizationRole'> | string;
   permission?: Prisma.StringWithAggregatesFilter<'OrganizationRole'> | string;
   createdAt?: Prisma.DateTimeWithAggregatesFilter<'OrganizationRole'> | Date | string;
-  updatedAt?:
-    | Prisma.DateTimeNullableWithAggregatesFilter<'OrganizationRole'>
-    | Date
-    | string
-    | null;
+  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<'OrganizationRole'> | Date | string | null;
 };
 
 export type OrganizationRoleCreateInput = {
@@ -330,9 +309,7 @@ export type OrganizationRoleOrderByRelationAggregateInput = {
 };
 
 export type OrganizationRoleOrderByRelevanceInput = {
-  fields:
-    | Prisma.OrganizationRoleOrderByRelevanceFieldEnum
-    | Prisma.OrganizationRoleOrderByRelevanceFieldEnum[];
+  fields: Prisma.OrganizationRoleOrderByRelevanceFieldEnum | Prisma.OrganizationRoleOrderByRelevanceFieldEnum[];
   sort: Prisma.SortOrder;
   search: string;
 };
@@ -366,87 +343,55 @@ export type OrganizationRoleMinOrderByAggregateInput = {
 
 export type OrganizationRoleCreateNestedManyWithoutOrganizationInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.OrganizationRoleCreateWithoutOrganizationInput,
-        Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput
-      >
+    | Prisma.XOR<Prisma.OrganizationRoleCreateWithoutOrganizationInput, Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput>
     | Prisma.OrganizationRoleCreateWithoutOrganizationInput[]
     | Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput[];
-  connectOrCreate?:
-    | Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput
-    | Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput[];
+  connectOrCreate?: Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput | Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput[];
   createMany?: Prisma.OrganizationRoleCreateManyOrganizationInputEnvelope;
   connect?: Prisma.OrganizationRoleWhereUniqueInput | Prisma.OrganizationRoleWhereUniqueInput[];
 };
 
 export type OrganizationRoleUncheckedCreateNestedManyWithoutOrganizationInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.OrganizationRoleCreateWithoutOrganizationInput,
-        Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput
-      >
+    | Prisma.XOR<Prisma.OrganizationRoleCreateWithoutOrganizationInput, Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput>
     | Prisma.OrganizationRoleCreateWithoutOrganizationInput[]
     | Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput[];
-  connectOrCreate?:
-    | Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput
-    | Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput[];
+  connectOrCreate?: Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput | Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput[];
   createMany?: Prisma.OrganizationRoleCreateManyOrganizationInputEnvelope;
   connect?: Prisma.OrganizationRoleWhereUniqueInput | Prisma.OrganizationRoleWhereUniqueInput[];
 };
 
 export type OrganizationRoleUpdateManyWithoutOrganizationNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.OrganizationRoleCreateWithoutOrganizationInput,
-        Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput
-      >
+    | Prisma.XOR<Prisma.OrganizationRoleCreateWithoutOrganizationInput, Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput>
     | Prisma.OrganizationRoleCreateWithoutOrganizationInput[]
     | Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput[];
-  connectOrCreate?:
-    | Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput
-    | Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput[];
-  upsert?:
-    | Prisma.OrganizationRoleUpsertWithWhereUniqueWithoutOrganizationInput
-    | Prisma.OrganizationRoleUpsertWithWhereUniqueWithoutOrganizationInput[];
+  connectOrCreate?: Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput | Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput[];
+  upsert?: Prisma.OrganizationRoleUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.OrganizationRoleUpsertWithWhereUniqueWithoutOrganizationInput[];
   createMany?: Prisma.OrganizationRoleCreateManyOrganizationInputEnvelope;
   set?: Prisma.OrganizationRoleWhereUniqueInput | Prisma.OrganizationRoleWhereUniqueInput[];
   disconnect?: Prisma.OrganizationRoleWhereUniqueInput | Prisma.OrganizationRoleWhereUniqueInput[];
   delete?: Prisma.OrganizationRoleWhereUniqueInput | Prisma.OrganizationRoleWhereUniqueInput[];
   connect?: Prisma.OrganizationRoleWhereUniqueInput | Prisma.OrganizationRoleWhereUniqueInput[];
-  update?:
-    | Prisma.OrganizationRoleUpdateWithWhereUniqueWithoutOrganizationInput
-    | Prisma.OrganizationRoleUpdateWithWhereUniqueWithoutOrganizationInput[];
-  updateMany?:
-    | Prisma.OrganizationRoleUpdateManyWithWhereWithoutOrganizationInput
-    | Prisma.OrganizationRoleUpdateManyWithWhereWithoutOrganizationInput[];
+  update?: Prisma.OrganizationRoleUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.OrganizationRoleUpdateWithWhereUniqueWithoutOrganizationInput[];
+  updateMany?: Prisma.OrganizationRoleUpdateManyWithWhereWithoutOrganizationInput | Prisma.OrganizationRoleUpdateManyWithWhereWithoutOrganizationInput[];
   deleteMany?: Prisma.OrganizationRoleScalarWhereInput | Prisma.OrganizationRoleScalarWhereInput[];
 };
 
 export type OrganizationRoleUncheckedUpdateManyWithoutOrganizationNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.OrganizationRoleCreateWithoutOrganizationInput,
-        Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput
-      >
+    | Prisma.XOR<Prisma.OrganizationRoleCreateWithoutOrganizationInput, Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput>
     | Prisma.OrganizationRoleCreateWithoutOrganizationInput[]
     | Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput[];
-  connectOrCreate?:
-    | Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput
-    | Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput[];
-  upsert?:
-    | Prisma.OrganizationRoleUpsertWithWhereUniqueWithoutOrganizationInput
-    | Prisma.OrganizationRoleUpsertWithWhereUniqueWithoutOrganizationInput[];
+  connectOrCreate?: Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput | Prisma.OrganizationRoleCreateOrConnectWithoutOrganizationInput[];
+  upsert?: Prisma.OrganizationRoleUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.OrganizationRoleUpsertWithWhereUniqueWithoutOrganizationInput[];
   createMany?: Prisma.OrganizationRoleCreateManyOrganizationInputEnvelope;
   set?: Prisma.OrganizationRoleWhereUniqueInput | Prisma.OrganizationRoleWhereUniqueInput[];
   disconnect?: Prisma.OrganizationRoleWhereUniqueInput | Prisma.OrganizationRoleWhereUniqueInput[];
   delete?: Prisma.OrganizationRoleWhereUniqueInput | Prisma.OrganizationRoleWhereUniqueInput[];
   connect?: Prisma.OrganizationRoleWhereUniqueInput | Prisma.OrganizationRoleWhereUniqueInput[];
-  update?:
-    | Prisma.OrganizationRoleUpdateWithWhereUniqueWithoutOrganizationInput
-    | Prisma.OrganizationRoleUpdateWithWhereUniqueWithoutOrganizationInput[];
-  updateMany?:
-    | Prisma.OrganizationRoleUpdateManyWithWhereWithoutOrganizationInput
-    | Prisma.OrganizationRoleUpdateManyWithWhereWithoutOrganizationInput[];
+  update?: Prisma.OrganizationRoleUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.OrganizationRoleUpdateWithWhereUniqueWithoutOrganizationInput[];
+  updateMany?: Prisma.OrganizationRoleUpdateManyWithWhereWithoutOrganizationInput | Prisma.OrganizationRoleUpdateManyWithWhereWithoutOrganizationInput[];
   deleteMany?: Prisma.OrganizationRoleScalarWhereInput | Prisma.OrganizationRoleScalarWhereInput[];
 };
 
@@ -468,45 +413,28 @@ export type OrganizationRoleUncheckedCreateWithoutOrganizationInput = {
 
 export type OrganizationRoleCreateOrConnectWithoutOrganizationInput = {
   where: Prisma.OrganizationRoleWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.OrganizationRoleCreateWithoutOrganizationInput,
-    Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput
-  >;
+  create: Prisma.XOR<Prisma.OrganizationRoleCreateWithoutOrganizationInput, Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput>;
 };
 
 export type OrganizationRoleCreateManyOrganizationInputEnvelope = {
-  data:
-    | Prisma.OrganizationRoleCreateManyOrganizationInput
-    | Prisma.OrganizationRoleCreateManyOrganizationInput[];
+  data: Prisma.OrganizationRoleCreateManyOrganizationInput | Prisma.OrganizationRoleCreateManyOrganizationInput[];
   skipDuplicates?: boolean;
 };
 
 export type OrganizationRoleUpsertWithWhereUniqueWithoutOrganizationInput = {
   where: Prisma.OrganizationRoleWhereUniqueInput;
-  update: Prisma.XOR<
-    Prisma.OrganizationRoleUpdateWithoutOrganizationInput,
-    Prisma.OrganizationRoleUncheckedUpdateWithoutOrganizationInput
-  >;
-  create: Prisma.XOR<
-    Prisma.OrganizationRoleCreateWithoutOrganizationInput,
-    Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput
-  >;
+  update: Prisma.XOR<Prisma.OrganizationRoleUpdateWithoutOrganizationInput, Prisma.OrganizationRoleUncheckedUpdateWithoutOrganizationInput>;
+  create: Prisma.XOR<Prisma.OrganizationRoleCreateWithoutOrganizationInput, Prisma.OrganizationRoleUncheckedCreateWithoutOrganizationInput>;
 };
 
 export type OrganizationRoleUpdateWithWhereUniqueWithoutOrganizationInput = {
   where: Prisma.OrganizationRoleWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.OrganizationRoleUpdateWithoutOrganizationInput,
-    Prisma.OrganizationRoleUncheckedUpdateWithoutOrganizationInput
-  >;
+  data: Prisma.XOR<Prisma.OrganizationRoleUpdateWithoutOrganizationInput, Prisma.OrganizationRoleUncheckedUpdateWithoutOrganizationInput>;
 };
 
 export type OrganizationRoleUpdateManyWithWhereWithoutOrganizationInput = {
   where: Prisma.OrganizationRoleScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.OrganizationRoleUpdateManyMutationInput,
-    Prisma.OrganizationRoleUncheckedUpdateManyWithoutOrganizationInput
-  >;
+  data: Prisma.XOR<Prisma.OrganizationRoleUpdateManyMutationInput, Prisma.OrganizationRoleUncheckedUpdateManyWithoutOrganizationInput>;
 };
 
 export type OrganizationRoleScalarWhereInput = {
@@ -553,9 +481,7 @@ export type OrganizationRoleUncheckedUpdateManyWithoutOrganizationInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
 };
 
-export type OrganizationRoleSelect<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetSelect<
+export type OrganizationRoleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
     organizationId?: boolean;
@@ -577,21 +503,15 @@ export type OrganizationRoleSelectScalar = {
   updatedAt?: boolean;
 };
 
-export type OrganizationRoleOmit<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetOmit<
+export type OrganizationRoleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<
   'id' | 'organizationId' | 'role' | 'permission' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['organizationRole']
 >;
-export type OrganizationRoleInclude<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>;
 };
 
-export type $OrganizationRolePayload<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type $OrganizationRolePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: 'OrganizationRole';
   objects: {
     organization: Prisma.$OrganizationPayload<ExtArgs>;
@@ -610,20 +530,16 @@ export type $OrganizationRolePayload<
   composites: {};
 };
 
-export type OrganizationRoleGetPayload<
-  S extends boolean | null | undefined | OrganizationRoleDefaultArgs
-> = runtime.Types.Result.GetResult<Prisma.$OrganizationRolePayload, S>;
+export type OrganizationRoleGetPayload<S extends boolean | null | undefined | OrganizationRoleDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$OrganizationRolePayload, S>;
 
-export type OrganizationRoleCountArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = Omit<OrganizationRoleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+export type OrganizationRoleCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<
+  OrganizationRoleFindManyArgs,
+  'select' | 'include' | 'distinct' | 'omit'
+> & {
   select?: OrganizationRoleCountAggregateInputType | true;
 };
 
-export interface OrganizationRoleDelegate<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-  GlobalOmitOptions = {}
-> {
+export interface OrganizationRoleDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
   [K: symbol]: {
     types: Prisma.TypeMap<ExtArgs>['model']['OrganizationRole'];
     meta: { name: 'OrganizationRole' };
@@ -641,17 +557,7 @@ export interface OrganizationRoleDelegate<
    */
   findUnique<T extends OrganizationRoleFindUniqueArgs>(
     args: Prisma.SelectSubset<T, OrganizationRoleFindUniqueArgs<ExtArgs>>
-  ): Prisma.Prisma__OrganizationRoleClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$OrganizationRolePayload<ExtArgs>,
-      T,
-      'findUnique',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__OrganizationRoleClient<runtime.Types.Result.GetResult<Prisma.$OrganizationRolePayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find one OrganizationRole that matches the filter or throw an error with `error.code='P2025'`
@@ -667,17 +573,7 @@ export interface OrganizationRoleDelegate<
    */
   findUniqueOrThrow<T extends OrganizationRoleFindUniqueOrThrowArgs>(
     args: Prisma.SelectSubset<T, OrganizationRoleFindUniqueOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__OrganizationRoleClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$OrganizationRolePayload<ExtArgs>,
-      T,
-      'findUniqueOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__OrganizationRoleClient<runtime.Types.Result.GetResult<Prisma.$OrganizationRolePayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first OrganizationRole that matches the filter.
@@ -694,17 +590,7 @@ export interface OrganizationRoleDelegate<
    */
   findFirst<T extends OrganizationRoleFindFirstArgs>(
     args?: Prisma.SelectSubset<T, OrganizationRoleFindFirstArgs<ExtArgs>>
-  ): Prisma.Prisma__OrganizationRoleClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$OrganizationRolePayload<ExtArgs>,
-      T,
-      'findFirst',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__OrganizationRoleClient<runtime.Types.Result.GetResult<Prisma.$OrganizationRolePayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first OrganizationRole that matches the filter or
@@ -722,17 +608,7 @@ export interface OrganizationRoleDelegate<
    */
   findFirstOrThrow<T extends OrganizationRoleFindFirstOrThrowArgs>(
     args?: Prisma.SelectSubset<T, OrganizationRoleFindFirstOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__OrganizationRoleClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$OrganizationRolePayload<ExtArgs>,
-      T,
-      'findFirstOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__OrganizationRoleClient<runtime.Types.Result.GetResult<Prisma.$OrganizationRolePayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find zero or more OrganizationRoles that matches the filter.
@@ -752,14 +628,7 @@ export interface OrganizationRoleDelegate<
    */
   findMany<T extends OrganizationRoleFindManyArgs>(
     args?: Prisma.SelectSubset<T, OrganizationRoleFindManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<
-    runtime.Types.Result.GetResult<
-      Prisma.$OrganizationRolePayload<ExtArgs>,
-      T,
-      'findMany',
-      GlobalOmitOptions
-    >
-  >;
+  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationRolePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>;
 
   /**
    * Create a OrganizationRole.
@@ -775,17 +644,7 @@ export interface OrganizationRoleDelegate<
    */
   create<T extends OrganizationRoleCreateArgs>(
     args: Prisma.SelectSubset<T, OrganizationRoleCreateArgs<ExtArgs>>
-  ): Prisma.Prisma__OrganizationRoleClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$OrganizationRolePayload<ExtArgs>,
-      T,
-      'create',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__OrganizationRoleClient<runtime.Types.Result.GetResult<Prisma.$OrganizationRolePayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Create many OrganizationRoles.
@@ -799,9 +658,7 @@ export interface OrganizationRoleDelegate<
    * })
    *
    */
-  createMany<T extends OrganizationRoleCreateManyArgs>(
-    args?: Prisma.SelectSubset<T, OrganizationRoleCreateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  createMany<T extends OrganizationRoleCreateManyArgs>(args?: Prisma.SelectSubset<T, OrganizationRoleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Delete a OrganizationRole.
@@ -817,17 +674,7 @@ export interface OrganizationRoleDelegate<
    */
   delete<T extends OrganizationRoleDeleteArgs>(
     args: Prisma.SelectSubset<T, OrganizationRoleDeleteArgs<ExtArgs>>
-  ): Prisma.Prisma__OrganizationRoleClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$OrganizationRolePayload<ExtArgs>,
-      T,
-      'delete',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__OrganizationRoleClient<runtime.Types.Result.GetResult<Prisma.$OrganizationRolePayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Update one OrganizationRole.
@@ -846,17 +693,7 @@ export interface OrganizationRoleDelegate<
    */
   update<T extends OrganizationRoleUpdateArgs>(
     args: Prisma.SelectSubset<T, OrganizationRoleUpdateArgs<ExtArgs>>
-  ): Prisma.Prisma__OrganizationRoleClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$OrganizationRolePayload<ExtArgs>,
-      T,
-      'update',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__OrganizationRoleClient<runtime.Types.Result.GetResult<Prisma.$OrganizationRolePayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Delete zero or more OrganizationRoles.
@@ -870,9 +707,7 @@ export interface OrganizationRoleDelegate<
    * })
    *
    */
-  deleteMany<T extends OrganizationRoleDeleteManyArgs>(
-    args?: Prisma.SelectSubset<T, OrganizationRoleDeleteManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  deleteMany<T extends OrganizationRoleDeleteManyArgs>(args?: Prisma.SelectSubset<T, OrganizationRoleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Update zero or more OrganizationRoles.
@@ -891,9 +726,7 @@ export interface OrganizationRoleDelegate<
    * })
    *
    */
-  updateMany<T extends OrganizationRoleUpdateManyArgs>(
-    args: Prisma.SelectSubset<T, OrganizationRoleUpdateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  updateMany<T extends OrganizationRoleUpdateManyArgs>(args: Prisma.SelectSubset<T, OrganizationRoleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Create or update one OrganizationRole.
@@ -914,17 +747,7 @@ export interface OrganizationRoleDelegate<
    */
   upsert<T extends OrganizationRoleUpsertArgs>(
     args: Prisma.SelectSubset<T, OrganizationRoleUpsertArgs<ExtArgs>>
-  ): Prisma.Prisma__OrganizationRoleClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$OrganizationRolePayload<ExtArgs>,
-      T,
-      'upsert',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__OrganizationRoleClient<runtime.Types.Result.GetResult<Prisma.$OrganizationRolePayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Count the number of OrganizationRoles.
@@ -942,11 +765,7 @@ export interface OrganizationRoleDelegate<
   count<T extends OrganizationRoleCountArgs>(
     args?: Prisma.Subset<T, OrganizationRoleCountArgs>
   ): Prisma.PrismaPromise<
-    T extends runtime.Types.Utils.Record<'select', any>
-      ? T['select'] extends true
-        ? number
-        : Prisma.GetScalarType<T['select'], OrganizationRoleCountAggregateOutputType>
-      : number
+    T extends runtime.Types.Utils.Record<'select', any> ? (T['select'] extends true ? number : Prisma.GetScalarType<T['select'], OrganizationRoleCountAggregateOutputType>) : number
   >;
 
   /**
@@ -973,9 +792,7 @@ export interface OrganizationRoleDelegate<
    *   take: 10,
    * })
    **/
-  aggregate<T extends OrganizationRoleAggregateArgs>(
-    args: Prisma.Subset<T, OrganizationRoleAggregateArgs>
-  ): Prisma.PrismaPromise<GetOrganizationRoleAggregateType<T>>;
+  aggregate<T extends OrganizationRoleAggregateArgs>(args: Prisma.Subset<T, OrganizationRoleAggregateArgs>): Prisma.PrismaPromise<GetOrganizationRoleAggregateType<T>>;
 
   /**
    * Group by OrganizationRole.
@@ -997,16 +814,9 @@ export interface OrganizationRoleDelegate<
    **/
   groupBy<
     T extends OrganizationRoleGroupByArgs,
-    HasSelectOrTake extends Prisma.Or<
-      Prisma.Extends<'skip', Prisma.Keys<T>>,
-      Prisma.Extends<'take', Prisma.Keys<T>>
-    >,
-    OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? { orderBy: OrganizationRoleGroupByArgs['orderBy'] }
-      : { orderBy?: OrganizationRoleGroupByArgs['orderBy'] },
-    OrderFields extends Prisma.ExcludeUnderscoreKeys<
-      Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>
-    >,
+    HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>,
+    OrderByArg extends Prisma.True extends HasSelectOrTake ? { orderBy: OrganizationRoleGroupByArgs['orderBy'] } : { orderBy?: OrganizationRoleGroupByArgs['orderBy'] },
+    OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>,
     ByFields extends Prisma.MaybeTupleToUnion<T['by']>,
     ByValid extends Prisma.Has<ByFields, OrderFields>,
     HavingFields extends Prisma.GetHavingFields<T['having']>,
@@ -1027,9 +837,7 @@ export interface OrganizationRoleDelegate<
             ? ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
             : 'Error: If you provide "take", you also need to provide "orderBy"'
           : 'skip' extends Prisma.Keys<T>
@@ -1037,23 +845,17 @@ export interface OrganizationRoleDelegate<
               ? ByValid extends Prisma.True
                 ? {}
                 : {
-                    [P in OrderFields]: P extends ByFields
-                      ? never
-                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                   }[OrderFields]
               : 'Error: If you provide "skip", you also need to provide "orderBy"'
             : ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
   >(
     args: Prisma.SubsetIntersection<T, OrganizationRoleGroupByArgs, OrderByArg> & InputErrors
-  ): {} extends InputErrors
-    ? GetOrganizationRoleGroupByPayload<T>
-    : Prisma.PrismaPromise<InputErrors>;
+  ): {} extends InputErrors ? GetOrganizationRoleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
   /**
    * Fields of the OrganizationRole model
    */
@@ -1075,18 +877,7 @@ export interface Prisma__OrganizationRoleClient<
   readonly [Symbol.toStringTag]: 'PrismaPromise';
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>
-  ): Prisma.Prisma__OrganizationClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$OrganizationPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1102,9 +893,7 @@ export interface Prisma__OrganizationRoleClient<
    * @param onrejected The callback to execute when the Promise is rejected.
    * @returns A Promise for the completion of the callback.
    */
-  catch<TResult = never>(
-    onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
-  ): runtime.Types.Utils.JsPromise<T | TResult>;
+  catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
   /**
    * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
    * resolved value cannot be modified from the callback.
@@ -1130,9 +919,7 @@ export interface OrganizationRoleFieldRefs {
 /**
  * OrganizationRole findUnique
  */
-export type OrganizationRoleFindUniqueArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the OrganizationRole
    */
@@ -1154,9 +941,7 @@ export type OrganizationRoleFindUniqueArgs<
 /**
  * OrganizationRole findUniqueOrThrow
  */
-export type OrganizationRoleFindUniqueOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the OrganizationRole
    */
@@ -1178,9 +963,7 @@ export type OrganizationRoleFindUniqueOrThrowArgs<
 /**
  * OrganizationRole findFirst
  */
-export type OrganizationRoleFindFirstArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the OrganizationRole
    */
@@ -1202,9 +985,7 @@ export type OrganizationRoleFindFirstArgs<
    *
    * Determine the order of OrganizationRoles to fetch.
    */
-  orderBy?:
-    | Prisma.OrganizationRoleOrderByWithRelationInput
-    | Prisma.OrganizationRoleOrderByWithRelationInput[];
+  orderBy?: Prisma.OrganizationRoleOrderByWithRelationInput | Prisma.OrganizationRoleOrderByWithRelationInput[];
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    *
@@ -1234,9 +1015,7 @@ export type OrganizationRoleFindFirstArgs<
 /**
  * OrganizationRole findFirstOrThrow
  */
-export type OrganizationRoleFindFirstOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the OrganizationRole
    */
@@ -1258,9 +1037,7 @@ export type OrganizationRoleFindFirstOrThrowArgs<
    *
    * Determine the order of OrganizationRoles to fetch.
    */
-  orderBy?:
-    | Prisma.OrganizationRoleOrderByWithRelationInput
-    | Prisma.OrganizationRoleOrderByWithRelationInput[];
+  orderBy?: Prisma.OrganizationRoleOrderByWithRelationInput | Prisma.OrganizationRoleOrderByWithRelationInput[];
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    *
@@ -1290,9 +1067,7 @@ export type OrganizationRoleFindFirstOrThrowArgs<
 /**
  * OrganizationRole findMany
  */
-export type OrganizationRoleFindManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the OrganizationRole
    */
@@ -1314,9 +1089,7 @@ export type OrganizationRoleFindManyArgs<
    *
    * Determine the order of OrganizationRoles to fetch.
    */
-  orderBy?:
-    | Prisma.OrganizationRoleOrderByWithRelationInput
-    | Prisma.OrganizationRoleOrderByWithRelationInput[];
+  orderBy?: Prisma.OrganizationRoleOrderByWithRelationInput | Prisma.OrganizationRoleOrderByWithRelationInput[];
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
    *
@@ -1346,9 +1119,7 @@ export type OrganizationRoleFindManyArgs<
 /**
  * OrganizationRole create
  */
-export type OrganizationRoleCreateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the OrganizationRole
    */
@@ -1370,9 +1141,7 @@ export type OrganizationRoleCreateArgs<
 /**
  * OrganizationRole createMany
  */
-export type OrganizationRoleCreateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to create many OrganizationRoles.
    */
@@ -1383,9 +1152,7 @@ export type OrganizationRoleCreateManyArgs<
 /**
  * OrganizationRole update
  */
-export type OrganizationRoleUpdateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the OrganizationRole
    */
@@ -1411,16 +1178,11 @@ export type OrganizationRoleUpdateArgs<
 /**
  * OrganizationRole updateMany
  */
-export type OrganizationRoleUpdateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to update OrganizationRoles.
    */
-  data: Prisma.XOR<
-    Prisma.OrganizationRoleUpdateManyMutationInput,
-    Prisma.OrganizationRoleUncheckedUpdateManyInput
-  >;
+  data: Prisma.XOR<Prisma.OrganizationRoleUpdateManyMutationInput, Prisma.OrganizationRoleUncheckedUpdateManyInput>;
   /**
    * Filter which OrganizationRoles to update
    */
@@ -1434,9 +1196,7 @@ export type OrganizationRoleUpdateManyArgs<
 /**
  * OrganizationRole upsert
  */
-export type OrganizationRoleUpsertArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the OrganizationRole
    */
@@ -1456,25 +1216,17 @@ export type OrganizationRoleUpsertArgs<
   /**
    * In case the OrganizationRole found by the `where` argument doesn't exist, create a new OrganizationRole with this data.
    */
-  create: Prisma.XOR<
-    Prisma.OrganizationRoleCreateInput,
-    Prisma.OrganizationRoleUncheckedCreateInput
-  >;
+  create: Prisma.XOR<Prisma.OrganizationRoleCreateInput, Prisma.OrganizationRoleUncheckedCreateInput>;
   /**
    * In case the OrganizationRole was found with the provided `where` argument, update it with this data.
    */
-  update: Prisma.XOR<
-    Prisma.OrganizationRoleUpdateInput,
-    Prisma.OrganizationRoleUncheckedUpdateInput
-  >;
+  update: Prisma.XOR<Prisma.OrganizationRoleUpdateInput, Prisma.OrganizationRoleUncheckedUpdateInput>;
 };
 
 /**
  * OrganizationRole delete
  */
-export type OrganizationRoleDeleteArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the OrganizationRole
    */
@@ -1496,9 +1248,7 @@ export type OrganizationRoleDeleteArgs<
 /**
  * OrganizationRole deleteMany
  */
-export type OrganizationRoleDeleteManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which OrganizationRoles to delete
    */
@@ -1512,9 +1262,7 @@ export type OrganizationRoleDeleteManyArgs<
 /**
  * OrganizationRole without action
  */
-export type OrganizationRoleDefaultArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type OrganizationRoleDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the OrganizationRole
    */

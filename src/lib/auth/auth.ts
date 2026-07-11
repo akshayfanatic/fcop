@@ -3,11 +3,7 @@ import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { organization } from 'better-auth/plugins';
 import { env } from '../../config/env.js';
 import { LeadStatus } from '../../generated/prisma/client.js';
-import {
-  sendInvitationEmail,
-  sendMemberAcceptedInvitationEmail,
-  sendResetPasswordEmail
-} from '../email/index.js';
+import { sendInvitationEmail, sendMemberAcceptedInvitationEmail, sendResetPasswordEmail } from '../email/index.js';
 import { leadService } from '../../services/lead.service.js';
 import { clientService } from '../../services/client.service.js';
 import { logger } from '../logger.js';

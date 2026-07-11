@@ -17,9 +17,7 @@ export const getSessionMember = async (headers: IncomingHttpHeaders) => {
   const member = await prisma.member.findFirst({
     where: {
       userId: session.user.id,
-      ...(session.session.activeOrganizationId
-        ? { organizationId: session.session.activeOrganizationId }
-        : {})
+      ...(session.session.activeOrganizationId ? { organizationId: session.session.activeOrganizationId } : {})
     },
     include: {
       user: {
@@ -32,11 +30,7 @@ export const getSessionMember = async (headers: IncomingHttpHeaders) => {
   });
 
   if (!member) {
-    throw createHttpError(
-      HttpStatus.NOT_FOUND,
-      'Organization member not found.',
-      'MEMBER_NOT_FOUND'
-    );
+    throw createHttpError(HttpStatus.NOT_FOUND, 'Organization member not found.', 'MEMBER_NOT_FOUND');
   }
 
   return member;

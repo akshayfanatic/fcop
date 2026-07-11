@@ -10,9 +10,7 @@ export const TestEmail = ({ recipientName = 'there' }: TestEmailProps) => (
   <BaseEmail previewText="Your FCOP email setup is working.">
     <h1 style={emailStyles.heading}>Email setup works</h1>
     <p style={emailStyles.text}>Hi {recipientName},</p>
-    <p style={emailStyles.lastText}>
-      Resend is configured and this message was sent through the FCOP backend email layer.
-    </p>
+    <p style={emailStyles.lastText}>Resend is configured and this message was sent through the FCOP backend email layer.</p>
   </BaseEmail>
 );
 

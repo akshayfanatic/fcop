@@ -7,10 +7,7 @@ import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
-import type {
-  CreateServiceRequestInput,
-  UpdateServiceRequestInput
-} from '../validators/service-request.validator.js';
+import type { CreateServiceRequestInput, UpdateServiceRequestInput } from '../validators/service-request.validator.js';
 
 const includeClientRequestDetails = {
   client: {
@@ -38,21 +35,14 @@ const includeClientRequestDetails = {
 } satisfies Prisma.ServiceRequestInclude;
 
 export const serviceRequestService = {
-  createServiceRequest: async (
-    payload: CreateServiceRequestInput,
-    headers: IncomingHttpHeaders
-  ) => {
+  createServiceRequest: async (payload: CreateServiceRequestInput, headers: IncomingHttpHeaders) => {
     try {
       const member = await getSessionMember(headers);
       const client = member.client;
 
       // Make sure only clients can create service requests.
       if (!client) {
-        throw createHttpError(
-          HttpStatus.NOT_FOUND,
-          'Client profile has not been created.',
-          'CLIENT_NOT_FOUND'
-        );
+        throw createHttpError(HttpStatus.NOT_FOUND, 'Client profile has not been created.', 'CLIENT_NOT_FOUND');
       }
 
       const request = await prisma.serviceRequest.create({
@@ -65,9 +55,7 @@ export const serviceRequestService = {
       });
 
       if (!env.adminEmail) {
-        logger.warn(
-          'ADMIN_EMAIL is not configured. Skipping new service request email notification.'
-        );
+        logger.warn('ADMIN_EMAIL is not configured. Skipping new service request email notification.');
         return request;
       }
 
@@ -79,10 +67,7 @@ export const serviceRequestService = {
           template: createNewServiceRequestEmailTemplate({ request })
         });
       } catch (error) {
-        logger.error(
-          { error, serviceRequestId: request.id },
-          'Failed to send new service request email notification.'
-        );
+        logger.error({ error, serviceRequestId: request.id }, 'Failed to send new service request email notification.');
       }
 
       return request;
@@ -132,11 +117,7 @@ export const serviceRequestService = {
         });
 
         if (!request) {
-          throw createHttpError(
-            HttpStatus.NOT_FOUND,
-            'Service request not found.',
-            'SERVICE_REQUEST_NOT_FOUND'
-          );
+          throw createHttpError(HttpStatus.NOT_FOUND, 'Service request not found.', 'SERVICE_REQUEST_NOT_FOUND');
         }
 
         return request;
@@ -150,11 +131,7 @@ export const serviceRequestService = {
       });
 
       if (!request) {
-        throw createHttpError(
-          HttpStatus.NOT_FOUND,
-          'Service request not found.',
-          'SERVICE_REQUEST_NOT_FOUND'
-        );
+        throw createHttpError(HttpStatus.NOT_FOUND, 'Service request not found.', 'SERVICE_REQUEST_NOT_FOUND');
       }
 
       return request;
@@ -164,11 +141,7 @@ export const serviceRequestService = {
     }
   },
 
-  updateServiceRequestById: async (
-    id: string,
-    payload: UpdateServiceRequestInput,
-    _headers: IncomingHttpHeaders
-  ) => {
+  updateServiceRequestById: async (id: string, payload: UpdateServiceRequestInput, _headers: IncomingHttpHeaders) => {
     try {
       const request = await prisma.serviceRequest.findUnique({
         where: {
@@ -178,11 +151,7 @@ export const serviceRequestService = {
 
       // Make sure service request exists before update.
       if (!request) {
-        throw createHttpError(
-          HttpStatus.NOT_FOUND,
-          'Service request not found.',
-          'SERVICE_REQUEST_NOT_FOUND'
-        );
+        throw createHttpError(HttpStatus.NOT_FOUND, 'Service request not found.', 'SERVICE_REQUEST_NOT_FOUND');
       }
 
       return await prisma.serviceRequest.update({
@@ -211,11 +180,7 @@ export const serviceRequestService = {
 
       // Make sure service request exists before delete.
       if (!request) {
-        throw createHttpError(
-          HttpStatus.NOT_FOUND,
-          'Service request not found.',
-          'SERVICE_REQUEST_NOT_FOUND'
-        );
+        throw createHttpError(HttpStatus.NOT_FOUND, 'Service request not found.', 'SERVICE_REQUEST_NOT_FOUND');
       }
 
       return await prisma.serviceRequest.delete({

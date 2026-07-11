@@ -31,17 +31,12 @@ const tokenStyle = {
   wordBreak: 'break-all' as const
 };
 
-export const createResetPasswordEmailTemplate = ({
-  resetUrl,
-  token
-}: ResetPasswordEmailProps): EmailTemplate => ({
+export const createResetPasswordEmailTemplate = ({ resetUrl, token }: ResetPasswordEmailProps): EmailTemplate => ({
   subject: 'Reset your FCOP password',
   react: (
     <BaseEmail previewText="Use this secure link to reset your FCOP password.">
       <h1 style={emailStyles.heading}>Reset your password</h1>
-      <p style={emailStyles.text}>
-        We received a request to reset your FCOP password. Use the button below to continue.
-      </p>
+      <p style={emailStyles.text}>We received a request to reset your FCOP password. Use the button below to continue.</p>
       <p style={emailStyles.text}>
         <a href={resetUrl} style={buttonStyle}>
           Reset password
@@ -49,9 +44,7 @@ export const createResetPasswordEmailTemplate = ({
       </p>
       <p style={emailStyles.text}>If the button does not work, use this reset token:</p>
       <p style={tokenStyle}>{token}</p>
-      <p style={emailStyles.lastText}>
-        If you did not request a password reset, you can ignore this email.
-      </p>
+      <p style={emailStyles.lastText}>If you did not request a password reset, you can ignore this email.</p>
     </BaseEmail>
   ),
   text: [

@@ -67,9 +67,7 @@ export type TeamMemberCountAggregateInputType = {
   _all?: true;
 };
 
-export type TeamMemberAggregateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which TeamMember to aggregate.
    */
@@ -126,13 +124,9 @@ export type GetTeamMemberAggregateType<T extends TeamMemberAggregateArgs> = {
     : Prisma.GetScalarType<T[P], AggregateTeamMember[P]>;
 };
 
-export type TeamMemberGroupByArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TeamMemberWhereInput;
-  orderBy?:
-    | Prisma.TeamMemberOrderByWithAggregationInput
-    | Prisma.TeamMemberOrderByWithAggregationInput[];
+  orderBy?: Prisma.TeamMemberOrderByWithAggregationInput | Prisma.TeamMemberOrderByWithAggregationInput[];
   by: Prisma.TeamMemberScalarFieldEnum[] | Prisma.TeamMemberScalarFieldEnum;
   having?: Prisma.TeamMemberScalarWhereWithAggregatesInput;
   take?: number;
@@ -212,13 +206,9 @@ export type TeamMemberOrderByWithAggregationInput = {
 };
 
 export type TeamMemberScalarWhereWithAggregatesInput = {
-  AND?:
-    | Prisma.TeamMemberScalarWhereWithAggregatesInput
-    | Prisma.TeamMemberScalarWhereWithAggregatesInput[];
+  AND?: Prisma.TeamMemberScalarWhereWithAggregatesInput | Prisma.TeamMemberScalarWhereWithAggregatesInput[];
   OR?: Prisma.TeamMemberScalarWhereWithAggregatesInput[];
-  NOT?:
-    | Prisma.TeamMemberScalarWhereWithAggregatesInput
-    | Prisma.TeamMemberScalarWhereWithAggregatesInput[];
+  NOT?: Prisma.TeamMemberScalarWhereWithAggregatesInput | Prisma.TeamMemberScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'TeamMember'> | string;
   teamId?: Prisma.StringWithAggregatesFilter<'TeamMember'> | string;
   userId?: Prisma.StringWithAggregatesFilter<'TeamMember'> | string;
@@ -311,173 +301,109 @@ export type TeamMemberMinOrderByAggregateInput = {
 
 export type TeamMemberCreateNestedManyWithoutUserInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.TeamMemberCreateWithoutUserInput,
-        Prisma.TeamMemberUncheckedCreateWithoutUserInput
-      >
+    | Prisma.XOR<Prisma.TeamMemberCreateWithoutUserInput, Prisma.TeamMemberUncheckedCreateWithoutUserInput>
     | Prisma.TeamMemberCreateWithoutUserInput[]
     | Prisma.TeamMemberUncheckedCreateWithoutUserInput[];
-  connectOrCreate?:
-    | Prisma.TeamMemberCreateOrConnectWithoutUserInput
-    | Prisma.TeamMemberCreateOrConnectWithoutUserInput[];
+  connectOrCreate?: Prisma.TeamMemberCreateOrConnectWithoutUserInput | Prisma.TeamMemberCreateOrConnectWithoutUserInput[];
   createMany?: Prisma.TeamMemberCreateManyUserInputEnvelope;
   connect?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
 };
 
 export type TeamMemberUncheckedCreateNestedManyWithoutUserInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.TeamMemberCreateWithoutUserInput,
-        Prisma.TeamMemberUncheckedCreateWithoutUserInput
-      >
+    | Prisma.XOR<Prisma.TeamMemberCreateWithoutUserInput, Prisma.TeamMemberUncheckedCreateWithoutUserInput>
     | Prisma.TeamMemberCreateWithoutUserInput[]
     | Prisma.TeamMemberUncheckedCreateWithoutUserInput[];
-  connectOrCreate?:
-    | Prisma.TeamMemberCreateOrConnectWithoutUserInput
-    | Prisma.TeamMemberCreateOrConnectWithoutUserInput[];
+  connectOrCreate?: Prisma.TeamMemberCreateOrConnectWithoutUserInput | Prisma.TeamMemberCreateOrConnectWithoutUserInput[];
   createMany?: Prisma.TeamMemberCreateManyUserInputEnvelope;
   connect?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
 };
 
 export type TeamMemberUpdateManyWithoutUserNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.TeamMemberCreateWithoutUserInput,
-        Prisma.TeamMemberUncheckedCreateWithoutUserInput
-      >
+    | Prisma.XOR<Prisma.TeamMemberCreateWithoutUserInput, Prisma.TeamMemberUncheckedCreateWithoutUserInput>
     | Prisma.TeamMemberCreateWithoutUserInput[]
     | Prisma.TeamMemberUncheckedCreateWithoutUserInput[];
-  connectOrCreate?:
-    | Prisma.TeamMemberCreateOrConnectWithoutUserInput
-    | Prisma.TeamMemberCreateOrConnectWithoutUserInput[];
-  upsert?:
-    | Prisma.TeamMemberUpsertWithWhereUniqueWithoutUserInput
-    | Prisma.TeamMemberUpsertWithWhereUniqueWithoutUserInput[];
+  connectOrCreate?: Prisma.TeamMemberCreateOrConnectWithoutUserInput | Prisma.TeamMemberCreateOrConnectWithoutUserInput[];
+  upsert?: Prisma.TeamMemberUpsertWithWhereUniqueWithoutUserInput | Prisma.TeamMemberUpsertWithWhereUniqueWithoutUserInput[];
   createMany?: Prisma.TeamMemberCreateManyUserInputEnvelope;
   set?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
   disconnect?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
   delete?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
   connect?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
-  update?:
-    | Prisma.TeamMemberUpdateWithWhereUniqueWithoutUserInput
-    | Prisma.TeamMemberUpdateWithWhereUniqueWithoutUserInput[];
-  updateMany?:
-    | Prisma.TeamMemberUpdateManyWithWhereWithoutUserInput
-    | Prisma.TeamMemberUpdateManyWithWhereWithoutUserInput[];
+  update?: Prisma.TeamMemberUpdateWithWhereUniqueWithoutUserInput | Prisma.TeamMemberUpdateWithWhereUniqueWithoutUserInput[];
+  updateMany?: Prisma.TeamMemberUpdateManyWithWhereWithoutUserInput | Prisma.TeamMemberUpdateManyWithWhereWithoutUserInput[];
   deleteMany?: Prisma.TeamMemberScalarWhereInput | Prisma.TeamMemberScalarWhereInput[];
 };
 
 export type TeamMemberUncheckedUpdateManyWithoutUserNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.TeamMemberCreateWithoutUserInput,
-        Prisma.TeamMemberUncheckedCreateWithoutUserInput
-      >
+    | Prisma.XOR<Prisma.TeamMemberCreateWithoutUserInput, Prisma.TeamMemberUncheckedCreateWithoutUserInput>
     | Prisma.TeamMemberCreateWithoutUserInput[]
     | Prisma.TeamMemberUncheckedCreateWithoutUserInput[];
-  connectOrCreate?:
-    | Prisma.TeamMemberCreateOrConnectWithoutUserInput
-    | Prisma.TeamMemberCreateOrConnectWithoutUserInput[];
-  upsert?:
-    | Prisma.TeamMemberUpsertWithWhereUniqueWithoutUserInput
-    | Prisma.TeamMemberUpsertWithWhereUniqueWithoutUserInput[];
+  connectOrCreate?: Prisma.TeamMemberCreateOrConnectWithoutUserInput | Prisma.TeamMemberCreateOrConnectWithoutUserInput[];
+  upsert?: Prisma.TeamMemberUpsertWithWhereUniqueWithoutUserInput | Prisma.TeamMemberUpsertWithWhereUniqueWithoutUserInput[];
   createMany?: Prisma.TeamMemberCreateManyUserInputEnvelope;
   set?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
   disconnect?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
   delete?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
   connect?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
-  update?:
-    | Prisma.TeamMemberUpdateWithWhereUniqueWithoutUserInput
-    | Prisma.TeamMemberUpdateWithWhereUniqueWithoutUserInput[];
-  updateMany?:
-    | Prisma.TeamMemberUpdateManyWithWhereWithoutUserInput
-    | Prisma.TeamMemberUpdateManyWithWhereWithoutUserInput[];
+  update?: Prisma.TeamMemberUpdateWithWhereUniqueWithoutUserInput | Prisma.TeamMemberUpdateWithWhereUniqueWithoutUserInput[];
+  updateMany?: Prisma.TeamMemberUpdateManyWithWhereWithoutUserInput | Prisma.TeamMemberUpdateManyWithWhereWithoutUserInput[];
   deleteMany?: Prisma.TeamMemberScalarWhereInput | Prisma.TeamMemberScalarWhereInput[];
 };
 
 export type TeamMemberCreateNestedManyWithoutTeamInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.TeamMemberCreateWithoutTeamInput,
-        Prisma.TeamMemberUncheckedCreateWithoutTeamInput
-      >
+    | Prisma.XOR<Prisma.TeamMemberCreateWithoutTeamInput, Prisma.TeamMemberUncheckedCreateWithoutTeamInput>
     | Prisma.TeamMemberCreateWithoutTeamInput[]
     | Prisma.TeamMemberUncheckedCreateWithoutTeamInput[];
-  connectOrCreate?:
-    | Prisma.TeamMemberCreateOrConnectWithoutTeamInput
-    | Prisma.TeamMemberCreateOrConnectWithoutTeamInput[];
+  connectOrCreate?: Prisma.TeamMemberCreateOrConnectWithoutTeamInput | Prisma.TeamMemberCreateOrConnectWithoutTeamInput[];
   createMany?: Prisma.TeamMemberCreateManyTeamInputEnvelope;
   connect?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
 };
 
 export type TeamMemberUncheckedCreateNestedManyWithoutTeamInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.TeamMemberCreateWithoutTeamInput,
-        Prisma.TeamMemberUncheckedCreateWithoutTeamInput
-      >
+    | Prisma.XOR<Prisma.TeamMemberCreateWithoutTeamInput, Prisma.TeamMemberUncheckedCreateWithoutTeamInput>
     | Prisma.TeamMemberCreateWithoutTeamInput[]
     | Prisma.TeamMemberUncheckedCreateWithoutTeamInput[];
-  connectOrCreate?:
-    | Prisma.TeamMemberCreateOrConnectWithoutTeamInput
-    | Prisma.TeamMemberCreateOrConnectWithoutTeamInput[];
+  connectOrCreate?: Prisma.TeamMemberCreateOrConnectWithoutTeamInput | Prisma.TeamMemberCreateOrConnectWithoutTeamInput[];
   createMany?: Prisma.TeamMemberCreateManyTeamInputEnvelope;
   connect?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
 };
 
 export type TeamMemberUpdateManyWithoutTeamNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.TeamMemberCreateWithoutTeamInput,
-        Prisma.TeamMemberUncheckedCreateWithoutTeamInput
-      >
+    | Prisma.XOR<Prisma.TeamMemberCreateWithoutTeamInput, Prisma.TeamMemberUncheckedCreateWithoutTeamInput>
     | Prisma.TeamMemberCreateWithoutTeamInput[]
     | Prisma.TeamMemberUncheckedCreateWithoutTeamInput[];
-  connectOrCreate?:
-    | Prisma.TeamMemberCreateOrConnectWithoutTeamInput
-    | Prisma.TeamMemberCreateOrConnectWithoutTeamInput[];
-  upsert?:
-    | Prisma.TeamMemberUpsertWithWhereUniqueWithoutTeamInput
-    | Prisma.TeamMemberUpsertWithWhereUniqueWithoutTeamInput[];
+  connectOrCreate?: Prisma.TeamMemberCreateOrConnectWithoutTeamInput | Prisma.TeamMemberCreateOrConnectWithoutTeamInput[];
+  upsert?: Prisma.TeamMemberUpsertWithWhereUniqueWithoutTeamInput | Prisma.TeamMemberUpsertWithWhereUniqueWithoutTeamInput[];
   createMany?: Prisma.TeamMemberCreateManyTeamInputEnvelope;
   set?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
   disconnect?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
   delete?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
   connect?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
-  update?:
-    | Prisma.TeamMemberUpdateWithWhereUniqueWithoutTeamInput
-    | Prisma.TeamMemberUpdateWithWhereUniqueWithoutTeamInput[];
-  updateMany?:
-    | Prisma.TeamMemberUpdateManyWithWhereWithoutTeamInput
-    | Prisma.TeamMemberUpdateManyWithWhereWithoutTeamInput[];
+  update?: Prisma.TeamMemberUpdateWithWhereUniqueWithoutTeamInput | Prisma.TeamMemberUpdateWithWhereUniqueWithoutTeamInput[];
+  updateMany?: Prisma.TeamMemberUpdateManyWithWhereWithoutTeamInput | Prisma.TeamMemberUpdateManyWithWhereWithoutTeamInput[];
   deleteMany?: Prisma.TeamMemberScalarWhereInput | Prisma.TeamMemberScalarWhereInput[];
 };
 
 export type TeamMemberUncheckedUpdateManyWithoutTeamNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.TeamMemberCreateWithoutTeamInput,
-        Prisma.TeamMemberUncheckedCreateWithoutTeamInput
-      >
+    | Prisma.XOR<Prisma.TeamMemberCreateWithoutTeamInput, Prisma.TeamMemberUncheckedCreateWithoutTeamInput>
     | Prisma.TeamMemberCreateWithoutTeamInput[]
     | Prisma.TeamMemberUncheckedCreateWithoutTeamInput[];
-  connectOrCreate?:
-    | Prisma.TeamMemberCreateOrConnectWithoutTeamInput
-    | Prisma.TeamMemberCreateOrConnectWithoutTeamInput[];
-  upsert?:
-    | Prisma.TeamMemberUpsertWithWhereUniqueWithoutTeamInput
-    | Prisma.TeamMemberUpsertWithWhereUniqueWithoutTeamInput[];
+  connectOrCreate?: Prisma.TeamMemberCreateOrConnectWithoutTeamInput | Prisma.TeamMemberCreateOrConnectWithoutTeamInput[];
+  upsert?: Prisma.TeamMemberUpsertWithWhereUniqueWithoutTeamInput | Prisma.TeamMemberUpsertWithWhereUniqueWithoutTeamInput[];
   createMany?: Prisma.TeamMemberCreateManyTeamInputEnvelope;
   set?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
   disconnect?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
   delete?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
   connect?: Prisma.TeamMemberWhereUniqueInput | Prisma.TeamMemberWhereUniqueInput[];
-  update?:
-    | Prisma.TeamMemberUpdateWithWhereUniqueWithoutTeamInput
-    | Prisma.TeamMemberUpdateWithWhereUniqueWithoutTeamInput[];
-  updateMany?:
-    | Prisma.TeamMemberUpdateManyWithWhereWithoutTeamInput
-    | Prisma.TeamMemberUpdateManyWithWhereWithoutTeamInput[];
+  update?: Prisma.TeamMemberUpdateWithWhereUniqueWithoutTeamInput | Prisma.TeamMemberUpdateWithWhereUniqueWithoutTeamInput[];
+  updateMany?: Prisma.TeamMemberUpdateManyWithWhereWithoutTeamInput | Prisma.TeamMemberUpdateManyWithWhereWithoutTeamInput[];
   deleteMany?: Prisma.TeamMemberScalarWhereInput | Prisma.TeamMemberScalarWhereInput[];
 };
 
@@ -495,10 +421,7 @@ export type TeamMemberUncheckedCreateWithoutUserInput = {
 
 export type TeamMemberCreateOrConnectWithoutUserInput = {
   where: Prisma.TeamMemberWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.TeamMemberCreateWithoutUserInput,
-    Prisma.TeamMemberUncheckedCreateWithoutUserInput
-  >;
+  create: Prisma.XOR<Prisma.TeamMemberCreateWithoutUserInput, Prisma.TeamMemberUncheckedCreateWithoutUserInput>;
 };
 
 export type TeamMemberCreateManyUserInputEnvelope = {
@@ -508,30 +431,18 @@ export type TeamMemberCreateManyUserInputEnvelope = {
 
 export type TeamMemberUpsertWithWhereUniqueWithoutUserInput = {
   where: Prisma.TeamMemberWhereUniqueInput;
-  update: Prisma.XOR<
-    Prisma.TeamMemberUpdateWithoutUserInput,
-    Prisma.TeamMemberUncheckedUpdateWithoutUserInput
-  >;
-  create: Prisma.XOR<
-    Prisma.TeamMemberCreateWithoutUserInput,
-    Prisma.TeamMemberUncheckedCreateWithoutUserInput
-  >;
+  update: Prisma.XOR<Prisma.TeamMemberUpdateWithoutUserInput, Prisma.TeamMemberUncheckedUpdateWithoutUserInput>;
+  create: Prisma.XOR<Prisma.TeamMemberCreateWithoutUserInput, Prisma.TeamMemberUncheckedCreateWithoutUserInput>;
 };
 
 export type TeamMemberUpdateWithWhereUniqueWithoutUserInput = {
   where: Prisma.TeamMemberWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.TeamMemberUpdateWithoutUserInput,
-    Prisma.TeamMemberUncheckedUpdateWithoutUserInput
-  >;
+  data: Prisma.XOR<Prisma.TeamMemberUpdateWithoutUserInput, Prisma.TeamMemberUncheckedUpdateWithoutUserInput>;
 };
 
 export type TeamMemberUpdateManyWithWhereWithoutUserInput = {
   where: Prisma.TeamMemberScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.TeamMemberUpdateManyMutationInput,
-    Prisma.TeamMemberUncheckedUpdateManyWithoutUserInput
-  >;
+  data: Prisma.XOR<Prisma.TeamMemberUpdateManyMutationInput, Prisma.TeamMemberUncheckedUpdateManyWithoutUserInput>;
 };
 
 export type TeamMemberScalarWhereInput = {
@@ -558,10 +469,7 @@ export type TeamMemberUncheckedCreateWithoutTeamInput = {
 
 export type TeamMemberCreateOrConnectWithoutTeamInput = {
   where: Prisma.TeamMemberWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.TeamMemberCreateWithoutTeamInput,
-    Prisma.TeamMemberUncheckedCreateWithoutTeamInput
-  >;
+  create: Prisma.XOR<Prisma.TeamMemberCreateWithoutTeamInput, Prisma.TeamMemberUncheckedCreateWithoutTeamInput>;
 };
 
 export type TeamMemberCreateManyTeamInputEnvelope = {
@@ -571,30 +479,18 @@ export type TeamMemberCreateManyTeamInputEnvelope = {
 
 export type TeamMemberUpsertWithWhereUniqueWithoutTeamInput = {
   where: Prisma.TeamMemberWhereUniqueInput;
-  update: Prisma.XOR<
-    Prisma.TeamMemberUpdateWithoutTeamInput,
-    Prisma.TeamMemberUncheckedUpdateWithoutTeamInput
-  >;
-  create: Prisma.XOR<
-    Prisma.TeamMemberCreateWithoutTeamInput,
-    Prisma.TeamMemberUncheckedCreateWithoutTeamInput
-  >;
+  update: Prisma.XOR<Prisma.TeamMemberUpdateWithoutTeamInput, Prisma.TeamMemberUncheckedUpdateWithoutTeamInput>;
+  create: Prisma.XOR<Prisma.TeamMemberCreateWithoutTeamInput, Prisma.TeamMemberUncheckedCreateWithoutTeamInput>;
 };
 
 export type TeamMemberUpdateWithWhereUniqueWithoutTeamInput = {
   where: Prisma.TeamMemberWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.TeamMemberUpdateWithoutTeamInput,
-    Prisma.TeamMemberUncheckedUpdateWithoutTeamInput
-  >;
+  data: Prisma.XOR<Prisma.TeamMemberUpdateWithoutTeamInput, Prisma.TeamMemberUncheckedUpdateWithoutTeamInput>;
 };
 
 export type TeamMemberUpdateManyWithWhereWithoutTeamInput = {
   where: Prisma.TeamMemberScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.TeamMemberUpdateManyMutationInput,
-    Prisma.TeamMemberUncheckedUpdateManyWithoutTeamInput
-  >;
+  data: Prisma.XOR<Prisma.TeamMemberUpdateManyMutationInput, Prisma.TeamMemberUncheckedUpdateManyWithoutTeamInput>;
 };
 
 export type TeamMemberCreateManyUserInput = {
@@ -645,9 +541,7 @@ export type TeamMemberUncheckedUpdateManyWithoutTeamInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type TeamMemberSelect<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetSelect<
+export type TeamMemberSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
     teamId?: boolean;
@@ -666,22 +560,16 @@ export type TeamMemberSelectScalar = {
   createdAt?: boolean;
 };
 
-export type TeamMemberOmit<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetOmit<
+export type TeamMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<
   'id' | 'teamId' | 'userId' | 'createdAt',
   ExtArgs['result']['teamMember']
 >;
-export type TeamMemberInclude<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   team?: boolean | Prisma.TeamDefaultArgs<ExtArgs>;
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
 
-export type $TeamMemberPayload<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type $TeamMemberPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: 'TeamMember';
   objects: {
     team: Prisma.$TeamPayload<ExtArgs>;
@@ -699,19 +587,16 @@ export type $TeamMemberPayload<
   composites: {};
 };
 
-export type TeamMemberGetPayload<S extends boolean | null | undefined | TeamMemberDefaultArgs> =
-  runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload, S>;
+export type TeamMemberGetPayload<S extends boolean | null | undefined | TeamMemberDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload, S>;
 
-export type TeamMemberCountArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = Omit<TeamMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+export type TeamMemberCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<
+  TeamMemberFindManyArgs,
+  'select' | 'include' | 'distinct' | 'omit'
+> & {
   select?: TeamMemberCountAggregateInputType | true;
 };
 
-export interface TeamMemberDelegate<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-  GlobalOmitOptions = {}
-> {
+export interface TeamMemberDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
   [K: symbol]: {
     types: Prisma.TypeMap<ExtArgs>['model']['TeamMember'];
     meta: { name: 'TeamMember' };
@@ -729,17 +614,7 @@ export interface TeamMemberDelegate<
    */
   findUnique<T extends TeamMemberFindUniqueArgs>(
     args: Prisma.SelectSubset<T, TeamMemberFindUniqueArgs<ExtArgs>>
-  ): Prisma.Prisma__TeamMemberClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$TeamMemberPayload<ExtArgs>,
-      T,
-      'findUnique',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__TeamMemberClient<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find one TeamMember that matches the filter or throw an error with `error.code='P2025'`
@@ -755,17 +630,7 @@ export interface TeamMemberDelegate<
    */
   findUniqueOrThrow<T extends TeamMemberFindUniqueOrThrowArgs>(
     args: Prisma.SelectSubset<T, TeamMemberFindUniqueOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__TeamMemberClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$TeamMemberPayload<ExtArgs>,
-      T,
-      'findUniqueOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__TeamMemberClient<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first TeamMember that matches the filter.
@@ -782,17 +647,7 @@ export interface TeamMemberDelegate<
    */
   findFirst<T extends TeamMemberFindFirstArgs>(
     args?: Prisma.SelectSubset<T, TeamMemberFindFirstArgs<ExtArgs>>
-  ): Prisma.Prisma__TeamMemberClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$TeamMemberPayload<ExtArgs>,
-      T,
-      'findFirst',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__TeamMemberClient<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first TeamMember that matches the filter or
@@ -810,17 +665,7 @@ export interface TeamMemberDelegate<
    */
   findFirstOrThrow<T extends TeamMemberFindFirstOrThrowArgs>(
     args?: Prisma.SelectSubset<T, TeamMemberFindFirstOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__TeamMemberClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$TeamMemberPayload<ExtArgs>,
-      T,
-      'findFirstOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__TeamMemberClient<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find zero or more TeamMembers that matches the filter.
@@ -840,14 +685,7 @@ export interface TeamMemberDelegate<
    */
   findMany<T extends TeamMemberFindManyArgs>(
     args?: Prisma.SelectSubset<T, TeamMemberFindManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<
-    runtime.Types.Result.GetResult<
-      Prisma.$TeamMemberPayload<ExtArgs>,
-      T,
-      'findMany',
-      GlobalOmitOptions
-    >
-  >;
+  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>;
 
   /**
    * Create a TeamMember.
@@ -863,17 +701,7 @@ export interface TeamMemberDelegate<
    */
   create<T extends TeamMemberCreateArgs>(
     args: Prisma.SelectSubset<T, TeamMemberCreateArgs<ExtArgs>>
-  ): Prisma.Prisma__TeamMemberClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$TeamMemberPayload<ExtArgs>,
-      T,
-      'create',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__TeamMemberClient<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Create many TeamMembers.
@@ -887,9 +715,7 @@ export interface TeamMemberDelegate<
    * })
    *
    */
-  createMany<T extends TeamMemberCreateManyArgs>(
-    args?: Prisma.SelectSubset<T, TeamMemberCreateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  createMany<T extends TeamMemberCreateManyArgs>(args?: Prisma.SelectSubset<T, TeamMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Delete a TeamMember.
@@ -905,17 +731,7 @@ export interface TeamMemberDelegate<
    */
   delete<T extends TeamMemberDeleteArgs>(
     args: Prisma.SelectSubset<T, TeamMemberDeleteArgs<ExtArgs>>
-  ): Prisma.Prisma__TeamMemberClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$TeamMemberPayload<ExtArgs>,
-      T,
-      'delete',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__TeamMemberClient<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Update one TeamMember.
@@ -934,17 +750,7 @@ export interface TeamMemberDelegate<
    */
   update<T extends TeamMemberUpdateArgs>(
     args: Prisma.SelectSubset<T, TeamMemberUpdateArgs<ExtArgs>>
-  ): Prisma.Prisma__TeamMemberClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$TeamMemberPayload<ExtArgs>,
-      T,
-      'update',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__TeamMemberClient<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Delete zero or more TeamMembers.
@@ -958,9 +764,7 @@ export interface TeamMemberDelegate<
    * })
    *
    */
-  deleteMany<T extends TeamMemberDeleteManyArgs>(
-    args?: Prisma.SelectSubset<T, TeamMemberDeleteManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  deleteMany<T extends TeamMemberDeleteManyArgs>(args?: Prisma.SelectSubset<T, TeamMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Update zero or more TeamMembers.
@@ -979,9 +783,7 @@ export interface TeamMemberDelegate<
    * })
    *
    */
-  updateMany<T extends TeamMemberUpdateManyArgs>(
-    args: Prisma.SelectSubset<T, TeamMemberUpdateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  updateMany<T extends TeamMemberUpdateManyArgs>(args: Prisma.SelectSubset<T, TeamMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Create or update one TeamMember.
@@ -1002,17 +804,7 @@ export interface TeamMemberDelegate<
    */
   upsert<T extends TeamMemberUpsertArgs>(
     args: Prisma.SelectSubset<T, TeamMemberUpsertArgs<ExtArgs>>
-  ): Prisma.Prisma__TeamMemberClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$TeamMemberPayload<ExtArgs>,
-      T,
-      'upsert',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__TeamMemberClient<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Count the number of TeamMembers.
@@ -1029,13 +821,7 @@ export interface TeamMemberDelegate<
    **/
   count<T extends TeamMemberCountArgs>(
     args?: Prisma.Subset<T, TeamMemberCountArgs>
-  ): Prisma.PrismaPromise<
-    T extends runtime.Types.Utils.Record<'select', any>
-      ? T['select'] extends true
-        ? number
-        : Prisma.GetScalarType<T['select'], TeamMemberCountAggregateOutputType>
-      : number
-  >;
+  ): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? (T['select'] extends true ? number : Prisma.GetScalarType<T['select'], TeamMemberCountAggregateOutputType>) : number>;
 
   /**
    * Allows you to perform aggregations operations on a TeamMember.
@@ -1061,9 +847,7 @@ export interface TeamMemberDelegate<
    *   take: 10,
    * })
    **/
-  aggregate<T extends TeamMemberAggregateArgs>(
-    args: Prisma.Subset<T, TeamMemberAggregateArgs>
-  ): Prisma.PrismaPromise<GetTeamMemberAggregateType<T>>;
+  aggregate<T extends TeamMemberAggregateArgs>(args: Prisma.Subset<T, TeamMemberAggregateArgs>): Prisma.PrismaPromise<GetTeamMemberAggregateType<T>>;
 
   /**
    * Group by TeamMember.
@@ -1085,16 +869,9 @@ export interface TeamMemberDelegate<
    **/
   groupBy<
     T extends TeamMemberGroupByArgs,
-    HasSelectOrTake extends Prisma.Or<
-      Prisma.Extends<'skip', Prisma.Keys<T>>,
-      Prisma.Extends<'take', Prisma.Keys<T>>
-    >,
-    OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? { orderBy: TeamMemberGroupByArgs['orderBy'] }
-      : { orderBy?: TeamMemberGroupByArgs['orderBy'] },
-    OrderFields extends Prisma.ExcludeUnderscoreKeys<
-      Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>
-    >,
+    HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>,
+    OrderByArg extends Prisma.True extends HasSelectOrTake ? { orderBy: TeamMemberGroupByArgs['orderBy'] } : { orderBy?: TeamMemberGroupByArgs['orderBy'] },
+    OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>,
     ByFields extends Prisma.MaybeTupleToUnion<T['by']>,
     ByValid extends Prisma.Has<ByFields, OrderFields>,
     HavingFields extends Prisma.GetHavingFields<T['having']>,
@@ -1115,9 +892,7 @@ export interface TeamMemberDelegate<
             ? ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
             : 'Error: If you provide "take", you also need to provide "orderBy"'
           : 'skip' extends Prisma.Keys<T>
@@ -1125,17 +900,13 @@ export interface TeamMemberDelegate<
               ? ByValid extends Prisma.True
                 ? {}
                 : {
-                    [P in OrderFields]: P extends ByFields
-                      ? never
-                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                   }[OrderFields]
               : 'Error: If you provide "skip", you also need to provide "orderBy"'
             : ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
   >(
     args: Prisma.SubsetIntersection<T, TeamMemberGroupByArgs, OrderByArg> & InputErrors
@@ -1161,32 +932,10 @@ export interface Prisma__TeamMemberClient<
   readonly [Symbol.toStringTag]: 'PrismaPromise';
   team<T extends Prisma.TeamDefaultArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.TeamDefaultArgs<ExtArgs>>
-  ): Prisma.Prisma__TeamClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$TeamPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>
-  ): Prisma.Prisma__UserClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$UserPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1202,9 +951,7 @@ export interface Prisma__TeamMemberClient<
    * @param onrejected The callback to execute when the Promise is rejected.
    * @returns A Promise for the completion of the callback.
    */
-  catch<TResult = never>(
-    onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
-  ): runtime.Types.Utils.JsPromise<T | TResult>;
+  catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
   /**
    * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
    * resolved value cannot be modified from the callback.
@@ -1228,9 +975,7 @@ export interface TeamMemberFieldRefs {
 /**
  * TeamMember findUnique
  */
-export type TeamMemberFindUniqueArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the TeamMember
    */
@@ -1252,9 +997,7 @@ export type TeamMemberFindUniqueArgs<
 /**
  * TeamMember findUniqueOrThrow
  */
-export type TeamMemberFindUniqueOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the TeamMember
    */
@@ -1276,9 +1019,7 @@ export type TeamMemberFindUniqueOrThrowArgs<
 /**
  * TeamMember findFirst
  */
-export type TeamMemberFindFirstArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the TeamMember
    */
@@ -1330,9 +1071,7 @@ export type TeamMemberFindFirstArgs<
 /**
  * TeamMember findFirstOrThrow
  */
-export type TeamMemberFindFirstOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the TeamMember
    */
@@ -1384,9 +1123,7 @@ export type TeamMemberFindFirstOrThrowArgs<
 /**
  * TeamMember findMany
  */
-export type TeamMemberFindManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the TeamMember
    */
@@ -1438,9 +1175,7 @@ export type TeamMemberFindManyArgs<
 /**
  * TeamMember create
  */
-export type TeamMemberCreateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the TeamMember
    */
@@ -1462,9 +1197,7 @@ export type TeamMemberCreateArgs<
 /**
  * TeamMember createMany
  */
-export type TeamMemberCreateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to create many TeamMembers.
    */
@@ -1475,9 +1208,7 @@ export type TeamMemberCreateManyArgs<
 /**
  * TeamMember update
  */
-export type TeamMemberUpdateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the TeamMember
    */
@@ -1503,16 +1234,11 @@ export type TeamMemberUpdateArgs<
 /**
  * TeamMember updateMany
  */
-export type TeamMemberUpdateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to update TeamMembers.
    */
-  data: Prisma.XOR<
-    Prisma.TeamMemberUpdateManyMutationInput,
-    Prisma.TeamMemberUncheckedUpdateManyInput
-  >;
+  data: Prisma.XOR<Prisma.TeamMemberUpdateManyMutationInput, Prisma.TeamMemberUncheckedUpdateManyInput>;
   /**
    * Filter which TeamMembers to update
    */
@@ -1526,9 +1252,7 @@ export type TeamMemberUpdateManyArgs<
 /**
  * TeamMember upsert
  */
-export type TeamMemberUpsertArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the TeamMember
    */
@@ -1558,9 +1282,7 @@ export type TeamMemberUpsertArgs<
 /**
  * TeamMember delete
  */
-export type TeamMemberDeleteArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the TeamMember
    */
@@ -1582,9 +1304,7 @@ export type TeamMemberDeleteArgs<
 /**
  * TeamMember deleteMany
  */
-export type TeamMemberDeleteManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which TeamMembers to delete
    */
@@ -1598,9 +1318,7 @@ export type TeamMemberDeleteManyArgs<
 /**
  * TeamMember without action
  */
-export type TeamMemberDefaultArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type TeamMemberDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the TeamMember
    */

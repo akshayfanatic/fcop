@@ -11,14 +11,7 @@ type MemberAcceptedInvitationEmailProps = {
   invitationId: string;
 };
 
-export const createMemberAcceptedInvitationEmailTemplate = ({
-  userName,
-  userEmail,
-  organizationName,
-  role,
-  memberId,
-  invitationId
-}: MemberAcceptedInvitationEmailProps): EmailTemplate => ({
+export const createMemberAcceptedInvitationEmailTemplate = ({ userName, userEmail, organizationName, role, memberId, invitationId }: MemberAcceptedInvitationEmailProps): EmailTemplate => ({
   subject: `Invitation accepted: ${userName}`,
   react: (
     <BaseEmail previewText={`${userName} accepted an invitation to ${organizationName}.`}>
@@ -31,11 +24,7 @@ export const createMemberAcceptedInvitationEmailTemplate = ({
       <p style={emailStyles.lastText}>Invitation ID: {invitationId}</p>
     </BaseEmail>
   ),
-  text: [
-    'Invitation accepted',
-    `${userName} (${userEmail}) accepted an invitation to join ${organizationName}.`,
-    `Role: ${role}`,
-    `Member ID: ${memberId}`,
-    `Invitation ID: ${invitationId}`
-  ].join('\n')
+  text: ['Invitation accepted', `${userName} (${userEmail}) accepted an invitation to join ${organizationName}.`, `Role: ${role}`, `Member ID: ${memberId}`, `Invitation ID: ${invitationId}`].join(
+    '\n'
+  )
 });

@@ -73,9 +73,7 @@ export type MemberCountAggregateInputType = {
   _all?: true;
 };
 
-export type MemberAggregateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which Member to aggregate.
    */
@@ -125,16 +123,10 @@ export type MemberAggregateArgs<
 };
 
 export type GetMemberAggregateType<T extends MemberAggregateArgs> = {
-  [P in keyof T & keyof AggregateMember]: P extends '_count' | 'count'
-    ? T[P] extends true
-      ? number
-      : Prisma.GetScalarType<T[P], AggregateMember[P]>
-    : Prisma.GetScalarType<T[P], AggregateMember[P]>;
+  [P in keyof T & keyof AggregateMember]: P extends '_count' | 'count' ? (T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateMember[P]>) : Prisma.GetScalarType<T[P], AggregateMember[P]>;
 };
 
-export type MemberGroupByArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.MemberWhereInput;
   orderBy?: Prisma.MemberOrderByWithAggregationInput | Prisma.MemberOrderByWithAggregationInput[];
   by: Prisma.MemberScalarFieldEnum[] | Prisma.MemberScalarFieldEnum;
@@ -206,10 +198,7 @@ export type MemberWhereUniqueInput = Prisma.AtLeast<
     role?: Prisma.StringFilter<'Member'> | string;
     createdAt?: Prisma.DateTimeFilter<'Member'> | Date | string;
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
-    organization?: Prisma.XOR<
-      Prisma.OrganizationScalarRelationFilter,
-      Prisma.OrganizationWhereInput
-    >;
+    organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>;
     client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null;
   },
   'id'
@@ -341,189 +330,113 @@ export type MemberScalarRelationFilter = {
 };
 
 export type MemberCreateNestedManyWithoutUserInput = {
-  create?:
-    | Prisma.XOR<Prisma.MemberCreateWithoutUserInput, Prisma.MemberUncheckedCreateWithoutUserInput>
-    | Prisma.MemberCreateWithoutUserInput[]
-    | Prisma.MemberUncheckedCreateWithoutUserInput[];
-  connectOrCreate?:
-    | Prisma.MemberCreateOrConnectWithoutUserInput
-    | Prisma.MemberCreateOrConnectWithoutUserInput[];
+  create?: Prisma.XOR<Prisma.MemberCreateWithoutUserInput, Prisma.MemberUncheckedCreateWithoutUserInput> | Prisma.MemberCreateWithoutUserInput[] | Prisma.MemberUncheckedCreateWithoutUserInput[];
+  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutUserInput | Prisma.MemberCreateOrConnectWithoutUserInput[];
   createMany?: Prisma.MemberCreateManyUserInputEnvelope;
   connect?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
 };
 
 export type MemberUncheckedCreateNestedManyWithoutUserInput = {
-  create?:
-    | Prisma.XOR<Prisma.MemberCreateWithoutUserInput, Prisma.MemberUncheckedCreateWithoutUserInput>
-    | Prisma.MemberCreateWithoutUserInput[]
-    | Prisma.MemberUncheckedCreateWithoutUserInput[];
-  connectOrCreate?:
-    | Prisma.MemberCreateOrConnectWithoutUserInput
-    | Prisma.MemberCreateOrConnectWithoutUserInput[];
+  create?: Prisma.XOR<Prisma.MemberCreateWithoutUserInput, Prisma.MemberUncheckedCreateWithoutUserInput> | Prisma.MemberCreateWithoutUserInput[] | Prisma.MemberUncheckedCreateWithoutUserInput[];
+  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutUserInput | Prisma.MemberCreateOrConnectWithoutUserInput[];
   createMany?: Prisma.MemberCreateManyUserInputEnvelope;
   connect?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
 };
 
 export type MemberUpdateManyWithoutUserNestedInput = {
-  create?:
-    | Prisma.XOR<Prisma.MemberCreateWithoutUserInput, Prisma.MemberUncheckedCreateWithoutUserInput>
-    | Prisma.MemberCreateWithoutUserInput[]
-    | Prisma.MemberUncheckedCreateWithoutUserInput[];
-  connectOrCreate?:
-    | Prisma.MemberCreateOrConnectWithoutUserInput
-    | Prisma.MemberCreateOrConnectWithoutUserInput[];
-  upsert?:
-    | Prisma.MemberUpsertWithWhereUniqueWithoutUserInput
-    | Prisma.MemberUpsertWithWhereUniqueWithoutUserInput[];
+  create?: Prisma.XOR<Prisma.MemberCreateWithoutUserInput, Prisma.MemberUncheckedCreateWithoutUserInput> | Prisma.MemberCreateWithoutUserInput[] | Prisma.MemberUncheckedCreateWithoutUserInput[];
+  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutUserInput | Prisma.MemberCreateOrConnectWithoutUserInput[];
+  upsert?: Prisma.MemberUpsertWithWhereUniqueWithoutUserInput | Prisma.MemberUpsertWithWhereUniqueWithoutUserInput[];
   createMany?: Prisma.MemberCreateManyUserInputEnvelope;
   set?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
   disconnect?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
   delete?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
   connect?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
-  update?:
-    | Prisma.MemberUpdateWithWhereUniqueWithoutUserInput
-    | Prisma.MemberUpdateWithWhereUniqueWithoutUserInput[];
-  updateMany?:
-    | Prisma.MemberUpdateManyWithWhereWithoutUserInput
-    | Prisma.MemberUpdateManyWithWhereWithoutUserInput[];
+  update?: Prisma.MemberUpdateWithWhereUniqueWithoutUserInput | Prisma.MemberUpdateWithWhereUniqueWithoutUserInput[];
+  updateMany?: Prisma.MemberUpdateManyWithWhereWithoutUserInput | Prisma.MemberUpdateManyWithWhereWithoutUserInput[];
   deleteMany?: Prisma.MemberScalarWhereInput | Prisma.MemberScalarWhereInput[];
 };
 
 export type MemberUncheckedUpdateManyWithoutUserNestedInput = {
-  create?:
-    | Prisma.XOR<Prisma.MemberCreateWithoutUserInput, Prisma.MemberUncheckedCreateWithoutUserInput>
-    | Prisma.MemberCreateWithoutUserInput[]
-    | Prisma.MemberUncheckedCreateWithoutUserInput[];
-  connectOrCreate?:
-    | Prisma.MemberCreateOrConnectWithoutUserInput
-    | Prisma.MemberCreateOrConnectWithoutUserInput[];
-  upsert?:
-    | Prisma.MemberUpsertWithWhereUniqueWithoutUserInput
-    | Prisma.MemberUpsertWithWhereUniqueWithoutUserInput[];
+  create?: Prisma.XOR<Prisma.MemberCreateWithoutUserInput, Prisma.MemberUncheckedCreateWithoutUserInput> | Prisma.MemberCreateWithoutUserInput[] | Prisma.MemberUncheckedCreateWithoutUserInput[];
+  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutUserInput | Prisma.MemberCreateOrConnectWithoutUserInput[];
+  upsert?: Prisma.MemberUpsertWithWhereUniqueWithoutUserInput | Prisma.MemberUpsertWithWhereUniqueWithoutUserInput[];
   createMany?: Prisma.MemberCreateManyUserInputEnvelope;
   set?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
   disconnect?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
   delete?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
   connect?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
-  update?:
-    | Prisma.MemberUpdateWithWhereUniqueWithoutUserInput
-    | Prisma.MemberUpdateWithWhereUniqueWithoutUserInput[];
-  updateMany?:
-    | Prisma.MemberUpdateManyWithWhereWithoutUserInput
-    | Prisma.MemberUpdateManyWithWhereWithoutUserInput[];
+  update?: Prisma.MemberUpdateWithWhereUniqueWithoutUserInput | Prisma.MemberUpdateWithWhereUniqueWithoutUserInput[];
+  updateMany?: Prisma.MemberUpdateManyWithWhereWithoutUserInput | Prisma.MemberUpdateManyWithWhereWithoutUserInput[];
   deleteMany?: Prisma.MemberScalarWhereInput | Prisma.MemberScalarWhereInput[];
 };
 
 export type MemberCreateNestedManyWithoutOrganizationInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.MemberCreateWithoutOrganizationInput,
-        Prisma.MemberUncheckedCreateWithoutOrganizationInput
-      >
+    | Prisma.XOR<Prisma.MemberCreateWithoutOrganizationInput, Prisma.MemberUncheckedCreateWithoutOrganizationInput>
     | Prisma.MemberCreateWithoutOrganizationInput[]
     | Prisma.MemberUncheckedCreateWithoutOrganizationInput[];
-  connectOrCreate?:
-    | Prisma.MemberCreateOrConnectWithoutOrganizationInput
-    | Prisma.MemberCreateOrConnectWithoutOrganizationInput[];
+  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutOrganizationInput | Prisma.MemberCreateOrConnectWithoutOrganizationInput[];
   createMany?: Prisma.MemberCreateManyOrganizationInputEnvelope;
   connect?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
 };
 
 export type MemberUncheckedCreateNestedManyWithoutOrganizationInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.MemberCreateWithoutOrganizationInput,
-        Prisma.MemberUncheckedCreateWithoutOrganizationInput
-      >
+    | Prisma.XOR<Prisma.MemberCreateWithoutOrganizationInput, Prisma.MemberUncheckedCreateWithoutOrganizationInput>
     | Prisma.MemberCreateWithoutOrganizationInput[]
     | Prisma.MemberUncheckedCreateWithoutOrganizationInput[];
-  connectOrCreate?:
-    | Prisma.MemberCreateOrConnectWithoutOrganizationInput
-    | Prisma.MemberCreateOrConnectWithoutOrganizationInput[];
+  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutOrganizationInput | Prisma.MemberCreateOrConnectWithoutOrganizationInput[];
   createMany?: Prisma.MemberCreateManyOrganizationInputEnvelope;
   connect?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
 };
 
 export type MemberUpdateManyWithoutOrganizationNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.MemberCreateWithoutOrganizationInput,
-        Prisma.MemberUncheckedCreateWithoutOrganizationInput
-      >
+    | Prisma.XOR<Prisma.MemberCreateWithoutOrganizationInput, Prisma.MemberUncheckedCreateWithoutOrganizationInput>
     | Prisma.MemberCreateWithoutOrganizationInput[]
     | Prisma.MemberUncheckedCreateWithoutOrganizationInput[];
-  connectOrCreate?:
-    | Prisma.MemberCreateOrConnectWithoutOrganizationInput
-    | Prisma.MemberCreateOrConnectWithoutOrganizationInput[];
-  upsert?:
-    | Prisma.MemberUpsertWithWhereUniqueWithoutOrganizationInput
-    | Prisma.MemberUpsertWithWhereUniqueWithoutOrganizationInput[];
+  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutOrganizationInput | Prisma.MemberCreateOrConnectWithoutOrganizationInput[];
+  upsert?: Prisma.MemberUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.MemberUpsertWithWhereUniqueWithoutOrganizationInput[];
   createMany?: Prisma.MemberCreateManyOrganizationInputEnvelope;
   set?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
   disconnect?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
   delete?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
   connect?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
-  update?:
-    | Prisma.MemberUpdateWithWhereUniqueWithoutOrganizationInput
-    | Prisma.MemberUpdateWithWhereUniqueWithoutOrganizationInput[];
-  updateMany?:
-    | Prisma.MemberUpdateManyWithWhereWithoutOrganizationInput
-    | Prisma.MemberUpdateManyWithWhereWithoutOrganizationInput[];
+  update?: Prisma.MemberUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.MemberUpdateWithWhereUniqueWithoutOrganizationInput[];
+  updateMany?: Prisma.MemberUpdateManyWithWhereWithoutOrganizationInput | Prisma.MemberUpdateManyWithWhereWithoutOrganizationInput[];
   deleteMany?: Prisma.MemberScalarWhereInput | Prisma.MemberScalarWhereInput[];
 };
 
 export type MemberUncheckedUpdateManyWithoutOrganizationNestedInput = {
   create?:
-    | Prisma.XOR<
-        Prisma.MemberCreateWithoutOrganizationInput,
-        Prisma.MemberUncheckedCreateWithoutOrganizationInput
-      >
+    | Prisma.XOR<Prisma.MemberCreateWithoutOrganizationInput, Prisma.MemberUncheckedCreateWithoutOrganizationInput>
     | Prisma.MemberCreateWithoutOrganizationInput[]
     | Prisma.MemberUncheckedCreateWithoutOrganizationInput[];
-  connectOrCreate?:
-    | Prisma.MemberCreateOrConnectWithoutOrganizationInput
-    | Prisma.MemberCreateOrConnectWithoutOrganizationInput[];
-  upsert?:
-    | Prisma.MemberUpsertWithWhereUniqueWithoutOrganizationInput
-    | Prisma.MemberUpsertWithWhereUniqueWithoutOrganizationInput[];
+  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutOrganizationInput | Prisma.MemberCreateOrConnectWithoutOrganizationInput[];
+  upsert?: Prisma.MemberUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.MemberUpsertWithWhereUniqueWithoutOrganizationInput[];
   createMany?: Prisma.MemberCreateManyOrganizationInputEnvelope;
   set?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
   disconnect?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
   delete?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
   connect?: Prisma.MemberWhereUniqueInput | Prisma.MemberWhereUniqueInput[];
-  update?:
-    | Prisma.MemberUpdateWithWhereUniqueWithoutOrganizationInput
-    | Prisma.MemberUpdateWithWhereUniqueWithoutOrganizationInput[];
-  updateMany?:
-    | Prisma.MemberUpdateManyWithWhereWithoutOrganizationInput
-    | Prisma.MemberUpdateManyWithWhereWithoutOrganizationInput[];
+  update?: Prisma.MemberUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.MemberUpdateWithWhereUniqueWithoutOrganizationInput[];
+  updateMany?: Prisma.MemberUpdateManyWithWhereWithoutOrganizationInput | Prisma.MemberUpdateManyWithWhereWithoutOrganizationInput[];
   deleteMany?: Prisma.MemberScalarWhereInput | Prisma.MemberScalarWhereInput[];
 };
 
 export type MemberCreateNestedOneWithoutClientInput = {
-  create?: Prisma.XOR<
-    Prisma.MemberCreateWithoutClientInput,
-    Prisma.MemberUncheckedCreateWithoutClientInput
-  >;
+  create?: Prisma.XOR<Prisma.MemberCreateWithoutClientInput, Prisma.MemberUncheckedCreateWithoutClientInput>;
   connectOrCreate?: Prisma.MemberCreateOrConnectWithoutClientInput;
   connect?: Prisma.MemberWhereUniqueInput;
 };
 
 export type MemberUpdateOneRequiredWithoutClientNestedInput = {
-  create?: Prisma.XOR<
-    Prisma.MemberCreateWithoutClientInput,
-    Prisma.MemberUncheckedCreateWithoutClientInput
-  >;
+  create?: Prisma.XOR<Prisma.MemberCreateWithoutClientInput, Prisma.MemberUncheckedCreateWithoutClientInput>;
   connectOrCreate?: Prisma.MemberCreateOrConnectWithoutClientInput;
   upsert?: Prisma.MemberUpsertWithoutClientInput;
   connect?: Prisma.MemberWhereUniqueInput;
-  update?: Prisma.XOR<
-    Prisma.XOR<
-      Prisma.MemberUpdateToOneWithWhereWithoutClientInput,
-      Prisma.MemberUpdateWithoutClientInput
-    >,
-    Prisma.MemberUncheckedUpdateWithoutClientInput
-  >;
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MemberUpdateToOneWithWhereWithoutClientInput, Prisma.MemberUpdateWithoutClientInput>, Prisma.MemberUncheckedUpdateWithoutClientInput>;
 };
 
 export type MemberCreateWithoutUserInput = {
@@ -544,10 +457,7 @@ export type MemberUncheckedCreateWithoutUserInput = {
 
 export type MemberCreateOrConnectWithoutUserInput = {
   where: Prisma.MemberWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.MemberCreateWithoutUserInput,
-    Prisma.MemberUncheckedCreateWithoutUserInput
-  >;
+  create: Prisma.XOR<Prisma.MemberCreateWithoutUserInput, Prisma.MemberUncheckedCreateWithoutUserInput>;
 };
 
 export type MemberCreateManyUserInputEnvelope = {
@@ -557,30 +467,18 @@ export type MemberCreateManyUserInputEnvelope = {
 
 export type MemberUpsertWithWhereUniqueWithoutUserInput = {
   where: Prisma.MemberWhereUniqueInput;
-  update: Prisma.XOR<
-    Prisma.MemberUpdateWithoutUserInput,
-    Prisma.MemberUncheckedUpdateWithoutUserInput
-  >;
-  create: Prisma.XOR<
-    Prisma.MemberCreateWithoutUserInput,
-    Prisma.MemberUncheckedCreateWithoutUserInput
-  >;
+  update: Prisma.XOR<Prisma.MemberUpdateWithoutUserInput, Prisma.MemberUncheckedUpdateWithoutUserInput>;
+  create: Prisma.XOR<Prisma.MemberCreateWithoutUserInput, Prisma.MemberUncheckedCreateWithoutUserInput>;
 };
 
 export type MemberUpdateWithWhereUniqueWithoutUserInput = {
   where: Prisma.MemberWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.MemberUpdateWithoutUserInput,
-    Prisma.MemberUncheckedUpdateWithoutUserInput
-  >;
+  data: Prisma.XOR<Prisma.MemberUpdateWithoutUserInput, Prisma.MemberUncheckedUpdateWithoutUserInput>;
 };
 
 export type MemberUpdateManyWithWhereWithoutUserInput = {
   where: Prisma.MemberScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.MemberUpdateManyMutationInput,
-    Prisma.MemberUncheckedUpdateManyWithoutUserInput
-  >;
+  data: Prisma.XOR<Prisma.MemberUpdateManyMutationInput, Prisma.MemberUncheckedUpdateManyWithoutUserInput>;
 };
 
 export type MemberScalarWhereInput = {
@@ -612,10 +510,7 @@ export type MemberUncheckedCreateWithoutOrganizationInput = {
 
 export type MemberCreateOrConnectWithoutOrganizationInput = {
   where: Prisma.MemberWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.MemberCreateWithoutOrganizationInput,
-    Prisma.MemberUncheckedCreateWithoutOrganizationInput
-  >;
+  create: Prisma.XOR<Prisma.MemberCreateWithoutOrganizationInput, Prisma.MemberUncheckedCreateWithoutOrganizationInput>;
 };
 
 export type MemberCreateManyOrganizationInputEnvelope = {
@@ -625,30 +520,18 @@ export type MemberCreateManyOrganizationInputEnvelope = {
 
 export type MemberUpsertWithWhereUniqueWithoutOrganizationInput = {
   where: Prisma.MemberWhereUniqueInput;
-  update: Prisma.XOR<
-    Prisma.MemberUpdateWithoutOrganizationInput,
-    Prisma.MemberUncheckedUpdateWithoutOrganizationInput
-  >;
-  create: Prisma.XOR<
-    Prisma.MemberCreateWithoutOrganizationInput,
-    Prisma.MemberUncheckedCreateWithoutOrganizationInput
-  >;
+  update: Prisma.XOR<Prisma.MemberUpdateWithoutOrganizationInput, Prisma.MemberUncheckedUpdateWithoutOrganizationInput>;
+  create: Prisma.XOR<Prisma.MemberCreateWithoutOrganizationInput, Prisma.MemberUncheckedCreateWithoutOrganizationInput>;
 };
 
 export type MemberUpdateWithWhereUniqueWithoutOrganizationInput = {
   where: Prisma.MemberWhereUniqueInput;
-  data: Prisma.XOR<
-    Prisma.MemberUpdateWithoutOrganizationInput,
-    Prisma.MemberUncheckedUpdateWithoutOrganizationInput
-  >;
+  data: Prisma.XOR<Prisma.MemberUpdateWithoutOrganizationInput, Prisma.MemberUncheckedUpdateWithoutOrganizationInput>;
 };
 
 export type MemberUpdateManyWithWhereWithoutOrganizationInput = {
   where: Prisma.MemberScalarWhereInput;
-  data: Prisma.XOR<
-    Prisma.MemberUpdateManyMutationInput,
-    Prisma.MemberUncheckedUpdateManyWithoutOrganizationInput
-  >;
+  data: Prisma.XOR<Prisma.MemberUpdateManyMutationInput, Prisma.MemberUncheckedUpdateManyWithoutOrganizationInput>;
 };
 
 export type MemberCreateWithoutClientInput = {
@@ -669,30 +552,18 @@ export type MemberUncheckedCreateWithoutClientInput = {
 
 export type MemberCreateOrConnectWithoutClientInput = {
   where: Prisma.MemberWhereUniqueInput;
-  create: Prisma.XOR<
-    Prisma.MemberCreateWithoutClientInput,
-    Prisma.MemberUncheckedCreateWithoutClientInput
-  >;
+  create: Prisma.XOR<Prisma.MemberCreateWithoutClientInput, Prisma.MemberUncheckedCreateWithoutClientInput>;
 };
 
 export type MemberUpsertWithoutClientInput = {
-  update: Prisma.XOR<
-    Prisma.MemberUpdateWithoutClientInput,
-    Prisma.MemberUncheckedUpdateWithoutClientInput
-  >;
-  create: Prisma.XOR<
-    Prisma.MemberCreateWithoutClientInput,
-    Prisma.MemberUncheckedCreateWithoutClientInput
-  >;
+  update: Prisma.XOR<Prisma.MemberUpdateWithoutClientInput, Prisma.MemberUncheckedUpdateWithoutClientInput>;
+  create: Prisma.XOR<Prisma.MemberCreateWithoutClientInput, Prisma.MemberUncheckedCreateWithoutClientInput>;
   where?: Prisma.MemberWhereInput;
 };
 
 export type MemberUpdateToOneWithWhereWithoutClientInput = {
   where?: Prisma.MemberWhereInput;
-  data: Prisma.XOR<
-    Prisma.MemberUpdateWithoutClientInput,
-    Prisma.MemberUncheckedUpdateWithoutClientInput
-  >;
+  data: Prisma.XOR<Prisma.MemberUpdateWithoutClientInput, Prisma.MemberUncheckedUpdateWithoutClientInput>;
 };
 
 export type MemberUpdateWithoutClientInput = {
@@ -771,9 +642,7 @@ export type MemberUncheckedUpdateManyWithoutOrganizationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 
-export type MemberSelect<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetSelect<
+export type MemberSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
     userId?: boolean;
@@ -795,23 +664,17 @@ export type MemberSelectScalar = {
   createdAt?: boolean;
 };
 
-export type MemberOmit<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = runtime.Types.Extensions.GetOmit<
+export type MemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<
   'id' | 'userId' | 'organizationId' | 'role' | 'createdAt',
   ExtArgs['result']['member']
 >;
-export type MemberInclude<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>;
   client?: boolean | Prisma.Member$clientArgs<ExtArgs>;
 };
 
-export type $MemberPayload<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type $MemberPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: 'Member';
   objects: {
     user: Prisma.$UserPayload<ExtArgs>;
@@ -831,19 +694,13 @@ export type $MemberPayload<
   composites: {};
 };
 
-export type MemberGetPayload<S extends boolean | null | undefined | MemberDefaultArgs> =
-  runtime.Types.Result.GetResult<Prisma.$MemberPayload, S>;
+export type MemberGetPayload<S extends boolean | null | undefined | MemberDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$MemberPayload, S>;
 
-export type MemberCountArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = Omit<MemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+export type MemberCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<MemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
   select?: MemberCountAggregateInputType | true;
 };
 
-export interface MemberDelegate<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-  GlobalOmitOptions = {}
-> {
+export interface MemberDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Member']; meta: { name: 'Member' } };
   /**
    * Find zero or one Member that matches the filter.
@@ -858,17 +715,7 @@ export interface MemberDelegate<
    */
   findUnique<T extends MemberFindUniqueArgs>(
     args: Prisma.SelectSubset<T, MemberFindUniqueArgs<ExtArgs>>
-  ): Prisma.Prisma__MemberClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$MemberPayload<ExtArgs>,
-      T,
-      'findUnique',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find one Member that matches the filter or throw an error with `error.code='P2025'`
@@ -884,17 +731,7 @@ export interface MemberDelegate<
    */
   findUniqueOrThrow<T extends MemberFindUniqueOrThrowArgs>(
     args: Prisma.SelectSubset<T, MemberFindUniqueOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__MemberClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$MemberPayload<ExtArgs>,
-      T,
-      'findUniqueOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first Member that matches the filter.
@@ -911,17 +748,7 @@ export interface MemberDelegate<
    */
   findFirst<T extends MemberFindFirstArgs>(
     args?: Prisma.SelectSubset<T, MemberFindFirstArgs<ExtArgs>>
-  ): Prisma.Prisma__MemberClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$MemberPayload<ExtArgs>,
-      T,
-      'findFirst',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find the first Member that matches the filter or
@@ -939,17 +766,7 @@ export interface MemberDelegate<
    */
   findFirstOrThrow<T extends MemberFindFirstOrThrowArgs>(
     args?: Prisma.SelectSubset<T, MemberFindFirstOrThrowArgs<ExtArgs>>
-  ): Prisma.Prisma__MemberClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$MemberPayload<ExtArgs>,
-      T,
-      'findFirstOrThrow',
-      GlobalOmitOptions
-    >,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Find zero or more Members that matches the filter.
@@ -969,9 +786,7 @@ export interface MemberDelegate<
    */
   findMany<T extends MemberFindManyArgs>(
     args?: Prisma.SelectSubset<T, MemberFindManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<
-    runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>
-  >;
+  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>;
 
   /**
    * Create a Member.
@@ -987,12 +802,7 @@ export interface MemberDelegate<
    */
   create<T extends MemberCreateArgs>(
     args: Prisma.SelectSubset<T, MemberCreateArgs<ExtArgs>>
-  ): Prisma.Prisma__MemberClient<
-    runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'create', GlobalOmitOptions>,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Create many Members.
@@ -1006,9 +816,7 @@ export interface MemberDelegate<
    * })
    *
    */
-  createMany<T extends MemberCreateManyArgs>(
-    args?: Prisma.SelectSubset<T, MemberCreateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  createMany<T extends MemberCreateManyArgs>(args?: Prisma.SelectSubset<T, MemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Delete a Member.
@@ -1024,12 +832,7 @@ export interface MemberDelegate<
    */
   delete<T extends MemberDeleteArgs>(
     args: Prisma.SelectSubset<T, MemberDeleteArgs<ExtArgs>>
-  ): Prisma.Prisma__MemberClient<
-    runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Update one Member.
@@ -1048,12 +851,7 @@ export interface MemberDelegate<
    */
   update<T extends MemberUpdateArgs>(
     args: Prisma.SelectSubset<T, MemberUpdateArgs<ExtArgs>>
-  ): Prisma.Prisma__MemberClient<
-    runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'update', GlobalOmitOptions>,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Delete zero or more Members.
@@ -1067,9 +865,7 @@ export interface MemberDelegate<
    * })
    *
    */
-  deleteMany<T extends MemberDeleteManyArgs>(
-    args?: Prisma.SelectSubset<T, MemberDeleteManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  deleteMany<T extends MemberDeleteManyArgs>(args?: Prisma.SelectSubset<T, MemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Update zero or more Members.
@@ -1088,9 +884,7 @@ export interface MemberDelegate<
    * })
    *
    */
-  updateMany<T extends MemberUpdateManyArgs>(
-    args: Prisma.SelectSubset<T, MemberUpdateManyArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<Prisma.BatchPayload>;
+  updateMany<T extends MemberUpdateManyArgs>(args: Prisma.SelectSubset<T, MemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
 
   /**
    * Create or update one Member.
@@ -1111,12 +905,7 @@ export interface MemberDelegate<
    */
   upsert<T extends MemberUpsertArgs>(
     args: Prisma.SelectSubset<T, MemberUpsertArgs<ExtArgs>>
-  ): Prisma.Prisma__MemberClient<
-    runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>,
-    never,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
 
   /**
    * Count the number of Members.
@@ -1133,13 +922,7 @@ export interface MemberDelegate<
    **/
   count<T extends MemberCountArgs>(
     args?: Prisma.Subset<T, MemberCountArgs>
-  ): Prisma.PrismaPromise<
-    T extends runtime.Types.Utils.Record<'select', any>
-      ? T['select'] extends true
-        ? number
-        : Prisma.GetScalarType<T['select'], MemberCountAggregateOutputType>
-      : number
-  >;
+  ): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? (T['select'] extends true ? number : Prisma.GetScalarType<T['select'], MemberCountAggregateOutputType>) : number>;
 
   /**
    * Allows you to perform aggregations operations on a Member.
@@ -1165,9 +948,7 @@ export interface MemberDelegate<
    *   take: 10,
    * })
    **/
-  aggregate<T extends MemberAggregateArgs>(
-    args: Prisma.Subset<T, MemberAggregateArgs>
-  ): Prisma.PrismaPromise<GetMemberAggregateType<T>>;
+  aggregate<T extends MemberAggregateArgs>(args: Prisma.Subset<T, MemberAggregateArgs>): Prisma.PrismaPromise<GetMemberAggregateType<T>>;
 
   /**
    * Group by Member.
@@ -1189,16 +970,9 @@ export interface MemberDelegate<
    **/
   groupBy<
     T extends MemberGroupByArgs,
-    HasSelectOrTake extends Prisma.Or<
-      Prisma.Extends<'skip', Prisma.Keys<T>>,
-      Prisma.Extends<'take', Prisma.Keys<T>>
-    >,
-    OrderByArg extends Prisma.True extends HasSelectOrTake
-      ? { orderBy: MemberGroupByArgs['orderBy'] }
-      : { orderBy?: MemberGroupByArgs['orderBy'] },
-    OrderFields extends Prisma.ExcludeUnderscoreKeys<
-      Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>
-    >,
+    HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>,
+    OrderByArg extends Prisma.True extends HasSelectOrTake ? { orderBy: MemberGroupByArgs['orderBy'] } : { orderBy?: MemberGroupByArgs['orderBy'] },
+    OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>,
     ByFields extends Prisma.MaybeTupleToUnion<T['by']>,
     ByValid extends Prisma.Has<ByFields, OrderFields>,
     HavingFields extends Prisma.GetHavingFields<T['having']>,
@@ -1219,9 +993,7 @@ export interface MemberDelegate<
             ? ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
             : 'Error: If you provide "take", you also need to provide "orderBy"'
           : 'skip' extends Prisma.Keys<T>
@@ -1229,17 +1001,13 @@ export interface MemberDelegate<
               ? ByValid extends Prisma.True
                 ? {}
                 : {
-                    [P in OrderFields]: P extends ByFields
-                      ? never
-                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                    [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                   }[OrderFields]
               : 'Error: If you provide "skip", you also need to provide "orderBy"'
             : ByValid extends Prisma.True
               ? {}
               : {
-                  [P in OrderFields]: P extends ByFields
-                    ? never
-                    : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
                 }[OrderFields]
   >(
     args: Prisma.SubsetIntersection<T, MemberGroupByArgs, OrderByArg> & InputErrors
@@ -1265,45 +1033,13 @@ export interface Prisma__MemberClient<
   readonly [Symbol.toStringTag]: 'PrismaPromise';
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>
-  ): Prisma.Prisma__UserClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$UserPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>
-  ): Prisma.Prisma__OrganizationClient<
-    | runtime.Types.Result.GetResult<
-        Prisma.$OrganizationPayload<ExtArgs>,
-        T,
-        'findUniqueOrThrow',
-        GlobalOmitOptions
-      >
-    | Null,
-    Null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
   client<T extends Prisma.Member$clientArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Member$clientArgs<ExtArgs>>
-  ): Prisma.Prisma__ClientClient<
-    runtime.Types.Result.GetResult<
-      Prisma.$ClientPayload<ExtArgs>,
-      T,
-      'findUniqueOrThrow',
-      GlobalOmitOptions
-    > | null,
-    null,
-    ExtArgs,
-    GlobalOmitOptions
-  >;
+  ): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1319,9 +1055,7 @@ export interface Prisma__MemberClient<
    * @param onrejected The callback to execute when the Promise is rejected.
    * @returns A Promise for the completion of the callback.
    */
-  catch<TResult = never>(
-    onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
-  ): runtime.Types.Utils.JsPromise<T | TResult>;
+  catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
   /**
    * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
    * resolved value cannot be modified from the callback.
@@ -1346,9 +1080,7 @@ export interface MemberFieldRefs {
 /**
  * Member findUnique
  */
-export type MemberFindUniqueArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Member
    */
@@ -1370,9 +1102,7 @@ export type MemberFindUniqueArgs<
 /**
  * Member findUniqueOrThrow
  */
-export type MemberFindUniqueOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Member
    */
@@ -1394,9 +1124,7 @@ export type MemberFindUniqueOrThrowArgs<
 /**
  * Member findFirst
  */
-export type MemberFindFirstArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Member
    */
@@ -1448,9 +1176,7 @@ export type MemberFindFirstArgs<
 /**
  * Member findFirstOrThrow
  */
-export type MemberFindFirstOrThrowArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Member
    */
@@ -1502,9 +1228,7 @@ export type MemberFindFirstOrThrowArgs<
 /**
  * Member findMany
  */
-export type MemberFindManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Member
    */
@@ -1556,9 +1280,7 @@ export type MemberFindManyArgs<
 /**
  * Member create
  */
-export type MemberCreateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Member
    */
@@ -1580,9 +1302,7 @@ export type MemberCreateArgs<
 /**
  * Member createMany
  */
-export type MemberCreateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to create many Members.
    */
@@ -1593,9 +1313,7 @@ export type MemberCreateManyArgs<
 /**
  * Member update
  */
-export type MemberUpdateArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Member
    */
@@ -1621,9 +1339,7 @@ export type MemberUpdateArgs<
 /**
  * Member updateMany
  */
-export type MemberUpdateManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * The data used to update Members.
    */
@@ -1641,9 +1357,7 @@ export type MemberUpdateManyArgs<
 /**
  * Member upsert
  */
-export type MemberUpsertArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Member
    */
@@ -1673,9 +1387,7 @@ export type MemberUpsertArgs<
 /**
  * Member delete
  */
-export type MemberDeleteArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Member
    */
@@ -1697,9 +1409,7 @@ export type MemberDeleteArgs<
 /**
  * Member deleteMany
  */
-export type MemberDeleteManyArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Filter which Members to delete
    */
@@ -1713,9 +1423,7 @@ export type MemberDeleteManyArgs<
 /**
  * Member.client
  */
-export type Member$clientArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type Member$clientArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Client
    */
@@ -1734,9 +1442,7 @@ export type Member$clientArgs<
 /**
  * Member without action
  */
-export type MemberDefaultArgs<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs
-> = {
+export type MemberDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Member
    */

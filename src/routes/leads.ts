@@ -9,8 +9,4 @@ leadRouter.post('/', leadController.createLead);
 leadRouter.get('/', requireOrgPermission({ lead: ['read'] }), leadController.getLeads);
 leadRouter.get('/:id', requireOrgPermission({ lead: ['read'] }), leadController.getLeadById);
 leadRouter.put('/:id', requireOrgPermission({ lead: ['update'] }), leadController.updateLeadById);
-leadRouter.delete(
-  '/:id',
-  requireOrgPermission({ lead: ['delete'] }),
-  leadController.deleteLeadById
-);
+leadRouter.delete('/:id', requireOrgPermission({ lead: ['delete'] }), leadController.deleteLeadById);

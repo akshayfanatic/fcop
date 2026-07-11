@@ -14,23 +14,11 @@ export const BaseEmail = ({ previewText, children }: BaseEmailProps) => (
     </head>
     <body style={emailStyles.body}>
       <div style={emailStyles.preview}>{previewText}</div>
-      <table
-        role="presentation"
-        width="100%"
-        cellSpacing="0"
-        cellPadding="0"
-        style={emailStyles.page}
-      >
+      <table role="presentation" width="100%" cellSpacing="0" cellPadding="0" style={emailStyles.page}>
         <tbody>
           <tr>
             <td align="center">
-              <table
-                role="presentation"
-                width="100%"
-                cellSpacing="0"
-                cellPadding="0"
-                style={emailStyles.container}
-              >
+              <table role="presentation" width="100%" cellSpacing="0" cellPadding="0" style={emailStyles.container}>
                 <tbody>
                   <tr>
                     <td style={emailStyles.brandCell}>

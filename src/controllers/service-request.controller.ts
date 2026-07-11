@@ -3,11 +3,7 @@ import { z } from 'zod';
 import { serviceRequestService } from '../services/service-request.service.js';
 import { ApiResponse, HttpStatus } from '../utils/api-response.js';
 import { sendValidationError } from '../utils/http-error.js';
-import {
-  createServiceRequestSchema,
-  serviceRequestIdParamsSchema,
-  updateServiceRequestSchema
-} from '../validators/service-request.validator.js';
+import { createServiceRequestSchema, serviceRequestIdParamsSchema, updateServiceRequestSchema } from '../validators/service-request.validator.js';
 
 export const serviceRequestController = {
   createServiceRequest: (async (req, res, next) => {
@@ -77,11 +73,7 @@ export const serviceRequestController = {
     try {
       const { id } = serviceRequestIdParamsSchema.parse(req.params);
       const payload = updateServiceRequestSchema.parse(req.body);
-      const request = await serviceRequestService.updateServiceRequestById(
-        id,
-        payload,
-        req.headers
-      );
+      const request = await serviceRequestService.updateServiceRequestById(id, payload, req.headers);
 
       res.status(HttpStatus.OK).json(
         ApiResponse({

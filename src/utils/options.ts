@@ -3,7 +3,4 @@ export type Option<TValue extends string> = {
   label: string;
 };
 
-export const getOptionLabel = <TValue extends string>(
-  options: readonly Option<TValue>[],
-  value: TValue
-) => options.find((option) => option.value === value)?.label ?? value;
+export const getOptionLabel = <TValue extends string>(options: readonly Option<TValue>[], value: TValue) => options.find((option) => option.value === value)?.label ?? value;

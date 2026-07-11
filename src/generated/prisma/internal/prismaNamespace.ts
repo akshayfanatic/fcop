@@ -157,11 +157,7 @@ export type Subset<T, U> = {
  */
 export type SelectSubset<T, U> = {
   [key in keyof T]: key extends keyof U ? T[key] : never;
-} & (T extends SelectAndInclude
-  ? 'Please either choose `select` or `include`.'
-  : T extends SelectAndOmit
-    ? 'Please either choose `select` or `omit`.'
-    : {});
+} & (T extends SelectAndInclude ? 'Please either choose `select` or `include`.' : T extends SelectAndOmit ? 'Please either choose `select` or `omit`.' : {});
 
 /**
  * Subset + Intersection
@@ -177,27 +173,12 @@ type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
  * XOR is needed to have a real mutually exclusive union type
  * https://stackoverflow.com/questions/42123407/does-typescript-support-mutually-exclusive-types
  */
-export type XOR<T, U> = T extends object
-  ? U extends object
-    ? (Without<T, U> & U) | (Without<U, T> & T)
-    : U
-  : T;
+export type XOR<T, U> = T extends object ? (U extends object ? (Without<T, U> & U) | (Without<U, T> & T) : U) : T;
 
 /**
  * Is T a Record?
  */
-type IsObject<T extends any> =
-  T extends Array<any>
-    ? False
-    : T extends Date
-      ? False
-      : T extends Uint8Array
-        ? False
-        : T extends BigInt
-          ? False
-          : T extends object
-            ? True
-            : False;
+type IsObject<T extends any> = T extends Array<any> ? False : T extends Date ? False : T extends Uint8Array ? False : T extends BigInt ? False : T extends object ? True : False;
 
 /**
  * If it's T[], return T
@@ -223,9 +204,7 @@ type _Either<O extends object, K extends Key, strict extends Boolean> = {
   0: EitherLoose<O, K>;
 }[strict];
 
-export type Either<O extends object, K extends Key, strict extends Boolean = 1> = O extends unknown
-  ? _Either<O, K, strict>
-  : never;
+export type Either<O extends object, K extends Key, strict extends Boolean = 1> = O extends unknown ? _Either<O, K, strict> : never;
 
 export type Union = any;
 
@@ -234,11 +213,7 @@ export type PatchUndefined<O extends object, O1 extends object> = {
 } & {};
 
 /** Helper Types for "Merge" **/
-export type IntersectOf<U extends Union> = (U extends unknown ? (k: U) => void : never) extends (
-  k: infer I
-) => void
-  ? I
-  : never;
+export type IntersectOf<U extends Union> = (U extends unknown ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
 export type Overwrite<O extends object, O1 extends object> = {
   [K in keyof O]: K extends keyof O1 ? O1[K] : O[K];
@@ -280,16 +255,10 @@ type NoExpand<T> = T extends unknown ? T : never;
 
 // this type assumes the passed object is entirely optional
 export type AtLeast<O extends object, K extends string> = NoExpand<
-  O extends unknown
-    ?
-        | (K extends keyof O ? { [P in K]: O[P] } & O : O)
-        | ({ [P in keyof O as P extends K ? P : never]-?: O[P] } & O)
-    : never
+  O extends unknown ? (K extends keyof O ? { [P in K]: O[P] } & O : O) | ({ [P in keyof O as P extends K ? P : never]-?: O[P] } & O) : never
 >;
 
-type _Strict<U, _U = U> = U extends unknown
-  ? U & OptionalFlat<_Record<Exclude<Keys<_U>, keyof U>, never>>
-  : never;
+type _Strict<U, _U = U> = U extends unknown ? U & OptionalFlat<_Record<Exclude<Keys<_U>, keyof U>, never>> : never;
 
 export type Strict<U extends object> = ComputeRaw<_Strict<U>>;
 /** End Helper Types for "Merge" **/
@@ -334,8 +303,7 @@ export type GetScalarType<T, O> = O extends object
     }
   : never;
 
-type FieldPaths<T, U = Omit<T, '_avg' | '_sum' | '_count' | '_min' | '_max'>> =
-  IsObject<T> extends True ? U : T;
+type FieldPaths<T, U = Omit<T, '_avg' | '_sum' | '_count' | '_min' | '_max'>> = IsObject<T> extends True ? U : T;
 
 export type GetHavingFields<T> = {
   [K in keyof T]: Or<Or<Extends<'OR', K>, Extends<'AND', K>>, Extends<'NOT', K>> extends True
@@ -360,10 +328,7 @@ export type MaybeTupleToUnion<T> = T extends any[] ? TupleToUnion<T> : T;
 /**
  * Like `Pick`, but additionally can also accept an array of keys
  */
-export type PickEnumerable<T, K extends Enumerable<keyof T> | keyof T> = Prisma__Pick<
-  T,
-  MaybeTupleToUnion<K>
->;
+export type PickEnumerable<T, K extends Enumerable<keyof T> | keyof T> = Prisma__Pick<T, MaybeTupleToUnion<K>>;
 
 /**
  * Exclude all keys with underscores
@@ -392,35 +357,16 @@ export const ModelName = {
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 
-export interface TypeMapCb<GlobalOmitOptions = {}> extends runtime.Types.Utils.Fn<
-  { extArgs: runtime.Types.Extensions.InternalArgs },
-  runtime.Types.Utils.Record<string, any>
-> {
+export interface TypeMapCb<GlobalOmitOptions = {}> extends runtime.Types.Utils.Fn<{ extArgs: runtime.Types.Extensions.InternalArgs }, runtime.Types.Utils.Record<string, any>> {
   returns: TypeMap<this['params']['extArgs'], GlobalOmitOptions>;
 }
 
-export type TypeMap<
-  ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs,
-  GlobalOmitOptions = {}
-> = {
+export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> = {
   globalOmitOptions: {
     omit: GlobalOmitOptions;
   };
   meta: {
-    modelProps:
-      | 'user'
-      | 'session'
-      | 'account'
-      | 'verification'
-      | 'organization'
-      | 'member'
-      | 'invitation'
-      | 'team'
-      | 'teamMember'
-      | 'organizationRole'
-      | 'client'
-      | 'serviceRequest'
-      | 'lead';
+    modelProps: 'user' | 'session' | 'account' | 'verification' | 'organization' | 'member' | 'invitation' | 'team' | 'teamMember' | 'organizationRole' | 'client' | 'serviceRequest' | 'lead';
     txIsolationLevel: TransactionIsolationLevel;
   };
   model: {
@@ -684,9 +630,7 @@ export type TypeMap<
         };
         count: {
           args: Prisma.VerificationCountArgs<ExtArgs>;
-          result:
-            | runtime.Types.Utils.Optional<Prisma.VerificationCountAggregateOutputType>
-            | number;
+          result: runtime.Types.Utils.Optional<Prisma.VerificationCountAggregateOutputType> | number;
         };
       };
     };
@@ -752,9 +696,7 @@ export type TypeMap<
         };
         count: {
           args: Prisma.OrganizationCountArgs<ExtArgs>;
-          result:
-            | runtime.Types.Utils.Optional<Prisma.OrganizationCountAggregateOutputType>
-            | number;
+          result: runtime.Types.Utils.Optional<Prisma.OrganizationCountAggregateOutputType> | number;
         };
       };
     };
@@ -1084,9 +1026,7 @@ export type TypeMap<
         };
         count: {
           args: Prisma.OrganizationRoleCountArgs<ExtArgs>;
-          result:
-            | runtime.Types.Utils.Optional<Prisma.OrganizationRoleCountAggregateOutputType>
-            | number;
+          result: runtime.Types.Utils.Optional<Prisma.OrganizationRoleCountAggregateOutputType> | number;
         };
       };
     };
@@ -1218,9 +1158,7 @@ export type TypeMap<
         };
         count: {
           args: Prisma.ServiceRequestCountArgs<ExtArgs>;
-          result:
-            | runtime.Types.Utils.Optional<Prisma.ServiceRequestCountAggregateOutputType>
-            | number;
+          result: runtime.Types.Utils.Optional<Prisma.ServiceRequestCountAggregateOutputType> | number;
         };
       };
     };
@@ -1326,8 +1264,7 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
   Serializable: 'Serializable'
 } as const);
 
-export type TransactionIsolationLevel =
-  (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel];
+export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel];
 
 export const UserScalarFieldEnum = {
   id: 'id',
@@ -1354,8 +1291,7 @@ export const SessionScalarFieldEnum = {
   activeTeamId: 'activeTeamId'
 } as const;
 
-export type SessionScalarFieldEnum =
-  (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum];
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum];
 
 export const AccountScalarFieldEnum = {
   id: 'id',
@@ -1373,8 +1309,7 @@ export const AccountScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const;
 
-export type AccountScalarFieldEnum =
-  (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum];
+export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum];
 
 export const VerificationScalarFieldEnum = {
   id: 'id',
@@ -1385,8 +1320,7 @@ export const VerificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const;
 
-export type VerificationScalarFieldEnum =
-  (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum];
+export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum];
 
 export const OrganizationScalarFieldEnum = {
   id: 'id',
@@ -1397,8 +1331,7 @@ export const OrganizationScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const;
 
-export type OrganizationScalarFieldEnum =
-  (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum];
+export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum];
 
 export const MemberScalarFieldEnum = {
   id: 'id',
@@ -1408,8 +1341,7 @@ export const MemberScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const;
 
-export type MemberScalarFieldEnum =
-  (typeof MemberScalarFieldEnum)[keyof typeof MemberScalarFieldEnum];
+export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof MemberScalarFieldEnum];
 
 export const InvitationScalarFieldEnum = {
   id: 'id',
@@ -1423,8 +1355,7 @@ export const InvitationScalarFieldEnum = {
   expiresAt: 'expiresAt'
 } as const;
 
-export type InvitationScalarFieldEnum =
-  (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum];
+export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum];
 
 export const TeamScalarFieldEnum = {
   id: 'id',
@@ -1443,8 +1374,7 @@ export const TeamMemberScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const;
 
-export type TeamMemberScalarFieldEnum =
-  (typeof TeamMemberScalarFieldEnum)[keyof typeof TeamMemberScalarFieldEnum];
+export type TeamMemberScalarFieldEnum = (typeof TeamMemberScalarFieldEnum)[keyof typeof TeamMemberScalarFieldEnum];
 
 export const OrganizationRoleScalarFieldEnum = {
   id: 'id',
@@ -1455,8 +1385,7 @@ export const OrganizationRoleScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const;
 
-export type OrganizationRoleScalarFieldEnum =
-  (typeof OrganizationRoleScalarFieldEnum)[keyof typeof OrganizationRoleScalarFieldEnum];
+export type OrganizationRoleScalarFieldEnum = (typeof OrganizationRoleScalarFieldEnum)[keyof typeof OrganizationRoleScalarFieldEnum];
 
 export const ClientScalarFieldEnum = {
   id: 'id',
@@ -1466,8 +1395,7 @@ export const ClientScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const;
 
-export type ClientScalarFieldEnum =
-  (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum];
+export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum];
 
 export const ServiceRequestScalarFieldEnum = {
   id: 'id',
@@ -1479,8 +1407,7 @@ export const ServiceRequestScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const;
 
-export type ServiceRequestScalarFieldEnum =
-  (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum];
+export type ServiceRequestScalarFieldEnum = (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum];
 
 export const LeadScalarFieldEnum = {
   id: 'id',
@@ -1509,8 +1436,7 @@ export const NullableJsonNullValueInput = {
   JsonNull: JsonNull
 } as const;
 
-export type NullableJsonNullValueInput =
-  (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
 
 export const NullsOrder = {
   first: 'first',
@@ -1526,8 +1452,7 @@ export const UserOrderByRelevanceFieldEnum = {
   image: 'image'
 } as const;
 
-export type UserOrderByRelevanceFieldEnum =
-  (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum];
+export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum];
 
 export const SessionOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -1539,8 +1464,7 @@ export const SessionOrderByRelevanceFieldEnum = {
   activeTeamId: 'activeTeamId'
 } as const;
 
-export type SessionOrderByRelevanceFieldEnum =
-  (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum];
+export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum];
 
 export const AccountOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -1554,8 +1478,7 @@ export const AccountOrderByRelevanceFieldEnum = {
   password: 'password'
 } as const;
 
-export type AccountOrderByRelevanceFieldEnum =
-  (typeof AccountOrderByRelevanceFieldEnum)[keyof typeof AccountOrderByRelevanceFieldEnum];
+export type AccountOrderByRelevanceFieldEnum = (typeof AccountOrderByRelevanceFieldEnum)[keyof typeof AccountOrderByRelevanceFieldEnum];
 
 export const VerificationOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -1563,8 +1486,7 @@ export const VerificationOrderByRelevanceFieldEnum = {
   value: 'value'
 } as const;
 
-export type VerificationOrderByRelevanceFieldEnum =
-  (typeof VerificationOrderByRelevanceFieldEnum)[keyof typeof VerificationOrderByRelevanceFieldEnum];
+export type VerificationOrderByRelevanceFieldEnum = (typeof VerificationOrderByRelevanceFieldEnum)[keyof typeof VerificationOrderByRelevanceFieldEnum];
 
 export const OrganizationOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -1574,8 +1496,7 @@ export const OrganizationOrderByRelevanceFieldEnum = {
   metadata: 'metadata'
 } as const;
 
-export type OrganizationOrderByRelevanceFieldEnum =
-  (typeof OrganizationOrderByRelevanceFieldEnum)[keyof typeof OrganizationOrderByRelevanceFieldEnum];
+export type OrganizationOrderByRelevanceFieldEnum = (typeof OrganizationOrderByRelevanceFieldEnum)[keyof typeof OrganizationOrderByRelevanceFieldEnum];
 
 export const MemberOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -1584,8 +1505,7 @@ export const MemberOrderByRelevanceFieldEnum = {
   role: 'role'
 } as const;
 
-export type MemberOrderByRelevanceFieldEnum =
-  (typeof MemberOrderByRelevanceFieldEnum)[keyof typeof MemberOrderByRelevanceFieldEnum];
+export type MemberOrderByRelevanceFieldEnum = (typeof MemberOrderByRelevanceFieldEnum)[keyof typeof MemberOrderByRelevanceFieldEnum];
 
 export const InvitationOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -1597,8 +1517,7 @@ export const InvitationOrderByRelevanceFieldEnum = {
   teamId: 'teamId'
 } as const;
 
-export type InvitationOrderByRelevanceFieldEnum =
-  (typeof InvitationOrderByRelevanceFieldEnum)[keyof typeof InvitationOrderByRelevanceFieldEnum];
+export type InvitationOrderByRelevanceFieldEnum = (typeof InvitationOrderByRelevanceFieldEnum)[keyof typeof InvitationOrderByRelevanceFieldEnum];
 
 export const TeamOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -1606,8 +1525,7 @@ export const TeamOrderByRelevanceFieldEnum = {
   organizationId: 'organizationId'
 } as const;
 
-export type TeamOrderByRelevanceFieldEnum =
-  (typeof TeamOrderByRelevanceFieldEnum)[keyof typeof TeamOrderByRelevanceFieldEnum];
+export type TeamOrderByRelevanceFieldEnum = (typeof TeamOrderByRelevanceFieldEnum)[keyof typeof TeamOrderByRelevanceFieldEnum];
 
 export const TeamMemberOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -1615,8 +1533,7 @@ export const TeamMemberOrderByRelevanceFieldEnum = {
   userId: 'userId'
 } as const;
 
-export type TeamMemberOrderByRelevanceFieldEnum =
-  (typeof TeamMemberOrderByRelevanceFieldEnum)[keyof typeof TeamMemberOrderByRelevanceFieldEnum];
+export type TeamMemberOrderByRelevanceFieldEnum = (typeof TeamMemberOrderByRelevanceFieldEnum)[keyof typeof TeamMemberOrderByRelevanceFieldEnum];
 
 export const OrganizationRoleOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -1625,8 +1542,7 @@ export const OrganizationRoleOrderByRelevanceFieldEnum = {
   permission: 'permission'
 } as const;
 
-export type OrganizationRoleOrderByRelevanceFieldEnum =
-  (typeof OrganizationRoleOrderByRelevanceFieldEnum)[keyof typeof OrganizationRoleOrderByRelevanceFieldEnum];
+export type OrganizationRoleOrderByRelevanceFieldEnum = (typeof OrganizationRoleOrderByRelevanceFieldEnum)[keyof typeof OrganizationRoleOrderByRelevanceFieldEnum];
 
 export const ClientOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -1634,8 +1550,7 @@ export const ClientOrderByRelevanceFieldEnum = {
   name: 'name'
 } as const;
 
-export type ClientOrderByRelevanceFieldEnum =
-  (typeof ClientOrderByRelevanceFieldEnum)[keyof typeof ClientOrderByRelevanceFieldEnum];
+export type ClientOrderByRelevanceFieldEnum = (typeof ClientOrderByRelevanceFieldEnum)[keyof typeof ClientOrderByRelevanceFieldEnum];
 
 export const JsonNullValueFilter = {
   DbNull: DbNull,
@@ -1657,8 +1572,7 @@ export const ServiceRequestOrderByRelevanceFieldEnum = {
   clientId: 'clientId'
 } as const;
 
-export type ServiceRequestOrderByRelevanceFieldEnum =
-  (typeof ServiceRequestOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestOrderByRelevanceFieldEnum];
+export type ServiceRequestOrderByRelevanceFieldEnum = (typeof ServiceRequestOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestOrderByRelevanceFieldEnum];
 
 export const LeadOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -1668,8 +1582,7 @@ export const LeadOrderByRelevanceFieldEnum = {
   budgetRange: 'budgetRange'
 } as const;
 
-export type LeadOrderByRelevanceFieldEnum =
-  (typeof LeadOrderByRelevanceFieldEnum)[keyof typeof LeadOrderByRelevanceFieldEnum];
+export type LeadOrderByRelevanceFieldEnum = (typeof LeadOrderByRelevanceFieldEnum)[keyof typeof LeadOrderByRelevanceFieldEnum];
 
 /**
  * Field references
@@ -1693,18 +1606,12 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
 /**
  * Reference to a field of type 'ServiceInterest'
  */
-export type EnumServiceInterestFieldRefInput<$PrismaModel> = FieldRefInputType<
-  $PrismaModel,
-  'ServiceInterest'
->;
+export type EnumServiceInterestFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceInterest'>;
 
 /**
  * Reference to a field of type 'ServiceRequestStatus'
  */
-export type EnumServiceRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
-  $PrismaModel,
-  'ServiceRequestStatus'
->;
+export type EnumServiceRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ServiceRequestStatus'>;
 
 /**
  * Reference to a field of type 'Json'
@@ -1719,18 +1626,12 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 /**
  * Reference to a field of type 'LeadStatus'
  */
-export type EnumLeadStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
-  $PrismaModel,
-  'LeadStatus'
->;
+export type EnumLeadStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeadStatus'>;
 
 /**
  * Reference to a field of type 'LeadSource'
  */
-export type EnumLeadSourceFieldRefInput<$PrismaModel> = FieldRefInputType<
-  $PrismaModel,
-  'LeadSource'
->;
+export type EnumLeadSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeadSource'>;
 
 /**
  * Reference to a field of type 'Int'
@@ -1744,12 +1645,7 @@ export type BatchPayload = {
   count: number;
 };
 
-export const defineExtension = runtime.Extensions
-  .defineExtension as unknown as runtime.Types.Extensions.ExtendsHook<
-  'define',
-  TypeMapCb,
-  runtime.Types.Extensions.DefaultArgs
->;
+export const defineExtension = runtime.Extensions.defineExtension as unknown as runtime.Types.Extensions.ExtendsHook<'define', TypeMapCb, runtime.Types.Extensions.DefaultArgs>;
 export type DefaultPrismaClient = PrismaClient;
 export type ErrorFormat = 'pretty' | 'colorless' | 'minimal';
 export type PrismaClientOptions = (
@@ -1881,8 +1777,7 @@ export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
 
 export type GetLogType<T> = CheckIsLogLevel<T extends LogDefinition ? T['level'] : T>;
 
-export type GetEvents<T extends any[]> =
-  T extends Array<LogLevel | LogDefinition> ? GetLogType<T[number]> : never;
+export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition> ? GetLogType<T[number]> : never;
 
 export type QueryEvent = {
   timestamp: Date;
