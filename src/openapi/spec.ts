@@ -1184,6 +1184,9 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           role: {
             $ref: '#/components/schemas/InviteMemberRole'
           },
+          serviceInterest: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
           resend: {
             type: 'boolean',
             description: 'Resend the invitation email if a pending invitation already exists.',
@@ -1207,6 +1210,9 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           role: {
             type: 'string',
             example: 'CLIENT'
+          },
+          serviceInterest: {
+            $ref: '#/components/schemas/ServiceInterest'
           },
           organizationId: {
             type: 'string',

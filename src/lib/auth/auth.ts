@@ -31,6 +31,17 @@ export const auth = betterAuth({
       roles: organizationRoles,
       creatorRole: Role.ADMIN,
       cancelPendingInvitationsOnReInvite: true,
+      schema: {
+        invitation: {
+          additionalFields: {
+            serviceInterest: {
+              type: 'string',
+              input: true,
+              required: false
+            }
+          }
+        }
+      },
       // Send email to invite user into the organization.
       sendInvitationEmail,
       organizationHooks: {

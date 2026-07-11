@@ -17,6 +17,11 @@ type SendInvitationEmailParams = {
   id: string;
   role: string;
   email: string;
+  invitation: {
+    id: string;
+    serviceInterest?: string | null;
+    [key: string]: unknown;
+  };
   organization: {
     name: string;
   };
@@ -65,15 +70,20 @@ export const sendResetPasswordEmail = async ({ user, url, token }: SendResetPass
   }
 };
 
-export const sendInvitationEmail = async ({ id, role, email, organization, inviter }: SendInvitationEmailParams) => {
-  const acceptUrl = `${env.frontendUrl}/accept-invitation?invitationId=${encodeURIComponent(id)}`;
+export const sendInvitationEmail = async ({ id, role, email, invitation, organization, inviter }: SendInvitationEmailParams) => {
+  const acceptUrl = new URL('/accept-invitation', env.frontendUrl);
+  acceptUrl.searchParams.set('invitationId', id);
+
+  if (invitation.serviceInterest) {
+    acceptUrl.searchParams.set('serviceInterest', invitation.serviceInterest);
+  }
 
   try {
     // Send email to invite user into the organization.
     await sendTemplateEmail({
       to: email,
       template: createInvitationEmailTemplate({
-        acceptUrl,
+        acceptUrl: acceptUrl.toString(),
         invitedEmail: email,
         inviterName: inviter.user.name,
         organizationName: organization.name,
