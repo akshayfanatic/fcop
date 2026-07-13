@@ -1,4 +1,5 @@
 import { LeadSource, LeadStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/enums.js';
+import { Role } from '../lib/auth/permissions.js';
 
 const enumValues = <T extends Record<string, string>>(values: T) => Object.values(values);
 
@@ -86,6 +87,44 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           },
           '400': {
             description: 'Invalid email or redirect URL.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/me': {
+      get: {
+        tags: ['Auth'],
+        summary: 'Fetch current user access',
+        description: 'Returns the authenticated user, active organization member, role, and permission statements for UI access checks.',
+        operationId: 'getMe',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Current user fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/MeResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '404': {
+            description: 'Authenticated user does not have an active organization member.',
             content: {
               'application/json': {
                 schema: {
@@ -407,6 +446,9 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             cookieAuth: []
           }
         ],
+        'x-requiredPermissions': {
+          serviceRequest: ['create']
+        },
         requestBody: {
           required: true,
           content: {
@@ -440,6 +482,9 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           },
           '401': {
             $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
           },
           '404': {
             description: 'Client profile has not been created.',
@@ -723,6 +768,11 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         enum: enumValues(ServiceRequestStatus),
         example: ServiceRequestStatus.NEW
       },
+      OrganizationRole: {
+        type: 'string',
+        enum: enumValues(Role),
+        example: Role.CLIENT
+      },
       ApiResponse: {
         type: 'object',
         required: ['success', 'status', 'message'],
@@ -756,6 +806,81 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             }
           }
         }
+      },
+      MeUser: {
+        type: 'object',
+        required: ['id', 'name', 'email'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000000'
+          },
+          name: {
+            type: 'string',
+            example: 'Akshay'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'akshay@example.com'
+          }
+        }
+      },
+      PermissionStatements: {
+        type: 'object',
+        description: 'Role permission statements keyed by resource. The values are allowed CRUD or domain actions.',
+        additionalProperties: {
+          type: 'array',
+          items: {
+            type: 'string',
+            example: 'read'
+          }
+        },
+        example: {
+          ac: ['read'],
+          serviceRequest: ['create', 'read'],
+          project: ['read'],
+          dashboard: ['read']
+        }
+      },
+      Me: {
+        type: 'object',
+        required: ['user', 'organizationId', 'memberId', 'role', 'permissions'],
+        properties: {
+          user: {
+            $ref: '#/components/schemas/MeUser'
+          },
+          organizationId: {
+            type: 'string',
+            example: 'seed-org-fanatic-coders'
+          },
+          memberId: {
+            type: 'string',
+            example: 'seed-member-client'
+          },
+          role: {
+            $ref: '#/components/schemas/OrganizationRole'
+          },
+          permissions: {
+            $ref: '#/components/schemas/PermissionStatements'
+          }
+        }
+      },
+      MeResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/Me'
+              }
+            }
+          }
+        ]
       },
       User: {
         type: 'object',

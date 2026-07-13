@@ -27,62 +27,87 @@ const statement = {
 
 export const ac = createAccessControl(statement);
 export type OrganizationPermission = {
-  [Key in keyof typeof statement]?: Array<(typeof statement)[Key][number]>;
+  [Key in keyof typeof statement]?: ReadonlyArray<(typeof statement)[Key][number]>;
 };
 
-export const admin = ac.newRole({
-  ...ownerAc.statements,
-  lead: ['create', 'read', 'update', 'delete'],
-  serviceRequest: ['create', 'read', 'update', 'delete'],
-  project: ['create', 'read', 'update', 'delete'],
-  task: ['create', 'read', 'update', 'delete', 'assign'],
-  deliverable: ['create', 'read', 'update', 'delete', 'download'],
-  comment: ['create', 'read', 'update', 'delete'],
-  file: ['upload', 'read', 'delete'],
-  timeEntry: ['create', 'read', 'update', 'delete'],
-  billing: ['read', 'update'],
-  revenue: ['read'],
-  dashboard: ['read']
-});
+export const rolePermissionStatements = {
+  [Role.ADMIN]: {
+    ...ownerAc.statements,
+    lead: ['create', 'read', 'update', 'delete'],
+    serviceRequest: ['create', 'read', 'update', 'delete'],
+    project: ['create', 'read', 'update', 'delete'],
+    task: ['create', 'read', 'update', 'delete', 'assign'],
+    deliverable: ['create', 'read', 'update', 'delete', 'download'],
+    comment: ['create', 'read', 'update', 'delete'],
+    file: ['upload', 'read', 'delete'],
+    timeEntry: ['create', 'read', 'update', 'delete'],
+    billing: ['read', 'update'],
+    revenue: ['read'],
+    dashboard: ['read']
+  },
+  [Role.MANAGER]: {
+    organization: ['update'],
+    member: ['create', 'update'],
+    team: ['create', 'update'],
+    ac: ['read'],
+    lead: ['read', 'update'],
+    serviceRequest: ['read', 'update'],
+    project: ['create', 'read', 'update'],
+    task: ['create', 'read', 'update', 'assign'],
+    deliverable: ['create', 'read', 'update', 'download'],
+    comment: ['create', 'read', 'update'],
+    file: ['upload', 'read'],
+    timeEntry: ['read'],
+    billing: ['read'],
+    dashboard: ['read']
+  },
+  [Role.MEMBER]: {
+    ac: ['read'],
+    project: ['read'],
+    task: ['read', 'update'],
+    deliverable: ['create', 'read', 'update', 'download'],
+    comment: ['create', 'read', 'update'],
+    file: ['upload', 'read'],
+    timeEntry: ['create', 'read', 'update'],
+    dashboard: ['read']
+  },
+  [Role.CLIENT]: {
+    ac: ['read'],
+    project: ['read'],
+    serviceRequest: ['create', 'read'],
+    deliverable: ['read', 'download'],
+    comment: ['create', 'read'],
+    file: ['read'],
+    billing: ['read'],
+    dashboard: ['read']
+  }
+} satisfies Record<Role, OrganizationPermission>;
 
-export const manager = ac.newRole({
-  organization: ['update'],
-  member: ['create', 'update'],
-  team: ['create', 'update'],
-  ac: ['read'],
-  lead: ['read', 'update'],
-  serviceRequest: ['read', 'update'],
-  project: ['create', 'read', 'update'],
-  task: ['create', 'read', 'update', 'assign'],
-  deliverable: ['create', 'read', 'update', 'download'],
-  comment: ['create', 'read', 'update'],
-  file: ['upload', 'read'],
-  timeEntry: ['read'],
-  billing: ['read'],
-  dashboard: ['read']
-});
+/**
+ * Returns the permission statements configured for a FCOP organization role.
+ *
+ * @param role - Organization member role stored by Better Auth.
+ * @returns Permission statements for known FCOP roles, or an empty map for unknown roles.
+ *
+ * @example
+ * getRolePermissionStatements('CLIENT');
+ * // { ac: ['read'], project: ['read'], serviceRequest: ['create', 'read'], ... }
+ */
+export function getRolePermissionStatements(role: string): OrganizationPermission {
+  if (Object.values(Role).includes(role as Role)) {
+    return rolePermissionStatements[role as Role];
+  }
 
-export const member = ac.newRole({
-  ac: ['read'],
-  project: ['read'],
-  task: ['read', 'update'],
-  deliverable: ['create', 'read', 'update', 'download'],
-  comment: ['create', 'read', 'update'],
-  file: ['upload', 'read'],
-  timeEntry: ['create', 'read', 'update'],
-  dashboard: ['read']
-});
+  return {};
+}
 
-export const client = ac.newRole({
-  ac: ['read'],
-  project: ['read'],
-  serviceRequest: ['create', 'read'],
-  deliverable: ['read', 'download'],
-  comment: ['create', 'read'],
-  file: ['read'],
-  billing: ['read'],
-  dashboard: ['read']
-});
+export const admin = ac.newRole(rolePermissionStatements[Role.ADMIN]);
+
+export const manager = ac.newRole(rolePermissionStatements[Role.MANAGER]);
+
+export const member = ac.newRole(rolePermissionStatements[Role.MEMBER]);
+
+export const client = ac.newRole(rolePermissionStatements[Role.CLIENT]);
 
 export const organizationRoles = {
   [Role.ADMIN]: admin,

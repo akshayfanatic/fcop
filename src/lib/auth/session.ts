@@ -22,7 +22,9 @@ export const getSessionMember = async (headers: IncomingHttpHeaders) => {
     include: {
       user: {
         select: {
-          name: true
+          id: true,
+          name: true,
+          email: true
         }
       },
       client: true
