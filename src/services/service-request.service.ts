@@ -7,6 +7,7 @@ import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
+import { isClientRole } from '../utils/role.js';
 import type { CreateServiceRequestInput, UpdateServiceRequestInput } from '../validators/service-request.validator.js';
 
 const includeClientRequestDetails = {
@@ -81,13 +82,19 @@ export const serviceRequestService = {
     try {
       const member = await getSessionMember(headers);
 
-      if (!member.client) {
+      // Show non-client roles the full service request queue after permission middleware allows read access.
+      if (!isClientRole(member.role)) {
         return await prisma.serviceRequest.findMany({
           include: includeClientRequestDetails,
           orderBy: {
             createdAt: 'desc'
           }
         });
+      }
+
+      // Restrict clients to their own submitted service requests.
+      if (!member.client) {
+        throw createHttpError(HttpStatus.NOT_FOUND, 'Client profile has not been created.', 'CLIENT_NOT_FOUND');
       }
 
       return await prisma.serviceRequest.findMany({
@@ -108,7 +115,8 @@ export const serviceRequestService = {
     try {
       const member = await getSessionMember(headers);
 
-      if (!member.client) {
+      // Show non-client roles any service request detail after permission middleware allows read access.
+      if (!isClientRole(member.role)) {
         const request = await prisma.serviceRequest.findUnique({
           where: {
             id
@@ -121,6 +129,11 @@ export const serviceRequestService = {
         }
 
         return request;
+      }
+
+      // Restrict clients to their own submitted service request details.
+      if (!member.client) {
+        throw createHttpError(HttpStatus.NOT_FOUND, 'Client profile has not been created.', 'CLIENT_NOT_FOUND');
       }
 
       const request = await prisma.serviceRequest.findFirst({

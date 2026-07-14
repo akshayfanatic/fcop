@@ -48,10 +48,11 @@ export const rolePermissionStatements = {
   [Role.MANAGER]: {
     organization: ['update'],
     member: ['create', 'update'],
+    invitation: ['create'],
     team: ['create', 'update'],
     ac: ['read'],
     lead: ['read', 'update'],
-    serviceRequest: ['read', 'update'],
+    serviceRequest: ['create', 'read', 'update', 'delete'],
     project: ['create', 'read', 'update'],
     task: ['create', 'read', 'update', 'assign'],
     deliverable: ['create', 'read', 'update', 'download'],
