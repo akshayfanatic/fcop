@@ -60,6 +60,7 @@ export const ModelName = {
   OrganizationRole: 'OrganizationRole',
   Client: 'Client',
   ServiceRequest: 'ServiceRequest',
+  ServiceRequestMessage: 'ServiceRequestMessage',
   Lead: 'Lead'
 } as const;
 
@@ -221,6 +222,18 @@ export const ServiceRequestScalarFieldEnum = {
 } as const;
 
 export type ServiceRequestScalarFieldEnum = (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum];
+
+export const ServiceRequestMessageScalarFieldEnum = {
+  id: 'id',
+  serviceRequestId: 'serviceRequestId',
+  authorMemberId: 'authorMemberId',
+  body: 'body',
+  isInternal: 'isInternal',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type ServiceRequestMessageScalarFieldEnum = (typeof ServiceRequestMessageScalarFieldEnum)[keyof typeof ServiceRequestMessageScalarFieldEnum];
 
 export const LeadScalarFieldEnum = {
   id: 'id',
@@ -387,6 +400,15 @@ export const ServiceRequestOrderByRelevanceFieldEnum = {
 } as const;
 
 export type ServiceRequestOrderByRelevanceFieldEnum = (typeof ServiceRequestOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestOrderByRelevanceFieldEnum];
+
+export const ServiceRequestMessageOrderByRelevanceFieldEnum = {
+  id: 'id',
+  serviceRequestId: 'serviceRequestId',
+  authorMemberId: 'authorMemberId',
+  body: 'body'
+} as const;
+
+export type ServiceRequestMessageOrderByRelevanceFieldEnum = (typeof ServiceRequestMessageOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestMessageOrderByRelevanceFieldEnum];
 
 export const LeadOrderByRelevanceFieldEnum = {
   id: 'id',

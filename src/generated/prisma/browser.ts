@@ -77,6 +77,11 @@ export type Client = Prisma.ClientModel;
  */
 export type ServiceRequest = Prisma.ServiceRequestModel;
 /**
+ * Model ServiceRequestMessage
+ *
+ */
+export type ServiceRequestMessage = Prisma.ServiceRequestMessageModel;
+/**
  * Model Lead
  *
  */

@@ -19,5 +19,6 @@ export type * from './models/TeamMember.js';
 export type * from './models/OrganizationRole.js';
 export type * from './models/Client.js';
 export type * from './models/ServiceRequest.js';
+export type * from './models/ServiceRequestMessage.js';
 export type * from './models/Lead.js';
 export type * from './commonInputTypes.js';

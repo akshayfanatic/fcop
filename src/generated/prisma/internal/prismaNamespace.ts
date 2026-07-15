@@ -352,6 +352,7 @@ export const ModelName = {
   OrganizationRole: 'OrganizationRole',
   Client: 'Client',
   ServiceRequest: 'ServiceRequest',
+  ServiceRequestMessage: 'ServiceRequestMessage',
   Lead: 'Lead'
 } as const;
 
@@ -366,7 +367,21 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions;
   };
   meta: {
-    modelProps: 'user' | 'session' | 'account' | 'verification' | 'organization' | 'member' | 'invitation' | 'team' | 'teamMember' | 'organizationRole' | 'client' | 'serviceRequest' | 'lead';
+    modelProps:
+      | 'user'
+      | 'session'
+      | 'account'
+      | 'verification'
+      | 'organization'
+      | 'member'
+      | 'invitation'
+      | 'team'
+      | 'teamMember'
+      | 'organizationRole'
+      | 'client'
+      | 'serviceRequest'
+      | 'serviceRequestMessage'
+      | 'lead';
     txIsolationLevel: TransactionIsolationLevel;
   };
   model: {
@@ -1162,6 +1177,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         };
       };
     };
+    ServiceRequestMessage: {
+      payload: Prisma.$ServiceRequestMessagePayload<ExtArgs>;
+      fields: Prisma.ServiceRequestMessageFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.ServiceRequestMessageFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.ServiceRequestMessageFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>;
+        };
+        findFirst: {
+          args: Prisma.ServiceRequestMessageFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.ServiceRequestMessageFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>;
+        };
+        findMany: {
+          args: Prisma.ServiceRequestMessageFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>[];
+        };
+        create: {
+          args: Prisma.ServiceRequestMessageCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>;
+        };
+        createMany: {
+          args: Prisma.ServiceRequestMessageCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.ServiceRequestMessageDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>;
+        };
+        update: {
+          args: Prisma.ServiceRequestMessageUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>;
+        };
+        deleteMany: {
+          args: Prisma.ServiceRequestMessageDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.ServiceRequestMessageUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.ServiceRequestMessageUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>;
+        };
+        aggregate: {
+          args: Prisma.ServiceRequestMessageAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceRequestMessage>;
+        };
+        groupBy: {
+          args: Prisma.ServiceRequestMessageGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.ServiceRequestMessageGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.ServiceRequestMessageCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.ServiceRequestMessageCountAggregateOutputType> | number;
+        };
+      };
+    };
     Lead: {
       payload: Prisma.$LeadPayload<ExtArgs>;
       fields: Prisma.LeadFieldRefs;
@@ -1410,6 +1491,18 @@ export const ServiceRequestScalarFieldEnum = {
 
 export type ServiceRequestScalarFieldEnum = (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum];
 
+export const ServiceRequestMessageScalarFieldEnum = {
+  id: 'id',
+  serviceRequestId: 'serviceRequestId',
+  authorMemberId: 'authorMemberId',
+  body: 'body',
+  isInternal: 'isInternal',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type ServiceRequestMessageScalarFieldEnum = (typeof ServiceRequestMessageScalarFieldEnum)[keyof typeof ServiceRequestMessageScalarFieldEnum];
+
 export const LeadScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1575,6 +1668,15 @@ export const ServiceRequestOrderByRelevanceFieldEnum = {
 } as const;
 
 export type ServiceRequestOrderByRelevanceFieldEnum = (typeof ServiceRequestOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestOrderByRelevanceFieldEnum];
+
+export const ServiceRequestMessageOrderByRelevanceFieldEnum = {
+  id: 'id',
+  serviceRequestId: 'serviceRequestId',
+  authorMemberId: 'authorMemberId',
+  body: 'body'
+} as const;
+
+export type ServiceRequestMessageOrderByRelevanceFieldEnum = (typeof ServiceRequestMessageOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestMessageOrderByRelevanceFieldEnum];
 
 export const LeadOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -1765,6 +1867,7 @@ export type GlobalOmitConfig = {
   organizationRole?: Prisma.OrganizationRoleOmit;
   client?: Prisma.ClientOmit;
   serviceRequest?: Prisma.ServiceRequestOmit;
+  serviceRequestMessage?: Prisma.ServiceRequestMessageOmit;
   lead?: Prisma.LeadOmit;
 };
 
