@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/akshayfanatic/fcop/compare/v0.1.0...v0.2.0) (2026-07-16)
+
+### Features
+
+- **auth:** added api routes for creating managing reset password ([381e6b0](https://github.com/akshayfanatic/fcop/commit/381e6b0cf48598cb1114de63a359ccd4c0168706))
+- **auth:** added new setup ofr authentication using better auth ([a496f9c](https://github.com/akshayfanatic/fcop/commit/a496f9c8546894ac6f18444cdb7ccc15cb1e576a))
+- **auth:** added session for auth management contenxt (member) ([de0d482](https://github.com/akshayfanatic/fcop/commit/de0d482fc0f5835b37eb870021af6e93004d5a7f))
+- **comments:** added a new skill for structring comments whenver side effect happen or any other operation happen around operation ([bfb7ebd](https://github.com/akshayfanatic/fcop/commit/bfb7ebdcd1c6fc72e525655ed10530605f4ab24e))
+- **controller:** added controler for managin response ([efbcd12](https://github.com/akshayfanatic/fcop/commit/efbcd1289e17eb9422a4c10de083b81def3a7ad2))
+- **db:** added new migration for new table requestService ([6c42e37](https://github.com/akshayfanatic/fcop/commit/6c42e37d1a39d193c9de79c04f8cb1af7f402acf))
+- **email:** added email support in system for managing and sending email ([781fa6b](https://github.com/akshayfanatic/fcop/commit/781fa6bfca76c9f88f9e107f28f005801372842c))
+- **email:** send email to admin regarding new service request coming ([5b6344f](https://github.com/akshayfanatic/fcop/commit/5b6344fadc4930c9cc0b4d2673693a6c7bf721f3))
+- **email:** send email to admin when new user accepted member ship ([5bd183b](https://github.com/akshayfanatic/fcop/commit/5bd183b03848c9ec0d5ab130229eb9e214d543ff))
+- **invitation:** added new field in invitation table serviceInterest ([fb5c8c7](https://github.com/akshayfanatic/fcop/commit/fb5c8c724b71286ae0c9efa24e2cf029c732c245))
+- **member:** update lead data when member accept invitation ([1680179](https://github.com/akshayfanatic/fcop/commit/1680179b649a9d0aa8bb4ea1da7ed46f8994fea1))
+- **migration:** added new table serviceRequestMessage for managing request messages ([12e2c93](https://github.com/akshayfanatic/fcop/commit/12e2c9350c1db59fc40d899888c85255dc2aa632))
+- **organization:** modify organization hook ( beforeInvitation ) and attach binding ([dc32898](https://github.com/akshayfanatic/fcop/commit/dc328981cf37ce928ba0e1adf652e4644fec8d80))
+- **permission:** give all permission and manger for CRUD regarding service request and manager invitations ([c93d699](https://github.com/akshayfanatic/fcop/commit/c93d6990686ccfafb7081ad1598434da2053cd9d))
+- **rbac:** added new endpoint to making /api/me to enhance permission and security ([9847f17](https://github.com/akshayfanatic/fcop/commit/9847f17fdb21cd8155958ec3b44064d576d2429e))
+- **rbac:** added permission for managing serviceRequest ([3044c17](https://github.com/akshayfanatic/fcop/commit/3044c17c84ae5e355b69bb6da861b0d1eb28bfd9))
+- **requestMessage:** added api endpoint for service request meesages ([dc4d527](https://github.com/akshayfanatic/fcop/commit/dc4d527c9231955d3f9b0e79e47d81221bf0715e))
+- **servicerequest:** added endpoint regarding serviceRequest entity ([d05f795](https://github.com/akshayfanatic/fcop/commit/d05f7958acdd6ad64db10ae2e26c897e7223fc8a))
+- **spec:** added spec for managing contracts types ([afe6eb4](https://github.com/akshayfanatic/fcop/commit/afe6eb4ed4571ffe2ebafefe441cfbab93582e30))
+
+### Bug Fixes
+
+- **husky:** added pre push hook to build before push ([f21038e](https://github.com/akshayfanatic/fcop/commit/f21038e9d52feed4e82ec4effce537dfa01b75d5))
+
+### Code Refactoring
+
+- **auth:** added feature for reinvitte and cancel previousl invite ([653b5b7](https://github.com/akshayfanatic/fcop/commit/653b5b70ab73674c406f8b87e86234a0d0517165))
+- **db:** added new migration for qualified lead status ([f864fc2](https://github.com/akshayfanatic/fcop/commit/f864fc2b8cfbd839d2bb56280799f6225b9d3cb5))
+- **prettier:** update formating rules ([c4f4e1b](https://github.com/akshayfanatic/fcop/commit/c4f4e1bb323f40ea19dad8d3a4d0329994ce9872))
+
 ## [0.1.0](https://github.com/akshayfanatic/fcop/compare/v0.0.2...v0.1.0) (2026-07-02)
 
 ### Features
