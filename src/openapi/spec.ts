@@ -531,6 +531,124 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/service-requests/{serviceRequestId}/messages': {
+      post: {
+        tags: ['Service Requests'],
+        summary: 'Create a service request message',
+        description: 'Adds a message to a service request consultation. Only Admin and Manager can create internal messages.',
+        operationId: 'createServiceRequestMessage',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['read'],
+          serviceRequestMessage: ['create']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestMessageServiceRequestId'
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateServiceRequestMessageRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Service request message created successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestMessageResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid service request message payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request was not found or is not accessible to the current member.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      get: {
+        tags: ['Service Requests'],
+        summary: 'Fetch service request messages',
+        description: 'Returns the consultation chronologically. Clients receive only shared messages from their own service request.',
+        operationId: 'getServiceRequestMessages',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['read'],
+          serviceRequestMessage: ['read']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestMessageServiceRequestId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Service request messages fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestMessagesResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request was not found or is not accessible to the current member.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     '/api/v1/service-requests/{id}': {
       get: {
         tags: ['Service Requests'],
@@ -745,6 +863,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           minLength: 1
         },
         example: 'clx0000000000000000000006'
+      },
+      ServiceRequestMessageServiceRequestId: {
+        name: 'serviceRequestId',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000006'
       }
     },
     schemas: {
@@ -839,6 +967,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         example: {
           ac: ['read'],
           serviceRequest: ['create', 'read'],
+          serviceRequestMessage: ['create', 'read'],
           project: ['read'],
           dashboard: ['read']
         }
@@ -1254,6 +1383,101 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       },
+      ServiceRequestMessageAuthorUser: {
+        type: 'object',
+        required: ['id', 'name'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000000'
+          },
+          name: {
+            type: 'string',
+            example: 'Akshay'
+          },
+          image: {
+            type: 'string',
+            nullable: true,
+            example: 'https://example.com/avatar.png'
+          }
+        }
+      },
+      ServiceRequestMessageAuthor: {
+        type: 'object',
+        required: ['id', 'role', 'user'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'seed-member-manager'
+          },
+          role: {
+            $ref: '#/components/schemas/OrganizationRole'
+          },
+          user: {
+            $ref: '#/components/schemas/ServiceRequestMessageAuthorUser'
+          }
+        }
+      },
+      ServiceRequestMessage: {
+        type: 'object',
+        required: ['id', 'serviceRequestId', 'authorMemberId', 'body', 'isInternal', 'createdAt', 'updatedAt', 'author'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000007'
+          },
+          serviceRequestId: {
+            type: 'string',
+            example: 'clx0000000000000000000006'
+          },
+          authorMemberId: {
+            type: 'string',
+            example: 'seed-member-manager'
+          },
+          body: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 10000,
+            example: 'Could you confirm the target launch date?'
+          },
+          isInternal: {
+            type: 'boolean',
+            description: 'Internal messages are visible only to Admin and Manager roles.',
+            example: false
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-15T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-15T06:30:00.000Z'
+          },
+          author: {
+            $ref: '#/components/schemas/ServiceRequestMessageAuthor'
+          }
+        }
+      },
+      CreateServiceRequestMessageRequest: {
+        type: 'object',
+        required: ['body'],
+        properties: {
+          body: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 10000,
+            example: 'Could you confirm the target launch date?'
+          },
+          isInternal: {
+            type: 'boolean',
+            default: false,
+            description: 'Admin/Manager-only internal note. Clients cannot set this to true.',
+            example: false
+          }
+        }
+      },
       RequestPasswordResetRequest: {
         type: 'object',
         required: ['email'],
@@ -1444,6 +1668,41 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             properties: {
               data: {
                 $ref: '#/components/schemas/ServiceRequest'
+              }
+            }
+          }
+        ]
+      },
+      ServiceRequestMessagesResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/ServiceRequestMessage'
+                }
+              }
+            }
+          }
+        ]
+      },
+      ServiceRequestMessageResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/ServiceRequestMessage'
               }
             }
           }
