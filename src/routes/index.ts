@@ -10,11 +10,11 @@ import { serviceRequestRouter } from './service-requests.js';
 
 export const apiRouter = Router();
 
-apiRouter.use('/api/health', healthRouter);
-apiRouter.use('/api/docs', docsRouter); // SWAGGER DOCS
-apiRouter.use('/api/openapi.json', openApiRouter); // OPENAPISPECS
-apiRouter.use('/api/v1/auth', authRouter);
-apiRouter.use('/api/v1/invitations', invitationRouter);
-apiRouter.use('/api/v1/leads', leadRouter);
-apiRouter.use('/api/v1/me', meRouter);
-apiRouter.use('/api/v1/service-requests', serviceRequestRouter);
+apiRouter.use('/api/health', healthRouter); // Backend health check.
+apiRouter.use('/api/docs', docsRouter); // Interactive Swagger documentation.
+apiRouter.use('/api/openapi.json', openApiRouter); // Raw OpenAPI contract.
+apiRouter.use('/api/v1/auth', authRouter); // Authentication helper flows.
+apiRouter.use('/api/v1/invitations', invitationRouter); // Organization invitation management.
+apiRouter.use('/api/v1/leads', leadRouter); // Prospective client lead management.
+apiRouter.use('/api/v1/me', meRouter); // Current member access context.
+apiRouter.use('/api/v1/service-requests', serviceRequestRouter); // Service requests and consultation messages.
