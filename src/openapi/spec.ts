@@ -1,0 +1,1748 @@
+import { LeadSource, LeadStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/enums.js';
+import { Role } from '../lib/auth/permissions.js';
+
+const enumValues = <T extends Record<string, string>>(values: T) => Object.values(values);
+
+export const createOpenApiDocument = (baseUrl: string) => ({
+  openapi: '3.0.3',
+  info: {
+    title: 'FCOP Backend API',
+    version: '1.0.1',
+    description: 'OpenAPI contract for FCOP backend application routes.'
+  },
+  servers: [
+    {
+      url: baseUrl,
+      description: 'Configured backend URL'
+    }
+  ],
+  tags: [
+    {
+      name: 'System',
+      description: 'System health and metadata endpoints.'
+    },
+    {
+      name: 'Auth',
+      description: 'Authentication helper endpoints.'
+    },
+    {
+      name: 'Invitations',
+      description: 'Organization member invitation endpoints.'
+    },
+    {
+      name: 'Leads',
+      description: 'Lead management endpoints.'
+    },
+    {
+      name: 'Service Requests',
+      description: 'Client service request endpoints.'
+    }
+  ],
+  paths: {
+    '/api/health': {
+      get: {
+        tags: ['System'],
+        summary: 'Health check',
+        operationId: 'getHealth',
+        responses: {
+          '200': {
+            description: 'Backend is running.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/HealthResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/auth/request-password-reset': {
+      post: {
+        tags: ['Auth'],
+        summary: 'Request a password reset email',
+        description: 'Triggers Better Auth password reset flow and sends the customer a reset email from the backend email service.',
+        operationId: 'requestPasswordReset',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/RequestPasswordResetRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '200': {
+            description: 'Request accepted. The response does not reveal whether the email exists.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/RequestPasswordResetResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid email or redirect URL.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/me': {
+      get: {
+        tags: ['Auth'],
+        summary: 'Fetch current user access',
+        description: 'Returns the authenticated user, active organization member, role, and permission statements for UI access checks.',
+        operationId: 'getMe',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Current user fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/MeResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '404': {
+            description: 'Authenticated user does not have an active organization member.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/invitations': {
+      post: {
+        tags: ['Invitations'],
+        summary: 'Invite an organization member',
+        description: 'Creates a Better Auth organization invitation for the FCOP organization and sends an invitation email. Requires invitation:create permission in the active organization.',
+        operationId: 'inviteMember',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          invitation: ['create']
+        },
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/InviteMemberRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Invitation created and invitation email queued/sent.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/InvitationResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid invitation payload or Better Auth rejected the invitation.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'FCOP organization has not been bootstrapped.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/leads': {
+      post: {
+        tags: ['Leads'],
+        summary: 'Create a lead',
+        description: 'Creates a lead from an unauthenticated website form submission.',
+        operationId: 'createLead',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateLeadRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Lead captured successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LeadResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid lead payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      get: {
+        tags: ['Leads'],
+        summary: 'Fetch all leads',
+        description: 'Requires lead:read permission in the active organization.',
+        operationId: 'getLeads',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          lead: ['read']
+        },
+        responses: {
+          '200': {
+            description: 'Leads fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LeadsResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          }
+        }
+      }
+    },
+    '/api/v1/leads/{id}': {
+      get: {
+        tags: ['Leads'],
+        summary: 'Fetch a lead by id',
+        description: 'Requires lead:read permission in the active organization.',
+        operationId: 'getLeadById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          lead: ['read']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/LeadId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Lead fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LeadResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Lead was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      put: {
+        tags: ['Leads'],
+        summary: 'Update a lead by id',
+        description: 'Requires lead:update permission in the active organization.',
+        operationId: 'updateLeadById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          lead: ['update']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/LeadId'
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/UpdateLeadRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '200': {
+            description: 'Lead updated successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LeadResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid lead payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Lead was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      delete: {
+        tags: ['Leads'],
+        summary: 'Delete a lead by id',
+        description: 'Requires lead:delete permission in the active organization.',
+        operationId: 'deleteLeadById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          lead: ['delete']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/LeadId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Lead deleted successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/LeadResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Lead was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/service-requests': {
+      post: {
+        tags: ['Service Requests'],
+        summary: 'Create a service request',
+        description: 'Creates a service request for the authenticated client.',
+        operationId: 'createServiceRequest',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['create']
+        },
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateServiceRequestRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Service request created successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid service request payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Client profile has not been created.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      get: {
+        tags: ['Service Requests'],
+        summary: 'Fetch service requests',
+        description: 'Requires serviceRequest:read permission in the active organization.',
+        operationId: 'getServiceRequests',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['read']
+        },
+        responses: {
+          '200': {
+            description: 'Service requests fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestsResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          }
+        }
+      }
+    },
+    '/api/v1/service-requests/{serviceRequestId}/messages': {
+      post: {
+        tags: ['Service Requests'],
+        summary: 'Create a service request message',
+        description: 'Adds a message to a service request consultation. Only Admin and Manager can create internal messages.',
+        operationId: 'createServiceRequestMessage',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['read'],
+          serviceRequestMessage: ['create']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestMessageServiceRequestId'
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateServiceRequestMessageRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Service request message created successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestMessageResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid service request message payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request was not found or is not accessible to the current member.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      get: {
+        tags: ['Service Requests'],
+        summary: 'Fetch service request messages',
+        description: 'Returns the consultation chronologically. Clients receive only shared messages from their own service request.',
+        operationId: 'getServiceRequestMessages',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['read'],
+          serviceRequestMessage: ['read']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestMessageServiceRequestId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Service request messages fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestMessagesResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request was not found or is not accessible to the current member.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/service-requests/{id}': {
+      get: {
+        tags: ['Service Requests'],
+        summary: 'Fetch a service request by id',
+        description: 'Requires serviceRequest:read permission in the active organization.',
+        operationId: 'getServiceRequestById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['read']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Service request fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      put: {
+        tags: ['Service Requests'],
+        summary: 'Update a service request by id',
+        description: 'Requires serviceRequest:update permission in the active organization.',
+        operationId: 'updateServiceRequestById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['update']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestId'
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/UpdateServiceRequestRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '200': {
+            description: 'Service request updated successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid service request payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      delete: {
+        tags: ['Service Requests'],
+        summary: 'Delete a service request by id',
+        description: 'Requires serviceRequest:delete permission in the active organization.',
+        operationId: 'deleteServiceRequestById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['delete']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Service request deleted successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ServiceRequestResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  components: {
+    securitySchemes: {
+      cookieAuth: {
+        type: 'apiKey',
+        in: 'cookie',
+        name: 'better-auth.session_token'
+      }
+    },
+    responses: {
+      Unauthorized: {
+        description: 'Authentication is required.',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/ApiResponse'
+            }
+          }
+        }
+      },
+      Forbidden: {
+        description: 'Authenticated user does not have the required permission.',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/ApiResponse'
+            }
+          }
+        }
+      }
+    },
+    parameters: {
+      LeadId: {
+        name: 'id',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000004'
+      },
+      ServiceRequestId: {
+        name: 'id',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000006'
+      },
+      ServiceRequestMessageServiceRequestId: {
+        name: 'serviceRequestId',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000006'
+      }
+    },
+    schemas: {
+      LeadStatus: {
+        type: 'string',
+        enum: enumValues(LeadStatus),
+        example: LeadStatus.NEW
+      },
+      LeadSource: {
+        type: 'string',
+        enum: enumValues(LeadSource),
+        example: LeadSource.CONTACT_FORM
+      },
+      ServiceInterest: {
+        type: 'string',
+        enum: enumValues(ServiceInterest),
+        example: ServiceInterest.WEB_DEVELOPMENT
+      },
+      ServiceRequestStatus: {
+        type: 'string',
+        enum: enumValues(ServiceRequestStatus),
+        example: ServiceRequestStatus.NEW
+      },
+      OrganizationRole: {
+        type: 'string',
+        enum: enumValues(Role),
+        example: Role.CLIENT
+      },
+      ApiResponse: {
+        type: 'object',
+        required: ['success', 'status', 'message'],
+        properties: {
+          success: {
+            type: 'boolean',
+            example: true
+          },
+          status: {
+            type: 'integer',
+            example: 200
+          },
+          message: {
+            type: 'string',
+            example: 'Health check passed.'
+          },
+          data: {
+            nullable: true
+          },
+          error: {
+            type: 'object',
+            required: ['code'],
+            properties: {
+              code: {
+                type: 'string',
+                example: 'NOT_FOUND'
+              },
+              details: {
+                type: 'string'
+              }
+            }
+          }
+        }
+      },
+      MeUser: {
+        type: 'object',
+        required: ['id', 'name', 'email'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000000'
+          },
+          name: {
+            type: 'string',
+            example: 'Akshay'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'akshay@example.com'
+          }
+        }
+      },
+      PermissionStatements: {
+        type: 'object',
+        description: 'Role permission statements keyed by resource. The values are allowed CRUD or domain actions.',
+        additionalProperties: {
+          type: 'array',
+          items: {
+            type: 'string',
+            example: 'read'
+          }
+        },
+        example: {
+          ac: ['read'],
+          serviceRequest: ['create', 'read'],
+          serviceRequestMessage: ['create', 'read'],
+          project: ['read'],
+          dashboard: ['read']
+        }
+      },
+      Me: {
+        type: 'object',
+        required: ['user', 'organizationId', 'memberId', 'role', 'permissions'],
+        properties: {
+          user: {
+            $ref: '#/components/schemas/MeUser'
+          },
+          organizationId: {
+            type: 'string',
+            example: 'seed-org-fanatic-coders'
+          },
+          memberId: {
+            type: 'string',
+            example: 'seed-member-client'
+          },
+          role: {
+            $ref: '#/components/schemas/OrganizationRole'
+          },
+          permissions: {
+            $ref: '#/components/schemas/PermissionStatements'
+          }
+        }
+      },
+      MeResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/Me'
+              }
+            }
+          }
+        ]
+      },
+      User: {
+        type: 'object',
+        required: ['id', 'name', 'email', 'emailVerified', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000000'
+          },
+          name: {
+            type: 'string',
+            example: 'Akshay'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'akshay@example.com'
+          },
+          emailVerified: {
+            type: 'boolean',
+            example: true
+          },
+          image: {
+            type: 'string',
+            nullable: true,
+            example: 'https://example.com/avatar.png'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          }
+        }
+      },
+      Session: {
+        type: 'object',
+        required: ['id', 'expiresAt', 'token', 'createdAt', 'updatedAt', 'userId'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000001'
+          },
+          expiresAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-06T06:30:00.000Z'
+          },
+          token: {
+            type: 'string',
+            example: 'session-token'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          ipAddress: {
+            type: 'string',
+            nullable: true,
+            example: '127.0.0.1'
+          },
+          userAgent: {
+            type: 'string',
+            nullable: true,
+            example: 'Mozilla/5.0'
+          },
+          userId: {
+            type: 'string',
+            example: 'clx0000000000000000000000'
+          }
+        }
+      },
+      Account: {
+        type: 'object',
+        required: ['id', 'accountId', 'providerId', 'userId', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000002'
+          },
+          accountId: {
+            type: 'string',
+            example: 'akshay@example.com'
+          },
+          providerId: {
+            type: 'string',
+            example: 'credential'
+          },
+          userId: {
+            type: 'string',
+            example: 'clx0000000000000000000000'
+          },
+          accessToken: {
+            type: 'string',
+            nullable: true
+          },
+          refreshToken: {
+            type: 'string',
+            nullable: true
+          },
+          idToken: {
+            type: 'string',
+            nullable: true
+          },
+          accessTokenExpiresAt: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true,
+            example: '2026-07-06T06:30:00.000Z'
+          },
+          refreshTokenExpiresAt: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true,
+            example: '2026-07-06T06:30:00.000Z'
+          },
+          scope: {
+            type: 'string',
+            nullable: true,
+            example: 'openid email profile'
+          },
+          password: {
+            type: 'string',
+            nullable: true,
+            writeOnly: true
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          }
+        }
+      },
+      Verification: {
+        type: 'object',
+        required: ['id', 'identifier', 'value', 'expiresAt', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000003'
+          },
+          identifier: {
+            type: 'string',
+            example: 'akshay@example.com'
+          },
+          value: {
+            type: 'string',
+            example: 'verification-token'
+          },
+          expiresAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:45:00.000Z'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          }
+        }
+      },
+      Lead: {
+        type: 'object',
+        required: ['id', 'name', 'email', 'serviceInterest', 'status', 'source', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000004'
+          },
+          name: {
+            type: 'string',
+            example: 'Akshay Kumar'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'akshay@example.com'
+          },
+          companyName: {
+            type: 'string',
+            nullable: true,
+            example: 'Fanatic Coders'
+          },
+          serviceInterest: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          budgetRange: {
+            type: 'string',
+            nullable: true,
+            example: 'AED 10,000 - AED 25,000'
+          },
+          status: {
+            $ref: '#/components/schemas/LeadStatus'
+          },
+          source: {
+            $ref: '#/components/schemas/LeadSource'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          }
+        }
+      },
+      CreateLeadRequest: {
+        type: 'object',
+        required: ['name', 'email', 'serviceInterest'],
+        properties: {
+          name: {
+            type: 'string',
+            minLength: 2,
+            maxLength: 255,
+            example: 'Akshay Kumar'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+            example: 'akshay@example.com'
+          },
+          companyName: {
+            type: 'string',
+            nullable: true,
+            minLength: 1,
+            maxLength: 255,
+            example: 'Fanatic Coders'
+          },
+          serviceInterest: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          budgetRange: {
+            type: 'string',
+            nullable: true,
+            minLength: 1,
+            maxLength: 255,
+            example: 'AED 10,000 - AED 25,000'
+          }
+        }
+      },
+      UpdateLeadRequest: {
+        type: 'object',
+        minProperties: 1,
+        properties: {
+          name: {
+            type: 'string',
+            minLength: 2,
+            maxLength: 255,
+            example: 'Akshay Kumar'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+            example: 'akshay@example.com'
+          },
+          companyName: {
+            type: 'string',
+            nullable: true,
+            minLength: 1,
+            maxLength: 255,
+            example: 'Fanatic Coders'
+          },
+          serviceInterest: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          budgetRange: {
+            type: 'string',
+            nullable: true,
+            minLength: 1,
+            maxLength: 255,
+            example: 'AED 10,000 - AED 25,000'
+          },
+          status: {
+            $ref: '#/components/schemas/LeadStatus'
+          }
+        }
+      },
+      ServiceRequestData: {
+        type: 'object',
+        additionalProperties: true,
+        description: 'Service-specific answers collected from the selected service template.',
+        example: {
+          websiteUrl: 'https://example.com',
+          targetKeywords: ['seo agency', 'web development']
+        }
+      },
+      ServiceRequest: {
+        type: 'object',
+        required: ['id', 'clientId', 'service', 'status', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000006'
+          },
+          clientId: {
+            type: 'string',
+            example: 'clx0000000000000000000005'
+          },
+          service: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          status: {
+            $ref: '#/components/schemas/ServiceRequestStatus'
+          },
+          data: {
+            nullable: true,
+            allOf: [
+              {
+                $ref: '#/components/schemas/ServiceRequestData'
+              }
+            ]
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          }
+        }
+      },
+      CreateServiceRequestRequest: {
+        type: 'object',
+        required: ['service'],
+        properties: {
+          service: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          data: {
+            $ref: '#/components/schemas/ServiceRequestData'
+          }
+        }
+      },
+      UpdateServiceRequestRequest: {
+        type: 'object',
+        minProperties: 1,
+        properties: {
+          status: {
+            $ref: '#/components/schemas/ServiceRequestStatus'
+          },
+          data: {
+            $ref: '#/components/schemas/ServiceRequestData'
+          }
+        }
+      },
+      ServiceRequestMessageAuthorUser: {
+        type: 'object',
+        required: ['id', 'name'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000000'
+          },
+          name: {
+            type: 'string',
+            example: 'Akshay'
+          },
+          image: {
+            type: 'string',
+            nullable: true,
+            example: 'https://example.com/avatar.png'
+          }
+        }
+      },
+      ServiceRequestMessageAuthor: {
+        type: 'object',
+        required: ['id', 'role', 'user'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'seed-member-manager'
+          },
+          role: {
+            $ref: '#/components/schemas/OrganizationRole'
+          },
+          user: {
+            $ref: '#/components/schemas/ServiceRequestMessageAuthorUser'
+          }
+        }
+      },
+      ServiceRequestMessage: {
+        type: 'object',
+        required: ['id', 'serviceRequestId', 'authorMemberId', 'body', 'isInternal', 'createdAt', 'updatedAt', 'author'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000007'
+          },
+          serviceRequestId: {
+            type: 'string',
+            example: 'clx0000000000000000000006'
+          },
+          authorMemberId: {
+            type: 'string',
+            example: 'seed-member-manager'
+          },
+          body: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 10000,
+            example: 'Could you confirm the target launch date?'
+          },
+          isInternal: {
+            type: 'boolean',
+            description: 'Internal messages are visible only to Admin and Manager roles.',
+            example: false
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-15T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-15T06:30:00.000Z'
+          },
+          author: {
+            $ref: '#/components/schemas/ServiceRequestMessageAuthor'
+          }
+        }
+      },
+      CreateServiceRequestMessageRequest: {
+        type: 'object',
+        required: ['body'],
+        properties: {
+          body: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 10000,
+            example: 'Could you confirm the target launch date?'
+          },
+          isInternal: {
+            type: 'boolean',
+            default: false,
+            description: 'Admin/Manager-only internal note. Clients cannot set this to true.',
+            example: false
+          }
+        }
+      },
+      RequestPasswordResetRequest: {
+        type: 'object',
+        required: ['email'],
+        properties: {
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'customer@example.com'
+          },
+          redirectTo: {
+            type: 'string',
+            format: 'uri',
+            description: 'Optional frontend reset password page. Origin must be configured as a trusted frontend origin.',
+            example: 'http://localhost:3000/reset-password'
+          }
+        }
+      },
+      RequestPasswordResetResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            properties: {
+              data: {
+                nullable: true,
+                example: null
+              },
+              message: {
+                type: 'string',
+                example: 'If an account exists for this email, a password reset link has been sent.'
+              }
+            }
+          }
+        ]
+      },
+      InviteMemberRole: {
+        type: 'string',
+        enum: ['MANAGER', 'MEMBER', 'CLIENT'],
+        example: 'CLIENT'
+      },
+      InviteMemberRequest: {
+        type: 'object',
+        required: ['email', 'role'],
+        properties: {
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+            example: 'client@example.com'
+          },
+          role: {
+            $ref: '#/components/schemas/InviteMemberRole'
+          },
+          serviceInterest: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          resend: {
+            type: 'boolean',
+            description: 'Resend the invitation email if a pending invitation already exists.',
+            example: true
+          }
+        }
+      },
+      Invitation: {
+        type: 'object',
+        required: ['id', 'email', 'role', 'organizationId', 'inviterId', 'status', 'expiresAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000005'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'client@example.com'
+          },
+          role: {
+            type: 'string',
+            example: 'CLIENT'
+          },
+          serviceInterest: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          organizationId: {
+            type: 'string',
+            example: 'seed-org-fanatic-coders'
+          },
+          inviterId: {
+            type: 'string',
+            example: 'seed-user-admin'
+          },
+          status: {
+            type: 'string',
+            example: 'pending'
+          },
+          expiresAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-08T06:30:00.000Z'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-06T06:30:00.000Z'
+          }
+        }
+      },
+      InvitationResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/Invitation'
+              }
+            }
+          }
+        ]
+      },
+      LeadsResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/Lead'
+                }
+              }
+            }
+          }
+        ]
+      },
+      LeadResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/Lead'
+              }
+            }
+          }
+        ]
+      },
+      ServiceRequestsResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/ServiceRequest'
+                }
+              }
+            }
+          }
+        ]
+      },
+      ServiceRequestResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/ServiceRequest'
+              }
+            }
+          }
+        ]
+      },
+      ServiceRequestMessagesResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/ServiceRequestMessage'
+                }
+              }
+            }
+          }
+        ]
+      },
+      ServiceRequestMessageResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/ServiceRequestMessage'
+              }
+            }
+          }
+        ]
+      },
+      HealthResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/HealthData'
+              }
+            }
+          }
+        ]
+      },
+      HealthData: {
+        type: 'object',
+        required: ['status', 'uptime', 'timestamp'],
+        properties: {
+          status: {
+            type: 'string',
+            example: 'ok'
+          },
+          uptime: {
+            type: 'number',
+            example: 42.5
+          },
+          timestamp: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-06-29T06:30:00.000Z'
+          }
+        }
+      }
+    }
+  }
+});

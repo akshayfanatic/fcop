@@ -1,0 +1,31 @@
+# Dependencies and generated output are recreated inside Docker.
+node_modules/
+dist/
+coverage/
+
+# Git, CI, editor, and local tooling files.
+.git/
+.github/
+.vscode/
+.idea/
+.husky/
+
+# Local environment files can contain secrets.
+.env
+.env.*
+!.env.example
+
+# Logs, caches, tests, and temporary files.
+*.log
+.cache/
+.turbo/
+test-results/
+*.tsbuildinfo
+
+# OS metadata and deployment definitions are not application source.
+.DS_Store
+Thumbs.db
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+docker-compose*.yaml
