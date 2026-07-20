@@ -15,6 +15,12 @@ export const auth = betterAuth({
   baseURL: env.betterAuthUrl,
   secret: env.betterAuthSecret,
   trustedOrigins: env.corsOrigins,
+  advanced: {
+    useSecureCookies: env.betterAuthUrl.startsWith('https://'),
+    defaultCookieAttributes: {
+      sameSite: 'lax'
+    }
+  },
   database: prismaAdapter(prisma, {
     provider: 'mysql'
   }),
