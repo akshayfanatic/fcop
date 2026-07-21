@@ -1,9 +1,9 @@
 import { z } from 'zod';
-import { ProjectStatus, ServiceInterest } from '../generated/prisma/client.js';
+import { ProjectCurrency, ProjectStatus, ServiceInterest } from '../generated/prisma/client.js';
 
 const optionalDateSchema = z.coerce.date().optional();
 const optionalMoneySchema = z.coerce.number().nonnegative().optional();
-const currencySchema = z.string().trim().length(3).toUpperCase().optional();
+const currencySchema = z.string().trim().toUpperCase().pipe(z.enum(ProjectCurrency)).optional();
 
 export const projectIdParamsSchema = z.object({
   id: z.string().trim().min(1)

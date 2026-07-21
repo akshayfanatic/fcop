@@ -47,6 +47,11 @@ enum ProjectMemberRole {
   MEMBER
 }
 
+enum ProjectCurrency {
+  USD
+  AED
+}
+
 model User {
   id            String       @id @default(cuid()) @db.VarChar(36)
   name          String
@@ -248,7 +253,7 @@ model Project {
   startDate         DateTime?
   endDate           DateTime?
   budgetAmount      Decimal?        @db.Decimal(12, 2)
-  currency          String          @default("AED") @db.VarChar(3)
+  currency          ProjectCurrency @default(USD)
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
   client            Client          @relation(fields: [clientId], references: [id], onDelete: Cascade)

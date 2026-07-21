@@ -1,0 +1,1 @@
+ALTER TABLE `projects` MODIFY `currency` ENUM('USD', 'AED') NOT NULL DEFAULT 'USD';

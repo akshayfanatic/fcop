@@ -249,6 +249,13 @@ export type DecimalNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDecimalNullableFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
 };
 
+export type EnumProjectCurrencyFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectCurrency | Prisma.EnumProjectCurrencyFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectCurrency[];
+  notIn?: $Enums.ProjectCurrency[];
+  not?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel> | $Enums.ProjectCurrency;
+};
+
 export type EnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.ProjectStatus | Prisma.EnumProjectStatusFieldRefInput<$PrismaModel>;
   in?: $Enums.ProjectStatus[];
@@ -273,6 +280,16 @@ export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
   _min?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
   _max?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
+};
+
+export type EnumProjectCurrencyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectCurrency | Prisma.EnumProjectCurrencyFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectCurrency[];
+  notIn?: $Enums.ProjectCurrency[];
+  not?: Prisma.NestedEnumProjectCurrencyWithAggregatesFilter<$PrismaModel> | $Enums.ProjectCurrency;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel>;
 };
 
 export type EnumProjectMemberRoleFilter<$PrismaModel = never> = {
@@ -553,6 +570,13 @@ export type NestedDecimalNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDecimalNullableFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
 };
 
+export type NestedEnumProjectCurrencyFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectCurrency | Prisma.EnumProjectCurrencyFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectCurrency[];
+  notIn?: $Enums.ProjectCurrency[];
+  not?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel> | $Enums.ProjectCurrency;
+};
+
 export type NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.ProjectStatus | Prisma.EnumProjectStatusFieldRefInput<$PrismaModel>;
   in?: $Enums.ProjectStatus[];
@@ -577,6 +601,16 @@ export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
   _min?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
   _max?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
+};
+
+export type NestedEnumProjectCurrencyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectCurrency | Prisma.EnumProjectCurrencyFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectCurrency[];
+  notIn?: $Enums.ProjectCurrency[];
+  not?: Prisma.NestedEnumProjectCurrencyWithAggregatesFilter<$PrismaModel> | $Enums.ProjectCurrency;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel>;
 };
 
 export type NestedEnumProjectMemberRoleFilter<$PrismaModel = never> = {

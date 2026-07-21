@@ -45,7 +45,7 @@ export type ProjectMinAggregateOutputType = {
   startDate: Date | null;
   endDate: Date | null;
   budgetAmount: runtime.Decimal | null;
-  currency: string | null;
+  currency: $Enums.ProjectCurrency | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
@@ -62,7 +62,7 @@ export type ProjectMaxAggregateOutputType = {
   startDate: Date | null;
   endDate: Date | null;
   budgetAmount: runtime.Decimal | null;
-  currency: string | null;
+  currency: $Enums.ProjectCurrency | null;
   createdAt: Date | null;
   updatedAt: Date | null;
 };
@@ -240,7 +240,7 @@ export type ProjectGroupByOutputType = {
   startDate: Date | null;
   endDate: Date | null;
   budgetAmount: runtime.Decimal | null;
-  currency: string;
+  currency: $Enums.ProjectCurrency;
   createdAt: Date;
   updatedAt: Date;
   _count: ProjectCountAggregateOutputType | null;
@@ -277,7 +277,7 @@ export type ProjectWhereInput = {
   startDate?: Prisma.DateTimeNullableFilter<'Project'> | Date | string | null;
   endDate?: Prisma.DateTimeNullableFilter<'Project'> | Date | string | null;
   budgetAmount?: Prisma.DecimalNullableFilter<'Project'> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFilter<'Project'> | string;
+  currency?: Prisma.EnumProjectCurrencyFilter<'Project'> | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFilter<'Project'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Project'> | Date | string;
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>;
@@ -324,7 +324,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<
     startDate?: Prisma.DateTimeNullableFilter<'Project'> | Date | string | null;
     endDate?: Prisma.DateTimeNullableFilter<'Project'> | Date | string | null;
     budgetAmount?: Prisma.DecimalNullableFilter<'Project'> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-    currency?: Prisma.StringFilter<'Project'> | string;
+    currency?: Prisma.EnumProjectCurrencyFilter<'Project'> | $Enums.ProjectCurrency;
     createdAt?: Prisma.DateTimeFilter<'Project'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'Project'> | Date | string;
     client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>;
@@ -372,7 +372,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
   startDate?: Prisma.DateTimeNullableWithAggregatesFilter<'Project'> | Date | string | null;
   endDate?: Prisma.DateTimeNullableWithAggregatesFilter<'Project'> | Date | string | null;
   budgetAmount?: Prisma.DecimalNullableWithAggregatesFilter<'Project'> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringWithAggregatesFilter<'Project'> | string;
+  currency?: Prisma.EnumProjectCurrencyWithAggregatesFilter<'Project'> | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeWithAggregatesFilter<'Project'> | Date | string;
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<'Project'> | Date | string;
 };
@@ -386,7 +386,7 @@ export type ProjectCreateInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput;
@@ -407,7 +407,7 @@ export type ProjectUncheckedCreateInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutProjectInput;
@@ -422,7 +422,7 @@ export type ProjectUpdateInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput;
@@ -443,7 +443,7 @@ export type ProjectUncheckedUpdateInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutProjectNestedInput;
@@ -461,7 +461,7 @@ export type ProjectCreateManyInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -475,7 +475,7 @@ export type ProjectUpdateManyMutationInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -492,7 +492,7 @@ export type ProjectUncheckedUpdateManyInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -740,6 +740,10 @@ export type NullableDecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string;
 };
 
+export type EnumProjectCurrencyFieldUpdateOperationsInput = {
+  set?: $Enums.ProjectCurrency;
+};
+
 export type ProjectCreateNestedOneWithoutMemberProjectsInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutMemberProjectsInput, Prisma.ProjectUncheckedCreateWithoutMemberProjectsInput>;
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutMemberProjectsInput;
@@ -766,7 +770,7 @@ export type ProjectCreateWithoutCreatedByInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput;
@@ -785,7 +789,7 @@ export type ProjectUncheckedCreateWithoutCreatedByInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutProjectInput;
@@ -832,7 +836,7 @@ export type ProjectScalarWhereInput = {
   startDate?: Prisma.DateTimeNullableFilter<'Project'> | Date | string | null;
   endDate?: Prisma.DateTimeNullableFilter<'Project'> | Date | string | null;
   budgetAmount?: Prisma.DecimalNullableFilter<'Project'> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFilter<'Project'> | string;
+  currency?: Prisma.EnumProjectCurrencyFilter<'Project'> | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFilter<'Project'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Project'> | Date | string;
 };
@@ -846,7 +850,7 @@ export type ProjectCreateWithoutClientInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   serviceRequest?: Prisma.ServiceRequestCreateNestedOneWithoutProjectInput;
@@ -865,7 +869,7 @@ export type ProjectUncheckedCreateWithoutClientInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutProjectInput;
@@ -906,7 +910,7 @@ export type ProjectCreateWithoutServiceRequestInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput;
@@ -925,7 +929,7 @@ export type ProjectUncheckedCreateWithoutServiceRequestInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutProjectInput;
@@ -956,7 +960,7 @@ export type ProjectUpdateWithoutServiceRequestInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput;
@@ -975,7 +979,7 @@ export type ProjectUncheckedUpdateWithoutServiceRequestInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutProjectNestedInput;
@@ -990,7 +994,7 @@ export type ProjectCreateWithoutMemberProjectsInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput;
@@ -1010,7 +1014,7 @@ export type ProjectUncheckedCreateWithoutMemberProjectsInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -1040,7 +1044,7 @@ export type ProjectUpdateWithoutMemberProjectsInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput;
@@ -1060,7 +1064,7 @@ export type ProjectUncheckedUpdateWithoutMemberProjectsInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -1076,7 +1080,7 @@ export type ProjectCreateManyCreatedByInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -1090,7 +1094,7 @@ export type ProjectUpdateWithoutCreatedByInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput;
@@ -1109,7 +1113,7 @@ export type ProjectUncheckedUpdateWithoutCreatedByInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutProjectNestedInput;
@@ -1126,7 +1130,7 @@ export type ProjectUncheckedUpdateManyWithoutCreatedByInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -1142,7 +1146,7 @@ export type ProjectCreateManyClientInput = {
   startDate?: Date | string | null;
   endDate?: Date | string | null;
   budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: string;
+  currency?: $Enums.ProjectCurrency;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
@@ -1156,7 +1160,7 @@ export type ProjectUpdateWithoutClientInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   serviceRequest?: Prisma.ServiceRequestUpdateOneWithoutProjectNestedInput;
@@ -1175,7 +1179,7 @@ export type ProjectUncheckedUpdateWithoutClientInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutProjectNestedInput;
@@ -1192,7 +1196,7 @@ export type ProjectUncheckedUpdateManyWithoutClientInput = {
   startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
   budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
-  currency?: Prisma.StringFieldUpdateOperationsInput | string;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -1301,7 +1305,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
       startDate: Date | null;
       endDate: Date | null;
       budgetAmount: runtime.Decimal | null;
-      currency: string;
+      currency: $Enums.ProjectCurrency;
       createdAt: Date;
       updatedAt: Date;
     },
@@ -1699,7 +1703,7 @@ export interface ProjectFieldRefs {
   readonly startDate: Prisma.FieldRef<'Project', 'DateTime'>;
   readonly endDate: Prisma.FieldRef<'Project', 'DateTime'>;
   readonly budgetAmount: Prisma.FieldRef<'Project', 'Decimal'>;
-  readonly currency: Prisma.FieldRef<'Project', 'String'>;
+  readonly currency: Prisma.FieldRef<'Project', 'ProjectCurrency'>;
   readonly createdAt: Prisma.FieldRef<'Project', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'Project', 'DateTime'>;
 }

@@ -1841,8 +1841,7 @@ export const ProjectOrderByRelevanceFieldEnum = {
   serviceRequestId: 'serviceRequestId',
   createdByMemberId: 'createdByMemberId',
   name: 'name',
-  description: 'description',
-  currency: 'currency'
+  description: 'description'
 } as const;
 
 export type ProjectOrderByRelevanceFieldEnum = (typeof ProjectOrderByRelevanceFieldEnum)[keyof typeof ProjectOrderByRelevanceFieldEnum];
@@ -1922,6 +1921,11 @@ export type EnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'Decimal'
  */
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>;
+
+/**
+ * Reference to a field of type 'ProjectCurrency'
+ */
+export type EnumProjectCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectCurrency'>;
 
 /**
  * Reference to a field of type 'ProjectMemberRole'

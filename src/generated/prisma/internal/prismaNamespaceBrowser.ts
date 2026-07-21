@@ -439,8 +439,7 @@ export const ProjectOrderByRelevanceFieldEnum = {
   serviceRequestId: 'serviceRequestId',
   createdByMemberId: 'createdByMemberId',
   name: 'name',
-  description: 'description',
-  currency: 'currency'
+  description: 'description'
 } as const;
 
 export type ProjectOrderByRelevanceFieldEnum = (typeof ProjectOrderByRelevanceFieldEnum)[keyof typeof ProjectOrderByRelevanceFieldEnum];

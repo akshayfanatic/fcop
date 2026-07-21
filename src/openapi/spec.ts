@@ -1,4 +1,4 @@
-import { LeadSource, LeadStatus, ProjectMemberRole, ProjectStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/enums.js';
+import { LeadSource, LeadStatus, ProjectCurrency, ProjectMemberRole, ProjectStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/enums.js';
 import { Role } from '../lib/auth/permissions.js';
 
 const enumValues = <T extends Record<string, string>>(values: T) => Object.values(values);
@@ -1267,6 +1267,12 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         enum: enumValues(ProjectMemberRole),
         example: ProjectMemberRole.MANAGER
       },
+      ProjectCurrency: {
+        type: 'string',
+        enum: enumValues(ProjectCurrency),
+        default: ProjectCurrency.USD,
+        example: ProjectCurrency.USD
+      },
       OrganizationRole: {
         type: 'string',
         enum: enumValues(Role),
@@ -1840,10 +1846,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             example: 25000
           },
           currency: {
-            type: 'string',
-            minLength: 3,
-            maxLength: 3,
-            example: 'AED'
+            $ref: '#/components/schemas/ProjectCurrency'
           },
           createdAt: {
             type: 'string',
@@ -1914,10 +1917,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             example: 25000
           },
           currency: {
-            type: 'string',
-            minLength: 3,
-            maxLength: 3,
-            example: 'AED'
+            $ref: '#/components/schemas/ProjectCurrency'
           }
         }
       },
@@ -1958,10 +1958,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             example: 25000
           },
           currency: {
-            type: 'string',
-            minLength: 3,
-            maxLength: 3,
-            example: 'AED'
+            $ref: '#/components/schemas/ProjectCurrency'
           }
         }
       },
@@ -2005,10 +2002,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             minimum: 0
           },
           currency: {
-            type: 'string',
-            minLength: 3,
-            maxLength: 3,
-            example: 'AED'
+            $ref: '#/components/schemas/ProjectCurrency'
           }
         }
       },

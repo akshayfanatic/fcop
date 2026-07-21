@@ -59,3 +59,10 @@ export const ProjectMemberRole = {
 } as const;
 
 export type ProjectMemberRole = (typeof ProjectMemberRole)[keyof typeof ProjectMemberRole];
+
+export const ProjectCurrency = {
+  USD: 'USD',
+  AED: 'AED'
+} as const;
+
+export type ProjectCurrency = (typeof ProjectCurrency)[keyof typeof ProjectCurrency];
