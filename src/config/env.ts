@@ -1,16 +1,22 @@
 import dotenv from 'dotenv';
-import { toLogLevel, toOrigins, toPort } from '../utils/env-parser.js';
+import { toLogLevel, toOrigin, toOrigins, toPort } from '../utils/env-parser.js';
 
 const nodeEnv = process.env.NODE_ENV ?? 'development';
 dotenv.config({ path: [`.env.${nodeEnv}`, '.env'] });
+
+const frontendUrl = toOrigin(process.env.FRONTEND_URL ?? 'http://localhost:3001');
+const betterAuthUrl = toOrigin(process.env.BETTER_AUTH_URL ?? 'http://localhost:3000');
+const corsOrigins = toOrigins(process.env.CORS_ORIGIN, [frontendUrl, 'http://192.168.29.204:3001', 'http://localhost:3001']);
 
 export const env = {
   nodeEnv,
   logLevel: toLogLevel(process.env.LOG_LEVEL),
   port: toPort(process.env.PORT, 3000),
-  corsOrigins: toOrigins(process.env.CORS_ORIGIN, ['http://192.168.29.204:3001', 'http://localhost:3001']),
-  frontendUrl: process.env.FRONTEND_URL ?? 'http://localhost:3001',
-  betterAuthUrl: process.env.BETTER_AUTH_URL ?? 'http://localhost:3000',
+  corsOrigins,
+  frontendUrl,
+  betterAuthUrl,
+  authTrustedOrigins: Array.from(new Set([...corsOrigins, frontendUrl])),
+  authCookieDomain: process.env.AUTH_COOKIE_DOMAIN?.trim() || undefined,
   betterAuthSecret: process.env.BETTER_AUTH_SECRET ?? 'dev-better-auth-secret-change-before-production',
   databaseUrl: process.env.DATABASE_URL ?? 'mysql://root@localhost:3306/fcop',
   resendApiKey: process.env.RESEND_API_KEY ?? '',

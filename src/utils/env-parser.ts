@@ -17,10 +17,19 @@ export const toLogLevel = (value: string | undefined) => {
   return 'info';
 };
 
+export const toOrigin = (value: string) => {
+  try {
+    return new URL(value).origin;
+  } catch {
+    return value.replace(/\/+$/, '');
+  }
+};
+
 export const toOrigins = (value: string | undefined, fallback: string[]) => {
   const origins = value
     ?.split(',')
     .map((origin) => origin.trim())
+    .map(toOrigin)
     .filter(Boolean);
 
   return origins?.length ? origins : fallback;
