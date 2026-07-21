@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 
-RUN --mount=type=cache,target=/root/.npm \
+RUN --mount=type=cache,id=npm,target=/root/.npm \
     HUSKY=0 npm ci --no-audit --no-fund
 
 FROM node:${NODE_VERSION} AS builder
