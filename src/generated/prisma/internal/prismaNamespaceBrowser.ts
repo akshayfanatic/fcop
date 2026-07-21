@@ -60,6 +60,8 @@ export const ModelName = {
   OrganizationRole: 'OrganizationRole',
   Client: 'Client',
   ServiceRequest: 'ServiceRequest',
+  Project: 'Project',
+  MemberProject: 'MemberProject',
   ServiceRequestMessage: 'ServiceRequestMessage',
   Lead: 'Lead'
 } as const;
@@ -222,6 +224,36 @@ export const ServiceRequestScalarFieldEnum = {
 } as const;
 
 export type ServiceRequestScalarFieldEnum = (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum];
+
+export const ProjectScalarFieldEnum = {
+  id: 'id',
+  clientId: 'clientId',
+  serviceRequestId: 'serviceRequestId',
+  createdByMemberId: 'createdByMemberId',
+  name: 'name',
+  description: 'description',
+  service: 'service',
+  status: 'status',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  budgetAmount: 'budgetAmount',
+  currency: 'currency',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum];
+
+export const MemberProjectScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  memberId: 'memberId',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type MemberProjectScalarFieldEnum = (typeof MemberProjectScalarFieldEnum)[keyof typeof MemberProjectScalarFieldEnum];
 
 export const ServiceRequestMessageScalarFieldEnum = {
   id: 'id',
@@ -400,6 +432,26 @@ export const ServiceRequestOrderByRelevanceFieldEnum = {
 } as const;
 
 export type ServiceRequestOrderByRelevanceFieldEnum = (typeof ServiceRequestOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestOrderByRelevanceFieldEnum];
+
+export const ProjectOrderByRelevanceFieldEnum = {
+  id: 'id',
+  clientId: 'clientId',
+  serviceRequestId: 'serviceRequestId',
+  createdByMemberId: 'createdByMemberId',
+  name: 'name',
+  description: 'description',
+  currency: 'currency'
+} as const;
+
+export type ProjectOrderByRelevanceFieldEnum = (typeof ProjectOrderByRelevanceFieldEnum)[keyof typeof ProjectOrderByRelevanceFieldEnum];
+
+export const MemberProjectOrderByRelevanceFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  memberId: 'memberId'
+} as const;
+
+export type MemberProjectOrderByRelevanceFieldEnum = (typeof MemberProjectOrderByRelevanceFieldEnum)[keyof typeof MemberProjectOrderByRelevanceFieldEnum];
 
 export const ServiceRequestMessageOrderByRelevanceFieldEnum = {
   id: 'id',

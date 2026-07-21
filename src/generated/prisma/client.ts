@@ -105,6 +105,16 @@ export type Client = Prisma.ClientModel;
  */
 export type ServiceRequest = Prisma.ServiceRequestModel;
 /**
+ * Model Project
+ *
+ */
+export type Project = Prisma.ProjectModel;
+/**
+ * Model MemberProject
+ *
+ */
+export type MemberProject = Prisma.MemberProjectModel;
+/**
  * Model ServiceRequestMessage
  *
  */
