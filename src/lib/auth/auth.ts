@@ -14,9 +14,15 @@ export const auth = betterAuth({
   appName: 'FCOP',
   baseURL: env.betterAuthUrl,
   secret: env.betterAuthSecret,
-  trustedOrigins: env.corsOrigins,
+  trustedOrigins: env.authTrustedOrigins,
   advanced: {
     useSecureCookies: env.betterAuthUrl.startsWith('https://'),
+    crossSubDomainCookies: env.authCookieDomain
+      ? {
+          enabled: true,
+          domain: env.authCookieDomain
+        }
+      : undefined,
     defaultCookieAttributes: {
       sameSite: 'lax'
     }
