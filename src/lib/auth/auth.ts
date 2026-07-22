@@ -1,6 +1,6 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { organization } from 'better-auth/plugins';
+import { bearer, organization } from 'better-auth/plugins';
 import { env } from '../../config/env.js';
 import { LeadStatus } from '../../generated/prisma/client.js';
 import { sendInvitationEmail, sendMemberAcceptedInvitationEmail, sendResetPasswordEmail } from '../email/index.js';
@@ -38,6 +38,7 @@ export const auth = betterAuth({
     sendResetPassword: sendResetPasswordEmail
   },
   plugins: [
+    bearer(),
     organization({
       ac,
       roles: organizationRoles,

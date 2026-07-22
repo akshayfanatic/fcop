@@ -15,6 +15,8 @@ const authHandler = toNodeHandler(auth);
 app.use(
   cors({
     origin: env.corsOrigins,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['set-auth-token'],
     credentials: true
   })
 );
