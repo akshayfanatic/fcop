@@ -16,7 +16,6 @@ export const env = {
   frontendUrl,
   betterAuthUrl,
   authTrustedOrigins: Array.from(new Set([...corsOrigins, frontendUrl])),
-  authCookieDomain: process.env.AUTH_COOKIE_DOMAIN?.trim() || undefined,
   betterAuthSecret: process.env.BETTER_AUTH_SECRET ?? 'dev-better-auth-secret-change-before-production',
   databaseUrl: process.env.DATABASE_URL ?? 'mysql://root@localhost:3306/fcop',
   resendApiKey: process.env.RESEND_API_KEY ?? '',
