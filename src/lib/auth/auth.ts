@@ -16,7 +16,7 @@ export const auth = betterAuth({
   secret: env.betterAuthSecret,
   trustedOrigins: env.authTrustedOrigins,
   advanced: {
-    useSecureCookies: env.betterAuthUrl.startsWith('https://'),
+    useSecureCookies: env.authUseSecureCookies,
     crossSubDomainCookies: env.authCookieDomain
       ? {
           enabled: true,
@@ -24,7 +24,7 @@ export const auth = betterAuth({
         }
       : undefined,
     defaultCookieAttributes: {
-      sameSite: 'lax'
+      sameSite: env.authCookieSameSite
     }
   },
   database: prismaAdapter(prisma, {
