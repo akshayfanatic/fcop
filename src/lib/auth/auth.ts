@@ -15,18 +15,6 @@ export const auth = betterAuth({
   baseURL: env.betterAuthUrl,
   secret: env.betterAuthSecret,
   trustedOrigins: env.authTrustedOrigins,
-  advanced: {
-    useSecureCookies: env.authUseSecureCookies,
-    crossSubDomainCookies: env.authCookieDomain
-      ? {
-          enabled: true,
-          domain: env.authCookieDomain
-        }
-      : undefined,
-    defaultCookieAttributes: {
-      sameSite: env.authCookieSameSite
-    }
-  },
   database: prismaAdapter(prisma, {
     provider: 'mysql'
   }),

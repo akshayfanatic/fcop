@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/akshayfanatic/fcop/compare/v0.2.0...v0.2.1) (2026-07-22)
+
+### Features
+
+- **deployment:** added deployment configurations ([612d5b8](https://github.com/akshayfanatic/fcop/commit/612d5b81a93470c3a0f0616375b10328021d722c))
+
+### Bug Fixes
+
+- **auth:** fixing auth regarding issue ([0ce3b2a](https://github.com/akshayfanatic/fcop/commit/0ce3b2a4afdb398f78d6666ca3073bc2a57292e2))
+- **auth:** fixing auth regarding issue ([5eccbd6](https://github.com/akshayfanatic/fcop/commit/5eccbd67d6d0f093e4afa1e7f16241257678120b))
+- **auth:** fixing auth regarding issue and code refactor ([249622f](https://github.com/akshayfanatic/fcop/commit/249622f5b307bce4a48090051913032093d086cd))
+- **credentials:** fix enviorment credentials related issues ([d870649](https://github.com/akshayfanatic/fcop/commit/d8706496d622b6567b06d90c1afb93b695e10ecf))
+- support shared auth cookies across live subdomains ([bed267b](https://github.com/akshayfanatic/fcop/commit/bed267b848ef89450faaa9727061c789880d0683))
+
+### Code Refactoring
+
+- **auth:** added subdomain cookie related configutation ([164d85f](https://github.com/akshayfanatic/fcop/commit/164d85f73799f11ca6d95e2be6b5252a2f8a9ccb))
+
 ## [0.2.0](https://github.com/akshayfanatic/fcop/compare/v0.1.0...v0.2.0) (2026-07-16)
 
 ### Features
