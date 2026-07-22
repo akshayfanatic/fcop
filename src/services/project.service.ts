@@ -1,5 +1,6 @@
 import type { IncomingHttpHeaders } from 'node:http';
 import { type Prisma, ServiceRequestStatus } from '../generated/prisma/client.js';
+import { createProjectCreatedEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
 import { getSessionMember } from '../lib/auth/session.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
@@ -53,6 +54,22 @@ const includeProjectDetails = {
   }
 } satisfies Prisma.ProjectInclude;
 
+type ProjectDetails = Prisma.ProjectGetPayload<{
+  include: typeof includeProjectDetails;
+}>;
+
+const sendProjectCreatedEmail = async (project: ProjectDetails) => {
+  try {
+    // Send email to tell customer that their project workspace has been created.
+    await sendTemplateEmail({
+      to: project.client.member.user.email,
+      template: createProjectCreatedEmailTemplate({ project })
+    });
+  } catch (error) {
+    logger.error({ error, projectId: project.id }, 'Failed to send project created email notification.');
+  }
+};
+
 export const projectService = {
   createProject: async (payload: CreateProjectInput, headers: IncomingHttpHeaders) => {
     try {
@@ -82,7 +99,7 @@ export const projectService = {
         }
       }
 
-      return await prisma.$transaction(async (tx) => {
+      const project = await prisma.$transaction(async (tx) => {
         const project = await tx.project.create({
           data: {
             clientId: payload.clientId,
@@ -109,6 +126,10 @@ export const projectService = {
           include: includeProjectDetails
         });
       });
+
+      await sendProjectCreatedEmail(project);
+
+      return project;
     } catch (error) {
       logger.error({ error, clientId: payload.clientId }, 'Failed to create project.');
       throw error;
@@ -137,7 +158,7 @@ export const projectService = {
         throw createHttpError(HttpStatus.CONFLICT, 'Project already exists for this service request.', 'PROJECT_ALREADY_EXISTS');
       }
 
-      return await prisma.$transaction(async (tx) => {
+      const project = await prisma.$transaction(async (tx) => {
         const project = await tx.project.create({
           data: {
             clientId: request.clientId,
@@ -174,6 +195,10 @@ export const projectService = {
           include: includeProjectDetails
         });
       });
+
+      await sendProjectCreatedEmail(project);
+
+      return project;
     } catch (error) {
       logger.error({ error, serviceRequestId }, 'Failed to create project from service request.');
       throw error;

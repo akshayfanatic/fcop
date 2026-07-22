@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/akshayfanatic/fcop/compare/v0.2.1...v0.3.0) (2026-07-22)
+
+### Features
+
+- **api:** added api endpoint for project ([bd4a2d3](https://github.com/akshayfanatic/fcop/commit/bd4a2d3f2ea9182fe051348b5e1d4377fb6e1cf5))
+- **controllers:** added controller and servicess regarding project table ([c83e214](https://github.com/akshayfanatic/fcop/commit/c83e2141bea1170fcc5e6561790c20f6722fb1db))
+- **email:** send email to customer when project is created ([248233f](https://github.com/akshayfanatic/fcop/commit/248233f489a47f22403b268a9dab9fd1aaa78d5c))
+- **migration:** added new migration for currency ([3c9da55](https://github.com/akshayfanatic/fcop/commit/3c9da5508077bb32d0f26b67953153bac1b85b91))
+- **migration:** added table for managing project ([aa7aa7a](https://github.com/akshayfanatic/fcop/commit/aa7aa7a44dc3b2fe784f0929358e4f772cd856bb))
+- **validators:** added zod validators and helper function ([4e4aff2](https://github.com/akshayfanatic/fcop/commit/4e4aff25abbbb2c9f63c87da99b5e3330cddf3ec))
+
+### [0.2.1](https://github.com/akshayfanatic/fcop/compare/v0.2.0...v0.2.1) (2026-07-22)
+
+### Features
+
+- **deployment:** added deployment configurations ([612d5b8](https://github.com/akshayfanatic/fcop/commit/612d5b81a93470c3a0f0616375b10328021d722c))
+
+### Bug Fixes
+
+- **auth:** fixing auth regarding issue ([0ce3b2a](https://github.com/akshayfanatic/fcop/commit/0ce3b2a4afdb398f78d6666ca3073bc2a57292e2))
+- **auth:** fixing auth regarding issue ([5eccbd6](https://github.com/akshayfanatic/fcop/commit/5eccbd67d6d0f093e4afa1e7f16241257678120b))
+- **auth:** fixing auth regarding issue and code refactor ([249622f](https://github.com/akshayfanatic/fcop/commit/249622f5b307bce4a48090051913032093d086cd))
+- **credentials:** fix enviorment credentials related issues ([d870649](https://github.com/akshayfanatic/fcop/commit/d8706496d622b6567b06d90c1afb93b695e10ecf))
+- support shared auth cookies across live subdomains ([bed267b](https://github.com/akshayfanatic/fcop/commit/bed267b848ef89450faaa9727061c789880d0683))
+
+### Code Refactoring
+
+- **auth:** added subdomain cookie related configutation ([164d85f](https://github.com/akshayfanatic/fcop/commit/164d85f73799f11ca6d95e2be6b5252a2f8a9ccb))
+
 ## [0.2.0](https://github.com/akshayfanatic/fcop/compare/v0.1.0...v0.2.0) (2026-07-16)
 
 ### Features
