@@ -292,6 +292,40 @@ export type EnumProjectCurrencyWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel>;
 };
 
+export type EnumTaskStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskStatus | Prisma.EnumTaskStatusFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskStatus[];
+  notIn?: $Enums.TaskStatus[];
+  not?: Prisma.NestedEnumTaskStatusFilter<$PrismaModel> | $Enums.TaskStatus;
+};
+
+export type EnumTaskPriorityFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskPriority | Prisma.EnumTaskPriorityFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskPriority[];
+  notIn?: $Enums.TaskPriority[];
+  not?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel> | $Enums.TaskPriority;
+};
+
+export type EnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskStatus | Prisma.EnumTaskStatusFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskStatus[];
+  notIn?: $Enums.TaskStatus[];
+  not?: Prisma.NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskStatus;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumTaskStatusFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumTaskStatusFilter<$PrismaModel>;
+};
+
+export type EnumTaskPriorityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskPriority | Prisma.EnumTaskPriorityFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskPriority[];
+  notIn?: $Enums.TaskPriority[];
+  not?: Prisma.NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel> | $Enums.TaskPriority;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel>;
+};
+
 export type EnumProjectMemberRoleFilter<$PrismaModel = never> = {
   equals?: $Enums.ProjectMemberRole | Prisma.EnumProjectMemberRoleFieldRefInput<$PrismaModel>;
   in?: $Enums.ProjectMemberRole[];
@@ -611,6 +645,40 @@ export type NestedEnumProjectCurrencyWithAggregatesFilter<$PrismaModel = never> 
   _count?: Prisma.NestedIntFilter<$PrismaModel>;
   _min?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel>;
   _max?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel>;
+};
+
+export type NestedEnumTaskStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskStatus | Prisma.EnumTaskStatusFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskStatus[];
+  notIn?: $Enums.TaskStatus[];
+  not?: Prisma.NestedEnumTaskStatusFilter<$PrismaModel> | $Enums.TaskStatus;
+};
+
+export type NestedEnumTaskPriorityFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskPriority | Prisma.EnumTaskPriorityFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskPriority[];
+  notIn?: $Enums.TaskPriority[];
+  not?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel> | $Enums.TaskPriority;
+};
+
+export type NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskStatus | Prisma.EnumTaskStatusFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskStatus[];
+  notIn?: $Enums.TaskStatus[];
+  not?: Prisma.NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskStatus;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumTaskStatusFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumTaskStatusFilter<$PrismaModel>;
+};
+
+export type NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskPriority | Prisma.EnumTaskPriorityFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskPriority[];
+  notIn?: $Enums.TaskPriority[];
+  not?: Prisma.NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel> | $Enums.TaskPriority;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel>;
 };
 
 export type NestedEnumProjectMemberRoleFilter<$PrismaModel = never> = {

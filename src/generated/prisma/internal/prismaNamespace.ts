@@ -353,6 +353,8 @@ export const ModelName = {
   Client: 'Client',
   ServiceRequest: 'ServiceRequest',
   Project: 'Project',
+  Task: 'Task',
+  TaskAssignee: 'TaskAssignee',
   MemberProject: 'MemberProject',
   ServiceRequestMessage: 'ServiceRequestMessage',
   Lead: 'Lead'
@@ -383,6 +385,8 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
       | 'client'
       | 'serviceRequest'
       | 'project'
+      | 'task'
+      | 'taskAssignee'
       | 'memberProject'
       | 'serviceRequestMessage'
       | 'lead';
@@ -1247,6 +1251,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         };
       };
     };
+    Task: {
+      payload: Prisma.$TaskPayload<ExtArgs>;
+      fields: Prisma.TaskFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.TaskFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.TaskFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>;
+        };
+        findFirst: {
+          args: Prisma.TaskFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.TaskFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>;
+        };
+        findMany: {
+          args: Prisma.TaskFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>[];
+        };
+        create: {
+          args: Prisma.TaskCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>;
+        };
+        createMany: {
+          args: Prisma.TaskCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.TaskDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>;
+        };
+        update: {
+          args: Prisma.TaskUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>;
+        };
+        deleteMany: {
+          args: Prisma.TaskDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.TaskUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.TaskUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskPayload>;
+        };
+        aggregate: {
+          args: Prisma.TaskAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTask>;
+        };
+        groupBy: {
+          args: Prisma.TaskGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.TaskGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.TaskCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.TaskCountAggregateOutputType> | number;
+        };
+      };
+    };
+    TaskAssignee: {
+      payload: Prisma.$TaskAssigneePayload<ExtArgs>;
+      fields: Prisma.TaskAssigneeFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.TaskAssigneeFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskAssigneePayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.TaskAssigneeFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskAssigneePayload>;
+        };
+        findFirst: {
+          args: Prisma.TaskAssigneeFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskAssigneePayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.TaskAssigneeFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskAssigneePayload>;
+        };
+        findMany: {
+          args: Prisma.TaskAssigneeFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskAssigneePayload>[];
+        };
+        create: {
+          args: Prisma.TaskAssigneeCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskAssigneePayload>;
+        };
+        createMany: {
+          args: Prisma.TaskAssigneeCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.TaskAssigneeDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskAssigneePayload>;
+        };
+        update: {
+          args: Prisma.TaskAssigneeUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskAssigneePayload>;
+        };
+        deleteMany: {
+          args: Prisma.TaskAssigneeDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.TaskAssigneeUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.TaskAssigneeUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TaskAssigneePayload>;
+        };
+        aggregate: {
+          args: Prisma.TaskAssigneeAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTaskAssignee>;
+        };
+        groupBy: {
+          args: Prisma.TaskAssigneeGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.TaskAssigneeGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.TaskAssigneeCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.TaskAssigneeCountAggregateOutputType> | number;
+        };
+      };
+    };
     MemberProject: {
       payload: Prisma.$MemberProjectPayload<ExtArgs>;
       fields: Prisma.MemberProjectFieldRefs;
@@ -1646,6 +1782,32 @@ export const ProjectScalarFieldEnum = {
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum];
 
+export const TaskScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  createdByMemberId: 'createdByMemberId',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  priority: 'priority',
+  dueDate: 'dueDate',
+  estimatedHours: 'estimatedHours',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum];
+
+export const TaskAssigneeScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  projectId: 'projectId',
+  memberId: 'memberId',
+  createdAt: 'createdAt'
+} as const;
+
+export type TaskAssigneeScalarFieldEnum = (typeof TaskAssigneeScalarFieldEnum)[keyof typeof TaskAssigneeScalarFieldEnum];
+
 export const MemberProjectScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
@@ -1846,6 +2008,25 @@ export const ProjectOrderByRelevanceFieldEnum = {
 
 export type ProjectOrderByRelevanceFieldEnum = (typeof ProjectOrderByRelevanceFieldEnum)[keyof typeof ProjectOrderByRelevanceFieldEnum];
 
+export const TaskOrderByRelevanceFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  createdByMemberId: 'createdByMemberId',
+  title: 'title',
+  description: 'description'
+} as const;
+
+export type TaskOrderByRelevanceFieldEnum = (typeof TaskOrderByRelevanceFieldEnum)[keyof typeof TaskOrderByRelevanceFieldEnum];
+
+export const TaskAssigneeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  projectId: 'projectId',
+  memberId: 'memberId'
+} as const;
+
+export type TaskAssigneeOrderByRelevanceFieldEnum = (typeof TaskAssigneeOrderByRelevanceFieldEnum)[keyof typeof TaskAssigneeOrderByRelevanceFieldEnum];
+
 export const MemberProjectOrderByRelevanceFieldEnum = {
   id: 'id',
   projectId: 'projectId',
@@ -1926,6 +2107,16 @@ export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'ProjectCurrency'
  */
 export type EnumProjectCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectCurrency'>;
+
+/**
+ * Reference to a field of type 'TaskStatus'
+ */
+export type EnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskStatus'>;
+
+/**
+ * Reference to a field of type 'TaskPriority'
+ */
+export type EnumTaskPriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskPriority'>;
 
 /**
  * Reference to a field of type 'ProjectMemberRole'
@@ -2073,6 +2264,8 @@ export type GlobalOmitConfig = {
   client?: Prisma.ClientOmit;
   serviceRequest?: Prisma.ServiceRequestOmit;
   project?: Prisma.ProjectOmit;
+  task?: Prisma.TaskOmit;
+  taskAssignee?: Prisma.TaskAssigneeOmit;
   memberProject?: Prisma.MemberProjectOmit;
   serviceRequestMessage?: Prisma.ServiceRequestMessageOmit;
   lead?: Prisma.LeadOmit;

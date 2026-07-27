@@ -61,6 +61,8 @@ export const ModelName = {
   Client: 'Client',
   ServiceRequest: 'ServiceRequest',
   Project: 'Project',
+  Task: 'Task',
+  TaskAssignee: 'TaskAssignee',
   MemberProject: 'MemberProject',
   ServiceRequestMessage: 'ServiceRequestMessage',
   Lead: 'Lead'
@@ -243,6 +245,32 @@ export const ProjectScalarFieldEnum = {
 } as const;
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum];
+
+export const TaskScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  createdByMemberId: 'createdByMemberId',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  priority: 'priority',
+  dueDate: 'dueDate',
+  estimatedHours: 'estimatedHours',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum];
+
+export const TaskAssigneeScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  projectId: 'projectId',
+  memberId: 'memberId',
+  createdAt: 'createdAt'
+} as const;
+
+export type TaskAssigneeScalarFieldEnum = (typeof TaskAssigneeScalarFieldEnum)[keyof typeof TaskAssigneeScalarFieldEnum];
 
 export const MemberProjectScalarFieldEnum = {
   id: 'id',
@@ -443,6 +471,25 @@ export const ProjectOrderByRelevanceFieldEnum = {
 } as const;
 
 export type ProjectOrderByRelevanceFieldEnum = (typeof ProjectOrderByRelevanceFieldEnum)[keyof typeof ProjectOrderByRelevanceFieldEnum];
+
+export const TaskOrderByRelevanceFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  createdByMemberId: 'createdByMemberId',
+  title: 'title',
+  description: 'description'
+} as const;
+
+export type TaskOrderByRelevanceFieldEnum = (typeof TaskOrderByRelevanceFieldEnum)[keyof typeof TaskOrderByRelevanceFieldEnum];
+
+export const TaskAssigneeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  projectId: 'projectId',
+  memberId: 'memberId'
+} as const;
+
+export type TaskAssigneeOrderByRelevanceFieldEnum = (typeof TaskAssigneeOrderByRelevanceFieldEnum)[keyof typeof TaskAssigneeOrderByRelevanceFieldEnum];
 
 export const MemberProjectOrderByRelevanceFieldEnum = {
   id: 'id',
