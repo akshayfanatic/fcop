@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/akshayfanatic/fcop/compare/v0.2.1...v0.4.0) (2026-07-27)
+
+### Features
+
+- **api:** added api endpoint for project ([bd4a2d3](https://github.com/akshayfanatic/fcop/commit/bd4a2d3f2ea9182fe051348b5e1d4377fb6e1cf5))
+- **api:** added controoler, api route for managing project tasks ([551ecea](https://github.com/akshayfanatic/fcop/commit/551ecea097b687b9e7504aea2ce40066a221ce54))
+- **controllers:** added controller and servicess regarding project table ([c83e214](https://github.com/akshayfanatic/fcop/commit/c83e2141bea1170fcc5e6561790c20f6722fb1db))
+- **email:** send email to assignee to manage it's task ([7c665a2](https://github.com/akshayfanatic/fcop/commit/7c665a2fc76e76cc5d62945148bd6c5f0161eaf9))
+- **migration:** added new migration for currency ([3c9da55](https://github.com/akshayfanatic/fcop/commit/3c9da5508077bb32d0f26b67953153bac1b85b91))
+- **migration:** added table for managing project ([aa7aa7a](https://github.com/akshayfanatic/fcop/commit/aa7aa7a44dc3b2fe784f0929358e4f772cd856bb))
+- **permissions:** added permission to managing task ([abe8e46](https://github.com/akshayfanatic/fcop/commit/abe8e46ba9dcbab2e6bcc4abc44256edfd5390d8))
+- **task:** added new schema for managing project tasks ([01019ff](https://github.com/akshayfanatic/fcop/commit/01019ffbbe5e9e95016693d6a0d8140f021a4041))
+- **validators:** added zod validators and helper function ([4e4aff2](https://github.com/akshayfanatic/fcop/commit/4e4aff25abbbb2c9f63c87da99b5e3330cddf3ec))
+
 ## [0.3.0](https://github.com/akshayfanatic/fcop/compare/v0.2.1...v0.3.0) (2026-07-22)
 
 ### Features
