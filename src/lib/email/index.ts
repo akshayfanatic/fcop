@@ -6,5 +6,6 @@ export { createProjectCreatedEmailTemplate } from './templates/project-created-e
 export { createInvitationEmailTemplate } from './templates/invitation-email.js';
 export { createMemberAcceptedInvitationEmailTemplate } from './templates/member-accepted-invitation-email.js';
 export { createResetPasswordEmailTemplate } from './templates/reset-password-email.js';
+export { createTaskAssignedEmailTemplate } from './templates/task-assigned-email.js';
 export { createTestEmailTemplate } from './templates/test-email.js';
 export type { EmailAddress, EmailTemplate, SendEmailParams, SendReactEmailParams } from './types.js';
