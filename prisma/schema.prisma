@@ -34,6 +34,38 @@ enum ServiceRequestStatus {
   CANCELLED
 }
 
+enum ProjectStatus {
+  PLANNING
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  ARCHIVED
+}
+
+enum ProjectMemberRole {
+  MANAGER
+  MEMBER
+}
+
+enum ProjectCurrency {
+  USD
+  AED
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  IN_REVIEW
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
 model User {
   id            String       @id @default(cuid()) @db.VarChar(36)
   name          String
@@ -125,6 +157,10 @@ model Member {
   organization           Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   client                 Client?
   serviceRequestMessages ServiceRequestMessage[]
+  createdProjects        Project[]               @relation("ProjectCreator")
+  memberProjects         MemberProject[]
+  createdTasks           Task[]                  @relation("TaskCreator")
+  taskAssignees          TaskAssignee[]
 
   @@index([userId])
   @@index([organizationId])
@@ -198,6 +234,7 @@ model Client {
   updatedAt DateTime         @updatedAt
   member    Member           @relation(fields: [memberId], references: [id], onDelete: Cascade)
   requests  ServiceRequest[]
+  projects  Project[]
 
   @@map("clients")
 }
@@ -212,11 +249,96 @@ model ServiceRequest {
   updatedAt DateTime                @updatedAt
   client    Client                  @relation(fields: [clientId], references: [id], onDelete: Cascade)
   messages  ServiceRequestMessage[]
+  project   Project?
 
   @@index([clientId])
   @@index([service])
   @@index([status])
   @@map("serviceRequests")
+}
+
+model Project {
+  id                String          @id @default(cuid()) @db.VarChar(36)
+  clientId          String          @db.VarChar(36)
+  serviceRequestId  String?         @unique @db.VarChar(36)
+  createdByMemberId String          @db.VarChar(36)
+  name              String
+  description       String?         @db.Text
+  service           ServiceInterest
+  status            ProjectStatus   @default(PLANNING)
+  startDate         DateTime?
+  endDate           DateTime?
+  budgetAmount      Decimal?        @db.Decimal(12, 2)
+  currency          ProjectCurrency @default(USD)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  client            Client          @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  serviceRequest    ServiceRequest? @relation(fields: [serviceRequestId], references: [id], onDelete: SetNull)
+  createdBy         Member          @relation("ProjectCreator", fields: [createdByMemberId], references: [id], onDelete: Restrict)
+  memberProjects    MemberProject[]
+  tasks             Task[]
+  taskAssignees     TaskAssignee[]
+
+  @@index([clientId])
+  @@index([createdByMemberId])
+  @@index([service])
+  @@index([status])
+  @@map("projects")
+}
+
+model Task {
+  id                String         @id @default(cuid()) @db.VarChar(36)
+  projectId         String         @db.VarChar(36)
+  createdByMemberId String         @db.VarChar(36)
+  title             String
+  description       String?        @db.Text
+  status            TaskStatus     @default(TODO)
+  priority          TaskPriority   @default(MEDIUM)
+  dueDate           DateTime?
+  estimatedHours    Decimal?       @db.Decimal(8, 2)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  project           Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdBy         Member         @relation("TaskCreator", fields: [createdByMemberId], references: [id], onDelete: Restrict)
+  assignees         TaskAssignee[]
+
+  @@index([projectId])
+  @@index([createdByMemberId])
+  @@index([status])
+  @@index([priority])
+  @@map("tasks")
+}
+
+model TaskAssignee {
+  id        String   @id @default(cuid()) @db.VarChar(36)
+  taskId    String   @db.VarChar(36)
+  projectId String   @db.VarChar(36)
+  memberId  String   @db.VarChar(36)
+  createdAt DateTime @default(now())
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  member    Member   @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, memberId])
+  @@index([projectId])
+  @@index([memberId])
+  @@map("taskAssignees")
+}
+
+model MemberProject {
+  id        String            @id @default(cuid()) @db.VarChar(36)
+  projectId String            @db.VarChar(36)
+  memberId  String            @db.VarChar(36)
+  role      ProjectMemberRole @default(MEMBER)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  project   Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  member    Member            @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, memberId])
+  @@index([memberId])
+  @@index([role])
+  @@map("memberProjects")
 }
 
 model ServiceRequestMessage {

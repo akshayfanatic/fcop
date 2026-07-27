@@ -231,6 +231,118 @@ export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonNullableFilter<$PrismaModel>;
 };
 
+export type EnumProjectStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectStatus | Prisma.EnumProjectStatusFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectStatus[];
+  notIn?: $Enums.ProjectStatus[];
+  not?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus;
+};
+
+export type DecimalNullableFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null;
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | null;
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | null;
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  not?: Prisma.NestedDecimalNullableFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+};
+
+export type EnumProjectCurrencyFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectCurrency | Prisma.EnumProjectCurrencyFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectCurrency[];
+  notIn?: $Enums.ProjectCurrency[];
+  not?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel> | $Enums.ProjectCurrency;
+};
+
+export type EnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectStatus | Prisma.EnumProjectStatusFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectStatus[];
+  notIn?: $Enums.ProjectStatus[];
+  not?: Prisma.NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel> | $Enums.ProjectStatus;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>;
+};
+
+export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null;
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | null;
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | null;
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  not?: Prisma.NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>;
+  _avg?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
+  _sum?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
+  _min?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
+  _max?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
+};
+
+export type EnumProjectCurrencyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectCurrency | Prisma.EnumProjectCurrencyFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectCurrency[];
+  notIn?: $Enums.ProjectCurrency[];
+  not?: Prisma.NestedEnumProjectCurrencyWithAggregatesFilter<$PrismaModel> | $Enums.ProjectCurrency;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel>;
+};
+
+export type EnumTaskStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskStatus | Prisma.EnumTaskStatusFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskStatus[];
+  notIn?: $Enums.TaskStatus[];
+  not?: Prisma.NestedEnumTaskStatusFilter<$PrismaModel> | $Enums.TaskStatus;
+};
+
+export type EnumTaskPriorityFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskPriority | Prisma.EnumTaskPriorityFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskPriority[];
+  notIn?: $Enums.TaskPriority[];
+  not?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel> | $Enums.TaskPriority;
+};
+
+export type EnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskStatus | Prisma.EnumTaskStatusFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskStatus[];
+  notIn?: $Enums.TaskStatus[];
+  not?: Prisma.NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskStatus;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumTaskStatusFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumTaskStatusFilter<$PrismaModel>;
+};
+
+export type EnumTaskPriorityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskPriority | Prisma.EnumTaskPriorityFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskPriority[];
+  notIn?: $Enums.TaskPriority[];
+  not?: Prisma.NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel> | $Enums.TaskPriority;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel>;
+};
+
+export type EnumProjectMemberRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectMemberRole | Prisma.EnumProjectMemberRoleFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectMemberRole[];
+  notIn?: $Enums.ProjectMemberRole[];
+  not?: Prisma.NestedEnumProjectMemberRoleFilter<$PrismaModel> | $Enums.ProjectMemberRole;
+};
+
+export type EnumProjectMemberRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectMemberRole | Prisma.EnumProjectMemberRoleFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectMemberRole[];
+  notIn?: $Enums.ProjectMemberRole[];
+  not?: Prisma.NestedEnumProjectMemberRoleWithAggregatesFilter<$PrismaModel> | $Enums.ProjectMemberRole;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumProjectMemberRoleFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumProjectMemberRoleFilter<$PrismaModel>;
+};
+
 export type EnumLeadStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.LeadStatus | Prisma.EnumLeadStatusFieldRefInput<$PrismaModel>;
   in?: $Enums.LeadStatus[];
@@ -472,6 +584,118 @@ export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue;
   gte?: runtime.InputJsonValue;
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter;
+};
+
+export type NestedEnumProjectStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectStatus | Prisma.EnumProjectStatusFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectStatus[];
+  notIn?: $Enums.ProjectStatus[];
+  not?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus;
+};
+
+export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null;
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | null;
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | null;
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  not?: Prisma.NestedDecimalNullableFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+};
+
+export type NestedEnumProjectCurrencyFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectCurrency | Prisma.EnumProjectCurrencyFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectCurrency[];
+  notIn?: $Enums.ProjectCurrency[];
+  not?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel> | $Enums.ProjectCurrency;
+};
+
+export type NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectStatus | Prisma.EnumProjectStatusFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectStatus[];
+  notIn?: $Enums.ProjectStatus[];
+  not?: Prisma.NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel> | $Enums.ProjectStatus;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>;
+};
+
+export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null;
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | null;
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | null;
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>;
+  not?: Prisma.NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>;
+  _avg?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
+  _sum?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
+  _min?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
+  _max?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
+};
+
+export type NestedEnumProjectCurrencyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectCurrency | Prisma.EnumProjectCurrencyFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectCurrency[];
+  notIn?: $Enums.ProjectCurrency[];
+  not?: Prisma.NestedEnumProjectCurrencyWithAggregatesFilter<$PrismaModel> | $Enums.ProjectCurrency;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumProjectCurrencyFilter<$PrismaModel>;
+};
+
+export type NestedEnumTaskStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskStatus | Prisma.EnumTaskStatusFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskStatus[];
+  notIn?: $Enums.TaskStatus[];
+  not?: Prisma.NestedEnumTaskStatusFilter<$PrismaModel> | $Enums.TaskStatus;
+};
+
+export type NestedEnumTaskPriorityFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskPriority | Prisma.EnumTaskPriorityFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskPriority[];
+  notIn?: $Enums.TaskPriority[];
+  not?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel> | $Enums.TaskPriority;
+};
+
+export type NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskStatus | Prisma.EnumTaskStatusFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskStatus[];
+  notIn?: $Enums.TaskStatus[];
+  not?: Prisma.NestedEnumTaskStatusWithAggregatesFilter<$PrismaModel> | $Enums.TaskStatus;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumTaskStatusFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumTaskStatusFilter<$PrismaModel>;
+};
+
+export type NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TaskPriority | Prisma.EnumTaskPriorityFieldRefInput<$PrismaModel>;
+  in?: $Enums.TaskPriority[];
+  notIn?: $Enums.TaskPriority[];
+  not?: Prisma.NestedEnumTaskPriorityWithAggregatesFilter<$PrismaModel> | $Enums.TaskPriority;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumTaskPriorityFilter<$PrismaModel>;
+};
+
+export type NestedEnumProjectMemberRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectMemberRole | Prisma.EnumProjectMemberRoleFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectMemberRole[];
+  notIn?: $Enums.ProjectMemberRole[];
+  not?: Prisma.NestedEnumProjectMemberRoleFilter<$PrismaModel> | $Enums.ProjectMemberRole;
+};
+
+export type NestedEnumProjectMemberRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectMemberRole | Prisma.EnumProjectMemberRoleFieldRefInput<$PrismaModel>;
+  in?: $Enums.ProjectMemberRole[];
+  notIn?: $Enums.ProjectMemberRole[];
+  not?: Prisma.NestedEnumProjectMemberRoleWithAggregatesFilter<$PrismaModel> | $Enums.ProjectMemberRole;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumProjectMemberRoleFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumProjectMemberRoleFilter<$PrismaModel>;
 };
 
 export type NestedEnumLeadStatusFilter<$PrismaModel = never> = {
