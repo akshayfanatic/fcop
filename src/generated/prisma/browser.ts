@@ -77,6 +77,26 @@ export type Client = Prisma.ClientModel;
  */
 export type ServiceRequest = Prisma.ServiceRequestModel;
 /**
+ * Model Project
+ *
+ */
+export type Project = Prisma.ProjectModel;
+/**
+ * Model Task
+ *
+ */
+export type Task = Prisma.TaskModel;
+/**
+ * Model TaskAssignee
+ *
+ */
+export type TaskAssignee = Prisma.TaskAssigneeModel;
+/**
+ * Model MemberProject
+ *
+ */
+export type MemberProject = Prisma.MemberProjectModel;
+/**
  * Model ServiceRequestMessage
  *
  */

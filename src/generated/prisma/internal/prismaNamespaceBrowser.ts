@@ -60,6 +60,10 @@ export const ModelName = {
   OrganizationRole: 'OrganizationRole',
   Client: 'Client',
   ServiceRequest: 'ServiceRequest',
+  Project: 'Project',
+  Task: 'Task',
+  TaskAssignee: 'TaskAssignee',
+  MemberProject: 'MemberProject',
   ServiceRequestMessage: 'ServiceRequestMessage',
   Lead: 'Lead'
 } as const;
@@ -222,6 +226,62 @@ export const ServiceRequestScalarFieldEnum = {
 } as const;
 
 export type ServiceRequestScalarFieldEnum = (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum];
+
+export const ProjectScalarFieldEnum = {
+  id: 'id',
+  clientId: 'clientId',
+  serviceRequestId: 'serviceRequestId',
+  createdByMemberId: 'createdByMemberId',
+  name: 'name',
+  description: 'description',
+  service: 'service',
+  status: 'status',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  budgetAmount: 'budgetAmount',
+  currency: 'currency',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum];
+
+export const TaskScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  createdByMemberId: 'createdByMemberId',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  priority: 'priority',
+  dueDate: 'dueDate',
+  estimatedHours: 'estimatedHours',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum];
+
+export const TaskAssigneeScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  projectId: 'projectId',
+  memberId: 'memberId',
+  createdAt: 'createdAt'
+} as const;
+
+export type TaskAssigneeScalarFieldEnum = (typeof TaskAssigneeScalarFieldEnum)[keyof typeof TaskAssigneeScalarFieldEnum];
+
+export const MemberProjectScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  memberId: 'memberId',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type MemberProjectScalarFieldEnum = (typeof MemberProjectScalarFieldEnum)[keyof typeof MemberProjectScalarFieldEnum];
 
 export const ServiceRequestMessageScalarFieldEnum = {
   id: 'id',
@@ -400,6 +460,44 @@ export const ServiceRequestOrderByRelevanceFieldEnum = {
 } as const;
 
 export type ServiceRequestOrderByRelevanceFieldEnum = (typeof ServiceRequestOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestOrderByRelevanceFieldEnum];
+
+export const ProjectOrderByRelevanceFieldEnum = {
+  id: 'id',
+  clientId: 'clientId',
+  serviceRequestId: 'serviceRequestId',
+  createdByMemberId: 'createdByMemberId',
+  name: 'name',
+  description: 'description'
+} as const;
+
+export type ProjectOrderByRelevanceFieldEnum = (typeof ProjectOrderByRelevanceFieldEnum)[keyof typeof ProjectOrderByRelevanceFieldEnum];
+
+export const TaskOrderByRelevanceFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  createdByMemberId: 'createdByMemberId',
+  title: 'title',
+  description: 'description'
+} as const;
+
+export type TaskOrderByRelevanceFieldEnum = (typeof TaskOrderByRelevanceFieldEnum)[keyof typeof TaskOrderByRelevanceFieldEnum];
+
+export const TaskAssigneeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  projectId: 'projectId',
+  memberId: 'memberId'
+} as const;
+
+export type TaskAssigneeOrderByRelevanceFieldEnum = (typeof TaskAssigneeOrderByRelevanceFieldEnum)[keyof typeof TaskAssigneeOrderByRelevanceFieldEnum];
+
+export const MemberProjectOrderByRelevanceFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  memberId: 'memberId'
+} as const;
+
+export type MemberProjectOrderByRelevanceFieldEnum = (typeof MemberProjectOrderByRelevanceFieldEnum)[keyof typeof MemberProjectOrderByRelevanceFieldEnum];
 
 export const ServiceRequestMessageOrderByRelevanceFieldEnum = {
   id: 'id',

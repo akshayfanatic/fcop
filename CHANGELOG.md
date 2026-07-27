@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/akshayfanatic/fcop/compare/v0.2.1...v0.3.0) (2026-07-22)
+
+### Features
+
+- **api:** added api endpoint for project ([bd4a2d3](https://github.com/akshayfanatic/fcop/commit/bd4a2d3f2ea9182fe051348b5e1d4377fb6e1cf5))
+- **controllers:** added controller and servicess regarding project table ([c83e214](https://github.com/akshayfanatic/fcop/commit/c83e2141bea1170fcc5e6561790c20f6722fb1db))
+- **email:** send email to customer when project is created ([248233f](https://github.com/akshayfanatic/fcop/commit/248233f489a47f22403b268a9dab9fd1aaa78d5c))
+- **migration:** added new migration for currency ([3c9da55](https://github.com/akshayfanatic/fcop/commit/3c9da5508077bb32d0f26b67953153bac1b85b91))
+- **migration:** added table for managing project ([aa7aa7a](https://github.com/akshayfanatic/fcop/commit/aa7aa7a44dc3b2fe784f0929358e4f772cd856bb))
+- **validators:** added zod validators and helper function ([4e4aff2](https://github.com/akshayfanatic/fcop/commit/4e4aff25abbbb2c9f63c87da99b5e3330cddf3ec))
+
 ### [0.2.1](https://github.com/akshayfanatic/fcop/compare/v0.2.0...v0.2.1) (2026-07-22)
 
 ### Features

@@ -1,4 +1,4 @@
-import { LeadSource, LeadStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/enums.js';
+import { LeadSource, LeadStatus, ProjectCurrency, ProjectMemberRole, ProjectStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/enums.js';
 import { Role } from '../lib/auth/permissions.js';
 
 const enumValues = <T extends Record<string, string>>(values: T) => Object.values(values);
@@ -36,6 +36,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     {
       name: 'Service Requests',
       description: 'Client service request endpoints.'
+    },
+    {
+      name: 'Projects',
+      description: 'Project delivery management endpoints.'
     }
   ],
   paths: {
@@ -649,6 +653,343 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/service-requests/{serviceRequestId}/project': {
+      post: {
+        tags: ['Projects'],
+        summary: 'Create project from service request',
+        description: 'Creates a project using the client and service from an existing service request. Admin can assign a manager; Manager is assigned to self.',
+        operationId: 'createProjectFromServiceRequest',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          serviceRequest: ['read', 'update'],
+          project: ['create']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestProjectServiceRequestId'
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateProjectFromServiceRequestRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Project created from service request successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ProjectResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid project payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '409': {
+            description: 'A project already exists for this service request.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/projects': {
+      post: {
+        tags: ['Projects'],
+        summary: 'Create a project',
+        description: 'Creates a project directly. Admin can assign a manager; Manager is assigned to self.',
+        operationId: 'createProject',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          project: ['create']
+        },
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateProjectRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Project created successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ProjectResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid project payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Client or service request was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      get: {
+        tags: ['Projects'],
+        summary: 'Fetch projects',
+        description: 'Admin sees all projects; clients see own projects; other members see assigned or created projects.',
+        operationId: 'getProjects',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          project: ['read']
+        },
+        responses: {
+          '200': {
+            description: 'Projects fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ProjectsResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          }
+        }
+      }
+    },
+    '/api/v1/projects/{id}': {
+      get: {
+        tags: ['Projects'],
+        summary: 'Fetch a project by id',
+        operationId: 'getProjectById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          project: ['read']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ProjectId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Project fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ProjectResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Project was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      put: {
+        tags: ['Projects'],
+        summary: 'Update a project by id',
+        description: 'Updates project details. Admin can reassign manager; Manager stays assigned to self.',
+        operationId: 'updateProjectById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          project: ['update']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ProjectId'
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/UpdateProjectRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '200': {
+            description: 'Project updated successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ProjectResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid project payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Project was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      delete: {
+        tags: ['Projects'],
+        summary: 'Delete a project by id',
+        operationId: 'deleteProjectById',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          project: ['delete']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ProjectId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Project deleted successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ProjectResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Project was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     '/api/v1/service-requests/{id}': {
       get: {
         tags: ['Service Requests'],
@@ -873,6 +1214,26 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           minLength: 1
         },
         example: 'clx0000000000000000000006'
+      },
+      ServiceRequestProjectServiceRequestId: {
+        name: 'serviceRequestId',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000006'
+      },
+      ProjectId: {
+        name: 'id',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000010'
       }
     },
     schemas: {
@@ -895,6 +1256,22 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         type: 'string',
         enum: enumValues(ServiceRequestStatus),
         example: ServiceRequestStatus.NEW
+      },
+      ProjectStatus: {
+        type: 'string',
+        enum: enumValues(ProjectStatus),
+        example: ProjectStatus.PLANNING
+      },
+      ProjectMemberRole: {
+        type: 'string',
+        enum: enumValues(ProjectMemberRole),
+        example: ProjectMemberRole.MANAGER
+      },
+      ProjectCurrency: {
+        type: 'string',
+        enum: enumValues(ProjectCurrency),
+        default: ProjectCurrency.USD,
+        example: ProjectCurrency.USD
       },
       OrganizationRole: {
         type: 'string',
@@ -1383,6 +1760,252 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       },
+      ProjectMember: {
+        type: 'object',
+        required: ['id', 'projectId', 'memberId', 'role', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000011'
+          },
+          projectId: {
+            type: 'string',
+            example: 'clx0000000000000000000010'
+          },
+          memberId: {
+            type: 'string',
+            example: 'seed-member-manager'
+          },
+          role: {
+            $ref: '#/components/schemas/ProjectMemberRole'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-21T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-21T06:30:00.000Z'
+          }
+        }
+      },
+      Project: {
+        type: 'object',
+        required: ['id', 'clientId', 'createdByMemberId', 'name', 'service', 'status', 'currency', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000010'
+          },
+          clientId: {
+            type: 'string',
+            example: 'clx0000000000000000000005'
+          },
+          serviceRequestId: {
+            type: 'string',
+            nullable: true,
+            example: 'clx0000000000000000000006'
+          },
+          createdByMemberId: {
+            type: 'string',
+            example: 'seed-member-admin'
+          },
+          name: {
+            type: 'string',
+            example: 'Acme website redesign'
+          },
+          description: {
+            type: 'string',
+            nullable: true,
+            example: 'Website redesign project created from the client service request.'
+          },
+          service: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          status: {
+            $ref: '#/components/schemas/ProjectStatus'
+          },
+          startDate: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true,
+            example: '2026-08-01T00:00:00.000Z'
+          },
+          endDate: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true,
+            example: '2026-09-15T00:00:00.000Z'
+          },
+          budgetAmount: {
+            type: 'number',
+            format: 'decimal',
+            nullable: true,
+            example: 25000
+          },
+          currency: {
+            $ref: '#/components/schemas/ProjectCurrency'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-21T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-21T06:30:00.000Z'
+          },
+          memberProjects: {
+            type: 'array',
+            items: {
+              $ref: '#/components/schemas/ProjectMember'
+            }
+          }
+        }
+      },
+      CreateProjectRequest: {
+        type: 'object',
+        required: ['clientId', 'name', 'service'],
+        properties: {
+          clientId: {
+            type: 'string',
+            minLength: 1,
+            example: 'clx0000000000000000000005'
+          },
+          serviceRequestId: {
+            type: 'string',
+            minLength: 1,
+            example: 'clx0000000000000000000006'
+          },
+          managerMemberId: {
+            type: 'string',
+            minLength: 1,
+            description: 'Admin-only manager assignment. Managers are assigned to self by the backend.',
+            example: 'seed-member-manager'
+          },
+          name: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 255,
+            example: 'Acme website redesign'
+          },
+          description: {
+            type: 'string',
+            maxLength: 10000,
+            example: 'Website redesign project created from discovery.'
+          },
+          service: {
+            $ref: '#/components/schemas/ServiceInterest'
+          },
+          status: {
+            $ref: '#/components/schemas/ProjectStatus'
+          },
+          startDate: {
+            type: 'string',
+            format: 'date-time'
+          },
+          endDate: {
+            type: 'string',
+            format: 'date-time'
+          },
+          budgetAmount: {
+            type: 'number',
+            minimum: 0,
+            example: 25000
+          },
+          currency: {
+            $ref: '#/components/schemas/ProjectCurrency'
+          }
+        }
+      },
+      CreateProjectFromServiceRequestRequest: {
+        type: 'object',
+        properties: {
+          managerMemberId: {
+            type: 'string',
+            minLength: 1,
+            description: 'Admin-only manager assignment. Managers are assigned to self by the backend.',
+            example: 'seed-member-manager'
+          },
+          name: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 255,
+            example: 'Acme website redesign'
+          },
+          description: {
+            type: 'string',
+            maxLength: 10000,
+            example: 'Project created from the accepted service request.'
+          },
+          status: {
+            $ref: '#/components/schemas/ProjectStatus'
+          },
+          startDate: {
+            type: 'string',
+            format: 'date-time'
+          },
+          endDate: {
+            type: 'string',
+            format: 'date-time'
+          },
+          budgetAmount: {
+            type: 'number',
+            minimum: 0,
+            example: 25000
+          },
+          currency: {
+            $ref: '#/components/schemas/ProjectCurrency'
+          }
+        }
+      },
+      UpdateProjectRequest: {
+        type: 'object',
+        minProperties: 1,
+        properties: {
+          managerMemberId: {
+            type: 'string',
+            nullable: true,
+            minLength: 1,
+            description: 'Admin-only manager reassignment. Managers are assigned to self by the backend.',
+            example: 'seed-member-manager'
+          },
+          name: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 255
+          },
+          description: {
+            type: 'string',
+            nullable: true,
+            maxLength: 10000
+          },
+          status: {
+            $ref: '#/components/schemas/ProjectStatus'
+          },
+          startDate: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true
+          },
+          endDate: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true
+          },
+          budgetAmount: {
+            type: 'number',
+            nullable: true,
+            minimum: 0
+          },
+          currency: {
+            $ref: '#/components/schemas/ProjectCurrency'
+          }
+        }
+      },
       ServiceRequestMessageAuthorUser: {
         type: 'object',
         required: ['id', 'name'],
@@ -1668,6 +2291,41 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             properties: {
               data: {
                 $ref: '#/components/schemas/ServiceRequest'
+              }
+            }
+          }
+        ]
+      },
+      ProjectsResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/Project'
+                }
+              }
+            }
+          }
+        ]
+      },
+      ProjectResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/Project'
               }
             }
           }

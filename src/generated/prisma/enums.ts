@@ -42,3 +42,45 @@ export const ServiceRequestStatus = {
 } as const;
 
 export type ServiceRequestStatus = (typeof ServiceRequestStatus)[keyof typeof ServiceRequestStatus];
+
+export const ProjectStatus = {
+  PLANNING: 'PLANNING',
+  ACTIVE: 'ACTIVE',
+  ON_HOLD: 'ON_HOLD',
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
+} as const;
+
+export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus];
+
+export const ProjectMemberRole = {
+  MANAGER: 'MANAGER',
+  MEMBER: 'MEMBER'
+} as const;
+
+export type ProjectMemberRole = (typeof ProjectMemberRole)[keyof typeof ProjectMemberRole];
+
+export const ProjectCurrency = {
+  USD: 'USD',
+  AED: 'AED'
+} as const;
+
+export type ProjectCurrency = (typeof ProjectCurrency)[keyof typeof ProjectCurrency];
+
+export const TaskStatus = {
+  TODO: 'TODO',
+  IN_PROGRESS: 'IN_PROGRESS',
+  IN_REVIEW: 'IN_REVIEW',
+  DONE: 'DONE'
+} as const;
+
+export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus];
+
+export const TaskPriority = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+} as const;
+
+export type TaskPriority = (typeof TaskPriority)[keyof typeof TaskPriority];

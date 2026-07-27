@@ -1,4 +1,4 @@
-import type { LeadSource, LeadStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/client.js';
+import type { LeadSource, LeadStatus, ServiceInterest, ServiceRequestStatus, TaskPriority, TaskStatus } from '../generated/prisma/client.js';
 import type { Option } from '../utils/options.js';
 
 export const LEAD_STATUS_OPTIONS = [
@@ -25,3 +25,17 @@ export const SERVICE_REQUEST_STATUS_OPTIONS = [
   { value: 'COMPLETED', label: 'Completed' },
   { value: 'CANCELLED', label: 'Cancelled' }
 ] as const satisfies readonly Option<ServiceRequestStatus>[];
+
+export const TASK_STATUS_OPTIONS = [
+  { value: 'TODO', label: 'To do' },
+  { value: 'IN_PROGRESS', label: 'In progress' },
+  { value: 'IN_REVIEW', label: 'In review' },
+  { value: 'DONE', label: 'Done' }
+] as const satisfies readonly Option<TaskStatus>[];
+
+export const TASK_PRIORITY_OPTIONS = [
+  { value: 'LOW', label: 'Low' },
+  { value: 'MEDIUM', label: 'Medium' },
+  { value: 'HIGH', label: 'High' },
+  { value: 'URGENT', label: 'Urgent' }
+] as const satisfies readonly Option<TaskPriority>[];
