@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { LeadStatus, ServiceInterest } from '../generated/prisma/client.js';
+import { paginationQuerySchema } from '../utils/pagination.js';
 
 const optionalText = z
   .string()
@@ -21,6 +22,12 @@ export const leadIdParamsSchema = z.object({
   id: z.string().trim().min(1)
 });
 
+export const leadFiltersSchema = paginationQuerySchema.extend({
+  email: z.string().trim().toLowerCase().min(1).max(255).optional(),
+  status: z.enum(LeadStatus).optional(),
+  serviceType: z.enum(ServiceInterest).optional()
+});
+
 export const updateLeadSchema = createLeadSchema
   .extend({
     status: z.enum(LeadStatus).optional()
@@ -31,5 +38,6 @@ export const updateLeadSchema = createLeadSchema
   });
 
 export type CreateLeadInput = z.infer<typeof createLeadSchema>;
+export type LeadFiltersInput = z.infer<typeof leadFiltersSchema>;
 export type LeadIdParamsInput = z.infer<typeof leadIdParamsSchema>;
 export type UpdateLeadInput = z.infer<typeof updateLeadSchema>;
