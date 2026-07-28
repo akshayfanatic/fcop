@@ -6,8 +6,9 @@ import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
+import { createPaginatedData, getPaginationOffset } from '../utils/pagination.js';
 import { getAssignableProjectManagerId, getProjectAccessWhere, upsertProjectManager } from '../utils/project/project-access.js';
-import type { CreateProjectFromServiceRequestInput, CreateProjectInput, UpdateProjectInput } from '../validators/project.validator.js';
+import type { CreateProjectFromServiceRequestInput, CreateProjectInput, ProjectFiltersInput, UpdateProjectInput } from '../validators/project.validator.js';
 
 const includeProjectDetails = {
   client: {
@@ -205,16 +206,39 @@ export const projectService = {
     }
   },
 
-  getProjects: async (headers: IncomingHttpHeaders) => {
+  getProjects: async (filters: ProjectFiltersInput, headers: IncomingHttpHeaders) => {
     try {
       const member = await getSessionMember(headers);
+      const { page, pageSize } = filters;
+      const where = {
+        AND: [
+          getProjectAccessWhere(member),
+          {
+            ...(filters.name ? { name: { contains: filters.name } } : {}),
+            ...(filters.status ? { status: filters.status } : {}),
+            ...(filters.serviceType ? { service: filters.serviceType } : {})
+          }
+        ]
+      } satisfies Prisma.ProjectWhereInput;
 
-      return await prisma.project.findMany({
-        where: getProjectAccessWhere(member),
-        include: includeProjectDetails,
-        orderBy: {
-          createdAt: 'desc'
-        }
+      const [items, totalItems] = await Promise.all([
+        prisma.project.findMany({
+          where,
+          include: includeProjectDetails,
+          orderBy: {
+            createdAt: 'desc'
+          },
+          skip: getPaginationOffset({ page, pageSize }),
+          take: pageSize
+        }),
+        prisma.project.count({ where })
+      ]);
+
+      return createPaginatedData({
+        items,
+        page,
+        pageSize,
+        totalItems
       });
     } catch (error) {
       logger.error({ error }, 'Failed to fetch projects.');

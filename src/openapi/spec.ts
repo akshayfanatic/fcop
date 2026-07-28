@@ -869,6 +869,55 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         'x-requiredPermissions': {
           project: ['read']
         },
+        parameters: [
+          {
+            name: 'name',
+            in: 'query',
+            description: 'Filter by full or partial project name.',
+            schema: {
+              type: 'string',
+              minLength: 1,
+              maxLength: 255
+            }
+          },
+          {
+            name: 'status',
+            in: 'query',
+            description: 'Filter by project status.',
+            schema: {
+              $ref: '#/components/schemas/ProjectStatus'
+            }
+          },
+          {
+            name: 'serviceType',
+            in: 'query',
+            description: 'Filter by project service type.',
+            schema: {
+              $ref: '#/components/schemas/ServiceInterest'
+            }
+          },
+          {
+            name: 'page',
+            in: 'query',
+            description: 'One-based page number.',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              default: DEFAULT_PAGE
+            }
+          },
+          {
+            name: 'pageSize',
+            in: 'query',
+            description: 'Number of projects per page.',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              maximum: MAX_PAGE_SIZE,
+              default: DEFAULT_PAGE_SIZE
+            }
+          }
+        ],
         responses: {
           '200': {
             description: 'Projects fetched successfully.',
@@ -885,6 +934,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           },
           '403': {
             $ref: '#/components/responses/Forbidden'
+          },
+          '400': {
+            description: 'Invalid project filters.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
           }
         }
       }
@@ -2404,14 +2463,26 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             required: ['data'],
             properties: {
               data: {
-                type: 'array',
-                items: {
-                  $ref: '#/components/schemas/Project'
-                }
+                $ref: '#/components/schemas/PaginatedProjects'
               }
             }
           }
         ]
+      },
+      PaginatedProjects: {
+        type: 'object',
+        required: ['items', 'pagination'],
+        properties: {
+          items: {
+            type: 'array',
+            items: {
+              $ref: '#/components/schemas/Project'
+            }
+          },
+          pagination: {
+            $ref: '#/components/schemas/PaginationMeta'
+          }
+        }
       },
       ProjectResponse: {
         allOf: [

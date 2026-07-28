@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { ProjectCurrency, ProjectStatus, ServiceInterest } from '../generated/prisma/client.js';
+import { paginationQuerySchema } from '../utils/pagination.js';
 
 const optionalDateSchema = z.coerce.date().optional();
 const optionalMoneySchema = z.coerce.number().nonnegative().optional();
@@ -11,6 +12,12 @@ export const projectIdParamsSchema = z.object({
 
 export const serviceRequestProjectParamsSchema = z.object({
   serviceRequestId: z.string().trim().min(1)
+});
+
+export const projectFiltersSchema = paginationQuerySchema.extend({
+  name: z.string().trim().min(1).max(255).optional(),
+  status: z.enum(ProjectStatus).optional(),
+  serviceType: z.enum(ServiceInterest).optional()
 });
 
 const createProjectBaseSchema = z.object({
@@ -68,5 +75,6 @@ export const updateProjectSchema = z
 export type CreateProjectInput = z.infer<typeof createProjectSchema>;
 export type CreateProjectFromServiceRequestInput = z.infer<typeof createProjectFromServiceRequestSchema>;
 export type ProjectIdParamsInput = z.infer<typeof projectIdParamsSchema>;
+export type ProjectFiltersInput = z.infer<typeof projectFiltersSchema>;
 export type ServiceRequestProjectParamsInput = z.infer<typeof serviceRequestProjectParamsSchema>;
 export type UpdateProjectInput = z.infer<typeof updateProjectSchema>;
