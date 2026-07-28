@@ -3,7 +3,14 @@ import { z } from 'zod';
 import { projectService } from '../services/project.service.js';
 import { ApiResponse, HttpStatus } from '../utils/api-response.js';
 import { sendValidationError } from '../utils/http-error.js';
-import { createProjectFromServiceRequestSchema, createProjectSchema, projectIdParamsSchema, serviceRequestProjectParamsSchema, updateProjectSchema } from '../validators/project.validator.js';
+import {
+  createProjectFromServiceRequestSchema,
+  createProjectSchema,
+  projectFiltersSchema,
+  projectIdParamsSchema,
+  serviceRequestProjectParamsSchema,
+  updateProjectSchema
+} from '../validators/project.validator.js';
 
 export const projectController = {
   createProject: (async (req, res, next) => {
@@ -55,7 +62,8 @@ export const projectController = {
 
   getProjects: (async (req, res, next) => {
     try {
-      const projects = await projectService.getProjects(req.headers);
+      const filters = projectFiltersSchema.parse(req.query);
+      const projects = await projectService.getProjects(filters, req.headers);
 
       res.status(HttpStatus.OK).json(
         ApiResponse({
@@ -66,6 +74,11 @@ export const projectController = {
         })
       );
     } catch (error) {
+      if (error instanceof z.ZodError) {
+        sendValidationError(res, error);
+        return;
+      }
+
       next(error);
     }
   }) satisfies RequestHandler,

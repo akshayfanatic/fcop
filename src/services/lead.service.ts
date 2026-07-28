@@ -5,18 +5,39 @@ import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
-import type { CreateLeadInput, UpdateLeadInput } from '../validators/lead.validator.js';
+import { createPaginatedData, getPaginationOffset } from '../utils/pagination.js';
+import type { CreateLeadInput, LeadFiltersInput, UpdateLeadInput } from '../validators/lead.validator.js';
 
 export const leadService = {
-  getLeads: async () => {
+  getLeads: async (filters: LeadFiltersInput) => {
     try {
-      return await prisma.lead.findMany({
-        orderBy: {
-          createdAt: 'desc'
-        }
+      const { page, pageSize } = filters;
+      const where = {
+        ...(filters.email ? { email: { contains: filters.email } } : {}),
+        ...(filters.status ? { status: filters.status } : {}),
+        ...(filters.serviceType ? { serviceInterest: filters.serviceType } : {})
+      } satisfies Prisma.LeadWhereInput;
+
+      const [items, totalItems] = await Promise.all([
+        prisma.lead.findMany({
+          where,
+          orderBy: {
+            createdAt: 'desc'
+          },
+          skip: getPaginationOffset({ page, pageSize }),
+          take: pageSize
+        }),
+        prisma.lead.count({ where })
+      ]);
+
+      return createPaginatedData({
+        items,
+        page,
+        pageSize,
+        totalItems
       });
     } catch (error) {
-      logger.error({ error }, 'Failed to fetch leads.');
+      logger.error({ error, filters }, 'Failed to fetch leads.');
       throw error;
     }
   },

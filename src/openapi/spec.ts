@@ -1,5 +1,6 @@
 import { LeadSource, LeadStatus, ProjectCurrency, ProjectMemberRole, ProjectStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/enums.js';
 import { Role } from '../lib/auth/permissions.js';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from '../utils/pagination.js';
 
 const enumValues = <T extends Record<string, string>>(values: T) => Object.values(values);
 
@@ -256,6 +257,55 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         'x-requiredPermissions': {
           lead: ['read']
         },
+        parameters: [
+          {
+            name: 'email',
+            in: 'query',
+            description: 'Filter by full or partial lead email.',
+            schema: {
+              type: 'string',
+              minLength: 1,
+              maxLength: 255
+            }
+          },
+          {
+            name: 'status',
+            in: 'query',
+            description: 'Filter by lead status.',
+            schema: {
+              $ref: '#/components/schemas/LeadStatus'
+            }
+          },
+          {
+            name: 'serviceType',
+            in: 'query',
+            description: 'Filter by requested service type.',
+            schema: {
+              $ref: '#/components/schemas/ServiceInterest'
+            }
+          },
+          {
+            name: 'page',
+            in: 'query',
+            description: 'One-based page number.',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              default: DEFAULT_PAGE
+            }
+          },
+          {
+            name: 'pageSize',
+            in: 'query',
+            description: 'Number of leads per page.',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              maximum: MAX_PAGE_SIZE,
+              default: DEFAULT_PAGE_SIZE
+            }
+          }
+        ],
         responses: {
           '200': {
             description: 'Leads fetched successfully.',
@@ -272,6 +322,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           },
           '403': {
             $ref: '#/components/responses/Forbidden'
+          },
+          '400': {
+            description: 'Invalid lead filters.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
           }
         }
       }
@@ -809,6 +869,55 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         'x-requiredPermissions': {
           project: ['read']
         },
+        parameters: [
+          {
+            name: 'name',
+            in: 'query',
+            description: 'Filter by full or partial project name.',
+            schema: {
+              type: 'string',
+              minLength: 1,
+              maxLength: 255
+            }
+          },
+          {
+            name: 'status',
+            in: 'query',
+            description: 'Filter by project status.',
+            schema: {
+              $ref: '#/components/schemas/ProjectStatus'
+            }
+          },
+          {
+            name: 'serviceType',
+            in: 'query',
+            description: 'Filter by project service type.',
+            schema: {
+              $ref: '#/components/schemas/ServiceInterest'
+            }
+          },
+          {
+            name: 'page',
+            in: 'query',
+            description: 'One-based page number.',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              default: DEFAULT_PAGE
+            }
+          },
+          {
+            name: 'pageSize',
+            in: 'query',
+            description: 'Number of projects per page.',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              maximum: MAX_PAGE_SIZE,
+              default: DEFAULT_PAGE_SIZE
+            }
+          }
+        ],
         responses: {
           '200': {
             description: 'Projects fetched successfully.',
@@ -825,6 +934,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           },
           '403': {
             $ref: '#/components/responses/Forbidden'
+          },
+          '400': {
+            description: 'Invalid project filters.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
           }
         }
       }
@@ -2236,14 +2355,52 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             required: ['data'],
             properties: {
               data: {
-                type: 'array',
-                items: {
-                  $ref: '#/components/schemas/Lead'
-                }
+                $ref: '#/components/schemas/PaginatedLeads'
               }
             }
           }
         ]
+      },
+      PaginationMeta: {
+        type: 'object',
+        required: ['page', 'pageSize', 'totalItems', 'totalPages'],
+        properties: {
+          page: {
+            type: 'integer',
+            minimum: 1,
+            example: 1
+          },
+          pageSize: {
+            type: 'integer',
+            minimum: 1,
+            example: 10
+          },
+          totalItems: {
+            type: 'integer',
+            minimum: 0,
+            example: 24
+          },
+          totalPages: {
+            type: 'integer',
+            minimum: 0,
+            example: 3
+          }
+        }
+      },
+      PaginatedLeads: {
+        type: 'object',
+        required: ['items', 'pagination'],
+        properties: {
+          items: {
+            type: 'array',
+            items: {
+              $ref: '#/components/schemas/Lead'
+            }
+          },
+          pagination: {
+            $ref: '#/components/schemas/PaginationMeta'
+          }
+        }
       },
       LeadResponse: {
         allOf: [
@@ -2306,14 +2463,26 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             required: ['data'],
             properties: {
               data: {
-                type: 'array',
-                items: {
-                  $ref: '#/components/schemas/Project'
-                }
+                $ref: '#/components/schemas/PaginatedProjects'
               }
             }
           }
         ]
+      },
+      PaginatedProjects: {
+        type: 'object',
+        required: ['items', 'pagination'],
+        properties: {
+          items: {
+            type: 'array',
+            items: {
+              $ref: '#/components/schemas/Project'
+            }
+          },
+          pagination: {
+            $ref: '#/components/schemas/PaginationMeta'
+          }
+        }
       },
       ProjectResponse: {
         allOf: [

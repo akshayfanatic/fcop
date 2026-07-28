@@ -3,12 +3,13 @@ import { z } from 'zod';
 import { leadService } from '../services/lead.service.js';
 import { ApiResponse, HttpStatus } from '../utils/api-response.js';
 import { sendValidationError } from '../utils/http-error.js';
-import { createLeadSchema, leadIdParamsSchema, updateLeadSchema } from '../validators/lead.validator.js';
+import { createLeadSchema, leadFiltersSchema, leadIdParamsSchema, updateLeadSchema } from '../validators/lead.validator.js';
 
 export const leadController = {
-  getLeads: (async (_req, res, next) => {
+  getLeads: (async (req, res, next) => {
     try {
-      const leads = await leadService.getLeads();
+      const filters = leadFiltersSchema.parse(req.query);
+      const leads = await leadService.getLeads(filters);
       const response = ApiResponse({
         success: true,
         status: HttpStatus.OK,
@@ -18,6 +19,11 @@ export const leadController = {
 
       res.status(HttpStatus.OK).json(response);
     } catch (error) {
+      if (error instanceof z.ZodError) {
+        sendValidationError(res, error);
+        return;
+      }
+
       next(error);
     }
   }) satisfies RequestHandler,
