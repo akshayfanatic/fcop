@@ -3,6 +3,8 @@ import { ProposalStatus } from '../generated/prisma/client.js';
 import { getSessionMember } from '../lib/auth/session.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
+import { ensureStripeCustomer } from '../lib/stripe/customer.js';
+import { createAndSendProposalInvoice } from '../lib/stripe/invoice.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { isClientRole } from '../utils/role.js';
@@ -16,6 +18,20 @@ const getServiceRequestForProposal = async (serviceRequestId: string, headers: I
     },
     include: {
       proposal: true,
+      client: {
+        include: {
+          member: {
+            include: {
+              user: {
+                select: {
+                  name: true,
+                  email: true
+                }
+              }
+            }
+          }
+        }
+      },
       project: {
         select: {
           id: true
@@ -97,21 +113,66 @@ export const proposalService = {
           throw createHttpError(HttpStatus.FORBIDDEN, 'Clients can only accept proposals.', 'PROPOSAL_UPDATE_FORBIDDEN');
         }
 
-        if (proposal.status === ProposalStatus.ACCEPTED) {
+        if (proposal.status === ProposalStatus.ACCEPTED && proposal.stripeInvoiceId) {
           return proposal;
         }
 
-        if (proposal.status !== ProposalStatus.SENT) {
+        if (proposal.status !== ProposalStatus.SENT && proposal.status !== ProposalStatus.ACCEPTED) {
           throw createHttpError(HttpStatus.CONFLICT, 'Only a sent proposal can be accepted.', 'PROPOSAL_NOT_SENT');
         }
 
+        const acceptedProposal =
+          proposal.status === ProposalStatus.ACCEPTED
+            ? proposal
+            : await prisma.proposal.update({
+                where: {
+                  id: proposal.id
+                },
+                data: {
+                  status: ProposalStatus.ACCEPTED,
+                  acceptedAt: new Date()
+                }
+              });
+
+        // Create or recover the Stripe customer before issuing the accepted proposal invoice.
+        const stripeCustomer = await ensureStripeCustomer({
+          clientId: request.client.id,
+          stripeCustomerId: request.client.stripeCustomerId,
+          name: request.client.member.user.name,
+          email: request.client.member.user.email
+        });
+
+        if (request.client.stripeCustomerId !== stripeCustomer.id) {
+          await prisma.client.update({
+            where: {
+              id: request.client.id
+            },
+            data: {
+              stripeCustomerId: stripeCustomer.id
+            }
+          });
+        }
+
+        // Send one idempotent Stripe invoice for the final accepted commercial terms.
+        const invoice = await createAndSendProposalInvoice({
+          proposalId: acceptedProposal.id,
+          serviceRequestId: request.id,
+          clientId: request.client.id,
+          stripeCustomerId: stripeCustomer.id,
+          description: acceptedProposal.description,
+          amount: acceptedProposal.amount,
+          currency: acceptedProposal.currency
+        });
+
         return await prisma.proposal.update({
           where: {
-            id: proposal.id
+            id: acceptedProposal.id
           },
           data: {
-            status: ProposalStatus.ACCEPTED,
-            acceptedAt: new Date()
+            stripeInvoiceId: invoice.id,
+            stripeInvoiceNumber: invoice.number,
+            stripeHostedInvoiceUrl: invoice.hosted_invoice_url,
+            stripeInvoicePdfUrl: invoice.invoice_pdf
           }
         });
       }

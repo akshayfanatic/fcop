@@ -4,7 +4,7 @@ import { ApiResponse, HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 
 export const stripeWebhookController = {
-  handleWebhook: ((req, res, next) => {
+  handleWebhook: (async (req, res, next) => {
     try {
       const signature = req.header('stripe-signature');
 
@@ -16,7 +16,7 @@ export const stripeWebhookController = {
         throw createHttpError(HttpStatus.BAD_REQUEST, 'Stripe webhook body must be raw.', 'STRIPE_RAW_BODY_REQUIRED');
       }
 
-      const eventId = stripeWebhookService.handleEvent(req.body, signature);
+      const eventId = await stripeWebhookService.handleEvent(req.body, signature);
 
       res.status(HttpStatus.OK).json(
         ApiResponse({
