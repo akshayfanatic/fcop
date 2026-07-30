@@ -67,6 +67,21 @@ export const ProjectCurrency = {
 
 export type ProjectCurrency = (typeof ProjectCurrency)[keyof typeof ProjectCurrency];
 
+export const ProposalStatus = {
+  DRAFT: 'DRAFT',
+  SENT: 'SENT',
+  ACCEPTED: 'ACCEPTED'
+} as const;
+
+export type ProposalStatus = (typeof ProposalStatus)[keyof typeof ProposalStatus];
+
+export const ProposalPaymentStatus = {
+  UNPAID: 'UNPAID',
+  PAID: 'PAID'
+} as const;
+
+export type ProposalPaymentStatus = (typeof ProposalPaymentStatus)[keyof typeof ProposalPaymentStatus];
+
 export const TaskStatus = {
   TODO: 'TODO',
   IN_PROGRESS: 'IN_PROGRESS',

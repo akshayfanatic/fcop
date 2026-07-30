@@ -26,6 +26,7 @@ export type AggregateClient = {
 export type ClientMinAggregateOutputType = {
   id: string | null;
   memberId: string | null;
+  stripeCustomerId: string | null;
   name: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
@@ -34,6 +35,7 @@ export type ClientMinAggregateOutputType = {
 export type ClientMaxAggregateOutputType = {
   id: string | null;
   memberId: string | null;
+  stripeCustomerId: string | null;
   name: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
@@ -42,6 +44,7 @@ export type ClientMaxAggregateOutputType = {
 export type ClientCountAggregateOutputType = {
   id: number;
   memberId: number;
+  stripeCustomerId: number;
   name: number;
   createdAt: number;
   updatedAt: number;
@@ -51,6 +54,7 @@ export type ClientCountAggregateOutputType = {
 export type ClientMinAggregateInputType = {
   id?: true;
   memberId?: true;
+  stripeCustomerId?: true;
   name?: true;
   createdAt?: true;
   updatedAt?: true;
@@ -59,6 +63,7 @@ export type ClientMinAggregateInputType = {
 export type ClientMaxAggregateInputType = {
   id?: true;
   memberId?: true;
+  stripeCustomerId?: true;
   name?: true;
   createdAt?: true;
   updatedAt?: true;
@@ -67,6 +72,7 @@ export type ClientMaxAggregateInputType = {
 export type ClientCountAggregateInputType = {
   id?: true;
   memberId?: true;
+  stripeCustomerId?: true;
   name?: true;
   createdAt?: true;
   updatedAt?: true;
@@ -141,6 +147,7 @@ export type ClientGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type ClientGroupByOutputType = {
   id: string;
   memberId: string;
+  stripeCustomerId: string | null;
   name: string;
   createdAt: Date;
   updatedAt: Date;
@@ -167,6 +174,7 @@ export type ClientWhereInput = {
   NOT?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[];
   id?: Prisma.StringFilter<'Client'> | string;
   memberId?: Prisma.StringFilter<'Client'> | string;
+  stripeCustomerId?: Prisma.StringNullableFilter<'Client'> | string | null;
   name?: Prisma.StringFilter<'Client'> | string;
   createdAt?: Prisma.DateTimeFilter<'Client'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Client'> | Date | string;
@@ -178,6 +186,7 @@ export type ClientWhereInput = {
 export type ClientOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
   memberId?: Prisma.SortOrder;
+  stripeCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder;
   name?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -191,6 +200,7 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<
   {
     id?: string;
     memberId?: string;
+    stripeCustomerId?: string;
     AND?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[];
     OR?: Prisma.ClientWhereInput[];
     NOT?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[];
@@ -201,12 +211,13 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<
     requests?: Prisma.ServiceRequestListRelationFilter;
     projects?: Prisma.ProjectListRelationFilter;
   },
-  'id' | 'memberId'
+  'id' | 'memberId' | 'stripeCustomerId'
 >;
 
 export type ClientOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
   memberId?: Prisma.SortOrder;
+  stripeCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder;
   name?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -221,6 +232,7 @@ export type ClientScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ClientScalarWhereWithAggregatesInput | Prisma.ClientScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'Client'> | string;
   memberId?: Prisma.StringWithAggregatesFilter<'Client'> | string;
+  stripeCustomerId?: Prisma.StringNullableWithAggregatesFilter<'Client'> | string | null;
   name?: Prisma.StringWithAggregatesFilter<'Client'> | string;
   createdAt?: Prisma.DateTimeWithAggregatesFilter<'Client'> | Date | string;
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<'Client'> | Date | string;
@@ -228,6 +240,7 @@ export type ClientScalarWhereWithAggregatesInput = {
 
 export type ClientCreateInput = {
   id?: string;
+  stripeCustomerId?: string | null;
   name: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -239,6 +252,7 @@ export type ClientCreateInput = {
 export type ClientUncheckedCreateInput = {
   id?: string;
   memberId: string;
+  stripeCustomerId?: string | null;
   name: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -248,6 +262,7 @@ export type ClientUncheckedCreateInput = {
 
 export type ClientUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -259,6 +274,7 @@ export type ClientUpdateInput = {
 export type ClientUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   memberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -269,6 +285,7 @@ export type ClientUncheckedUpdateInput = {
 export type ClientCreateManyInput = {
   id?: string;
   memberId: string;
+  stripeCustomerId?: string | null;
   name: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -276,6 +293,7 @@ export type ClientCreateManyInput = {
 
 export type ClientUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -284,6 +302,7 @@ export type ClientUpdateManyMutationInput = {
 export type ClientUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   memberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -303,6 +322,7 @@ export type ClientOrderByRelevanceInput = {
 export type ClientCountOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   memberId?: Prisma.SortOrder;
+  stripeCustomerId?: Prisma.SortOrder;
   name?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -311,6 +331,7 @@ export type ClientCountOrderByAggregateInput = {
 export type ClientMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   memberId?: Prisma.SortOrder;
+  stripeCustomerId?: Prisma.SortOrder;
   name?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -319,6 +340,7 @@ export type ClientMaxOrderByAggregateInput = {
 export type ClientMinOrderByAggregateInput = {
   id?: Prisma.SortOrder;
   memberId?: Prisma.SortOrder;
+  stripeCustomerId?: Prisma.SortOrder;
   name?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
@@ -391,6 +413,7 @@ export type ClientUpdateOneRequiredWithoutProjectsNestedInput = {
 
 export type ClientCreateWithoutMemberInput = {
   id?: string;
+  stripeCustomerId?: string | null;
   name: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -400,6 +423,7 @@ export type ClientCreateWithoutMemberInput = {
 
 export type ClientUncheckedCreateWithoutMemberInput = {
   id?: string;
+  stripeCustomerId?: string | null;
   name: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -425,6 +449,7 @@ export type ClientUpdateToOneWithWhereWithoutMemberInput = {
 
 export type ClientUpdateWithoutMemberInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -434,6 +459,7 @@ export type ClientUpdateWithoutMemberInput = {
 
 export type ClientUncheckedUpdateWithoutMemberInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -443,6 +469,7 @@ export type ClientUncheckedUpdateWithoutMemberInput = {
 
 export type ClientCreateWithoutRequestsInput = {
   id?: string;
+  stripeCustomerId?: string | null;
   name: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -453,6 +480,7 @@ export type ClientCreateWithoutRequestsInput = {
 export type ClientUncheckedCreateWithoutRequestsInput = {
   id?: string;
   memberId: string;
+  stripeCustomerId?: string | null;
   name: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -477,6 +505,7 @@ export type ClientUpdateToOneWithWhereWithoutRequestsInput = {
 
 export type ClientUpdateWithoutRequestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -487,6 +516,7 @@ export type ClientUpdateWithoutRequestsInput = {
 export type ClientUncheckedUpdateWithoutRequestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   memberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -495,6 +525,7 @@ export type ClientUncheckedUpdateWithoutRequestsInput = {
 
 export type ClientCreateWithoutProjectsInput = {
   id?: string;
+  stripeCustomerId?: string | null;
   name: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -505,6 +536,7 @@ export type ClientCreateWithoutProjectsInput = {
 export type ClientUncheckedCreateWithoutProjectsInput = {
   id?: string;
   memberId: string;
+  stripeCustomerId?: string | null;
   name: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
@@ -529,6 +561,7 @@ export type ClientUpdateToOneWithWhereWithoutProjectsInput = {
 
 export type ClientUpdateWithoutProjectsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -539,6 +572,7 @@ export type ClientUpdateWithoutProjectsInput = {
 export type ClientUncheckedUpdateWithoutProjectsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   memberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
@@ -587,6 +621,7 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   {
     id?: boolean;
     memberId?: boolean;
+    stripeCustomerId?: boolean;
     name?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
@@ -601,13 +636,14 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type ClientSelectScalar = {
   id?: boolean;
   memberId?: boolean;
+  stripeCustomerId?: boolean;
   name?: boolean;
   createdAt?: boolean;
   updatedAt?: boolean;
 };
 
 export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<
-  'id' | 'memberId' | 'name' | 'createdAt' | 'updatedAt',
+  'id' | 'memberId' | 'stripeCustomerId' | 'name' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['client']
 >;
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -628,6 +664,7 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     {
       id: string;
       memberId: string;
+      stripeCustomerId: string | null;
       name: string;
       createdAt: Date;
       updatedAt: Date;
@@ -1014,6 +1051,7 @@ export interface Prisma__ClientClient<
 export interface ClientFieldRefs {
   readonly id: Prisma.FieldRef<'Client', 'String'>;
   readonly memberId: Prisma.FieldRef<'Client', 'String'>;
+  readonly stripeCustomerId: Prisma.FieldRef<'Client', 'String'>;
   readonly name: Prisma.FieldRef<'Client', 'String'>;
   readonly createdAt: Prisma.FieldRef<'Client', 'DateTime'>;
   readonly updatedAt: Prisma.FieldRef<'Client', 'DateTime'>;
