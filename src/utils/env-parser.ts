@@ -3,6 +3,11 @@ export const toPort = (value: string | undefined, fallback: number) => {
   return Number.isInteger(port) && port > 0 ? port : fallback;
 };
 
+export const toPositiveInteger = (value: string | undefined, fallback: number) => {
+  const parsedValue = Number(value);
+  return Number.isInteger(parsedValue) && parsedValue > 0 ? parsedValue : fallback;
+};
+
 export const toLogLevel = (value: string | undefined) => {
   const logLevel = value?.toLowerCase();
 
