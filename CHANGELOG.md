@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/akshayfanatic/fcop/compare/v0.4.0...v0.5.0) (2026-08-03)
+
+### Features
+
+- **agent:** added stipre best practicess skills ([f675f6a](https://github.com/akshayfanatic/fcop/commit/f675f6aad566e245370316a9f1d1f8f4460e2426))
+- **db:** added db migration for managing proposals ([37ce542](https://github.com/akshayfanatic/fcop/commit/37ce542959ee71c95251e5d206483a2ef59506ef))
+- **invoice:** added invoice payment flow in propsal creation time ([8eb4dbe](https://github.com/akshayfanatic/fcop/commit/8eb4dbeff95fbd0478d83656b6b231192c091031))
+- **lead:** added pagination on leads ([74a9b29](https://github.com/akshayfanatic/fcop/commit/74a9b29ebfde3edae1fef1d86374b304e108cb31))
+- **package:** added package for managing stripe payments ([54e9a37](https://github.com/akshayfanatic/fcop/commit/54e9a37b85648b976de012943f5de6586b497aea))
+- **project:** added pagination and filter on project ([995c886](https://github.com/akshayfanatic/fcop/commit/995c88663cba45db9c9f3e1cc3c1fed52375342f))
+- **route:** added api route endpoint and controller service for managing proposal ([f87f4ab](https://github.com/akshayfanatic/fcop/commit/f87f4abfac7bf1906cc210238cd3ece81685f2ec))
+- **spec:** added open api contracts for frontend ([c2c5534](https://github.com/akshayfanatic/fcop/commit/c2c5534d02eb0470a3cb757cbce0828741381ec5))
+- **webhook:** setup webhook and controler ([798ac37](https://github.com/akshayfanatic/fcop/commit/798ac37c679dedc6d86402bee0ad01eaaf76d014))
+
+### Bug Fixes
+
+- included project id also in services ([d3d6cc0](https://github.com/akshayfanatic/fcop/commit/d3d6cc0f64a09054b861e402ff72742b3e74218b))
+
 ## [0.4.0](https://github.com/akshayfanatic/fcop/compare/v0.2.1...v0.4.0) (2026-07-27)
 
 ### Features
