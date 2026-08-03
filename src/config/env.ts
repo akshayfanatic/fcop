@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { toLogLevel, toOrigin, toOrigins, toPort } from '../utils/env-parser.js';
+import { toLogLevel, toOrigin, toOrigins, toPort, toPositiveInteger } from '../utils/env-parser.js';
 
 const nodeEnv = process.env.NODE_ENV ?? 'development';
 dotenv.config({ path: [`.env.${nodeEnv}`, '.env'] });
@@ -20,5 +20,8 @@ export const env = {
   databaseUrl: process.env.DATABASE_URL ?? 'mysql://root@localhost:3306/fcop',
   resendApiKey: process.env.RESEND_API_KEY ?? '',
   emailFrom: process.env.EMAIL_FROM ?? 'FCOP <onboarding@resend.dev>',
-  adminEmail: process.env.ADMIN_EMAIL ?? ''
+  adminEmail: process.env.ADMIN_EMAIL ?? '',
+  stripeSecretKey: process.env.STRIPE_SECRET_KEY ?? '',
+  stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET ?? '',
+  stripeInvoiceDaysUntilDue: toPositiveInteger(process.env.STRIPE_INVOICE_DAYS_UNTIL_DUE, 7)
 };

@@ -1,4 +1,4 @@
-import { LeadSource, LeadStatus, ProjectCurrency, ProjectMemberRole, ProjectStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/enums.js';
+import { LeadSource, LeadStatus, ProjectCurrency, ProjectMemberRole, ProjectStatus, ProposalPaymentStatus, ProposalStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/enums.js';
 import { Role } from '../lib/auth/permissions.js';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from '../utils/pagination.js';
 
@@ -37,6 +37,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     {
       name: 'Service Requests',
       description: 'Client service request endpoints.'
+    },
+    {
+      name: 'Proposals',
+      description: 'Commercial proposals nested under service requests.'
     },
     {
       name: 'Projects',
@@ -713,6 +717,287 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/service-requests/{serviceRequestId}/proposal': {
+      post: {
+        tags: ['Proposals'],
+        summary: 'Create a proposal',
+        description: 'Creates the single draft proposal for a service request. Available to Admin and Manager roles.',
+        operationId: 'createServiceRequestProposal',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          proposal: ['create']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestProposalServiceRequestId'
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateProposalRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Proposal created successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ProposalResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid proposal payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '409': {
+            description: 'A proposal or project already exists for the service request.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      get: {
+        tags: ['Proposals'],
+        summary: 'Fetch a proposal',
+        description: 'Returns the proposal for a service request. Clients can access only their own service request.',
+        operationId: 'getServiceRequestProposal',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          proposal: ['read']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestProposalServiceRequestId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Proposal fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ProposalResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request or proposal was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      patch: {
+        tags: ['Proposals'],
+        summary: 'Update a proposal',
+        description: 'Admin and Manager can change draft terms or set status to SENT. The owning Client can only set status to ACCEPTED. Accepted proposals are immutable.',
+        operationId: 'updateServiceRequestProposal',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          proposal: ['update']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestProposalServiceRequestId'
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/UpdateProposalRequest'
+              },
+              examples: {
+                sendForReview: {
+                  summary: 'Management sends the proposal',
+                  value: {
+                    status: ProposalStatus.SENT
+                  }
+                },
+                accept: {
+                  summary: 'Client accepts the proposal',
+                  value: {
+                    status: ProposalStatus.ACCEPTED
+                  }
+                }
+              }
+            }
+          }
+        },
+        responses: {
+          '200': {
+            description: 'Proposal updated successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ProposalResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid or empty proposal update.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            description: 'Role is not allowed to perform the requested proposal transition or field update.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '404': {
+            description: 'Service request or proposal was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '409': {
+            description: 'Proposal state does not allow the requested update.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      },
+      delete: {
+        tags: ['Proposals'],
+        summary: 'Delete a proposal',
+        description: 'Deletes a draft or sent proposal. Accepted proposals are preserved as immutable records.',
+        operationId: 'deleteServiceRequestProposal',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          proposal: ['delete']
+        },
+        parameters: [
+          {
+            $ref: '#/components/parameters/ServiceRequestProposalServiceRequestId'
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Proposal deleted successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ProposalResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
+          },
+          '404': {
+            description: 'Service request or proposal was not found.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '409': {
+            description: 'Accepted proposal cannot be deleted.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     '/api/v1/service-requests/{serviceRequestId}/project': {
       post: {
         tags: ['Projects'],
@@ -1334,6 +1619,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         },
         example: 'clx0000000000000000000006'
       },
+      ServiceRequestProposalServiceRequestId: {
+        name: 'serviceRequestId',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000006'
+      },
       ServiceRequestProjectServiceRequestId: {
         name: 'serviceRequestId',
         in: 'path',
@@ -1375,6 +1670,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         type: 'string',
         enum: enumValues(ServiceRequestStatus),
         example: ServiceRequestStatus.NEW
+      },
+      ProposalStatus: {
+        type: 'string',
+        enum: enumValues(ProposalStatus),
+        example: ProposalStatus.DRAFT
+      },
+      ProposalPaymentStatus: {
+        type: 'string',
+        enum: enumValues(ProposalPaymentStatus),
+        example: ProposalPaymentStatus.UNPAID
       },
       ProjectStatus: {
         type: 'string',
@@ -1843,6 +2148,26 @@ export const createOpenApiDocument = (baseUrl: string) => ({
               }
             ]
           },
+          proposal: {
+            nullable: true,
+            allOf: [
+              {
+                $ref: '#/components/schemas/Proposal'
+              }
+            ]
+          },
+          project: {
+            type: 'object',
+            nullable: true,
+            description: 'Linked project reference once this service request has been converted into a project.',
+            required: ['id'],
+            properties: {
+              id: {
+                type: 'string',
+                example: 'clx0000000000000000000011'
+              }
+            }
+          },
           createdAt: {
             type: 'string',
             format: 'date-time',
@@ -1876,6 +2201,127 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           },
           data: {
             $ref: '#/components/schemas/ServiceRequestData'
+          }
+        }
+      },
+      Proposal: {
+        type: 'object',
+        required: ['id', 'serviceRequestId', 'createdByMemberId', 'description', 'amount', 'currency', 'status', 'paymentStatus', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000020'
+          },
+          serviceRequestId: {
+            type: 'string',
+            example: 'clx0000000000000000000006'
+          },
+          createdByMemberId: {
+            type: 'string',
+            example: 'seed-member-manager'
+          },
+          description: {
+            type: 'string',
+            example: 'Design and develop the agreed business website.'
+          },
+          amount: {
+            type: 'number',
+            format: 'decimal',
+            example: 5000
+          },
+          currency: {
+            $ref: '#/components/schemas/ProjectCurrency'
+          },
+          status: {
+            $ref: '#/components/schemas/ProposalStatus'
+          },
+          paymentStatus: {
+            $ref: '#/components/schemas/ProposalPaymentStatus'
+          },
+          acceptedAt: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true,
+            example: '2026-07-30T10:00:00.000Z'
+          },
+          paidAt: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true,
+            example: '2026-07-30T10:05:00.000Z'
+          },
+          stripeInvoiceId: {
+            type: 'string',
+            nullable: true,
+            example: 'in_1Example'
+          },
+          stripeInvoiceNumber: {
+            type: 'string',
+            nullable: true,
+            example: 'A1B2C3D4-0001'
+          },
+          stripeHostedInvoiceUrl: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            example: 'https://invoice.stripe.com/i/example'
+          },
+          stripeInvoicePdfUrl: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            example: 'https://pay.stripe.com/invoice/example/pdf'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-30T09:00:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-30T10:05:00.000Z'
+          }
+        }
+      },
+      CreateProposalRequest: {
+        type: 'object',
+        required: ['description', 'amount', 'currency'],
+        properties: {
+          description: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 10000,
+            example: 'Design and develop the agreed business website.'
+          },
+          amount: {
+            type: 'number',
+            exclusiveMinimum: 0,
+            example: 5000
+          },
+          currency: {
+            $ref: '#/components/schemas/ProjectCurrency'
+          }
+        }
+      },
+      UpdateProposalRequest: {
+        type: 'object',
+        minProperties: 1,
+        properties: {
+          description: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 10000
+          },
+          amount: {
+            type: 'number',
+            exclusiveMinimum: 0
+          },
+          currency: {
+            $ref: '#/components/schemas/ProjectCurrency'
+          },
+          status: {
+            $ref: '#/components/schemas/ProposalStatus'
           }
         }
       },
@@ -2448,6 +2894,22 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             properties: {
               data: {
                 $ref: '#/components/schemas/ServiceRequest'
+              }
+            }
+          }
+        ]
+      },
+      ProposalResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/Proposal'
               }
             }
           }

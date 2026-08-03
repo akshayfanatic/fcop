@@ -352,6 +352,7 @@ export const ModelName = {
   OrganizationRole: 'OrganizationRole',
   Client: 'Client',
   ServiceRequest: 'ServiceRequest',
+  Proposal: 'Proposal',
   Project: 'Project',
   Task: 'Task',
   TaskAssignee: 'TaskAssignee',
@@ -384,6 +385,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
       | 'organizationRole'
       | 'client'
       | 'serviceRequest'
+      | 'proposal'
       | 'project'
       | 'task'
       | 'taskAssignee'
@@ -1185,6 +1187,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         };
       };
     };
+    Proposal: {
+      payload: Prisma.$ProposalPayload<ExtArgs>;
+      fields: Prisma.ProposalFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.ProposalFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProposalPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.ProposalFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProposalPayload>;
+        };
+        findFirst: {
+          args: Prisma.ProposalFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProposalPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.ProposalFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProposalPayload>;
+        };
+        findMany: {
+          args: Prisma.ProposalFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProposalPayload>[];
+        };
+        create: {
+          args: Prisma.ProposalCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProposalPayload>;
+        };
+        createMany: {
+          args: Prisma.ProposalCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.ProposalDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProposalPayload>;
+        };
+        update: {
+          args: Prisma.ProposalUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProposalPayload>;
+        };
+        deleteMany: {
+          args: Prisma.ProposalDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.ProposalUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.ProposalUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProposalPayload>;
+        };
+        aggregate: {
+          args: Prisma.ProposalAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProposal>;
+        };
+        groupBy: {
+          args: Prisma.ProposalGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.ProposalGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.ProposalCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.ProposalCountAggregateOutputType> | number;
+        };
+      };
+    };
     Project: {
       payload: Prisma.$ProjectPayload<ExtArgs>;
       fields: Prisma.ProjectFieldRefs;
@@ -1744,6 +1812,7 @@ export type OrganizationRoleScalarFieldEnum = (typeof OrganizationRoleScalarFiel
 export const ClientScalarFieldEnum = {
   id: 'id',
   memberId: 'memberId',
+  stripeCustomerId: 'stripeCustomerId',
   name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1762,6 +1831,27 @@ export const ServiceRequestScalarFieldEnum = {
 } as const;
 
 export type ServiceRequestScalarFieldEnum = (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum];
+
+export const ProposalScalarFieldEnum = {
+  id: 'id',
+  serviceRequestId: 'serviceRequestId',
+  createdByMemberId: 'createdByMemberId',
+  description: 'description',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  paymentStatus: 'paymentStatus',
+  acceptedAt: 'acceptedAt',
+  paidAt: 'paidAt',
+  stripeInvoiceId: 'stripeInvoiceId',
+  stripeInvoiceNumber: 'stripeInvoiceNumber',
+  stripeHostedInvoiceUrl: 'stripeHostedInvoiceUrl',
+  stripeInvoicePdfUrl: 'stripeInvoicePdfUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type ProposalScalarFieldEnum = (typeof ProposalScalarFieldEnum)[keyof typeof ProposalScalarFieldEnum];
 
 export const ProjectScalarFieldEnum = {
   id: 'id',
@@ -1970,6 +2060,7 @@ export type OrganizationRoleOrderByRelevanceFieldEnum = (typeof OrganizationRole
 export const ClientOrderByRelevanceFieldEnum = {
   id: 'id',
   memberId: 'memberId',
+  stripeCustomerId: 'stripeCustomerId',
   name: 'name'
 } as const;
 
@@ -1996,6 +2087,19 @@ export const ServiceRequestOrderByRelevanceFieldEnum = {
 } as const;
 
 export type ServiceRequestOrderByRelevanceFieldEnum = (typeof ServiceRequestOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestOrderByRelevanceFieldEnum];
+
+export const ProposalOrderByRelevanceFieldEnum = {
+  id: 'id',
+  serviceRequestId: 'serviceRequestId',
+  createdByMemberId: 'createdByMemberId',
+  description: 'description',
+  stripeInvoiceId: 'stripeInvoiceId',
+  stripeInvoiceNumber: 'stripeInvoiceNumber',
+  stripeHostedInvoiceUrl: 'stripeHostedInvoiceUrl',
+  stripeInvoicePdfUrl: 'stripeInvoicePdfUrl'
+} as const;
+
+export type ProposalOrderByRelevanceFieldEnum = (typeof ProposalOrderByRelevanceFieldEnum)[keyof typeof ProposalOrderByRelevanceFieldEnum];
 
 export const ProjectOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -2094,11 +2198,6 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>;
 
 /**
- * Reference to a field of type 'ProjectStatus'
- */
-export type EnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectStatus'>;
-
-/**
  * Reference to a field of type 'Decimal'
  */
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>;
@@ -2107,6 +2206,21 @@ export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'ProjectCurrency'
  */
 export type EnumProjectCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectCurrency'>;
+
+/**
+ * Reference to a field of type 'ProposalStatus'
+ */
+export type EnumProposalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProposalStatus'>;
+
+/**
+ * Reference to a field of type 'ProposalPaymentStatus'
+ */
+export type EnumProposalPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProposalPaymentStatus'>;
+
+/**
+ * Reference to a field of type 'ProjectStatus'
+ */
+export type EnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectStatus'>;
 
 /**
  * Reference to a field of type 'TaskStatus'
@@ -2263,6 +2377,7 @@ export type GlobalOmitConfig = {
   organizationRole?: Prisma.OrganizationRoleOmit;
   client?: Prisma.ClientOmit;
   serviceRequest?: Prisma.ServiceRequestOmit;
+  proposal?: Prisma.ProposalOmit;
   project?: Prisma.ProjectOmit;
   task?: Prisma.TaskOmit;
   taskAssignee?: Prisma.TaskAssigneeOmit;

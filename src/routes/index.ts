@@ -9,6 +9,7 @@ import { openApiRouter } from './openapi.js';
 import { projectRouter } from './projects.js';
 import { serviceRequestRouter } from './service-requests.js';
 import { taskRouter } from './tasks.js';
+import { dashboardRouter } from './dashboard.js';
 
 export const apiRouter = Router();
 
@@ -22,3 +23,4 @@ apiRouter.use('/api/v1/me', meRouter); // Current member access context.
 apiRouter.use('/api/v1/projects', projectRouter); // Project delivery management.
 apiRouter.use('/api/v1/service-requests', serviceRequestRouter); // Service requests and consultation messages.
 apiRouter.use('/api/v1/tasks', taskRouter); // Task detail update and delete routes.
+apiRouter.use('/api/v1/dashboard', dashboardRouter);

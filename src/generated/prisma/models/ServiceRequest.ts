@@ -188,6 +188,7 @@ export type ServiceRequestWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<'ServiceRequest'> | Date | string;
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>;
   messages?: Prisma.ServiceRequestMessageListRelationFilter;
+  proposal?: Prisma.XOR<Prisma.ProposalNullableScalarRelationFilter, Prisma.ProposalWhereInput> | null;
   project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null;
 };
 
@@ -201,6 +202,7 @@ export type ServiceRequestOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder;
   client?: Prisma.ClientOrderByWithRelationInput;
   messages?: Prisma.ServiceRequestMessageOrderByRelationAggregateInput;
+  proposal?: Prisma.ProposalOrderByWithRelationInput;
   project?: Prisma.ProjectOrderByWithRelationInput;
   _relevance?: Prisma.ServiceRequestOrderByRelevanceInput;
 };
@@ -219,6 +221,7 @@ export type ServiceRequestWhereUniqueInput = Prisma.AtLeast<
     updatedAt?: Prisma.DateTimeFilter<'ServiceRequest'> | Date | string;
     client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>;
     messages?: Prisma.ServiceRequestMessageListRelationFilter;
+    proposal?: Prisma.XOR<Prisma.ProposalNullableScalarRelationFilter, Prisma.ProposalWhereInput> | null;
     project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null;
   },
   'id'
@@ -259,6 +262,7 @@ export type ServiceRequestCreateInput = {
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutRequestsInput;
   messages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutServiceRequestInput;
+  proposal?: Prisma.ProposalCreateNestedOneWithoutServiceRequestInput;
   project?: Prisma.ProjectCreateNestedOneWithoutServiceRequestInput;
 };
 
@@ -271,6 +275,7 @@ export type ServiceRequestUncheckedCreateInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   messages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutServiceRequestInput;
+  proposal?: Prisma.ProposalUncheckedCreateNestedOneWithoutServiceRequestInput;
   project?: Prisma.ProjectUncheckedCreateNestedOneWithoutServiceRequestInput;
 };
 
@@ -283,6 +288,7 @@ export type ServiceRequestUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutRequestsNestedInput;
   messages?: Prisma.ServiceRequestMessageUpdateManyWithoutServiceRequestNestedInput;
+  proposal?: Prisma.ProposalUpdateOneWithoutServiceRequestNestedInput;
   project?: Prisma.ProjectUpdateOneWithoutServiceRequestNestedInput;
 };
 
@@ -295,6 +301,7 @@ export type ServiceRequestUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   messages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutServiceRequestNestedInput;
+  proposal?: Prisma.ProposalUncheckedUpdateOneWithoutServiceRequestNestedInput;
   project?: Prisma.ProjectUncheckedUpdateOneWithoutServiceRequestNestedInput;
 };
 
@@ -371,14 +378,14 @@ export type ServiceRequestMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder;
 };
 
-export type ServiceRequestNullableScalarRelationFilter = {
-  is?: Prisma.ServiceRequestWhereInput | null;
-  isNot?: Prisma.ServiceRequestWhereInput | null;
-};
-
 export type ServiceRequestScalarRelationFilter = {
   is?: Prisma.ServiceRequestWhereInput;
   isNot?: Prisma.ServiceRequestWhereInput;
+};
+
+export type ServiceRequestNullableScalarRelationFilter = {
+  is?: Prisma.ServiceRequestWhereInput | null;
+  isNot?: Prisma.ServiceRequestWhereInput | null;
 };
 
 export type ServiceRequestCreateNestedManyWithoutClientInput = {
@@ -443,6 +450,23 @@ export type EnumServiceRequestStatusFieldUpdateOperationsInput = {
   set?: $Enums.ServiceRequestStatus;
 };
 
+export type ServiceRequestCreateNestedOneWithoutProposalInput = {
+  create?: Prisma.XOR<Prisma.ServiceRequestCreateWithoutProposalInput, Prisma.ServiceRequestUncheckedCreateWithoutProposalInput>;
+  connectOrCreate?: Prisma.ServiceRequestCreateOrConnectWithoutProposalInput;
+  connect?: Prisma.ServiceRequestWhereUniqueInput;
+};
+
+export type ServiceRequestUpdateOneRequiredWithoutProposalNestedInput = {
+  create?: Prisma.XOR<Prisma.ServiceRequestCreateWithoutProposalInput, Prisma.ServiceRequestUncheckedCreateWithoutProposalInput>;
+  connectOrCreate?: Prisma.ServiceRequestCreateOrConnectWithoutProposalInput;
+  upsert?: Prisma.ServiceRequestUpsertWithoutProposalInput;
+  connect?: Prisma.ServiceRequestWhereUniqueInput;
+  update?: Prisma.XOR<
+    Prisma.XOR<Prisma.ServiceRequestUpdateToOneWithWhereWithoutProposalInput, Prisma.ServiceRequestUpdateWithoutProposalInput>,
+    Prisma.ServiceRequestUncheckedUpdateWithoutProposalInput
+  >;
+};
+
 export type ServiceRequestCreateNestedOneWithoutProjectInput = {
   create?: Prisma.XOR<Prisma.ServiceRequestCreateWithoutProjectInput, Prisma.ServiceRequestUncheckedCreateWithoutProjectInput>;
   connectOrCreate?: Prisma.ServiceRequestCreateOrConnectWithoutProjectInput;
@@ -487,6 +511,7 @@ export type ServiceRequestCreateWithoutClientInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   messages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutServiceRequestInput;
+  proposal?: Prisma.ProposalCreateNestedOneWithoutServiceRequestInput;
   project?: Prisma.ProjectCreateNestedOneWithoutServiceRequestInput;
 };
 
@@ -498,6 +523,7 @@ export type ServiceRequestUncheckedCreateWithoutClientInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   messages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutServiceRequestInput;
+  proposal?: Prisma.ProposalUncheckedCreateNestedOneWithoutServiceRequestInput;
   project?: Prisma.ProjectUncheckedCreateNestedOneWithoutServiceRequestInput;
 };
 
@@ -540,6 +566,70 @@ export type ServiceRequestScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<'ServiceRequest'> | Date | string;
 };
 
+export type ServiceRequestCreateWithoutProposalInput = {
+  id?: string;
+  service: $Enums.ServiceInterest;
+  status?: $Enums.ServiceRequestStatus;
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  client: Prisma.ClientCreateNestedOneWithoutRequestsInput;
+  messages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutServiceRequestInput;
+  project?: Prisma.ProjectCreateNestedOneWithoutServiceRequestInput;
+};
+
+export type ServiceRequestUncheckedCreateWithoutProposalInput = {
+  id?: string;
+  clientId: string;
+  service: $Enums.ServiceInterest;
+  status?: $Enums.ServiceRequestStatus;
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  messages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutServiceRequestInput;
+  project?: Prisma.ProjectUncheckedCreateNestedOneWithoutServiceRequestInput;
+};
+
+export type ServiceRequestCreateOrConnectWithoutProposalInput = {
+  where: Prisma.ServiceRequestWhereUniqueInput;
+  create: Prisma.XOR<Prisma.ServiceRequestCreateWithoutProposalInput, Prisma.ServiceRequestUncheckedCreateWithoutProposalInput>;
+};
+
+export type ServiceRequestUpsertWithoutProposalInput = {
+  update: Prisma.XOR<Prisma.ServiceRequestUpdateWithoutProposalInput, Prisma.ServiceRequestUncheckedUpdateWithoutProposalInput>;
+  create: Prisma.XOR<Prisma.ServiceRequestCreateWithoutProposalInput, Prisma.ServiceRequestUncheckedCreateWithoutProposalInput>;
+  where?: Prisma.ServiceRequestWhereInput;
+};
+
+export type ServiceRequestUpdateToOneWithWhereWithoutProposalInput = {
+  where?: Prisma.ServiceRequestWhereInput;
+  data: Prisma.XOR<Prisma.ServiceRequestUpdateWithoutProposalInput, Prisma.ServiceRequestUncheckedUpdateWithoutProposalInput>;
+};
+
+export type ServiceRequestUpdateWithoutProposalInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
+  status?: Prisma.EnumServiceRequestStatusFieldUpdateOperationsInput | $Enums.ServiceRequestStatus;
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  client?: Prisma.ClientUpdateOneRequiredWithoutRequestsNestedInput;
+  messages?: Prisma.ServiceRequestMessageUpdateManyWithoutServiceRequestNestedInput;
+  project?: Prisma.ProjectUpdateOneWithoutServiceRequestNestedInput;
+};
+
+export type ServiceRequestUncheckedUpdateWithoutProposalInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string;
+  service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
+  status?: Prisma.EnumServiceRequestStatusFieldUpdateOperationsInput | $Enums.ServiceRequestStatus;
+  data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  messages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutServiceRequestNestedInput;
+  project?: Prisma.ProjectUncheckedUpdateOneWithoutServiceRequestNestedInput;
+};
+
 export type ServiceRequestCreateWithoutProjectInput = {
   id?: string;
   service: $Enums.ServiceInterest;
@@ -549,6 +639,7 @@ export type ServiceRequestCreateWithoutProjectInput = {
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutRequestsInput;
   messages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutServiceRequestInput;
+  proposal?: Prisma.ProposalCreateNestedOneWithoutServiceRequestInput;
 };
 
 export type ServiceRequestUncheckedCreateWithoutProjectInput = {
@@ -560,6 +651,7 @@ export type ServiceRequestUncheckedCreateWithoutProjectInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   messages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutServiceRequestInput;
+  proposal?: Prisma.ProposalUncheckedCreateNestedOneWithoutServiceRequestInput;
 };
 
 export type ServiceRequestCreateOrConnectWithoutProjectInput = {
@@ -587,6 +679,7 @@ export type ServiceRequestUpdateWithoutProjectInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutRequestsNestedInput;
   messages?: Prisma.ServiceRequestMessageUpdateManyWithoutServiceRequestNestedInput;
+  proposal?: Prisma.ProposalUpdateOneWithoutServiceRequestNestedInput;
 };
 
 export type ServiceRequestUncheckedUpdateWithoutProjectInput = {
@@ -598,6 +691,7 @@ export type ServiceRequestUncheckedUpdateWithoutProjectInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   messages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutServiceRequestNestedInput;
+  proposal?: Prisma.ProposalUncheckedUpdateOneWithoutServiceRequestNestedInput;
 };
 
 export type ServiceRequestCreateWithoutMessagesInput = {
@@ -608,6 +702,7 @@ export type ServiceRequestCreateWithoutMessagesInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutRequestsInput;
+  proposal?: Prisma.ProposalCreateNestedOneWithoutServiceRequestInput;
   project?: Prisma.ProjectCreateNestedOneWithoutServiceRequestInput;
 };
 
@@ -619,6 +714,7 @@ export type ServiceRequestUncheckedCreateWithoutMessagesInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  proposal?: Prisma.ProposalUncheckedCreateNestedOneWithoutServiceRequestInput;
   project?: Prisma.ProjectUncheckedCreateNestedOneWithoutServiceRequestInput;
 };
 
@@ -646,6 +742,7 @@ export type ServiceRequestUpdateWithoutMessagesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutRequestsNestedInput;
+  proposal?: Prisma.ProposalUpdateOneWithoutServiceRequestNestedInput;
   project?: Prisma.ProjectUpdateOneWithoutServiceRequestNestedInput;
 };
 
@@ -657,6 +754,7 @@ export type ServiceRequestUncheckedUpdateWithoutMessagesInput = {
   data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  proposal?: Prisma.ProposalUncheckedUpdateOneWithoutServiceRequestNestedInput;
   project?: Prisma.ProjectUncheckedUpdateOneWithoutServiceRequestNestedInput;
 };
 
@@ -677,6 +775,7 @@ export type ServiceRequestUpdateWithoutClientInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   messages?: Prisma.ServiceRequestMessageUpdateManyWithoutServiceRequestNestedInput;
+  proposal?: Prisma.ProposalUpdateOneWithoutServiceRequestNestedInput;
   project?: Prisma.ProjectUpdateOneWithoutServiceRequestNestedInput;
 };
 
@@ -688,6 +787,7 @@ export type ServiceRequestUncheckedUpdateWithoutClientInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   messages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutServiceRequestNestedInput;
+  proposal?: Prisma.ProposalUncheckedUpdateOneWithoutServiceRequestNestedInput;
   project?: Prisma.ProjectUncheckedUpdateOneWithoutServiceRequestNestedInput;
 };
 
@@ -740,6 +840,7 @@ export type ServiceRequestSelect<ExtArgs extends runtime.Types.Extensions.Intern
     updatedAt?: boolean;
     client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>;
     messages?: boolean | Prisma.ServiceRequest$messagesArgs<ExtArgs>;
+    proposal?: boolean | Prisma.ServiceRequest$proposalArgs<ExtArgs>;
     project?: boolean | Prisma.ServiceRequest$projectArgs<ExtArgs>;
     _count?: boolean | Prisma.ServiceRequestCountOutputTypeDefaultArgs<ExtArgs>;
   },
@@ -763,6 +864,7 @@ export type ServiceRequestOmit<ExtArgs extends runtime.Types.Extensions.Internal
 export type ServiceRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>;
   messages?: boolean | Prisma.ServiceRequest$messagesArgs<ExtArgs>;
+  proposal?: boolean | Prisma.ServiceRequest$proposalArgs<ExtArgs>;
   project?: boolean | Prisma.ServiceRequest$projectArgs<ExtArgs>;
   _count?: boolean | Prisma.ServiceRequestCountOutputTypeDefaultArgs<ExtArgs>;
 };
@@ -772,6 +874,7 @@ export type $ServiceRequestPayload<ExtArgs extends runtime.Types.Extensions.Inte
   objects: {
     client: Prisma.$ClientPayload<ExtArgs>;
     messages: Prisma.$ServiceRequestMessagePayload<ExtArgs>[];
+    proposal: Prisma.$ProposalPayload<ExtArgs> | null;
     project: Prisma.$ProjectPayload<ExtArgs> | null;
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
@@ -1137,6 +1240,9 @@ export interface Prisma__ServiceRequestClient<
   messages<T extends Prisma.ServiceRequest$messagesArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.ServiceRequest$messagesArgs<ExtArgs>>
   ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceRequestMessagePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
+  proposal<T extends Prisma.ServiceRequest$proposalArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.ServiceRequest$proposalArgs<ExtArgs>>
+  ): Prisma.Prisma__ProposalClient<runtime.Types.Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
   project<T extends Prisma.ServiceRequest$projectArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.ServiceRequest$projectArgs<ExtArgs>>
   ): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
@@ -1544,6 +1650,25 @@ export type ServiceRequest$messagesArgs<ExtArgs extends runtime.Types.Extensions
   take?: number;
   skip?: number;
   distinct?: Prisma.ServiceRequestMessageScalarFieldEnum | Prisma.ServiceRequestMessageScalarFieldEnum[];
+};
+
+/**
+ * ServiceRequest.proposal
+ */
+export type ServiceRequest$proposalArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Proposal
+   */
+  select?: Prisma.ProposalSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the Proposal
+   */
+  omit?: Prisma.ProposalOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProposalInclude<ExtArgs> | null;
+  where?: Prisma.ProposalWhereInput;
 };
 
 /**

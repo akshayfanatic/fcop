@@ -77,6 +77,11 @@ export type Client = Prisma.ClientModel;
  */
 export type ServiceRequest = Prisma.ServiceRequestModel;
 /**
+ * Model Proposal
+ *
+ */
+export type Proposal = Prisma.ProposalModel;
+/**
  * Model Project
  *
  */

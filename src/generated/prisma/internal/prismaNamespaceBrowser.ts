@@ -60,6 +60,7 @@ export const ModelName = {
   OrganizationRole: 'OrganizationRole',
   Client: 'Client',
   ServiceRequest: 'ServiceRequest',
+  Proposal: 'Proposal',
   Project: 'Project',
   Task: 'Task',
   TaskAssignee: 'TaskAssignee',
@@ -208,6 +209,7 @@ export type OrganizationRoleScalarFieldEnum = (typeof OrganizationRoleScalarFiel
 export const ClientScalarFieldEnum = {
   id: 'id',
   memberId: 'memberId',
+  stripeCustomerId: 'stripeCustomerId',
   name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -226,6 +228,27 @@ export const ServiceRequestScalarFieldEnum = {
 } as const;
 
 export type ServiceRequestScalarFieldEnum = (typeof ServiceRequestScalarFieldEnum)[keyof typeof ServiceRequestScalarFieldEnum];
+
+export const ProposalScalarFieldEnum = {
+  id: 'id',
+  serviceRequestId: 'serviceRequestId',
+  createdByMemberId: 'createdByMemberId',
+  description: 'description',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  paymentStatus: 'paymentStatus',
+  acceptedAt: 'acceptedAt',
+  paidAt: 'paidAt',
+  stripeInvoiceId: 'stripeInvoiceId',
+  stripeInvoiceNumber: 'stripeInvoiceNumber',
+  stripeHostedInvoiceUrl: 'stripeHostedInvoiceUrl',
+  stripeInvoicePdfUrl: 'stripeInvoicePdfUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type ProposalScalarFieldEnum = (typeof ProposalScalarFieldEnum)[keyof typeof ProposalScalarFieldEnum];
 
 export const ProjectScalarFieldEnum = {
   id: 'id',
@@ -434,6 +457,7 @@ export type OrganizationRoleOrderByRelevanceFieldEnum = (typeof OrganizationRole
 export const ClientOrderByRelevanceFieldEnum = {
   id: 'id',
   memberId: 'memberId',
+  stripeCustomerId: 'stripeCustomerId',
   name: 'name'
 } as const;
 
@@ -460,6 +484,19 @@ export const ServiceRequestOrderByRelevanceFieldEnum = {
 } as const;
 
 export type ServiceRequestOrderByRelevanceFieldEnum = (typeof ServiceRequestOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestOrderByRelevanceFieldEnum];
+
+export const ProposalOrderByRelevanceFieldEnum = {
+  id: 'id',
+  serviceRequestId: 'serviceRequestId',
+  createdByMemberId: 'createdByMemberId',
+  description: 'description',
+  stripeInvoiceId: 'stripeInvoiceId',
+  stripeInvoiceNumber: 'stripeInvoiceNumber',
+  stripeHostedInvoiceUrl: 'stripeHostedInvoiceUrl',
+  stripeInvoicePdfUrl: 'stripeInvoicePdfUrl'
+} as const;
+
+export type ProposalOrderByRelevanceFieldEnum = (typeof ProposalOrderByRelevanceFieldEnum)[keyof typeof ProposalOrderByRelevanceFieldEnum];
 
 export const ProjectOrderByRelevanceFieldEnum = {
   id: 'id',

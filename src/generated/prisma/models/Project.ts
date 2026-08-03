@@ -754,10 +754,6 @@ export type NullableDecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string;
 };
 
-export type EnumProjectCurrencyFieldUpdateOperationsInput = {
-  set?: $Enums.ProjectCurrency;
-};
-
 export type ProjectCreateNestedOneWithoutTasksInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutTasksInput, Prisma.ProjectUncheckedCreateWithoutTasksInput>;
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTasksInput;

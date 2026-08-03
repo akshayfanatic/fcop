@@ -11,6 +11,12 @@ import { isClientRole } from '../utils/role.js';
 import type { CreateServiceRequestInput, UpdateServiceRequestInput } from '../validators/service-request.validator.js';
 
 const includeClientRequestDetails = {
+  proposal: true,
+  project: {
+    select: {
+      id: true
+    }
+  },
   client: {
     include: {
       member: {
@@ -101,6 +107,14 @@ export const serviceRequestService = {
         where: {
           clientId: member.client.id
         },
+        include: {
+          proposal: true,
+          project: {
+            select: {
+              id: true
+            }
+          }
+        },
         orderBy: {
           createdAt: 'desc'
         }
@@ -140,6 +154,14 @@ export const serviceRequestService = {
         where: {
           id,
           clientId: member.client.id
+        },
+        include: {
+          proposal: true,
+          project: {
+            select: {
+              id: true
+            }
+          }
         }
       });
 

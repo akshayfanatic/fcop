@@ -7,6 +7,7 @@ import { errorHandler } from './middleware/error-handler.js';
 import { notFoundHandler } from './middleware/not-found-handler.js';
 import { requestLogger } from './middleware/request-logger.js';
 import { apiRouter } from './routes/index.js';
+import { stripeWebhookRouter } from './routes/stripe-webhooks.js';
 
 export const app = express(); // intialized app
 
@@ -26,6 +27,9 @@ app.use(requestLogger);
 app.all('/api/auth/*', async (req, res) => {
   await authHandler(req, res);
 });
+
+// Mount Stripe webhooks before JSON parsing so signature verification receives the original request body.
+app.use('/api/v1/stripe/webhooks', stripeWebhookRouter);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
