@@ -2156,6 +2156,18 @@ export const createOpenApiDocument = (baseUrl: string) => ({
               }
             ]
           },
+          project: {
+            type: 'object',
+            nullable: true,
+            description: 'Linked project reference once this service request has been converted into a project.',
+            required: ['id'],
+            properties: {
+              id: {
+                type: 'string',
+                example: 'clx0000000000000000000011'
+              }
+            }
+          },
           createdAt: {
             type: 'string',
             format: 'date-time',

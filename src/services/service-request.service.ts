@@ -12,6 +12,11 @@ import type { CreateServiceRequestInput, UpdateServiceRequestInput } from '../va
 
 const includeClientRequestDetails = {
   proposal: true,
+  project: {
+    select: {
+      id: true
+    }
+  },
   client: {
     include: {
       member: {
@@ -103,7 +108,12 @@ export const serviceRequestService = {
           clientId: member.client.id
         },
         include: {
-          proposal: true
+          proposal: true,
+          project: {
+            select: {
+              id: true
+            }
+          }
         },
         orderBy: {
           createdAt: 'desc'
@@ -146,7 +156,12 @@ export const serviceRequestService = {
           clientId: member.client.id
         },
         include: {
-          proposal: true
+          proposal: true,
+          project: {
+            select: {
+              id: true
+            }
+          }
         }
       });
 
