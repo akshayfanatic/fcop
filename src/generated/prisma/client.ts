@@ -130,11 +130,6 @@ export type TaskAssignee = Prisma.TaskAssigneeModel;
  */
 export type MemberProject = Prisma.MemberProjectModel;
 /**
- * Model ServiceRequestMessage
- *
- */
-export type ServiceRequestMessage = Prisma.ServiceRequestMessageModel;
-/**
  * Model Lead
  *
  */

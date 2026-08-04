@@ -65,7 +65,6 @@ export const ModelName = {
   Task: 'Task',
   TaskAssignee: 'TaskAssignee',
   MemberProject: 'MemberProject',
-  ServiceRequestMessage: 'ServiceRequestMessage',
   Lead: 'Lead'
 } as const;
 
@@ -306,18 +305,6 @@ export const MemberProjectScalarFieldEnum = {
 
 export type MemberProjectScalarFieldEnum = (typeof MemberProjectScalarFieldEnum)[keyof typeof MemberProjectScalarFieldEnum];
 
-export const ServiceRequestMessageScalarFieldEnum = {
-  id: 'id',
-  serviceRequestId: 'serviceRequestId',
-  authorMemberId: 'authorMemberId',
-  body: 'body',
-  isInternal: 'isInternal',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const;
-
-export type ServiceRequestMessageScalarFieldEnum = (typeof ServiceRequestMessageScalarFieldEnum)[keyof typeof ServiceRequestMessageScalarFieldEnum];
-
 export const LeadScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -535,15 +522,6 @@ export const MemberProjectOrderByRelevanceFieldEnum = {
 } as const;
 
 export type MemberProjectOrderByRelevanceFieldEnum = (typeof MemberProjectOrderByRelevanceFieldEnum)[keyof typeof MemberProjectOrderByRelevanceFieldEnum];
-
-export const ServiceRequestMessageOrderByRelevanceFieldEnum = {
-  id: 'id',
-  serviceRequestId: 'serviceRequestId',
-  authorMemberId: 'authorMemberId',
-  body: 'body'
-} as const;
-
-export type ServiceRequestMessageOrderByRelevanceFieldEnum = (typeof ServiceRequestMessageOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestMessageOrderByRelevanceFieldEnum];
 
 export const LeadOrderByRelevanceFieldEnum = {
   id: 'id',

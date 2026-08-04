@@ -159,20 +159,19 @@ model Organization {
 }
 
 model Member {
-  id                     String                  @id @default(cuid()) @db.VarChar(36)
-  userId                 String                  @db.VarChar(36)
-  organizationId         String                  @db.VarChar(36)
-  role                   String
-  createdAt              DateTime                @default(now())
-  user                   User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  organization           Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  client                 Client?
-  serviceRequestMessages ServiceRequestMessage[]
-  createdProposals       Proposal[]              @relation("ProposalCreator")
-  createdProjects        Project[]               @relation("ProjectCreator")
-  memberProjects         MemberProject[]
-  createdTasks           Task[]                  @relation("TaskCreator")
-  taskAssignees          TaskAssignee[]
+  id               String          @id @default(cuid()) @db.VarChar(36)
+  userId           String          @db.VarChar(36)
+  organizationId   String          @db.VarChar(36)
+  role             String
+  createdAt        DateTime        @default(now())
+  user             User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization     Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  client           Client?
+  createdProposals Proposal[]      @relation("ProposalCreator")
+  createdProjects  Project[]       @relation("ProjectCreator")
+  memberProjects   MemberProject[]
+  createdTasks     Task[]          @relation("TaskCreator")
+  taskAssignees    TaskAssignee[]
 
   @@index([userId])
   @@index([organizationId])
@@ -253,15 +252,14 @@ model Client {
 }
 
 model ServiceRequest {
-  id        String                  @id @default(cuid()) @db.VarChar(36)
-  clientId  String                  @db.VarChar(36)
+  id        String               @id @default(cuid()) @db.VarChar(36)
+  clientId  String               @db.VarChar(36)
   service   ServiceInterest
-  status    ServiceRequestStatus    @default(NEW)
+  status    ServiceRequestStatus @default(NEW)
   data      Json?
-  createdAt DateTime                @default(now())
-  updatedAt DateTime                @updatedAt
-  client    Client                  @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  messages  ServiceRequestMessage[]
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+  client    Client               @relation(fields: [clientId], references: [id], onDelete: Cascade)
   proposal  Proposal?
   project   Project?
 
@@ -379,22 +377,6 @@ model MemberProject {
   @@index([memberId])
   @@index([role])
   @@map("memberProjects")
-}
-
-model ServiceRequestMessage {
-  id               String         @id @default(cuid()) @db.VarChar(36)
-  serviceRequestId String         @db.VarChar(36)
-  authorMemberId   String         @db.VarChar(36)
-  body             String         @db.Text
-  isInternal       Boolean        @default(false)
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
-  serviceRequest   ServiceRequest @relation(fields: [serviceRequestId], references: [id], onDelete: Cascade)
-  author           Member         @relation(fields: [authorMemberId], references: [id], onDelete: Restrict)
-
-  @@index([serviceRequestId, createdAt])
-  @@index([authorMemberId])
-  @@map("serviceRequestMessages")
 }
 
 model Lead {

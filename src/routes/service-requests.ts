@@ -3,13 +3,11 @@ import { projectController } from '../controllers/project.controller.js';
 import { serviceRequestController } from '../controllers/service-request.controller.js';
 import { requireOrgPermission } from '../middleware/require-org-permission.js';
 import { proposalRouter } from './proposals.js';
-import { serviceRequestMessageRouter } from './service-request-messages.js';
 
 export const serviceRequestRouter = Router();
 
 serviceRequestRouter.post('/', requireOrgPermission({ serviceRequest: ['create'] }), serviceRequestController.createServiceRequest);
 
-serviceRequestRouter.use('/:serviceRequestId/messages', serviceRequestMessageRouter); // Messages belong to a specific service request.
 serviceRequestRouter.use('/:serviceRequestId/proposal', proposalRouter); // A proposal records the final commercial agreement for a service request.
 
 serviceRequestRouter.post('/:serviceRequestId/project', requireOrgPermission({ serviceRequest: ['read', 'update'], project: ['create'] }), projectController.createProjectFromServiceRequest);
