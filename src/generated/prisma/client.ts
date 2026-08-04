@@ -130,6 +130,11 @@ export type TaskAssignee = Prisma.TaskAssigneeModel;
  */
 export type MemberProject = Prisma.MemberProjectModel;
 /**
+ * Model ChatHistory
+ *
+ */
+export type ChatHistory = Prisma.ChatHistoryModel;
+/**
  * Model Lead
  *
  */

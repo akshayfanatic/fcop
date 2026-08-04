@@ -8,7 +8,8 @@ import { logger } from '../logger.js';
 import { prisma } from '../prisma.js';
 import { hasRole } from '../../utils/role.js';
 import { getProjectAccessWhere } from '../../utils/project/project-access.js';
-import { chatChannelSchema, sendChatMessageSchema, type ChatChannelInput, type SendChatMessageInput } from './schemas.js';
+import { loadChatHistory, saveChatMessage } from './history.js';
+import { chatChannelSchema, sendChatMessageSchema, type ChatChannelInput, type ChatMessage, type SendChatMessageInput } from './schemas.js';
 
 type SessionMember = Awaited<ReturnType<typeof getSessionMember>>;
 
@@ -18,29 +19,6 @@ type ChatSocketData = {
 };
 
 type ChatAck<T = undefined> = (response: { success: true; data?: T } | { success: false; message: string; code: string }) => void;
-
-type EphemeralChatMessage = {
-  id: string;
-  channel: {
-    type: 'service-request' | 'project';
-    id: string;
-  };
-  authorMemberId: string;
-  body: string;
-  isInternal: boolean;
-  createdAt: string;
-  updatedAt: string;
-  author: {
-    id: string;
-    role: string;
-    user: {
-      id: string;
-      name: string;
-      email: string;
-      image: null;
-    };
-  };
-};
 
 type ChatChannel = ChatChannelInput['channel'];
 
@@ -101,7 +79,7 @@ async function getChatAccess(channel: ChatChannel, member: SessionMember) {
   return { isManagement };
 }
 
-function createEphemeralMessage(payload: SendChatMessageInput, member: SessionMember): EphemeralChatMessage {
+function createChatMessage(payload: SendChatMessageInput, member: SessionMember): ChatMessage {
   const timestamp = new Date().toISOString();
 
   return {
@@ -126,7 +104,7 @@ function createEphemeralMessage(payload: SendChatMessageInput, member: SessionMe
 }
 
 export function registerLiveChatChannel(io: Server, socket: Socket<Record<string, never>, Record<string, never>, Record<string, never>, ChatSocketData>) {
-  socket.on('chat:join', async (rawPayload: unknown, acknowledge: ChatAck) => {
+  socket.on('chat:join', async (rawPayload: unknown, acknowledge: ChatAck<ChatMessage[]>) => {
     try {
       const { channel } = chatChannelSchema.parse(rawPayload);
       const { isManagement } = await getChatAccess(channel, socket.data.member);
@@ -137,7 +115,11 @@ export function registerLiveChatChannel(io: Server, socket: Socket<Record<string
         await socket.join(managementRoom(channel));
       }
 
-      acknowledge({ success: true });
+      const history = await loadChatHistory(channel);
+      acknowledge({
+        success: true,
+        data: isManagement ? history : history.filter((message) => !message.isInternal)
+      });
     } catch (error) {
       const safeError = getSafeSocketError(error);
       logger.warn({ error, socketId: socket.id }, 'Failed to join chat channel.');
@@ -156,7 +138,7 @@ export function registerLiveChatChannel(io: Server, socket: Socket<Record<string
     await socket.leave(managementRoom(result.data.channel));
   });
 
-  socket.on('chat:send', async (rawPayload: unknown, acknowledge: ChatAck<EphemeralChatMessage>) => {
+  socket.on('chat:send', async (rawPayload: unknown, acknowledge: ChatAck<ChatMessage>) => {
     try {
       const payload = sendChatMessageSchema.parse(rawPayload);
       const { isManagement } = await getChatAccess(payload.channel, socket.data.member);
@@ -166,9 +148,11 @@ export function registerLiveChatChannel(io: Server, socket: Socket<Record<string
         throw Object.assign(new Error('Clients cannot send internal messages.'), { code: 'INTERNAL_MESSAGE_FORBIDDEN' });
       }
 
-      const message = createEphemeralMessage(payload, socket.data.member);
+      const message = createChatMessage(payload, socket.data.member);
       const room = message.isInternal ? managementRoom(payload.channel) : publicRoom(payload.channel);
 
+      // Retain bounded history before confirming delivery to connected participants.
+      await saveChatMessage(message);
       io.to(room).emit('chat:message', message);
       acknowledge({ success: true, data: message });
     } catch (error) {

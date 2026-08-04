@@ -23,5 +23,7 @@ export const env = {
   adminEmail: process.env.ADMIN_EMAIL ?? '',
   stripeSecretKey: process.env.STRIPE_SECRET_KEY ?? '',
   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET ?? '',
-  stripeInvoiceDaysUntilDue: toPositiveInteger(process.env.STRIPE_INVOICE_DAYS_UNTIL_DUE, 7)
+  stripeInvoiceDaysUntilDue: toPositiveInteger(process.env.STRIPE_INVOICE_DAYS_UNTIL_DUE, 7),
+  chatRetentionDays: toPositiveInteger(process.env.CHAT_RETENTION_DAYS, 7),
+  chatMaxMessages: toPositiveInteger(process.env.CHAT_MAX_MESSAGES, 100)
 };

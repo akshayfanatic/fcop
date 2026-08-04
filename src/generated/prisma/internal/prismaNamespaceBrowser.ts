@@ -65,6 +65,7 @@ export const ModelName = {
   Task: 'Task',
   TaskAssignee: 'TaskAssignee',
   MemberProject: 'MemberProject',
+  ChatHistory: 'ChatHistory',
   Lead: 'Lead'
 } as const;
 
@@ -305,6 +306,18 @@ export const MemberProjectScalarFieldEnum = {
 
 export type MemberProjectScalarFieldEnum = (typeof MemberProjectScalarFieldEnum)[keyof typeof MemberProjectScalarFieldEnum];
 
+export const ChatHistoryScalarFieldEnum = {
+  id: 'id',
+  channelType: 'channelType',
+  channelId: 'channelId',
+  messages: 'messages',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type ChatHistoryScalarFieldEnum = (typeof ChatHistoryScalarFieldEnum)[keyof typeof ChatHistoryScalarFieldEnum];
+
 export const LeadScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -333,6 +346,12 @@ export const NullableJsonNullValueInput = {
 } as const;
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const;
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput];
 
 export const NullsOrder = {
   first: 'first',
@@ -522,6 +541,14 @@ export const MemberProjectOrderByRelevanceFieldEnum = {
 } as const;
 
 export type MemberProjectOrderByRelevanceFieldEnum = (typeof MemberProjectOrderByRelevanceFieldEnum)[keyof typeof MemberProjectOrderByRelevanceFieldEnum];
+
+export const ChatHistoryOrderByRelevanceFieldEnum = {
+  id: 'id',
+  channelType: 'channelType',
+  channelId: 'channelId'
+} as const;
+
+export type ChatHistoryOrderByRelevanceFieldEnum = (typeof ChatHistoryOrderByRelevanceFieldEnum)[keyof typeof ChatHistoryOrderByRelevanceFieldEnum];
 
 export const LeadOrderByRelevanceFieldEnum = {
   id: 'id',

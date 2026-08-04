@@ -12,5 +12,28 @@ export const sendChatMessageSchema = chatChannelSchema.extend({
   isInternal: z.boolean().optional().default(false)
 });
 
+export const chatMessageSchema = z.object({
+  id: z.string(),
+  channel: chatChannelSchema.shape.channel,
+  authorMemberId: z.string(),
+  body: z.string(),
+  isInternal: z.boolean(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  author: z.object({
+    id: z.string(),
+    role: z.string(),
+    user: z.object({
+      id: z.string(),
+      name: z.string(),
+      email: z.string(),
+      image: z.null()
+    })
+  })
+});
+
+export const chatHistoryMessagesSchema = z.array(chatMessageSchema);
+
 export type ChatChannelInput = z.infer<typeof chatChannelSchema>;
 export type SendChatMessageInput = z.infer<typeof sendChatMessageSchema>;
+export type ChatMessage = z.infer<typeof chatMessageSchema>;

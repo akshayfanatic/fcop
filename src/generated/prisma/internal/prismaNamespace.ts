@@ -357,6 +357,7 @@ export const ModelName = {
   Task: 'Task',
   TaskAssignee: 'TaskAssignee',
   MemberProject: 'MemberProject',
+  ChatHistory: 'ChatHistory',
   Lead: 'Lead'
 } as const;
 
@@ -389,6 +390,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
       | 'task'
       | 'taskAssignee'
       | 'memberProject'
+      | 'chatHistory'
       | 'lead';
     txIsolationLevel: TransactionIsolationLevel;
   };
@@ -1515,6 +1517,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         };
       };
     };
+    ChatHistory: {
+      payload: Prisma.$ChatHistoryPayload<ExtArgs>;
+      fields: Prisma.ChatHistoryFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.ChatHistoryFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.ChatHistoryFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>;
+        };
+        findFirst: {
+          args: Prisma.ChatHistoryFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.ChatHistoryFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>;
+        };
+        findMany: {
+          args: Prisma.ChatHistoryFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>[];
+        };
+        create: {
+          args: Prisma.ChatHistoryCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>;
+        };
+        createMany: {
+          args: Prisma.ChatHistoryCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.ChatHistoryDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>;
+        };
+        update: {
+          args: Prisma.ChatHistoryUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>;
+        };
+        deleteMany: {
+          args: Prisma.ChatHistoryDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.ChatHistoryUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.ChatHistoryUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>;
+        };
+        aggregate: {
+          args: Prisma.ChatHistoryAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChatHistory>;
+        };
+        groupBy: {
+          args: Prisma.ChatHistoryGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.ChatHistoryGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.ChatHistoryCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.ChatHistoryCountAggregateOutputType> | number;
+        };
+      };
+    };
     Lead: {
       payload: Prisma.$LeadPayload<ExtArgs>;
       fields: Prisma.LeadFieldRefs;
@@ -1841,6 +1909,18 @@ export const MemberProjectScalarFieldEnum = {
 
 export type MemberProjectScalarFieldEnum = (typeof MemberProjectScalarFieldEnum)[keyof typeof MemberProjectScalarFieldEnum];
 
+export const ChatHistoryScalarFieldEnum = {
+  id: 'id',
+  channelType: 'channelType',
+  channelId: 'channelId',
+  messages: 'messages',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type ChatHistoryScalarFieldEnum = (typeof ChatHistoryScalarFieldEnum)[keyof typeof ChatHistoryScalarFieldEnum];
+
 export const LeadScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1869,6 +1949,12 @@ export const NullableJsonNullValueInput = {
 } as const;
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const;
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput];
 
 export const NullsOrder = {
   first: 'first',
@@ -2058,6 +2144,14 @@ export const MemberProjectOrderByRelevanceFieldEnum = {
 } as const;
 
 export type MemberProjectOrderByRelevanceFieldEnum = (typeof MemberProjectOrderByRelevanceFieldEnum)[keyof typeof MemberProjectOrderByRelevanceFieldEnum];
+
+export const ChatHistoryOrderByRelevanceFieldEnum = {
+  id: 'id',
+  channelType: 'channelType',
+  channelId: 'channelId'
+} as const;
+
+export type ChatHistoryOrderByRelevanceFieldEnum = (typeof ChatHistoryOrderByRelevanceFieldEnum)[keyof typeof ChatHistoryOrderByRelevanceFieldEnum];
 
 export const LeadOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -2293,6 +2387,7 @@ export type GlobalOmitConfig = {
   task?: Prisma.TaskOmit;
   taskAssignee?: Prisma.TaskAssigneeOmit;
   memberProject?: Prisma.MemberProjectOmit;
+  chatHistory?: Prisma.ChatHistoryOmit;
   lead?: Prisma.LeadOmit;
 };
 

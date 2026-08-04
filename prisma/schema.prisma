@@ -379,6 +379,20 @@ model MemberProject {
   @@map("memberProjects")
 }
 
+model ChatHistory {
+  id          String   @id @default(cuid()) @db.VarChar(36)
+  channelType String   @db.VarChar(32)
+  channelId   String   @db.VarChar(36)
+  messages    Json
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([channelType, channelId])
+  @@index([expiresAt])
+  @@map("chatHistories")
+}
+
 model Lead {
   id              String          @id @default(cuid())
   name            String

@@ -24,5 +24,6 @@ export type * from './models/Project.js';
 export type * from './models/Task.js';
 export type * from './models/TaskAssignee.js';
 export type * from './models/MemberProject.js';
+export type * from './models/ChatHistory.js';
 export type * from './models/Lead.js';
 export type * from './commonInputTypes.js';
