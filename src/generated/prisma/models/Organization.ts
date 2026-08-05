@@ -184,7 +184,6 @@ export type OrganizationWhereInput = {
   createdAt?: Prisma.DateTimeFilter<'Organization'> | Date | string;
   members?: Prisma.MemberListRelationFilter;
   invitations?: Prisma.InvitationListRelationFilter;
-  teams?: Prisma.TeamListRelationFilter;
   roles?: Prisma.OrganizationRoleListRelationFilter;
 };
 
@@ -197,7 +196,6 @@ export type OrganizationOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder;
   members?: Prisma.MemberOrderByRelationAggregateInput;
   invitations?: Prisma.InvitationOrderByRelationAggregateInput;
-  teams?: Prisma.TeamOrderByRelationAggregateInput;
   roles?: Prisma.OrganizationRoleOrderByRelationAggregateInput;
   _relevance?: Prisma.OrganizationOrderByRelevanceInput;
 };
@@ -215,7 +213,6 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<
     createdAt?: Prisma.DateTimeFilter<'Organization'> | Date | string;
     members?: Prisma.MemberListRelationFilter;
     invitations?: Prisma.InvitationListRelationFilter;
-    teams?: Prisma.TeamListRelationFilter;
     roles?: Prisma.OrganizationRoleListRelationFilter;
   },
   'id' | 'slug'
@@ -254,7 +251,6 @@ export type OrganizationCreateInput = {
   createdAt?: Date | string;
   members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput;
   invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput;
-  teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput;
   roles?: Prisma.OrganizationRoleCreateNestedManyWithoutOrganizationInput;
 };
 
@@ -267,7 +263,6 @@ export type OrganizationUncheckedCreateInput = {
   createdAt?: Date | string;
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput;
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput;
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput;
   roles?: Prisma.OrganizationRoleUncheckedCreateNestedManyWithoutOrganizationInput;
 };
 
@@ -280,7 +275,6 @@ export type OrganizationUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput;
   invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput;
-  teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput;
   roles?: Prisma.OrganizationRoleUpdateManyWithoutOrganizationNestedInput;
 };
 
@@ -293,7 +287,6 @@ export type OrganizationUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput;
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput;
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput;
   roles?: Prisma.OrganizationRoleUncheckedUpdateManyWithoutOrganizationNestedInput;
 };
 
@@ -393,20 +386,6 @@ export type OrganizationUpdateOneRequiredWithoutInvitationsNestedInput = {
   >;
 };
 
-export type OrganizationCreateNestedOneWithoutTeamsInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutTeamsInput, Prisma.OrganizationUncheckedCreateWithoutTeamsInput>;
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutTeamsInput;
-  connect?: Prisma.OrganizationWhereUniqueInput;
-};
-
-export type OrganizationUpdateOneRequiredWithoutTeamsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutTeamsInput, Prisma.OrganizationUncheckedCreateWithoutTeamsInput>;
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutTeamsInput;
-  upsert?: Prisma.OrganizationUpsertWithoutTeamsInput;
-  connect?: Prisma.OrganizationWhereUniqueInput;
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutTeamsInput, Prisma.OrganizationUpdateWithoutTeamsInput>, Prisma.OrganizationUncheckedUpdateWithoutTeamsInput>;
-};
-
 export type OrganizationCreateNestedOneWithoutRolesInput = {
   create?: Prisma.XOR<Prisma.OrganizationCreateWithoutRolesInput, Prisma.OrganizationUncheckedCreateWithoutRolesInput>;
   connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutRolesInput;
@@ -429,7 +408,6 @@ export type OrganizationCreateWithoutMembersInput = {
   metadata?: string | null;
   createdAt?: Date | string;
   invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput;
-  teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput;
   roles?: Prisma.OrganizationRoleCreateNestedManyWithoutOrganizationInput;
 };
 
@@ -441,7 +419,6 @@ export type OrganizationUncheckedCreateWithoutMembersInput = {
   metadata?: string | null;
   createdAt?: Date | string;
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput;
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput;
   roles?: Prisma.OrganizationRoleUncheckedCreateNestedManyWithoutOrganizationInput;
 };
 
@@ -469,7 +446,6 @@ export type OrganizationUpdateWithoutMembersInput = {
   metadata?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput;
-  teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput;
   roles?: Prisma.OrganizationRoleUpdateManyWithoutOrganizationNestedInput;
 };
 
@@ -481,7 +457,6 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
   metadata?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput;
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput;
   roles?: Prisma.OrganizationRoleUncheckedUpdateManyWithoutOrganizationNestedInput;
 };
 
@@ -493,7 +468,6 @@ export type OrganizationCreateWithoutInvitationsInput = {
   metadata?: string | null;
   createdAt?: Date | string;
   members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput;
-  teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput;
   roles?: Prisma.OrganizationRoleCreateNestedManyWithoutOrganizationInput;
 };
 
@@ -505,7 +479,6 @@ export type OrganizationUncheckedCreateWithoutInvitationsInput = {
   metadata?: string | null;
   createdAt?: Date | string;
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput;
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput;
   roles?: Prisma.OrganizationRoleUncheckedCreateNestedManyWithoutOrganizationInput;
 };
 
@@ -533,7 +506,6 @@ export type OrganizationUpdateWithoutInvitationsInput = {
   metadata?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput;
-  teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput;
   roles?: Prisma.OrganizationRoleUpdateManyWithoutOrganizationNestedInput;
 };
 
@@ -545,71 +517,6 @@ export type OrganizationUncheckedUpdateWithoutInvitationsInput = {
   metadata?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput;
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput;
-  roles?: Prisma.OrganizationRoleUncheckedUpdateManyWithoutOrganizationNestedInput;
-};
-
-export type OrganizationCreateWithoutTeamsInput = {
-  id?: string;
-  name: string;
-  slug: string;
-  logo?: string | null;
-  metadata?: string | null;
-  createdAt?: Date | string;
-  members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput;
-  invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput;
-  roles?: Prisma.OrganizationRoleCreateNestedManyWithoutOrganizationInput;
-};
-
-export type OrganizationUncheckedCreateWithoutTeamsInput = {
-  id?: string;
-  name: string;
-  slug: string;
-  logo?: string | null;
-  metadata?: string | null;
-  createdAt?: Date | string;
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput;
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput;
-  roles?: Prisma.OrganizationRoleUncheckedCreateNestedManyWithoutOrganizationInput;
-};
-
-export type OrganizationCreateOrConnectWithoutTeamsInput = {
-  where: Prisma.OrganizationWhereUniqueInput;
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutTeamsInput, Prisma.OrganizationUncheckedCreateWithoutTeamsInput>;
-};
-
-export type OrganizationUpsertWithoutTeamsInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutTeamsInput, Prisma.OrganizationUncheckedUpdateWithoutTeamsInput>;
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutTeamsInput, Prisma.OrganizationUncheckedCreateWithoutTeamsInput>;
-  where?: Prisma.OrganizationWhereInput;
-};
-
-export type OrganizationUpdateToOneWithWhereWithoutTeamsInput = {
-  where?: Prisma.OrganizationWhereInput;
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutTeamsInput, Prisma.OrganizationUncheckedUpdateWithoutTeamsInput>;
-};
-
-export type OrganizationUpdateWithoutTeamsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  name?: Prisma.StringFieldUpdateOperationsInput | string;
-  slug?: Prisma.StringFieldUpdateOperationsInput | string;
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  metadata?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput;
-  invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput;
-  roles?: Prisma.OrganizationRoleUpdateManyWithoutOrganizationNestedInput;
-};
-
-export type OrganizationUncheckedUpdateWithoutTeamsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  name?: Prisma.StringFieldUpdateOperationsInput | string;
-  slug?: Prisma.StringFieldUpdateOperationsInput | string;
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  metadata?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput;
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput;
   roles?: Prisma.OrganizationRoleUncheckedUpdateManyWithoutOrganizationNestedInput;
 };
 
@@ -622,7 +529,6 @@ export type OrganizationCreateWithoutRolesInput = {
   createdAt?: Date | string;
   members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput;
   invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput;
-  teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput;
 };
 
 export type OrganizationUncheckedCreateWithoutRolesInput = {
@@ -634,7 +540,6 @@ export type OrganizationUncheckedCreateWithoutRolesInput = {
   createdAt?: Date | string;
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput;
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput;
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput;
 };
 
 export type OrganizationCreateOrConnectWithoutRolesInput = {
@@ -662,7 +567,6 @@ export type OrganizationUpdateWithoutRolesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput;
   invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput;
-  teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput;
 };
 
 export type OrganizationUncheckedUpdateWithoutRolesInput = {
@@ -674,7 +578,6 @@ export type OrganizationUncheckedUpdateWithoutRolesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput;
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput;
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput;
 };
 
 /**
@@ -684,14 +587,12 @@ export type OrganizationUncheckedUpdateWithoutRolesInput = {
 export type OrganizationCountOutputType = {
   members: number;
   invitations: number;
-  teams: number;
   roles: number;
 };
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | OrganizationCountOutputTypeCountMembersArgs;
   invitations?: boolean | OrganizationCountOutputTypeCountInvitationsArgs;
-  teams?: boolean | OrganizationCountOutputTypeCountTeamsArgs;
   roles?: boolean | OrganizationCountOutputTypeCountRolesArgs;
 };
 
@@ -722,13 +623,6 @@ export type OrganizationCountOutputTypeCountInvitationsArgs<ExtArgs extends runt
 /**
  * OrganizationCountOutputType without action
  */
-export type OrganizationCountOutputTypeCountTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TeamWhereInput;
-};
-
-/**
- * OrganizationCountOutputType without action
- */
 export type OrganizationCountOutputTypeCountRolesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OrganizationRoleWhereInput;
 };
@@ -743,7 +637,6 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
     createdAt?: boolean;
     members?: boolean | Prisma.Organization$membersArgs<ExtArgs>;
     invitations?: boolean | Prisma.Organization$invitationsArgs<ExtArgs>;
-    teams?: boolean | Prisma.Organization$teamsArgs<ExtArgs>;
     roles?: boolean | Prisma.Organization$rolesArgs<ExtArgs>;
     _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>;
   },
@@ -766,7 +659,6 @@ export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>;
   invitations?: boolean | Prisma.Organization$invitationsArgs<ExtArgs>;
-  teams?: boolean | Prisma.Organization$teamsArgs<ExtArgs>;
   roles?: boolean | Prisma.Organization$rolesArgs<ExtArgs>;
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>;
 };
@@ -776,7 +668,6 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     members: Prisma.$MemberPayload<ExtArgs>[];
     invitations: Prisma.$InvitationPayload<ExtArgs>[];
-    teams: Prisma.$TeamPayload<ExtArgs>[];
     roles: Prisma.$OrganizationRolePayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
@@ -1139,9 +1030,6 @@ export interface Prisma__OrganizationClient<
   invitations<T extends Prisma.Organization$invitationsArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Organization$invitationsArgs<ExtArgs>>
   ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
-  teams<T extends Prisma.Organization$teamsArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.Organization$teamsArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
   roles<T extends Prisma.Organization$rolesArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Organization$rolesArgs<ExtArgs>>
   ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationRolePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
@@ -1572,30 +1460,6 @@ export type Organization$invitationsArgs<ExtArgs extends runtime.Types.Extension
   take?: number;
   skip?: number;
   distinct?: Prisma.InvitationScalarFieldEnum | Prisma.InvitationScalarFieldEnum[];
-};
-
-/**
- * Organization.teams
- */
-export type Organization$teamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Team
-   */
-  select?: Prisma.TeamSelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the Team
-   */
-  omit?: Prisma.TeamOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TeamInclude<ExtArgs> | null;
-  where?: Prisma.TeamWhereInput;
-  orderBy?: Prisma.TeamOrderByWithRelationInput | Prisma.TeamOrderByWithRelationInput[];
-  cursor?: Prisma.TeamWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  distinct?: Prisma.TeamScalarFieldEnum | Prisma.TeamScalarFieldEnum[];
 };
 
 /**

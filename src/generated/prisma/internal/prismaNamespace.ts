@@ -347,8 +347,6 @@ export const ModelName = {
   Organization: 'Organization',
   Member: 'Member',
   Invitation: 'Invitation',
-  Team: 'Team',
-  TeamMember: 'TeamMember',
   OrganizationRole: 'OrganizationRole',
   Client: 'Client',
   ServiceRequest: 'ServiceRequest',
@@ -357,7 +355,7 @@ export const ModelName = {
   Task: 'Task',
   TaskAssignee: 'TaskAssignee',
   MemberProject: 'MemberProject',
-  ServiceRequestMessage: 'ServiceRequestMessage',
+  ChatHistory: 'ChatHistory',
   Lead: 'Lead'
 } as const;
 
@@ -380,8 +378,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
       | 'organization'
       | 'member'
       | 'invitation'
-      | 'team'
-      | 'teamMember'
       | 'organizationRole'
       | 'client'
       | 'serviceRequest'
@@ -390,7 +386,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
       | 'task'
       | 'taskAssignee'
       | 'memberProject'
-      | 'serviceRequestMessage'
+      | 'chatHistory'
       | 'lead';
     txIsolationLevel: TransactionIsolationLevel;
   };
@@ -854,138 +850,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.InvitationCountArgs<ExtArgs>;
           result: runtime.Types.Utils.Optional<Prisma.InvitationCountAggregateOutputType> | number;
-        };
-      };
-    };
-    Team: {
-      payload: Prisma.$TeamPayload<ExtArgs>;
-      fields: Prisma.TeamFieldRefs;
-      operations: {
-        findUnique: {
-          args: Prisma.TeamFindUniqueArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload> | null;
-        };
-        findUniqueOrThrow: {
-          args: Prisma.TeamFindUniqueOrThrowArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>;
-        };
-        findFirst: {
-          args: Prisma.TeamFindFirstArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload> | null;
-        };
-        findFirstOrThrow: {
-          args: Prisma.TeamFindFirstOrThrowArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>;
-        };
-        findMany: {
-          args: Prisma.TeamFindManyArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>[];
-        };
-        create: {
-          args: Prisma.TeamCreateArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>;
-        };
-        createMany: {
-          args: Prisma.TeamCreateManyArgs<ExtArgs>;
-          result: BatchPayload;
-        };
-        delete: {
-          args: Prisma.TeamDeleteArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>;
-        };
-        update: {
-          args: Prisma.TeamUpdateArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>;
-        };
-        deleteMany: {
-          args: Prisma.TeamDeleteManyArgs<ExtArgs>;
-          result: BatchPayload;
-        };
-        updateMany: {
-          args: Prisma.TeamUpdateManyArgs<ExtArgs>;
-          result: BatchPayload;
-        };
-        upsert: {
-          args: Prisma.TeamUpsertArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamPayload>;
-        };
-        aggregate: {
-          args: Prisma.TeamAggregateArgs<ExtArgs>;
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTeam>;
-        };
-        groupBy: {
-          args: Prisma.TeamGroupByArgs<ExtArgs>;
-          result: runtime.Types.Utils.Optional<Prisma.TeamGroupByOutputType>[];
-        };
-        count: {
-          args: Prisma.TeamCountArgs<ExtArgs>;
-          result: runtime.Types.Utils.Optional<Prisma.TeamCountAggregateOutputType> | number;
-        };
-      };
-    };
-    TeamMember: {
-      payload: Prisma.$TeamMemberPayload<ExtArgs>;
-      fields: Prisma.TeamMemberFieldRefs;
-      operations: {
-        findUnique: {
-          args: Prisma.TeamMemberFindUniqueArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamMemberPayload> | null;
-        };
-        findUniqueOrThrow: {
-          args: Prisma.TeamMemberFindUniqueOrThrowArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamMemberPayload>;
-        };
-        findFirst: {
-          args: Prisma.TeamMemberFindFirstArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamMemberPayload> | null;
-        };
-        findFirstOrThrow: {
-          args: Prisma.TeamMemberFindFirstOrThrowArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamMemberPayload>;
-        };
-        findMany: {
-          args: Prisma.TeamMemberFindManyArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamMemberPayload>[];
-        };
-        create: {
-          args: Prisma.TeamMemberCreateArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamMemberPayload>;
-        };
-        createMany: {
-          args: Prisma.TeamMemberCreateManyArgs<ExtArgs>;
-          result: BatchPayload;
-        };
-        delete: {
-          args: Prisma.TeamMemberDeleteArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamMemberPayload>;
-        };
-        update: {
-          args: Prisma.TeamMemberUpdateArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamMemberPayload>;
-        };
-        deleteMany: {
-          args: Prisma.TeamMemberDeleteManyArgs<ExtArgs>;
-          result: BatchPayload;
-        };
-        updateMany: {
-          args: Prisma.TeamMemberUpdateManyArgs<ExtArgs>;
-          result: BatchPayload;
-        };
-        upsert: {
-          args: Prisma.TeamMemberUpsertArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamMemberPayload>;
-        };
-        aggregate: {
-          args: Prisma.TeamMemberAggregateArgs<ExtArgs>;
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTeamMember>;
-        };
-        groupBy: {
-          args: Prisma.TeamMemberGroupByArgs<ExtArgs>;
-          result: runtime.Types.Utils.Optional<Prisma.TeamMemberGroupByOutputType>[];
-        };
-        count: {
-          args: Prisma.TeamMemberCountArgs<ExtArgs>;
-          result: runtime.Types.Utils.Optional<Prisma.TeamMemberCountAggregateOutputType> | number;
         };
       };
     };
@@ -1517,69 +1381,69 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         };
       };
     };
-    ServiceRequestMessage: {
-      payload: Prisma.$ServiceRequestMessagePayload<ExtArgs>;
-      fields: Prisma.ServiceRequestMessageFieldRefs;
+    ChatHistory: {
+      payload: Prisma.$ChatHistoryPayload<ExtArgs>;
+      fields: Prisma.ChatHistoryFieldRefs;
       operations: {
         findUnique: {
-          args: Prisma.ServiceRequestMessageFindUniqueArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload> | null;
+          args: Prisma.ChatHistoryFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload> | null;
         };
         findUniqueOrThrow: {
-          args: Prisma.ServiceRequestMessageFindUniqueOrThrowArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>;
+          args: Prisma.ChatHistoryFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>;
         };
         findFirst: {
-          args: Prisma.ServiceRequestMessageFindFirstArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload> | null;
+          args: Prisma.ChatHistoryFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload> | null;
         };
         findFirstOrThrow: {
-          args: Prisma.ServiceRequestMessageFindFirstOrThrowArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>;
+          args: Prisma.ChatHistoryFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>;
         };
         findMany: {
-          args: Prisma.ServiceRequestMessageFindManyArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>[];
+          args: Prisma.ChatHistoryFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>[];
         };
         create: {
-          args: Prisma.ServiceRequestMessageCreateArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>;
+          args: Prisma.ChatHistoryCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>;
         };
         createMany: {
-          args: Prisma.ServiceRequestMessageCreateManyArgs<ExtArgs>;
+          args: Prisma.ChatHistoryCreateManyArgs<ExtArgs>;
           result: BatchPayload;
         };
         delete: {
-          args: Prisma.ServiceRequestMessageDeleteArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>;
+          args: Prisma.ChatHistoryDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>;
         };
         update: {
-          args: Prisma.ServiceRequestMessageUpdateArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>;
+          args: Prisma.ChatHistoryUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>;
         };
         deleteMany: {
-          args: Prisma.ServiceRequestMessageDeleteManyArgs<ExtArgs>;
+          args: Prisma.ChatHistoryDeleteManyArgs<ExtArgs>;
           result: BatchPayload;
         };
         updateMany: {
-          args: Prisma.ServiceRequestMessageUpdateManyArgs<ExtArgs>;
+          args: Prisma.ChatHistoryUpdateManyArgs<ExtArgs>;
           result: BatchPayload;
         };
         upsert: {
-          args: Prisma.ServiceRequestMessageUpsertArgs<ExtArgs>;
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ServiceRequestMessagePayload>;
+          args: Prisma.ChatHistoryUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChatHistoryPayload>;
         };
         aggregate: {
-          args: Prisma.ServiceRequestMessageAggregateArgs<ExtArgs>;
-          result: runtime.Types.Utils.Optional<Prisma.AggregateServiceRequestMessage>;
+          args: Prisma.ChatHistoryAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChatHistory>;
         };
         groupBy: {
-          args: Prisma.ServiceRequestMessageGroupByArgs<ExtArgs>;
-          result: runtime.Types.Utils.Optional<Prisma.ServiceRequestMessageGroupByOutputType>[];
+          args: Prisma.ChatHistoryGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.ChatHistoryGroupByOutputType>[];
         };
         count: {
-          args: Prisma.ServiceRequestMessageCountArgs<ExtArgs>;
-          result: runtime.Types.Utils.Optional<Prisma.ServiceRequestMessageCountAggregateOutputType> | number;
+          args: Prisma.ChatHistoryCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.ChatHistoryCountAggregateOutputType> | number;
         };
       };
     };
@@ -1708,8 +1572,7 @@ export const SessionScalarFieldEnum = {
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
   userId: 'userId',
-  activeOrganizationId: 'activeOrganizationId',
-  activeTeamId: 'activeTeamId'
+  activeOrganizationId: 'activeOrganizationId'
 } as const;
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum];
@@ -1772,31 +1635,11 @@ export const InvitationScalarFieldEnum = {
   role: 'role',
   serviceInterest: 'serviceInterest',
   status: 'status',
-  teamId: 'teamId',
   createdAt: 'createdAt',
   expiresAt: 'expiresAt'
 } as const;
 
 export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum];
-
-export const TeamScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  organizationId: 'organizationId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const;
-
-export type TeamScalarFieldEnum = (typeof TeamScalarFieldEnum)[keyof typeof TeamScalarFieldEnum];
-
-export const TeamMemberScalarFieldEnum = {
-  id: 'id',
-  teamId: 'teamId',
-  userId: 'userId',
-  createdAt: 'createdAt'
-} as const;
-
-export type TeamMemberScalarFieldEnum = (typeof TeamMemberScalarFieldEnum)[keyof typeof TeamMemberScalarFieldEnum];
 
 export const OrganizationRoleScalarFieldEnum = {
   id: 'id',
@@ -1909,17 +1752,17 @@ export const MemberProjectScalarFieldEnum = {
 
 export type MemberProjectScalarFieldEnum = (typeof MemberProjectScalarFieldEnum)[keyof typeof MemberProjectScalarFieldEnum];
 
-export const ServiceRequestMessageScalarFieldEnum = {
+export const ChatHistoryScalarFieldEnum = {
   id: 'id',
-  serviceRequestId: 'serviceRequestId',
-  authorMemberId: 'authorMemberId',
-  body: 'body',
-  isInternal: 'isInternal',
+  channelType: 'channelType',
+  channelId: 'channelId',
+  messages: 'messages',
+  expiresAt: 'expiresAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const;
 
-export type ServiceRequestMessageScalarFieldEnum = (typeof ServiceRequestMessageScalarFieldEnum)[keyof typeof ServiceRequestMessageScalarFieldEnum];
+export type ChatHistoryScalarFieldEnum = (typeof ChatHistoryScalarFieldEnum)[keyof typeof ChatHistoryScalarFieldEnum];
 
 export const LeadScalarFieldEnum = {
   id: 'id',
@@ -1950,6 +1793,12 @@ export const NullableJsonNullValueInput = {
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const;
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput];
+
 export const NullsOrder = {
   first: 'first',
   last: 'last'
@@ -1972,8 +1821,7 @@ export const SessionOrderByRelevanceFieldEnum = {
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
   userId: 'userId',
-  activeOrganizationId: 'activeOrganizationId',
-  activeTeamId: 'activeTeamId'
+  activeOrganizationId: 'activeOrganizationId'
 } as const;
 
 export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum];
@@ -2026,27 +1874,10 @@ export const InvitationOrderByRelevanceFieldEnum = {
   organizationId: 'organizationId',
   role: 'role',
   serviceInterest: 'serviceInterest',
-  status: 'status',
-  teamId: 'teamId'
+  status: 'status'
 } as const;
 
 export type InvitationOrderByRelevanceFieldEnum = (typeof InvitationOrderByRelevanceFieldEnum)[keyof typeof InvitationOrderByRelevanceFieldEnum];
-
-export const TeamOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  organizationId: 'organizationId'
-} as const;
-
-export type TeamOrderByRelevanceFieldEnum = (typeof TeamOrderByRelevanceFieldEnum)[keyof typeof TeamOrderByRelevanceFieldEnum];
-
-export const TeamMemberOrderByRelevanceFieldEnum = {
-  id: 'id',
-  teamId: 'teamId',
-  userId: 'userId'
-} as const;
-
-export type TeamMemberOrderByRelevanceFieldEnum = (typeof TeamMemberOrderByRelevanceFieldEnum)[keyof typeof TeamMemberOrderByRelevanceFieldEnum];
 
 export const OrganizationRoleOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -2139,14 +1970,13 @@ export const MemberProjectOrderByRelevanceFieldEnum = {
 
 export type MemberProjectOrderByRelevanceFieldEnum = (typeof MemberProjectOrderByRelevanceFieldEnum)[keyof typeof MemberProjectOrderByRelevanceFieldEnum];
 
-export const ServiceRequestMessageOrderByRelevanceFieldEnum = {
+export const ChatHistoryOrderByRelevanceFieldEnum = {
   id: 'id',
-  serviceRequestId: 'serviceRequestId',
-  authorMemberId: 'authorMemberId',
-  body: 'body'
+  channelType: 'channelType',
+  channelId: 'channelId'
 } as const;
 
-export type ServiceRequestMessageOrderByRelevanceFieldEnum = (typeof ServiceRequestMessageOrderByRelevanceFieldEnum)[keyof typeof ServiceRequestMessageOrderByRelevanceFieldEnum];
+export type ChatHistoryOrderByRelevanceFieldEnum = (typeof ChatHistoryOrderByRelevanceFieldEnum)[keyof typeof ChatHistoryOrderByRelevanceFieldEnum];
 
 export const LeadOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -2372,8 +2202,6 @@ export type GlobalOmitConfig = {
   organization?: Prisma.OrganizationOmit;
   member?: Prisma.MemberOmit;
   invitation?: Prisma.InvitationOmit;
-  team?: Prisma.TeamOmit;
-  teamMember?: Prisma.TeamMemberOmit;
   organizationRole?: Prisma.OrganizationRoleOmit;
   client?: Prisma.ClientOmit;
   serviceRequest?: Prisma.ServiceRequestOmit;
@@ -2382,7 +2210,7 @@ export type GlobalOmitConfig = {
   task?: Prisma.TaskOmit;
   taskAssignee?: Prisma.TaskAssigneeOmit;
   memberProject?: Prisma.MemberProjectOmit;
-  serviceRequestMessage?: Prisma.ServiceRequestMessageOmit;
+  chatHistory?: Prisma.ChatHistoryOmit;
   lead?: Prisma.LeadOmit;
 };
 

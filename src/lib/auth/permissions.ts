@@ -53,7 +53,6 @@ export const rolePermissionStatements = {
     organization: ['update'],
     member: ['create', 'update'],
     invitation: ['create'],
-    team: ['create', 'update'],
     ac: ['read'],
     lead: ['read', 'update'],
     serviceRequest: ['create', 'read', 'update', 'delete'],

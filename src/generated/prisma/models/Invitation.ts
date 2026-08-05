@@ -31,7 +31,6 @@ export type InvitationMinAggregateOutputType = {
   role: string | null;
   serviceInterest: string | null;
   status: string | null;
-  teamId: string | null;
   createdAt: Date | null;
   expiresAt: Date | null;
 };
@@ -44,7 +43,6 @@ export type InvitationMaxAggregateOutputType = {
   role: string | null;
   serviceInterest: string | null;
   status: string | null;
-  teamId: string | null;
   createdAt: Date | null;
   expiresAt: Date | null;
 };
@@ -57,7 +55,6 @@ export type InvitationCountAggregateOutputType = {
   role: number;
   serviceInterest: number;
   status: number;
-  teamId: number;
   createdAt: number;
   expiresAt: number;
   _all: number;
@@ -71,7 +68,6 @@ export type InvitationMinAggregateInputType = {
   role?: true;
   serviceInterest?: true;
   status?: true;
-  teamId?: true;
   createdAt?: true;
   expiresAt?: true;
 };
@@ -84,7 +80,6 @@ export type InvitationMaxAggregateInputType = {
   role?: true;
   serviceInterest?: true;
   status?: true;
-  teamId?: true;
   createdAt?: true;
   expiresAt?: true;
 };
@@ -97,7 +92,6 @@ export type InvitationCountAggregateInputType = {
   role?: true;
   serviceInterest?: true;
   status?: true;
-  teamId?: true;
   createdAt?: true;
   expiresAt?: true;
   _all?: true;
@@ -180,7 +174,6 @@ export type InvitationGroupByOutputType = {
   role: string | null;
   serviceInterest: string | null;
   status: string;
-  teamId: string | null;
   createdAt: Date;
   expiresAt: Date;
   _count: InvitationCountAggregateOutputType | null;
@@ -211,7 +204,6 @@ export type InvitationWhereInput = {
   role?: Prisma.StringNullableFilter<'Invitation'> | string | null;
   serviceInterest?: Prisma.StringNullableFilter<'Invitation'> | string | null;
   status?: Prisma.StringFilter<'Invitation'> | string;
-  teamId?: Prisma.StringNullableFilter<'Invitation'> | string | null;
   createdAt?: Prisma.DateTimeFilter<'Invitation'> | Date | string;
   expiresAt?: Prisma.DateTimeFilter<'Invitation'> | Date | string;
   inviter?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
@@ -226,7 +218,6 @@ export type InvitationOrderByWithRelationInput = {
   role?: Prisma.SortOrderInput | Prisma.SortOrder;
   serviceInterest?: Prisma.SortOrderInput | Prisma.SortOrder;
   status?: Prisma.SortOrder;
-  teamId?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   expiresAt?: Prisma.SortOrder;
   inviter?: Prisma.UserOrderByWithRelationInput;
@@ -246,7 +237,6 @@ export type InvitationWhereUniqueInput = Prisma.AtLeast<
     role?: Prisma.StringNullableFilter<'Invitation'> | string | null;
     serviceInterest?: Prisma.StringNullableFilter<'Invitation'> | string | null;
     status?: Prisma.StringFilter<'Invitation'> | string;
-    teamId?: Prisma.StringNullableFilter<'Invitation'> | string | null;
     createdAt?: Prisma.DateTimeFilter<'Invitation'> | Date | string;
     expiresAt?: Prisma.DateTimeFilter<'Invitation'> | Date | string;
     inviter?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
@@ -263,7 +253,6 @@ export type InvitationOrderByWithAggregationInput = {
   role?: Prisma.SortOrderInput | Prisma.SortOrder;
   serviceInterest?: Prisma.SortOrderInput | Prisma.SortOrder;
   status?: Prisma.SortOrder;
-  teamId?: Prisma.SortOrderInput | Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   expiresAt?: Prisma.SortOrder;
   _count?: Prisma.InvitationCountOrderByAggregateInput;
@@ -282,7 +271,6 @@ export type InvitationScalarWhereWithAggregatesInput = {
   role?: Prisma.StringNullableWithAggregatesFilter<'Invitation'> | string | null;
   serviceInterest?: Prisma.StringNullableWithAggregatesFilter<'Invitation'> | string | null;
   status?: Prisma.StringWithAggregatesFilter<'Invitation'> | string;
-  teamId?: Prisma.StringNullableWithAggregatesFilter<'Invitation'> | string | null;
   createdAt?: Prisma.DateTimeWithAggregatesFilter<'Invitation'> | Date | string;
   expiresAt?: Prisma.DateTimeWithAggregatesFilter<'Invitation'> | Date | string;
 };
@@ -293,7 +281,6 @@ export type InvitationCreateInput = {
   role?: string | null;
   serviceInterest?: string | null;
   status: string;
-  teamId?: string | null;
   createdAt?: Date | string;
   expiresAt: Date | string;
   inviter: Prisma.UserCreateNestedOneWithoutInvitationsInput;
@@ -308,7 +295,6 @@ export type InvitationUncheckedCreateInput = {
   role?: string | null;
   serviceInterest?: string | null;
   status: string;
-  teamId?: string | null;
   createdAt?: Date | string;
   expiresAt: Date | string;
 };
@@ -319,7 +305,6 @@ export type InvitationUpdateInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   serviceInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   status?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   inviter?: Prisma.UserUpdateOneRequiredWithoutInvitationsNestedInput;
@@ -334,7 +319,6 @@ export type InvitationUncheckedUpdateInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   serviceInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   status?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -347,7 +331,6 @@ export type InvitationCreateManyInput = {
   role?: string | null;
   serviceInterest?: string | null;
   status: string;
-  teamId?: string | null;
   createdAt?: Date | string;
   expiresAt: Date | string;
 };
@@ -358,7 +341,6 @@ export type InvitationUpdateManyMutationInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   serviceInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   status?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -371,7 +353,6 @@ export type InvitationUncheckedUpdateManyInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   serviceInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   status?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -400,7 +381,6 @@ export type InvitationCountOrderByAggregateInput = {
   role?: Prisma.SortOrder;
   serviceInterest?: Prisma.SortOrder;
   status?: Prisma.SortOrder;
-  teamId?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   expiresAt?: Prisma.SortOrder;
 };
@@ -413,7 +393,6 @@ export type InvitationMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder;
   serviceInterest?: Prisma.SortOrder;
   status?: Prisma.SortOrder;
-  teamId?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   expiresAt?: Prisma.SortOrder;
 };
@@ -426,7 +405,6 @@ export type InvitationMinOrderByAggregateInput = {
   role?: Prisma.SortOrder;
   serviceInterest?: Prisma.SortOrder;
   status?: Prisma.SortOrder;
-  teamId?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   expiresAt?: Prisma.SortOrder;
 };
@@ -545,7 +523,6 @@ export type InvitationCreateWithoutInviterInput = {
   role?: string | null;
   serviceInterest?: string | null;
   status: string;
-  teamId?: string | null;
   createdAt?: Date | string;
   expiresAt: Date | string;
   organization: Prisma.OrganizationCreateNestedOneWithoutInvitationsInput;
@@ -558,7 +535,6 @@ export type InvitationUncheckedCreateWithoutInviterInput = {
   role?: string | null;
   serviceInterest?: string | null;
   status: string;
-  teamId?: string | null;
   createdAt?: Date | string;
   expiresAt: Date | string;
 };
@@ -600,7 +576,6 @@ export type InvitationScalarWhereInput = {
   role?: Prisma.StringNullableFilter<'Invitation'> | string | null;
   serviceInterest?: Prisma.StringNullableFilter<'Invitation'> | string | null;
   status?: Prisma.StringFilter<'Invitation'> | string;
-  teamId?: Prisma.StringNullableFilter<'Invitation'> | string | null;
   createdAt?: Prisma.DateTimeFilter<'Invitation'> | Date | string;
   expiresAt?: Prisma.DateTimeFilter<'Invitation'> | Date | string;
 };
@@ -611,7 +586,6 @@ export type InvitationCreateWithoutOrganizationInput = {
   role?: string | null;
   serviceInterest?: string | null;
   status: string;
-  teamId?: string | null;
   createdAt?: Date | string;
   expiresAt: Date | string;
   inviter: Prisma.UserCreateNestedOneWithoutInvitationsInput;
@@ -624,7 +598,6 @@ export type InvitationUncheckedCreateWithoutOrganizationInput = {
   role?: string | null;
   serviceInterest?: string | null;
   status: string;
-  teamId?: string | null;
   createdAt?: Date | string;
   expiresAt: Date | string;
 };
@@ -662,7 +635,6 @@ export type InvitationCreateManyInviterInput = {
   role?: string | null;
   serviceInterest?: string | null;
   status: string;
-  teamId?: string | null;
   createdAt?: Date | string;
   expiresAt: Date | string;
 };
@@ -673,7 +645,6 @@ export type InvitationUpdateWithoutInviterInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   serviceInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   status?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutInvitationsNestedInput;
@@ -686,7 +657,6 @@ export type InvitationUncheckedUpdateWithoutInviterInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   serviceInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   status?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -698,7 +668,6 @@ export type InvitationUncheckedUpdateManyWithoutInviterInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   serviceInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   status?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -710,7 +679,6 @@ export type InvitationCreateManyOrganizationInput = {
   role?: string | null;
   serviceInterest?: string | null;
   status: string;
-  teamId?: string | null;
   createdAt?: Date | string;
   expiresAt: Date | string;
 };
@@ -721,7 +689,6 @@ export type InvitationUpdateWithoutOrganizationInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   serviceInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   status?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   inviter?: Prisma.UserUpdateOneRequiredWithoutInvitationsNestedInput;
@@ -734,7 +701,6 @@ export type InvitationUncheckedUpdateWithoutOrganizationInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   serviceInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   status?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -746,7 +712,6 @@ export type InvitationUncheckedUpdateManyWithoutOrganizationInput = {
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   serviceInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   status?: Prisma.StringFieldUpdateOperationsInput | string;
-  teamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -760,7 +725,6 @@ export type InvitationSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
     role?: boolean;
     serviceInterest?: boolean;
     status?: boolean;
-    teamId?: boolean;
     createdAt?: boolean;
     expiresAt?: boolean;
     inviter?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
@@ -777,13 +741,12 @@ export type InvitationSelectScalar = {
   role?: boolean;
   serviceInterest?: boolean;
   status?: boolean;
-  teamId?: boolean;
   createdAt?: boolean;
   expiresAt?: boolean;
 };
 
 export type InvitationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<
-  'id' | 'email' | 'inviterId' | 'organizationId' | 'role' | 'serviceInterest' | 'status' | 'teamId' | 'createdAt' | 'expiresAt',
+  'id' | 'email' | 'inviterId' | 'organizationId' | 'role' | 'serviceInterest' | 'status' | 'createdAt' | 'expiresAt',
   ExtArgs['result']['invitation']
 >;
 export type InvitationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -806,7 +769,6 @@ export type $InvitationPayload<ExtArgs extends runtime.Types.Extensions.Internal
       role: string | null;
       serviceInterest: string | null;
       status: string;
-      teamId: string | null;
       createdAt: Date;
       expiresAt: Date;
     },
@@ -1197,7 +1159,6 @@ export interface InvitationFieldRefs {
   readonly role: Prisma.FieldRef<'Invitation', 'String'>;
   readonly serviceInterest: Prisma.FieldRef<'Invitation', 'String'>;
   readonly status: Prisma.FieldRef<'Invitation', 'String'>;
-  readonly teamId: Prisma.FieldRef<'Invitation', 'String'>;
   readonly createdAt: Prisma.FieldRef<'Invitation', 'DateTime'>;
   readonly expiresAt: Prisma.FieldRef<'Invitation', 'DateTime'>;
 }

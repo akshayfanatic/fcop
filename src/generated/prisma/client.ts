@@ -80,16 +80,6 @@ export type Member = Prisma.MemberModel;
  */
 export type Invitation = Prisma.InvitationModel;
 /**
- * Model Team
- *
- */
-export type Team = Prisma.TeamModel;
-/**
- * Model TeamMember
- *
- */
-export type TeamMember = Prisma.TeamMemberModel;
-/**
  * Model OrganizationRole
  *
  */
@@ -130,10 +120,10 @@ export type TaskAssignee = Prisma.TaskAssigneeModel;
  */
 export type MemberProject = Prisma.MemberProjectModel;
 /**
- * Model ServiceRequestMessage
+ * Model ChatHistory
  *
  */
-export type ServiceRequestMessage = Prisma.ServiceRequestMessageModel;
+export type ChatHistory = Prisma.ChatHistoryModel;
 /**
  * Model Lead
  *

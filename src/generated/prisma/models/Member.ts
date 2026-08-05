@@ -173,7 +173,6 @@ export type MemberWhereInput = {
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>;
   client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageListRelationFilter;
   createdProposals?: Prisma.ProposalListRelationFilter;
   createdProjects?: Prisma.ProjectListRelationFilter;
   memberProjects?: Prisma.MemberProjectListRelationFilter;
@@ -190,7 +189,6 @@ export type MemberOrderByWithRelationInput = {
   user?: Prisma.UserOrderByWithRelationInput;
   organization?: Prisma.OrganizationOrderByWithRelationInput;
   client?: Prisma.ClientOrderByWithRelationInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageOrderByRelationAggregateInput;
   createdProposals?: Prisma.ProposalOrderByRelationAggregateInput;
   createdProjects?: Prisma.ProjectOrderByRelationAggregateInput;
   memberProjects?: Prisma.MemberProjectOrderByRelationAggregateInput;
@@ -212,7 +210,6 @@ export type MemberWhereUniqueInput = Prisma.AtLeast<
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
     organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>;
     client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null;
-    serviceRequestMessages?: Prisma.ServiceRequestMessageListRelationFilter;
     createdProposals?: Prisma.ProposalListRelationFilter;
     createdProjects?: Prisma.ProjectListRelationFilter;
     memberProjects?: Prisma.MemberProjectListRelationFilter;
@@ -251,7 +248,6 @@ export type MemberCreateInput = {
   user: Prisma.UserCreateNestedOneWithoutMembersInput;
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
   client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
@@ -266,7 +262,6 @@ export type MemberUncheckedCreateInput = {
   role: string;
   createdAt?: Date | string;
   client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalUncheckedCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
@@ -281,7 +276,6 @@ export type MemberUpdateInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
   client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
@@ -296,7 +290,6 @@ export type MemberUncheckedUpdateInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUncheckedUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
@@ -557,30 +550,12 @@ export type MemberUpdateOneRequiredWithoutMemberProjectsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MemberUpdateToOneWithWhereWithoutMemberProjectsInput, Prisma.MemberUpdateWithoutMemberProjectsInput>, Prisma.MemberUncheckedUpdateWithoutMemberProjectsInput>;
 };
 
-export type MemberCreateNestedOneWithoutServiceRequestMessagesInput = {
-  create?: Prisma.XOR<Prisma.MemberCreateWithoutServiceRequestMessagesInput, Prisma.MemberUncheckedCreateWithoutServiceRequestMessagesInput>;
-  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutServiceRequestMessagesInput;
-  connect?: Prisma.MemberWhereUniqueInput;
-};
-
-export type MemberUpdateOneRequiredWithoutServiceRequestMessagesNestedInput = {
-  create?: Prisma.XOR<Prisma.MemberCreateWithoutServiceRequestMessagesInput, Prisma.MemberUncheckedCreateWithoutServiceRequestMessagesInput>;
-  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutServiceRequestMessagesInput;
-  upsert?: Prisma.MemberUpsertWithoutServiceRequestMessagesInput;
-  connect?: Prisma.MemberWhereUniqueInput;
-  update?: Prisma.XOR<
-    Prisma.XOR<Prisma.MemberUpdateToOneWithWhereWithoutServiceRequestMessagesInput, Prisma.MemberUpdateWithoutServiceRequestMessagesInput>,
-    Prisma.MemberUncheckedUpdateWithoutServiceRequestMessagesInput
-  >;
-};
-
 export type MemberCreateWithoutUserInput = {
   id?: string;
   role: string;
   createdAt?: Date | string;
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
   client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
@@ -594,7 +569,6 @@ export type MemberUncheckedCreateWithoutUserInput = {
   role: string;
   createdAt?: Date | string;
   client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalUncheckedCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
@@ -645,7 +619,6 @@ export type MemberCreateWithoutOrganizationInput = {
   createdAt?: Date | string;
   user: Prisma.UserCreateNestedOneWithoutMembersInput;
   client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
@@ -659,7 +632,6 @@ export type MemberUncheckedCreateWithoutOrganizationInput = {
   role: string;
   createdAt?: Date | string;
   client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalUncheckedCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
@@ -699,7 +671,6 @@ export type MemberCreateWithoutClientInput = {
   createdAt?: Date | string;
   user: Prisma.UserCreateNestedOneWithoutMembersInput;
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
@@ -713,7 +684,6 @@ export type MemberUncheckedCreateWithoutClientInput = {
   organizationId: string;
   role: string;
   createdAt?: Date | string;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalUncheckedCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
@@ -743,7 +713,6 @@ export type MemberUpdateWithoutClientInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
@@ -757,7 +726,6 @@ export type MemberUncheckedUpdateWithoutClientInput = {
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string;
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUncheckedUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
@@ -772,7 +740,6 @@ export type MemberCreateWithoutCreatedProposalsInput = {
   user: Prisma.UserCreateNestedOneWithoutMembersInput;
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
   client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutAuthorInput;
   createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
@@ -786,7 +753,6 @@ export type MemberUncheckedCreateWithoutCreatedProposalsInput = {
   role: string;
   createdAt?: Date | string;
   client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutAuthorInput;
   createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
@@ -816,7 +782,6 @@ export type MemberUpdateWithoutCreatedProposalsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
   client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUpdateManyWithoutAuthorNestedInput;
   createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
@@ -830,7 +795,6 @@ export type MemberUncheckedUpdateWithoutCreatedProposalsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutAuthorNestedInput;
   createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
@@ -844,7 +808,6 @@ export type MemberCreateWithoutCreatedProjectsInput = {
   user: Prisma.UserCreateNestedOneWithoutMembersInput;
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
   client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
@@ -858,7 +821,6 @@ export type MemberUncheckedCreateWithoutCreatedProjectsInput = {
   role: string;
   createdAt?: Date | string;
   client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalUncheckedCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
@@ -888,7 +850,6 @@ export type MemberUpdateWithoutCreatedProjectsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
   client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
@@ -902,7 +863,6 @@ export type MemberUncheckedUpdateWithoutCreatedProjectsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUncheckedUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
@@ -916,7 +876,6 @@ export type MemberCreateWithoutCreatedTasksInput = {
   user: Prisma.UserCreateNestedOneWithoutMembersInput;
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
   client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
@@ -930,7 +889,6 @@ export type MemberUncheckedCreateWithoutCreatedTasksInput = {
   role: string;
   createdAt?: Date | string;
   client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalUncheckedCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
@@ -960,7 +918,6 @@ export type MemberUpdateWithoutCreatedTasksInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
   client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
@@ -974,7 +931,6 @@ export type MemberUncheckedUpdateWithoutCreatedTasksInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUncheckedUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
@@ -988,7 +944,6 @@ export type MemberCreateWithoutTaskAssigneesInput = {
   user: Prisma.UserCreateNestedOneWithoutMembersInput;
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
   client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
@@ -1002,7 +957,6 @@ export type MemberUncheckedCreateWithoutTaskAssigneesInput = {
   role: string;
   createdAt?: Date | string;
   client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalUncheckedCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
@@ -1032,7 +986,6 @@ export type MemberUpdateWithoutTaskAssigneesInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
   client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
@@ -1046,7 +999,6 @@ export type MemberUncheckedUpdateWithoutTaskAssigneesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUncheckedUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
@@ -1060,7 +1012,6 @@ export type MemberCreateWithoutMemberProjectsInput = {
   user: Prisma.UserCreateNestedOneWithoutMembersInput;
   organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
   client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
   createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
@@ -1074,7 +1025,6 @@ export type MemberUncheckedCreateWithoutMemberProjectsInput = {
   role: string;
   createdAt?: Date | string;
   client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedCreateNestedManyWithoutAuthorInput;
   createdProposals?: Prisma.ProposalUncheckedCreateNestedManyWithoutCreatedByInput;
   createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
   createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
@@ -1104,7 +1054,6 @@ export type MemberUpdateWithoutMemberProjectsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
   client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
   createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
@@ -1118,81 +1067,8 @@ export type MemberUncheckedUpdateWithoutMemberProjectsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUncheckedUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
-  taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutMemberNestedInput;
-};
-
-export type MemberCreateWithoutServiceRequestMessagesInput = {
-  id?: string;
-  role: string;
-  createdAt?: Date | string;
-  user: Prisma.UserCreateNestedOneWithoutMembersInput;
-  organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
-  client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
-  createdProposals?: Prisma.ProposalCreateNestedManyWithoutCreatedByInput;
-  createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
-  memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
-  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
-  taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutMemberInput;
-};
-
-export type MemberUncheckedCreateWithoutServiceRequestMessagesInput = {
-  id?: string;
-  userId: string;
-  organizationId: string;
-  role: string;
-  createdAt?: Date | string;
-  client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
-  createdProposals?: Prisma.ProposalUncheckedCreateNestedManyWithoutCreatedByInput;
-  createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
-  memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
-  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
-  taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutMemberInput;
-};
-
-export type MemberCreateOrConnectWithoutServiceRequestMessagesInput = {
-  where: Prisma.MemberWhereUniqueInput;
-  create: Prisma.XOR<Prisma.MemberCreateWithoutServiceRequestMessagesInput, Prisma.MemberUncheckedCreateWithoutServiceRequestMessagesInput>;
-};
-
-export type MemberUpsertWithoutServiceRequestMessagesInput = {
-  update: Prisma.XOR<Prisma.MemberUpdateWithoutServiceRequestMessagesInput, Prisma.MemberUncheckedUpdateWithoutServiceRequestMessagesInput>;
-  create: Prisma.XOR<Prisma.MemberCreateWithoutServiceRequestMessagesInput, Prisma.MemberUncheckedCreateWithoutServiceRequestMessagesInput>;
-  where?: Prisma.MemberWhereInput;
-};
-
-export type MemberUpdateToOneWithWhereWithoutServiceRequestMessagesInput = {
-  where?: Prisma.MemberWhereInput;
-  data: Prisma.XOR<Prisma.MemberUpdateWithoutServiceRequestMessagesInput, Prisma.MemberUncheckedUpdateWithoutServiceRequestMessagesInput>;
-};
-
-export type MemberUpdateWithoutServiceRequestMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  role?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
-  client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
-  createdProposals?: Prisma.ProposalUpdateManyWithoutCreatedByNestedInput;
-  createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
-  memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
-  createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
-  taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutMemberNestedInput;
-};
-
-export type MemberUncheckedUpdateWithoutServiceRequestMessagesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  userId?: Prisma.StringFieldUpdateOperationsInput | string;
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string;
-  role?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
-  createdProposals?: Prisma.ProposalUncheckedUpdateManyWithoutCreatedByNestedInput;
-  createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
-  memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutMemberNestedInput;
 };
@@ -1210,7 +1086,6 @@ export type MemberUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
   client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
@@ -1224,7 +1099,6 @@ export type MemberUncheckedUpdateWithoutUserInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUncheckedUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
@@ -1252,7 +1126,6 @@ export type MemberUpdateWithoutOrganizationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
   client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
@@ -1266,7 +1139,6 @@ export type MemberUncheckedUpdateWithoutOrganizationInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
-  serviceRequestMessages?: Prisma.ServiceRequestMessageUncheckedUpdateManyWithoutAuthorNestedInput;
   createdProposals?: Prisma.ProposalUncheckedUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
@@ -1286,7 +1158,6 @@ export type MemberUncheckedUpdateManyWithoutOrganizationInput = {
  */
 
 export type MemberCountOutputType = {
-  serviceRequestMessages: number;
   createdProposals: number;
   createdProjects: number;
   memberProjects: number;
@@ -1295,7 +1166,6 @@ export type MemberCountOutputType = {
 };
 
 export type MemberCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  serviceRequestMessages?: boolean | MemberCountOutputTypeCountServiceRequestMessagesArgs;
   createdProposals?: boolean | MemberCountOutputTypeCountCreatedProposalsArgs;
   createdProjects?: boolean | MemberCountOutputTypeCountCreatedProjectsArgs;
   memberProjects?: boolean | MemberCountOutputTypeCountMemberProjectsArgs;
@@ -1311,13 +1181,6 @@ export type MemberCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
    * Select specific fields to fetch from the MemberCountOutputType
    */
   select?: Prisma.MemberCountOutputTypeSelect<ExtArgs> | null;
-};
-
-/**
- * MemberCountOutputType without action
- */
-export type MemberCountOutputTypeCountServiceRequestMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ServiceRequestMessageWhereInput;
 };
 
 /**
@@ -1365,7 +1228,6 @@ export type MemberSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
     organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>;
     client?: boolean | Prisma.Member$clientArgs<ExtArgs>;
-    serviceRequestMessages?: boolean | Prisma.Member$serviceRequestMessagesArgs<ExtArgs>;
     createdProposals?: boolean | Prisma.Member$createdProposalsArgs<ExtArgs>;
     createdProjects?: boolean | Prisma.Member$createdProjectsArgs<ExtArgs>;
     memberProjects?: boolean | Prisma.Member$memberProjectsArgs<ExtArgs>;
@@ -1392,7 +1254,6 @@ export type MemberInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>;
   client?: boolean | Prisma.Member$clientArgs<ExtArgs>;
-  serviceRequestMessages?: boolean | Prisma.Member$serviceRequestMessagesArgs<ExtArgs>;
   createdProposals?: boolean | Prisma.Member$createdProposalsArgs<ExtArgs>;
   createdProjects?: boolean | Prisma.Member$createdProjectsArgs<ExtArgs>;
   memberProjects?: boolean | Prisma.Member$memberProjectsArgs<ExtArgs>;
@@ -1407,7 +1268,6 @@ export type $MemberPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     user: Prisma.$UserPayload<ExtArgs>;
     organization: Prisma.$OrganizationPayload<ExtArgs>;
     client: Prisma.$ClientPayload<ExtArgs> | null;
-    serviceRequestMessages: Prisma.$ServiceRequestMessagePayload<ExtArgs>[];
     createdProposals: Prisma.$ProposalPayload<ExtArgs>[];
     createdProjects: Prisma.$ProjectPayload<ExtArgs>[];
     memberProjects: Prisma.$MemberProjectPayload<ExtArgs>[];
@@ -1773,9 +1633,6 @@ export interface Prisma__MemberClient<
   client<T extends Prisma.Member$clientArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Member$clientArgs<ExtArgs>>
   ): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
-  serviceRequestMessages<T extends Prisma.Member$serviceRequestMessagesArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.Member$serviceRequestMessagesArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ServiceRequestMessagePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
   createdProposals<T extends Prisma.Member$createdProposalsArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Member$createdProposalsArgs<ExtArgs>>
   ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
@@ -2188,30 +2045,6 @@ export type Member$clientArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   include?: Prisma.ClientInclude<ExtArgs> | null;
   where?: Prisma.ClientWhereInput;
-};
-
-/**
- * Member.serviceRequestMessages
- */
-export type Member$serviceRequestMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ServiceRequestMessage
-   */
-  select?: Prisma.ServiceRequestMessageSelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the ServiceRequestMessage
-   */
-  omit?: Prisma.ServiceRequestMessageOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ServiceRequestMessageInclude<ExtArgs> | null;
-  where?: Prisma.ServiceRequestMessageWhereInput;
-  orderBy?: Prisma.ServiceRequestMessageOrderByWithRelationInput | Prisma.ServiceRequestMessageOrderByWithRelationInput[];
-  cursor?: Prisma.ServiceRequestMessageWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  distinct?: Prisma.ServiceRequestMessageScalarFieldEnum | Prisma.ServiceRequestMessageScalarFieldEnum[];
 };
 
 /**
