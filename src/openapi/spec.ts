@@ -1640,7 +1640,6 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         example: {
           ac: ['read'],
           serviceRequest: ['create', 'read'],
-          serviceRequestMessage: ['create', 'read'],
           project: ['read'],
           dashboard: ['read']
         }

@@ -39,7 +39,9 @@ function getSafeSocketError(error: unknown) {
 }
 
 async function getChatAccess(channel: ChatChannel, member: SessionMember) {
-  const isManagement = hasRole(member.role, Role.ADMIN) || hasRole(member.role, Role.MANAGER);
+  const isAdmin = hasRole(member.role, Role.ADMIN);
+  const isManager = hasRole(member.role, Role.MANAGER);
+  const isManagement = isAdmin || isManager;
   if (channel.type === 'project') {
     const project = await prisma.project.findFirst({
       where: {
@@ -54,6 +56,11 @@ async function getChatAccess(channel: ChatChannel, member: SessionMember) {
     }
 
     return { isManagement };
+  }
+
+  // Keep service request consultation between the client and administrators.
+  if (isManager && !isAdmin) {
+    throw Object.assign(new Error('Service request chat not found.'), { code: 'SERVICE_REQUEST_CHAT_NOT_FOUND' });
   }
 
   const request = await prisma.serviceRequest.findFirst({
