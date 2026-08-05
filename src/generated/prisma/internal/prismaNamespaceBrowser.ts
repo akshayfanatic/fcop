@@ -55,8 +55,6 @@ export const ModelName = {
   Organization: 'Organization',
   Member: 'Member',
   Invitation: 'Invitation',
-  Team: 'Team',
-  TeamMember: 'TeamMember',
   OrganizationRole: 'OrganizationRole',
   Client: 'Client',
   ServiceRequest: 'ServiceRequest',
@@ -105,8 +103,7 @@ export const SessionScalarFieldEnum = {
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
   userId: 'userId',
-  activeOrganizationId: 'activeOrganizationId',
-  activeTeamId: 'activeTeamId'
+  activeOrganizationId: 'activeOrganizationId'
 } as const;
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum];
@@ -169,31 +166,11 @@ export const InvitationScalarFieldEnum = {
   role: 'role',
   serviceInterest: 'serviceInterest',
   status: 'status',
-  teamId: 'teamId',
   createdAt: 'createdAt',
   expiresAt: 'expiresAt'
 } as const;
 
 export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum];
-
-export const TeamScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  organizationId: 'organizationId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const;
-
-export type TeamScalarFieldEnum = (typeof TeamScalarFieldEnum)[keyof typeof TeamScalarFieldEnum];
-
-export const TeamMemberScalarFieldEnum = {
-  id: 'id',
-  teamId: 'teamId',
-  userId: 'userId',
-  createdAt: 'createdAt'
-} as const;
-
-export type TeamMemberScalarFieldEnum = (typeof TeamMemberScalarFieldEnum)[keyof typeof TeamMemberScalarFieldEnum];
 
 export const OrganizationRoleScalarFieldEnum = {
   id: 'id',
@@ -375,8 +352,7 @@ export const SessionOrderByRelevanceFieldEnum = {
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
   userId: 'userId',
-  activeOrganizationId: 'activeOrganizationId',
-  activeTeamId: 'activeTeamId'
+  activeOrganizationId: 'activeOrganizationId'
 } as const;
 
 export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum];
@@ -429,27 +405,10 @@ export const InvitationOrderByRelevanceFieldEnum = {
   organizationId: 'organizationId',
   role: 'role',
   serviceInterest: 'serviceInterest',
-  status: 'status',
-  teamId: 'teamId'
+  status: 'status'
 } as const;
 
 export type InvitationOrderByRelevanceFieldEnum = (typeof InvitationOrderByRelevanceFieldEnum)[keyof typeof InvitationOrderByRelevanceFieldEnum];
-
-export const TeamOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  organizationId: 'organizationId'
-} as const;
-
-export type TeamOrderByRelevanceFieldEnum = (typeof TeamOrderByRelevanceFieldEnum)[keyof typeof TeamOrderByRelevanceFieldEnum];
-
-export const TeamMemberOrderByRelevanceFieldEnum = {
-  id: 'id',
-  teamId: 'teamId',
-  userId: 'userId'
-} as const;
-
-export type TeamMemberOrderByRelevanceFieldEnum = (typeof TeamMemberOrderByRelevanceFieldEnum)[keyof typeof TeamMemberOrderByRelevanceFieldEnum];
 
 export const OrganizationRoleOrderByRelevanceFieldEnum = {
   id: 'id',

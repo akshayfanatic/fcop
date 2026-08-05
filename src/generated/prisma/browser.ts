@@ -52,16 +52,6 @@ export type Member = Prisma.MemberModel;
  */
 export type Invitation = Prisma.InvitationModel;
 /**
- * Model Team
- *
- */
-export type Team = Prisma.TeamModel;
-/**
- * Model TeamMember
- *
- */
-export type TeamMember = Prisma.TeamMemberModel;
-/**
  * Model OrganizationRole
  *
  */

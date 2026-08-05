@@ -190,7 +190,6 @@ export type UserWhereInput = {
   accounts?: Prisma.AccountListRelationFilter;
   members?: Prisma.MemberListRelationFilter;
   invitations?: Prisma.InvitationListRelationFilter;
-  teamMembers?: Prisma.TeamMemberListRelationFilter;
 };
 
 export type UserOrderByWithRelationInput = {
@@ -205,7 +204,6 @@ export type UserOrderByWithRelationInput = {
   accounts?: Prisma.AccountOrderByRelationAggregateInput;
   members?: Prisma.MemberOrderByRelationAggregateInput;
   invitations?: Prisma.InvitationOrderByRelationAggregateInput;
-  teamMembers?: Prisma.TeamMemberOrderByRelationAggregateInput;
   _relevance?: Prisma.UserOrderByRelevanceInput;
 };
 
@@ -225,7 +223,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<
     accounts?: Prisma.AccountListRelationFilter;
     members?: Prisma.MemberListRelationFilter;
     invitations?: Prisma.InvitationListRelationFilter;
-    teamMembers?: Prisma.TeamMemberListRelationFilter;
   },
   'id' | 'email'
 >;
@@ -268,7 +265,6 @@ export type UserCreateInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput;
   members?: Prisma.MemberCreateNestedManyWithoutUserInput;
   invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput;
-  teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
 };
 
 export type UserUncheckedCreateInput = {
@@ -283,7 +279,6 @@ export type UserUncheckedCreateInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput;
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput;
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput;
-  teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserUpdateInput = {
@@ -298,7 +293,6 @@ export type UserUpdateInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput;
   members?: Prisma.MemberUpdateManyWithoutUserNestedInput;
   invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput;
-  teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateInput = {
@@ -313,7 +307,6 @@ export type UserUncheckedUpdateInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput;
   members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput;
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput;
-  teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateManyInput = {
@@ -459,20 +452,6 @@ export type UserUpdateOneRequiredWithoutInvitationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutInvitationsInput, Prisma.UserUpdateWithoutInvitationsInput>, Prisma.UserUncheckedUpdateWithoutInvitationsInput>;
 };
 
-export type UserCreateNestedOneWithoutTeamMembersInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutTeamMembersInput, Prisma.UserUncheckedCreateWithoutTeamMembersInput>;
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTeamMembersInput;
-  connect?: Prisma.UserWhereUniqueInput;
-};
-
-export type UserUpdateOneRequiredWithoutTeamMembersNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutTeamMembersInput, Prisma.UserUncheckedCreateWithoutTeamMembersInput>;
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTeamMembersInput;
-  upsert?: Prisma.UserUpsertWithoutTeamMembersInput;
-  connect?: Prisma.UserWhereUniqueInput;
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTeamMembersInput, Prisma.UserUpdateWithoutTeamMembersInput>, Prisma.UserUncheckedUpdateWithoutTeamMembersInput>;
-};
-
 export type UserCreateWithoutSessionsInput = {
   id?: string;
   name: string;
@@ -484,7 +463,6 @@ export type UserCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput;
   members?: Prisma.MemberCreateNestedManyWithoutUserInput;
   invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput;
-  teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -498,7 +476,6 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput;
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput;
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput;
-  teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -528,7 +505,6 @@ export type UserUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput;
   members?: Prisma.MemberUpdateManyWithoutUserNestedInput;
   invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput;
-  teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -542,7 +518,6 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput;
   members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput;
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput;
-  teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateWithoutAccountsInput = {
@@ -556,7 +531,6 @@ export type UserCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
   members?: Prisma.MemberCreateNestedManyWithoutUserInput;
   invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput;
-  teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -570,7 +544,6 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput;
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput;
-  teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -600,7 +573,6 @@ export type UserUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
   members?: Prisma.MemberUpdateManyWithoutUserNestedInput;
   invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput;
-  teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -614,7 +586,6 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
   members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput;
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput;
-  teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateWithoutMembersInput = {
@@ -628,7 +599,6 @@ export type UserCreateWithoutMembersInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput;
   invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput;
-  teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutMembersInput = {
@@ -642,7 +612,6 @@ export type UserUncheckedCreateWithoutMembersInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput;
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput;
-  teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutMembersInput = {
@@ -672,7 +641,6 @@ export type UserUpdateWithoutMembersInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput;
   invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput;
-  teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutMembersInput = {
@@ -686,7 +654,6 @@ export type UserUncheckedUpdateWithoutMembersInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput;
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput;
-  teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
 };
 
 export type UserCreateWithoutInvitationsInput = {
@@ -700,7 +667,6 @@ export type UserCreateWithoutInvitationsInput = {
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput;
   members?: Prisma.MemberCreateNestedManyWithoutUserInput;
-  teamMembers?: Prisma.TeamMemberCreateNestedManyWithoutUserInput;
 };
 
 export type UserUncheckedCreateWithoutInvitationsInput = {
@@ -714,7 +680,6 @@ export type UserUncheckedCreateWithoutInvitationsInput = {
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput;
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput;
-  teamMembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput;
 };
 
 export type UserCreateOrConnectWithoutInvitationsInput = {
@@ -744,7 +709,6 @@ export type UserUpdateWithoutInvitationsInput = {
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput;
   members?: Prisma.MemberUpdateManyWithoutUserNestedInput;
-  teamMembers?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput;
 };
 
 export type UserUncheckedUpdateWithoutInvitationsInput = {
@@ -758,79 +722,6 @@ export type UserUncheckedUpdateWithoutInvitationsInput = {
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput;
   members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput;
-  teamMembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput;
-};
-
-export type UserCreateWithoutTeamMembersInput = {
-  id?: string;
-  name: string;
-  email: string;
-  emailVerified?: boolean;
-  image?: string | null;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput;
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput;
-  members?: Prisma.MemberCreateNestedManyWithoutUserInput;
-  invitations?: Prisma.InvitationCreateNestedManyWithoutInviterInput;
-};
-
-export type UserUncheckedCreateWithoutTeamMembersInput = {
-  id?: string;
-  name: string;
-  email: string;
-  emailVerified?: boolean;
-  image?: string | null;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput;
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput;
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput;
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutInviterInput;
-};
-
-export type UserCreateOrConnectWithoutTeamMembersInput = {
-  where: Prisma.UserWhereUniqueInput;
-  create: Prisma.XOR<Prisma.UserCreateWithoutTeamMembersInput, Prisma.UserUncheckedCreateWithoutTeamMembersInput>;
-};
-
-export type UserUpsertWithoutTeamMembersInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutTeamMembersInput, Prisma.UserUncheckedUpdateWithoutTeamMembersInput>;
-  create: Prisma.XOR<Prisma.UserCreateWithoutTeamMembersInput, Prisma.UserUncheckedCreateWithoutTeamMembersInput>;
-  where?: Prisma.UserWhereInput;
-};
-
-export type UserUpdateToOneWithWhereWithoutTeamMembersInput = {
-  where?: Prisma.UserWhereInput;
-  data: Prisma.XOR<Prisma.UserUpdateWithoutTeamMembersInput, Prisma.UserUncheckedUpdateWithoutTeamMembersInput>;
-};
-
-export type UserUpdateWithoutTeamMembersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  name?: Prisma.StringFieldUpdateOperationsInput | string;
-  email?: Prisma.StringFieldUpdateOperationsInput | string;
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput;
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput;
-  members?: Prisma.MemberUpdateManyWithoutUserNestedInput;
-  invitations?: Prisma.InvitationUpdateManyWithoutInviterNestedInput;
-};
-
-export type UserUncheckedUpdateWithoutTeamMembersInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string;
-  name?: Prisma.StringFieldUpdateOperationsInput | string;
-  email?: Prisma.StringFieldUpdateOperationsInput | string;
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput;
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput;
-  members?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput;
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutInviterNestedInput;
 };
 
 /**
@@ -842,7 +733,6 @@ export type UserCountOutputType = {
   accounts: number;
   members: number;
   invitations: number;
-  teamMembers: number;
 };
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -850,7 +740,6 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs;
   members?: boolean | UserCountOutputTypeCountMembersArgs;
   invitations?: boolean | UserCountOutputTypeCountInvitationsArgs;
-  teamMembers?: boolean | UserCountOutputTypeCountTeamMembersArgs;
 };
 
 /**
@@ -891,13 +780,6 @@ export type UserCountOutputTypeCountInvitationsArgs<ExtArgs extends runtime.Type
   where?: Prisma.InvitationWhereInput;
 };
 
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountTeamMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TeamMemberWhereInput;
-};
-
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
@@ -911,7 +793,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>;
     members?: boolean | Prisma.User$membersArgs<ExtArgs>;
     invitations?: boolean | Prisma.User$invitationsArgs<ExtArgs>;
-    teamMembers?: boolean | Prisma.User$teamMembersArgs<ExtArgs>;
     _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['user']
@@ -936,7 +817,6 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>;
   members?: boolean | Prisma.User$membersArgs<ExtArgs>;
   invitations?: boolean | Prisma.User$invitationsArgs<ExtArgs>;
-  teamMembers?: boolean | Prisma.User$teamMembersArgs<ExtArgs>;
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
 };
 
@@ -947,7 +827,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     accounts: Prisma.$AccountPayload<ExtArgs>[];
     members: Prisma.$MemberPayload<ExtArgs>[];
     invitations: Prisma.$InvitationPayload<ExtArgs>[];
-    teamMembers: Prisma.$TeamMemberPayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -1313,9 +1192,6 @@ export interface Prisma__UserClient<
   invitations<T extends Prisma.User$invitationsArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.User$invitationsArgs<ExtArgs>>
   ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
-  teamMembers<T extends Prisma.User$teamMembersArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.User$teamMembersArgs<ExtArgs>>
-  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1792,30 +1668,6 @@ export type User$invitationsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number;
   skip?: number;
   distinct?: Prisma.InvitationScalarFieldEnum | Prisma.InvitationScalarFieldEnum[];
-};
-
-/**
- * User.teamMembers
- */
-export type User$teamMembersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the TeamMember
-   */
-  select?: Prisma.TeamMemberSelect<ExtArgs> | null;
-  /**
-   * Omit specific fields from the TeamMember
-   */
-  omit?: Prisma.TeamMemberOmit<ExtArgs> | null;
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TeamMemberInclude<ExtArgs> | null;
-  where?: Prisma.TeamMemberWhereInput;
-  orderBy?: Prisma.TeamMemberOrderByWithRelationInput | Prisma.TeamMemberOrderByWithRelationInput[];
-  cursor?: Prisma.TeamMemberWhereUniqueInput;
-  take?: number;
-  skip?: number;
-  distinct?: Prisma.TeamMemberScalarFieldEnum | Prisma.TeamMemberScalarFieldEnum[];
 };
 
 /**

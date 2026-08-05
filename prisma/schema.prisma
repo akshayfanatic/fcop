@@ -89,7 +89,6 @@ model User {
   accounts      Account[]
   members       Member[]
   invitations   Invitation[] @relation("InvitationInviter")
-  teamMembers   TeamMember[]
 
   @@map("user")
 }
@@ -105,7 +104,6 @@ model Session {
   userId               String   @db.VarChar(36)
   user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   activeOrganizationId String?  @db.VarChar(36)
-  activeTeamId         String?  @db.VarChar(36)
 
   @@index([userId])
   @@map("session")
@@ -152,7 +150,6 @@ model Organization {
   createdAt   DateTime           @default(now())
   members     Member[]
   invitations Invitation[]
-  teams       Team[]
   roles       OrganizationRole[]
 
   @@map("organization")
@@ -186,7 +183,6 @@ model Invitation {
   role            String?
   serviceInterest String?      @db.VarChar(64)
   status          String
-  teamId          String?      @db.VarChar(36)
   createdAt       DateTime     @default(now())
   expiresAt       DateTime
   inviter         User         @relation("InvitationInviter", fields: [inviterId], references: [id], onDelete: Cascade)
@@ -196,32 +192,6 @@ model Invitation {
   @@index([inviterId])
   @@index([organizationId])
   @@map("invitation")
-}
-
-model Team {
-  id             String       @id @default(cuid()) @db.VarChar(36)
-  name           String
-  organizationId String       @db.VarChar(36)
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime?    @updatedAt
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  members        TeamMember[]
-
-  @@index([organizationId])
-  @@map("team")
-}
-
-model TeamMember {
-  id        String   @id @default(cuid()) @db.VarChar(36)
-  teamId    String   @db.VarChar(36)
-  userId    String   @db.VarChar(36)
-  createdAt DateTime @default(now())
-  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([teamId])
-  @@index([userId])
-  @@map("teamMember")
 }
 
 model OrganizationRole {
