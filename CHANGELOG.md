@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/akshayfanatic/fcop/compare/v0.5.0...v0.6.0) (2026-08-05)
+
+### Features
+
+- **events:** added events , service, for managing chat events ([04ea40c](https://github.com/akshayfanatic/fcop/commit/04ea40c038e4101baee7664fce340fe78c12cc77))
+- **migraiton:** added new table for managing chat_history ([176d0e5](https://github.com/akshayfanatic/fcop/commit/176d0e56579ce56da7cd5c4506e7b174f55729c4))
+- **package:** added websocket pacakge for managing chat system ([a98200e](https://github.com/akshayfanatic/fcop/commit/a98200edb23ae27eaf838612714ae622b54293ad))
+
+### Bug Fixes
+
+- **migration:** remove teams related table ([035c44b](https://github.com/akshayfanatic/fcop/commit/035c44be081ad1a38edae293979da552837fe1f7))
+
+### Code Refactoring
+
+- **migration:** added migration for changes in db ([1c62efd](https://github.com/akshayfanatic/fcop/commit/1c62efd6203976b84423a6b40367e1aed3215a83))
+
 ## [0.5.0](https://github.com/akshayfanatic/fcop/compare/v0.4.0...v0.5.0) (2026-08-03)
 
 ### Features
