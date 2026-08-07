@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.1](https://github.com/akshayfanatic/fcop/compare/v0.6.0...v0.6.1) (2026-08-07)
+
+### Features
+
+- **docs:** added architecture file for understand high level design of system ([ad00499](https://github.com/akshayfanatic/fcop/commit/ad00499bf186e5f63e8228a985f9331dd5e90283))
+
+### Bug Fixes
+
+- **auth:** make user by defualt member role CLIENT ([d06cd1d](https://github.com/akshayfanatic/fcop/commit/d06cd1d02b3e505c143a8d9bc81774b259fd3e48))
+- **types:** added types to backend ([be38d9b](https://github.com/akshayfanatic/fcop/commit/be38d9b37c9af7bcd031ea1b6ade2e9b74e124da))
+
+### Code Refactoring
+
+- **permission:** remove serviceRequestMessage permission from auth ([83f1351](https://github.com/akshayfanatic/fcop/commit/83f13515063cdbe63a122a1d93e1fc1e066fddcd))
+- **task:** refactor open api specs added Task ([229b658](https://github.com/akshayfanatic/fcop/commit/229b6589165c16a1514bb5e38a94e39769c9af36))
+
 ## [0.6.0](https://github.com/akshayfanatic/fcop/compare/v0.5.0...v0.6.0) (2026-08-05)
 
 ### Features
