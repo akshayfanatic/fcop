@@ -16,6 +16,58 @@ import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from '../utils/paginat
 
 const enumValues = <T extends Record<string, string>>(values: T) => Object.values(values);
 
+const createDashboardGetOperation = (summary: string, operationId: string, schemaName: string, isArray = false) => ({
+  tags: ['Dashboard'],
+  summary,
+  operationId,
+  security: [
+    {
+      cookieAuth: []
+    }
+  ],
+  'x-requiredPermissions': {
+    dashboard: ['read']
+  },
+  responses: {
+    '200': {
+      description: `${summary} successfully.`,
+      content: {
+        'application/json': {
+          schema: {
+            allOf: [
+              {
+                $ref: '#/components/schemas/ApiResponse'
+              },
+              {
+                type: 'object',
+                required: ['data'],
+                properties: {
+                  data: isArray
+                    ? {
+                        type: 'array',
+                        items: {
+                          $ref: `#/components/schemas/${schemaName}`
+                        }
+                      }
+                    : {
+                        $ref: `#/components/schemas/${schemaName}`
+                      }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    '401': {
+      $ref: '#/components/responses/Unauthorized'
+    },
+    '403': {
+      $ref: '#/components/responses/Forbidden'
+    }
+  }
+});
+
 export const createOpenApiDocument = (baseUrl: string) => ({
   openapi: '3.0.3',
   info: {
@@ -61,6 +113,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     {
       name: 'Tasks',
       description: 'Project task and assignment endpoints.'
+    },
+    {
+      name: 'Dashboard',
+      description: 'Administrative workspace analytics endpoints.'
     }
   ],
   paths: {
@@ -82,6 +138,21 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       }
+    },
+    '/api/v1/dashboard/overview': {
+      get: createDashboardGetOperation('Fetch admin dashboard overview', 'getAdminDashboardOverview', 'AdminDashboardOverview')
+    },
+    '/api/v1/dashboard/leads': {
+      get: createDashboardGetOperation('Fetch admin lead status distribution', 'getAdminDashboardLeadDistribution', 'LeadStatusDistribution')
+    },
+    '/api/v1/dashboard/tasks': {
+      get: createDashboardGetOperation('Fetch admin task status distribution', 'getAdminDashboardTaskDistribution', 'TaskStatusDistribution')
+    },
+    '/api/v1/dashboard/recent/leads': {
+      get: createDashboardGetOperation('Fetch recent admin dashboard leads', 'getAdminDashboardRecentLeads', 'AdminDashboardRecentLead', true)
+    },
+    '/api/v1/dashboard/attention/tasks': {
+      get: createDashboardGetOperation('Fetch admin dashboard attention tasks', 'getAdminDashboardAttentionTasks', 'AdminDashboardAttentionTask', true)
     },
     '/api/v1/auth/request-password-reset': {
       post: {
@@ -1814,6 +1885,100 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         type: 'string',
         enum: enumValues(TaskPriority),
         example: TaskPriority.MEDIUM
+      },
+      AdminDashboardOverview: {
+        type: 'object',
+        required: ['totalLeads', 'newLeads', 'totalProjects', 'activeProjects', 'totalTasks', 'openTasks', 'completedTasks', 'totalServiceRequests', 'openServiceRequests'],
+        properties: {
+          totalLeads: { type: 'integer', minimum: 0, example: 24 },
+          newLeads: { type: 'integer', minimum: 0, example: 5 },
+          totalProjects: { type: 'integer', minimum: 0, example: 12 },
+          activeProjects: { type: 'integer', minimum: 0, example: 7 },
+          totalTasks: { type: 'integer', minimum: 0, example: 48 },
+          openTasks: { type: 'integer', minimum: 0, example: 18 },
+          completedTasks: { type: 'integer', minimum: 0, example: 30 },
+          totalServiceRequests: { type: 'integer', minimum: 0, example: 16 },
+          openServiceRequests: { type: 'integer', minimum: 0, example: 4 }
+        }
+      },
+      LeadStatusDistribution: {
+        type: 'object',
+        required: enumValues(LeadStatus),
+        properties: Object.fromEntries(enumValues(LeadStatus).map((status) => [status, { type: 'integer', minimum: 0, example: 0 }]))
+      },
+      TaskStatusDistribution: {
+        type: 'object',
+        required: enumValues(TaskStatus),
+        properties: Object.fromEntries(enumValues(TaskStatus).map((status) => [status, { type: 'integer', minimum: 0, example: 0 }]))
+      },
+      AdminDashboardRecentLead: {
+        type: 'object',
+        required: ['id', 'name', 'email', 'companyName', 'status', 'createdAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000004'
+          },
+          name: {
+            type: 'string',
+            example: 'Akshay Kumar'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'akshay@example.com'
+          },
+          companyName: {
+            type: 'string',
+            nullable: true,
+            example: 'Fanatic Coders'
+          },
+          status: {
+            $ref: '#/components/schemas/LeadStatus'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-06T06:30:00.000Z'
+          }
+        }
+      },
+      AdminDashboardAttentionTask: {
+        type: 'object',
+        required: ['id', 'projectId', 'title', 'priority', 'dueDate', 'project'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000030'
+          },
+          projectId: {
+            type: 'string',
+            example: 'clx0000000000000000000010'
+          },
+          title: {
+            type: 'string',
+            example: 'Review client feedback'
+          },
+          priority: {
+            $ref: '#/components/schemas/TaskPriority'
+          },
+          dueDate: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true,
+            example: '2026-07-08T06:30:00.000Z'
+          },
+          project: {
+            type: 'object',
+            required: ['name'],
+            properties: {
+              name: {
+                type: 'string',
+                example: 'FCOP Client Portal'
+              }
+            }
+          }
+        }
       },
       OrganizationRole: {
         type: 'string',
