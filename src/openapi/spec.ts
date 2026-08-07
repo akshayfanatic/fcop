@@ -1,8 +1,72 @@
-import { LeadSource, LeadStatus, ProjectCurrency, ProjectMemberRole, ProjectStatus, ProposalPaymentStatus, ProposalStatus, ServiceInterest, ServiceRequestStatus } from '../generated/prisma/enums.js';
+import {
+  LeadSource,
+  LeadStatus,
+  ProjectCurrency,
+  ProjectMemberRole,
+  ProjectStatus,
+  ProposalPaymentStatus,
+  ProposalStatus,
+  ServiceInterest,
+  ServiceRequestStatus,
+  TaskPriority,
+  TaskStatus
+} from '../generated/prisma/enums.js';
 import { Role } from '../lib/auth/permissions.js';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from '../utils/pagination.js';
 
 const enumValues = <T extends Record<string, string>>(values: T) => Object.values(values);
+
+const createDashboardGetOperation = (summary: string, operationId: string, schemaName: string, isArray = false) => ({
+  tags: ['Dashboard'],
+  summary,
+  operationId,
+  security: [
+    {
+      cookieAuth: []
+    }
+  ],
+  'x-requiredPermissions': {
+    dashboard: ['read']
+  },
+  responses: {
+    '200': {
+      description: `${summary} successfully.`,
+      content: {
+        'application/json': {
+          schema: {
+            allOf: [
+              {
+                $ref: '#/components/schemas/ApiResponse'
+              },
+              {
+                type: 'object',
+                required: ['data'],
+                properties: {
+                  data: isArray
+                    ? {
+                        type: 'array',
+                        items: {
+                          $ref: `#/components/schemas/${schemaName}`
+                        }
+                      }
+                    : {
+                        $ref: `#/components/schemas/${schemaName}`
+                      }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    '401': {
+      $ref: '#/components/responses/Unauthorized'
+    },
+    '403': {
+      $ref: '#/components/responses/Forbidden'
+    }
+  }
+});
 
 export const createOpenApiDocument = (baseUrl: string) => ({
   openapi: '3.0.3',
@@ -45,6 +109,14 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     {
       name: 'Projects',
       description: 'Project delivery management endpoints.'
+    },
+    {
+      name: 'Tasks',
+      description: 'Project task and assignment endpoints.'
+    },
+    {
+      name: 'Dashboard',
+      description: 'Administrative workspace analytics endpoints.'
     }
   ],
   paths: {
@@ -66,6 +138,21 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       }
+    },
+    '/api/v1/dashboard/overview': {
+      get: createDashboardGetOperation('Fetch admin dashboard overview', 'getAdminDashboardOverview', 'AdminDashboardOverview')
+    },
+    '/api/v1/dashboard/leads': {
+      get: createDashboardGetOperation('Fetch admin lead status distribution', 'getAdminDashboardLeadDistribution', 'LeadStatusDistribution')
+    },
+    '/api/v1/dashboard/tasks': {
+      get: createDashboardGetOperation('Fetch admin task status distribution', 'getAdminDashboardTaskDistribution', 'TaskStatusDistribution')
+    },
+    '/api/v1/dashboard/recent/leads': {
+      get: createDashboardGetOperation('Fetch recent admin dashboard leads', 'getAdminDashboardRecentLeads', 'AdminDashboardRecentLead', true)
+    },
+    '/api/v1/dashboard/attention/tasks': {
+      get: createDashboardGetOperation('Fetch admin dashboard attention tasks', 'getAdminDashboardAttentionTasks', 'AdminDashboardAttentionTask', true)
     },
     '/api/v1/auth/request-password-reset': {
       post: {
@@ -1276,6 +1363,206 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/projects/{projectId}/tasks': {
+      get: {
+        tags: ['Tasks'],
+        summary: 'Fetch project tasks',
+        description: 'Returns tasks for a project visible to the current member. Members receive only tasks assigned to them.',
+        operationId: 'getProjectTasks',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          task: ['read']
+        },
+        parameters: [{ $ref: '#/components/parameters/TaskProjectId' }],
+        responses: {
+          '200': {
+            description: 'Tasks fetched successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TasksResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid project id.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Project was not found or is unavailable to the current member.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      },
+      post: {
+        tags: ['Tasks'],
+        summary: 'Create a project task',
+        description: 'Creates a task in an accessible project. Only Admin and Manager members can create and assign tasks.',
+        operationId: 'createProjectTask',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          task: ['create']
+        },
+        parameters: [{ $ref: '#/components/parameters/TaskProjectId' }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/CreateTaskRequest' }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Task created successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TaskResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid task payload or assignee.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Project was not found or is unavailable to the current member.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/tasks': {
+      get: {
+        tags: ['Tasks'],
+        summary: 'Fetch visible tasks',
+        description: 'Returns tasks from accessible projects. Members receive only tasks assigned to them.',
+        operationId: 'getTasks',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          task: ['read']
+        },
+        responses: {
+          '200': {
+            description: 'Tasks fetched successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TasksResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' }
+        }
+      }
+    },
+    '/api/v1/tasks/{taskId}': {
+      put: {
+        tags: ['Tasks'],
+        summary: 'Update a task',
+        description: 'Updates an accessible task. Members can update assigned tasks but cannot change task assignments.',
+        operationId: 'updateTaskById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          task: ['update']
+        },
+        parameters: [{ $ref: '#/components/parameters/TaskId' }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/UpdateTaskRequest' }
+            }
+          }
+        },
+        responses: {
+          '200': {
+            description: 'Task updated successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TaskResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid or empty task update.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Task was not found or is unavailable to the current member.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      },
+      delete: {
+        tags: ['Tasks'],
+        summary: 'Delete a task',
+        description: 'Deletes an accessible task. Only Admin and Manager members can delete tasks.',
+        operationId: 'deleteTaskById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          task: ['delete']
+        },
+        parameters: [{ $ref: '#/components/parameters/TaskId' }],
+        responses: {
+          '200': {
+            description: 'Task deleted successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TaskResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid task id.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Task was not found or is unavailable to the current member.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      }
+    },
     '/api/v1/service-requests/{id}': {
       get: {
         tags: ['Service Requests'],
@@ -1520,6 +1807,26 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           minLength: 1
         },
         example: 'clx0000000000000000000010'
+      },
+      TaskProjectId: {
+        name: 'projectId',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000010'
+      },
+      TaskId: {
+        name: 'taskId',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000030'
       }
     },
     schemas: {
@@ -1568,6 +1875,110 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         enum: enumValues(ProjectCurrency),
         default: ProjectCurrency.USD,
         example: ProjectCurrency.USD
+      },
+      TaskStatus: {
+        type: 'string',
+        enum: enumValues(TaskStatus),
+        example: TaskStatus.TODO
+      },
+      TaskPriority: {
+        type: 'string',
+        enum: enumValues(TaskPriority),
+        example: TaskPriority.MEDIUM
+      },
+      AdminDashboardOverview: {
+        type: 'object',
+        required: ['totalLeads', 'newLeads', 'totalProjects', 'activeProjects', 'totalTasks', 'openTasks', 'completedTasks', 'totalServiceRequests', 'openServiceRequests'],
+        properties: {
+          totalLeads: { type: 'integer', minimum: 0, example: 24 },
+          newLeads: { type: 'integer', minimum: 0, example: 5 },
+          totalProjects: { type: 'integer', minimum: 0, example: 12 },
+          activeProjects: { type: 'integer', minimum: 0, example: 7 },
+          totalTasks: { type: 'integer', minimum: 0, example: 48 },
+          openTasks: { type: 'integer', minimum: 0, example: 18 },
+          completedTasks: { type: 'integer', minimum: 0, example: 30 },
+          totalServiceRequests: { type: 'integer', minimum: 0, example: 16 },
+          openServiceRequests: { type: 'integer', minimum: 0, example: 4 }
+        }
+      },
+      LeadStatusDistribution: {
+        type: 'object',
+        required: enumValues(LeadStatus),
+        properties: Object.fromEntries(enumValues(LeadStatus).map((status) => [status, { type: 'integer', minimum: 0, example: 0 }]))
+      },
+      TaskStatusDistribution: {
+        type: 'object',
+        required: enumValues(TaskStatus),
+        properties: Object.fromEntries(enumValues(TaskStatus).map((status) => [status, { type: 'integer', minimum: 0, example: 0 }]))
+      },
+      AdminDashboardRecentLead: {
+        type: 'object',
+        required: ['id', 'name', 'email', 'companyName', 'status', 'createdAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000004'
+          },
+          name: {
+            type: 'string',
+            example: 'Akshay Kumar'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'akshay@example.com'
+          },
+          companyName: {
+            type: 'string',
+            nullable: true,
+            example: 'Fanatic Coders'
+          },
+          status: {
+            $ref: '#/components/schemas/LeadStatus'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-07-06T06:30:00.000Z'
+          }
+        }
+      },
+      AdminDashboardAttentionTask: {
+        type: 'object',
+        required: ['id', 'projectId', 'title', 'priority', 'dueDate', 'project'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000030'
+          },
+          projectId: {
+            type: 'string',
+            example: 'clx0000000000000000000010'
+          },
+          title: {
+            type: 'string',
+            example: 'Review client feedback'
+          },
+          priority: {
+            $ref: '#/components/schemas/TaskPriority'
+          },
+          dueDate: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true,
+            example: '2026-07-08T06:30:00.000Z'
+          },
+          project: {
+            type: 'object',
+            required: ['name'],
+            properties: {
+              name: {
+                type: 'string',
+                example: 'FCOP Client Portal'
+              }
+            }
+          }
+        }
       },
       OrganizationRole: {
         type: 'string',
@@ -1640,7 +2051,6 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         example: {
           ac: ['read'],
           serviceRequest: ['create', 'read'],
-          serviceRequestMessage: ['create', 'read'],
           project: ['read'],
           dashboard: ['read']
         }
@@ -2442,6 +2852,281 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             $ref: '#/components/schemas/ProjectCurrency'
           }
         }
+      },
+      TaskUser: {
+        type: 'object',
+        required: ['id', 'name', 'email'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'seed-user-member'
+          },
+          name: {
+            type: 'string',
+            example: 'Delivery Member'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'member@example.com'
+          },
+          image: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            example: 'https://example.com/avatar.png'
+          }
+        }
+      },
+      TaskMember: {
+        type: 'object',
+        required: ['id', 'userId', 'organizationId', 'role', 'createdAt', 'user'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'seed-member-member'
+          },
+          userId: {
+            type: 'string',
+            example: 'seed-user-member'
+          },
+          organizationId: {
+            type: 'string',
+            example: 'seed-org-fanatic-coders'
+          },
+          role: {
+            $ref: '#/components/schemas/OrganizationRole'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-08-05T06:30:00.000Z'
+          },
+          user: {
+            $ref: '#/components/schemas/TaskUser'
+          }
+        }
+      },
+      TaskProjectReference: {
+        type: 'object',
+        required: ['id', 'name'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000010'
+          },
+          name: {
+            type: 'string',
+            example: 'Acme website redesign'
+          }
+        }
+      },
+      TaskAssignee: {
+        type: 'object',
+        required: ['id', 'taskId', 'projectId', 'memberId', 'createdAt', 'member'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000031'
+          },
+          taskId: {
+            type: 'string',
+            example: 'clx0000000000000000000030'
+          },
+          projectId: {
+            type: 'string',
+            example: 'clx0000000000000000000010'
+          },
+          memberId: {
+            type: 'string',
+            example: 'seed-member-member'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-08-05T06:30:00.000Z'
+          },
+          member: {
+            $ref: '#/components/schemas/TaskMember'
+          }
+        }
+      },
+      Task: {
+        type: 'object',
+        required: ['id', 'projectId', 'createdByMemberId', 'title', 'status', 'priority', 'createdAt', 'updatedAt', 'project', 'createdBy', 'assignees'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000030'
+          },
+          projectId: {
+            type: 'string',
+            example: 'clx0000000000000000000010'
+          },
+          createdByMemberId: {
+            type: 'string',
+            example: 'seed-member-manager'
+          },
+          title: {
+            type: 'string',
+            example: 'Build homepage wireframe'
+          },
+          description: {
+            type: 'string',
+            nullable: true,
+            example: 'Create the desktop and mobile homepage wireframes.'
+          },
+          status: {
+            $ref: '#/components/schemas/TaskStatus'
+          },
+          priority: {
+            $ref: '#/components/schemas/TaskPriority'
+          },
+          dueDate: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true,
+            example: '2026-08-15T00:00:00.000Z'
+          },
+          estimatedHours: {
+            nullable: true,
+            oneOf: [
+              { type: 'string', example: '8.50' },
+              { type: 'number', example: 8.5 }
+            ]
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-08-05T06:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-08-05T06:30:00.000Z'
+          },
+          project: {
+            $ref: '#/components/schemas/TaskProjectReference'
+          },
+          createdBy: {
+            $ref: '#/components/schemas/TaskMember'
+          },
+          assignees: {
+            type: 'array',
+            items: {
+              $ref: '#/components/schemas/TaskAssignee'
+            }
+          }
+        }
+      },
+      CreateTaskRequest: {
+        type: 'object',
+        required: ['title'],
+        properties: {
+          title: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 255,
+            example: 'Build homepage wireframe'
+          },
+          description: {
+            type: 'string',
+            nullable: true,
+            maxLength: 10000
+          },
+          status: {
+            $ref: '#/components/schemas/TaskStatus'
+          },
+          priority: {
+            $ref: '#/components/schemas/TaskPriority'
+          },
+          dueDate: {
+            type: 'string',
+            format: 'date-time'
+          },
+          estimatedHours: {
+            type: 'number',
+            minimum: 0,
+            maximum: 9999.99
+          },
+          assigneeMemberIds: {
+            type: 'array',
+            maxItems: 20,
+            items: {
+              type: 'string',
+              minLength: 1
+            },
+            default: []
+          }
+        }
+      },
+      UpdateTaskRequest: {
+        type: 'object',
+        minProperties: 1,
+        properties: {
+          title: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 255
+          },
+          description: {
+            type: 'string',
+            nullable: true,
+            maxLength: 10000
+          },
+          status: {
+            $ref: '#/components/schemas/TaskStatus'
+          },
+          priority: {
+            $ref: '#/components/schemas/TaskPriority'
+          },
+          dueDate: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true
+          },
+          estimatedHours: {
+            type: 'number',
+            nullable: true,
+            minimum: 0,
+            maximum: 9999.99
+          },
+          assigneeMemberIds: {
+            type: 'array',
+            maxItems: 20,
+            items: {
+              type: 'string',
+              minLength: 1
+            }
+          }
+        }
+      },
+      TaskResponse: {
+        allOf: [
+          { $ref: '#/components/schemas/ApiResponse' },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: { $ref: '#/components/schemas/Task' }
+            }
+          }
+        ]
+      },
+      TasksResponse: {
+        allOf: [
+          { $ref: '#/components/schemas/ApiResponse' },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'array',
+                items: { $ref: '#/components/schemas/Task' }
+              }
+            }
+          }
+        ]
       },
       RequestPasswordResetRequest: {
         type: 'object',

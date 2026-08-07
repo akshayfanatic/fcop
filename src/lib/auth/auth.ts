@@ -18,6 +18,23 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'mysql'
   }),
+  databaseHooks: {
+    session: {
+      create: {
+        before: async (session) => {
+          // Provision direct signups before login while invitations keep their assigned role.
+          const activeOrganizationId = await clientService.provisionDirectSignupClient(session.userId);
+
+          return {
+            data: {
+              ...session,
+              ...(activeOrganizationId ? { activeOrganizationId } : {})
+            }
+          };
+        }
+      }
+    }
+  },
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
@@ -31,6 +48,7 @@ export const auth = betterAuth({
       ac,
       roles: organizationRoles,
       creatorRole: Role.ADMIN,
+      allowUserToCreateOrganization: false,
       cancelPendingInvitationsOnReInvite: true,
       schema: {
         invitation: {
