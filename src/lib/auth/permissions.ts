@@ -17,12 +17,8 @@ const statement = {
   proposal: ['create', 'read', 'update', 'delete'],
   project: ['create', 'read', 'update', 'delete'],
   task: ['create', 'read', 'update', 'delete'],
-  deliverable: ['create', 'read', 'update', 'delete', 'download'],
-  comment: ['create', 'read', 'update', 'delete'],
-  file: ['upload', 'read', 'delete'],
-  timeEntry: ['create', 'read', 'update', 'delete'],
-  billing: ['read', 'update'],
-  revenue: ['read'],
+  comment: ['create'],
+  payment: ['read'],
   dashboard: ['read']
 } as const;
 
@@ -39,12 +35,8 @@ export const rolePermissionStatements = {
     proposal: ['create', 'read', 'update', 'delete'],
     project: ['create', 'read', 'update', 'delete'],
     task: ['create', 'read', 'update', 'delete'],
-    deliverable: ['create', 'read', 'update', 'delete', 'download'],
-    comment: ['create', 'read', 'update', 'delete'],
-    file: ['upload', 'read', 'delete'],
-    timeEntry: ['create', 'read', 'update', 'delete'],
-    billing: ['read', 'update'],
-    revenue: ['read'],
+    comment: ['create'],
+    payment: ['read'],
     dashboard: ['read']
   },
   [Role.MANAGER]: {
@@ -57,21 +49,15 @@ export const rolePermissionStatements = {
     proposal: ['create', 'read', 'update', 'delete'],
     project: ['create', 'read', 'update'],
     task: ['create', 'read', 'update', 'delete'],
-    deliverable: ['create', 'read', 'update', 'download'],
-    comment: ['create', 'read', 'update'],
-    file: ['upload', 'read'],
-    timeEntry: ['read'],
-    billing: ['read'],
+    comment: ['create'],
+    payment: ['read'],
     dashboard: ['read']
   },
   [Role.MEMBER]: {
     ac: ['read'],
     project: ['read'],
     task: ['read', 'update'],
-    deliverable: ['create', 'read', 'update', 'download'],
-    comment: ['create', 'read', 'update'],
-    file: ['upload', 'read'],
-    timeEntry: ['create', 'read', 'update'],
+    comment: ['create'],
     dashboard: ['read']
   },
   [Role.CLIENT]: {
@@ -80,10 +66,8 @@ export const rolePermissionStatements = {
     task: ['read'],
     serviceRequest: ['create', 'read'],
     proposal: ['read', 'update'],
-    deliverable: ['read', 'download'],
-    comment: ['create', 'read'],
-    file: ['read'],
-    billing: ['read'],
+    comment: ['create'],
+    payment: ['read'],
     dashboard: ['read']
   }
 } satisfies Record<Role, OrganizationPermission>;
