@@ -107,6 +107,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       description: 'Commercial proposals nested under service requests.'
     },
     {
+      name: 'Payments',
+      description: 'Invoice-backed organization and client payment history.'
+    },
+    {
       name: 'Projects',
       description: 'Project delivery management endpoints.'
     },
@@ -135,6 +139,91 @@ export const createOpenApiDocument = (baseUrl: string) => ({
                 }
               }
             }
+          }
+        }
+      }
+    },
+    '/api/v1/payments': {
+      get: {
+        tags: ['Payments'],
+        summary: 'Fetch payments',
+        description: 'Admin and Manager receive organization payment history. Client receives only payments for their own service requests.',
+        operationId: 'getPayments',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          payment: ['read']
+        },
+        parameters: [
+          {
+            name: 'status',
+            in: 'query',
+            description: 'Filter by payment status.',
+            schema: {
+              $ref: '#/components/schemas/ProposalPaymentStatus'
+            }
+          },
+          {
+            name: 'search',
+            in: 'query',
+            description: 'Filter by client name or email.',
+            schema: {
+              type: 'string',
+              minLength: 1,
+              maxLength: 255
+            }
+          },
+          {
+            name: 'page',
+            in: 'query',
+            description: 'One-based page number.',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              default: DEFAULT_PAGE
+            }
+          },
+          {
+            name: 'pageSize',
+            in: 'query',
+            description: 'Number of payments per page.',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              maximum: MAX_PAGE_SIZE,
+              default: DEFAULT_PAGE_SIZE
+            }
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Payments fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/PaymentsResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid payment filters.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
           }
         }
       }
@@ -2566,6 +2655,89 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       },
+      Payment: {
+        type: 'object',
+        required: ['id', 'proposalId', 'serviceRequestId', 'client', 'description', 'amount', 'currency', 'status', 'stripeInvoiceId', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000020'
+          },
+          proposalId: {
+            type: 'string',
+            example: 'clx0000000000000000000020'
+          },
+          serviceRequestId: {
+            type: 'string',
+            example: 'clx0000000000000000000006'
+          },
+          client: {
+            type: 'object',
+            required: ['id', 'name', 'email'],
+            properties: {
+              id: {
+                type: 'string',
+                example: 'clx0000000000000000000005'
+              },
+              name: {
+                type: 'string',
+                example: 'Acme Ltd'
+              },
+              email: {
+                type: 'string',
+                format: 'email',
+                example: 'billing@acme.example'
+              }
+            }
+          },
+          description: {
+            type: 'string',
+            example: 'Design and develop the agreed business website.'
+          },
+          amount: {
+            type: 'string',
+            example: '5000.00'
+          },
+          currency: {
+            $ref: '#/components/schemas/ProjectCurrency'
+          },
+          status: {
+            $ref: '#/components/schemas/ProposalPaymentStatus'
+          },
+          paidAt: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true
+          },
+          stripeInvoiceId: {
+            type: 'string',
+            example: 'in_1Example'
+          },
+          stripeInvoiceNumber: {
+            type: 'string',
+            nullable: true,
+            example: 'A1B2C3D4-0001'
+          },
+          stripeHostedInvoiceUrl: {
+            type: 'string',
+            format: 'uri',
+            nullable: true
+          },
+          stripeInvoicePdfUrl: {
+            type: 'string',
+            format: 'uri',
+            nullable: true
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time'
+          }
+        }
+      },
       CreateProposalRequest: {
         type: 'object',
         required: ['description', 'amount', 'currency'],
@@ -3372,6 +3544,34 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             properties: {
               data: {
                 $ref: '#/components/schemas/Proposal'
+              }
+            }
+          }
+        ]
+      },
+      PaymentsResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['items', 'pagination'],
+                properties: {
+                  items: {
+                    type: 'array',
+                    items: {
+                      $ref: '#/components/schemas/Payment'
+                    }
+                  },
+                  pagination: {
+                    $ref: '#/components/schemas/PaginationMeta'
+                  }
+                }
               }
             }
           }
