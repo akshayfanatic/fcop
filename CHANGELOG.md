@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/akshayfanatic/fcop/compare/v0.6.1...v0.7.0) (2026-08-08)
+
+### Features
+
+- **api:** added api endpoint and api route for payment ([43ba855](https://github.com/akshayfanatic/fcop/commit/43ba8559bf45368cd2e532b3f8c78e3aa56e8335))
+- **types:** added types and validations support ([9a33e68](https://github.com/akshayfanatic/fcop/commit/9a33e6858dfe78b8a464f0724359b5846a27d371))
+
+### Code Refactoring
+
+- **permissions:** remvoe statemsnts from permission which was not exists ([902e7b8](https://github.com/akshayfanatic/fcop/commit/902e7b8610bc51fa8a2f2e80160a990c5de31a5c))
+
 ### [0.6.1](https://github.com/akshayfanatic/fcop/compare/v0.6.0...v0.6.1) (2026-08-07)
 
 ### Features
