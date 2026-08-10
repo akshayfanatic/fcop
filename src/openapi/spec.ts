@@ -389,7 +389,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       post: {
         tags: ['Leads'],
         summary: 'Create a lead',
-        description: 'Creates a lead from an unauthenticated website form submission.',
+        description: 'Accepts an unauthenticated website enquiry. New contacts become leads; existing clients receive an email directing them to the authenticated service request flow.',
         operationId: 'createLead',
         requestBody: {
           required: true,
@@ -403,11 +403,11 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         },
         responses: {
           '201': {
-            description: 'Lead captured successfully.',
+            description: 'Request received successfully.',
             content: {
               'application/json': {
                 schema: {
-                  $ref: '#/components/schemas/LeadResponse'
+                  $ref: '#/components/schemas/LeadSubmissionResponse'
                 }
               }
             }
@@ -3493,6 +3493,29 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             properties: {
               data: {
                 $ref: '#/components/schemas/Lead'
+              }
+            }
+          }
+        ]
+      },
+      LeadSubmissionResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['accepted'],
+                properties: {
+                  accepted: {
+                    type: 'boolean',
+                    enum: [true]
+                  }
+                }
               }
             }
           }
