@@ -28,6 +28,9 @@ export const auth = betterAuth({
           if (provisionedClient.newClient) {
             // Send email to tell admin that a direct signup became a client.
             await sendNewClientRegisteredEmail(provisionedClient.newClient);
+
+            // Send welcome email after the self-registered client profile is ready.
+            await sendClientWelcomeEmail(provisionedClient.newClient);
           }
 
           return {
@@ -79,7 +82,11 @@ export const auth = betterAuth({
 
             if (client) {
               // Send welcome email after the invited client profile is ready.
-              await sendClientWelcomeEmail(payload);
+              await sendClientWelcomeEmail({
+                userName: payload.user.name,
+                userEmail: payload.user.email,
+                organizationName: payload.organization.name
+              });
             }
           } catch (error) {
             logger.error(

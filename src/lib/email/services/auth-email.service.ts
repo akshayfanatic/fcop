@@ -60,13 +60,9 @@ type SendNewClientRegisteredEmailParams = {
 };
 
 type SendClientWelcomeEmailParams = {
-  user: {
-    name: string;
-    email: string;
-  };
-  organization: {
-    name: string;
-  };
+  userName: string;
+  userEmail: string;
+  organizationName: string;
 };
 
 export const sendResetPasswordEmail = async ({ user, url, token }: SendResetPasswordParams) => {
@@ -161,16 +157,16 @@ export const sendMemberAcceptedInvitationEmail = async ({ invitation, member, us
   }
 };
 
-export const sendClientWelcomeEmail = async ({ user, organization }: SendClientWelcomeEmailParams) => {
+export const sendClientWelcomeEmail = async ({ userName, userEmail, organizationName }: SendClientWelcomeEmailParams) => {
   const dashboardUrl = new URL('/dashboard', env.frontendUrl).toString();
 
   try {
     // Send email to welcome the customer after their invited client profile is ready.
     await sendTemplateEmail({
-      to: user.email,
+      to: userEmail,
       template: createClientWelcomeEmailTemplate({
-        userName: user.name,
-        organizationName: organization.name,
+        userName,
+        organizationName,
         dashboardUrl
       })
     });
@@ -178,7 +174,7 @@ export const sendClientWelcomeEmail = async ({ user, organization }: SendClientW
     logger.error(
       {
         err: error,
-        userEmail: user.email
+        userEmail
       },
       'Failed to send client welcome email.'
     );
