@@ -12,6 +12,43 @@ type AcceptedMemberPayload = {
 const FCOP_ORGANIZATION_SLUG = 'fanatic-coders';
 
 export const clientService = {
+  findOrganizationClientByEmail: async (email: string) => {
+    try {
+      const normalizedEmail = email.trim().toLowerCase();
+
+      const client = await prisma.client.findFirst({
+        where: {
+          member: {
+            organization: {
+              slug: FCOP_ORGANIZATION_SLUG
+            },
+            user: {
+              email: normalizedEmail
+            }
+          }
+        },
+        select: {
+          id: true,
+          name: true,
+          member: {
+            select: {
+              user: {
+                select: {
+                  email: true
+                }
+              }
+            }
+          }
+        }
+      });
+
+      return client;
+    } catch (error) {
+      logger.error({ error, email }, 'Failed to find client by email.');
+      throw error;
+    }
+  },
+
   provisionDirectSignupClient: async (userId: string) => {
     try {
       const [user, organization] = await Promise.all([

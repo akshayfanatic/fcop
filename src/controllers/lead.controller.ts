@@ -53,12 +53,12 @@ export const leadController = {
   createLead: (async (req, res, next) => {
     try {
       const payload = createLeadSchema.parse(req.body);
-      const lead = await leadService.createLead(payload);
+      const result = await leadService.createLead(payload);
       const response = ApiResponse({
         success: true,
         status: HttpStatus.CREATED,
-        message: 'Lead captured successfully.',
-        data: lead
+        message: 'Request received successfully.',
+        data: result
       });
 
       res.status(HttpStatus.CREATED).json(response);
