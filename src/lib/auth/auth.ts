@@ -3,7 +3,7 @@ import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { bearer, organization } from 'better-auth/plugins';
 import { env } from '../../config/env.js';
 import { LeadStatus } from '../../generated/prisma/client.js';
-import { sendInvitationEmail, sendMemberAcceptedInvitationEmail, sendResetPasswordEmail } from '../email/index.js';
+import { sendClientWelcomeEmail, sendInvitationEmail, sendMemberAcceptedInvitationEmail, sendNewClientRegisteredEmail, sendResetPasswordEmail } from '../email/index.js';
 import { leadService } from '../../services/lead.service.js';
 import { clientService } from '../../services/client.service.js';
 import { logger } from '../logger.js';
@@ -23,12 +23,20 @@ export const auth = betterAuth({
       create: {
         before: async (session) => {
           // Provision direct signups before login while invitations keep their assigned role.
-          const activeOrganizationId = await clientService.provisionDirectSignupClient(session.userId);
+          const provisionedClient = await clientService.provisionDirectSignupClient(session.userId);
+
+          if (provisionedClient.newClient) {
+            // Send email to tell admin that a direct signup became a client.
+            await sendNewClientRegisteredEmail(provisionedClient.newClient);
+
+            // Send welcome email after the self-registered client profile is ready.
+            await sendClientWelcomeEmail(provisionedClient.newClient);
+          }
 
           return {
             data: {
               ...session,
-              ...(activeOrganizationId ? { activeOrganizationId } : {})
+              ...(provisionedClient.activeOrganizationId ? { activeOrganizationId: provisionedClient.activeOrganizationId } : {})
             }
           };
         }
@@ -70,7 +78,16 @@ export const auth = betterAuth({
 
           try {
             // Create client profile after invitation is accepted.
-            await clientService.createClient(payload);
+            const client = await clientService.createClient(payload);
+
+            if (client) {
+              // Send welcome email after the invited client profile is ready.
+              await sendClientWelcomeEmail({
+                userName: payload.user.name,
+                userEmail: payload.user.email,
+                organizationName: payload.organization.name
+              });
+            }
           } catch (error) {
             logger.error(
               {
