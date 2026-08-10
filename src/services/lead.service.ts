@@ -1,8 +1,9 @@
 import { type Prisma } from '../generated/prisma/client.js';
 import { env } from '../config/env.js';
-import { createNewLeadEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
+import { createExistingClientRequestEmailTemplate, createNewLeadEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
+import { clientService } from './client.service.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { createPaginatedData, getPaginationOffset } from '../utils/pagination.js';
@@ -61,6 +62,25 @@ export const leadService = {
 
   createLead: async (payload: CreateLeadInput) => {
     try {
+      const existingClient = await clientService.findOrganizationClientByEmail(payload.email);
+
+      if (existingClient) {
+        const serviceType = payload.serviceInterest.toLowerCase().replaceAll('_', '-');
+        const requestUrl = new URL(`/dashboard/services/new/${serviceType}`, env.frontendUrl);
+
+        // Send existing clients to their authenticated service request flow instead of creating another lead.
+        await sendTemplateEmail({
+          to: existingClient.member.user.email,
+          template: createExistingClientRequestEmailTemplate({
+            clientName: existingClient.name,
+            requestUrl: requestUrl.toString(),
+            serviceInterest: payload.serviceInterest
+          })
+        });
+
+        return { accepted: true } as const;
+      }
+
       const data = {
         name: payload.name,
         email: payload.email,
@@ -75,7 +95,7 @@ export const leadService = {
 
       if (!env.adminEmail) {
         logger.warn('ADMIN_EMAIL is not configured. Skipping new lead email notification.');
-        return lead;
+        return { accepted: true } as const;
       }
 
       try {
@@ -89,7 +109,7 @@ export const leadService = {
         logger.error({ error, leadId: lead.id }, 'Failed to send new lead email notification.');
       }
 
-      return lead;
+      return { accepted: true } as const;
     } catch (error) {
       logger.error({ error, email: payload.email }, 'Failed to create lead.');
       throw error;
