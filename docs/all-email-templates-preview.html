@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FCOP email template previews</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #030a13;
+        color: #ffffff;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .gallery-header {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 48px 20px 20px;
+      }
+
+      .gallery-header h1 {
+        margin: 0 0 10px;
+        font-size: 32px;
+        line-height: 38px;
+      }
+
+      .gallery-header p {
+        margin: 0;
+        color: #98a9ba;
+        font-size: 15px;
+        line-height: 24px;
+      }
+
+      .gallery {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 20px 20px 72px;
+      }
+
+      .preview-section {
+        margin-top: 48px;
+      }
+
+      .preview-label {
+        margin: 0 0 12px;
+        color: #b9cada;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 700;
+      }
+
+      .email-shell {
+        padding: 44px 16px;
+        border: 1px solid #17263a;
+        border-radius: 16px;
+        background: #07111f;
+      }
+
+      .email-card {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 14px;
+        background: #ffffff;
+        color: #172033;
+      }
+
+      .email-brand {
+        padding: 20px 40px;
+        border-bottom: 1px solid #252b3f;
+        background: #0d1121;
+        text-align: center;
+      }
+
+      .email-brand img {
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 0 auto;
+        border: 0;
+      }
+
+      .email-content {
+        padding: 40px;
+        text-align: center;
+      }
+
+      .email-content h2 {
+        margin: 0 0 18px;
+        color: #101828;
+        font-size: 30px;
+        line-height: 36px;
+        letter-spacing: -0.6px;
+      }
+
+      .email-content p {
+        margin: 0 0 16px;
+        color: #475467;
+        font-size: 16px;
+        line-height: 25px;
+      }
+
+      .email-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .email-button {
+        display: inline-block;
+        margin: 8px 0 4px;
+        padding: 14px 22px;
+        border-radius: 8px;
+        background: #0b8fbd;
+        color: #ffffff;
+        font-size: 15px;
+        line-height: 20px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .email-link {
+        color: #087da5;
+        overflow-wrap: anywhere;
+      }
+
+      .email-code {
+        padding: 12px;
+        border: 1px solid #e4eaf0;
+        border-radius: 8px;
+        background: #f5f8fb;
+        color: #172033 !important;
+        font-family: Consolas, Monaco, monospace;
+        font-size: 13px !important;
+        overflow-wrap: anywhere;
+      }
+
+      .email-footer {
+        padding: 22px 40px;
+        border-top: 1px solid #e4eaf0;
+        background: #f5f8fb;
+        color: #667085;
+        font-size: 12px;
+        line-height: 19px;
+        text-align: center;
+      }
+
+      .email-footer a {
+        color: #087da5;
+      }
+
+      @media (max-width: 620px) {
+        .gallery-header {
+          padding-top: 32px;
+        }
+
+        .gallery {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+
+        .email-shell {
+          padding: 20px 10px;
+        }
+
+        .email-brand,
+        .email-content,
+        .email-footer {
+          padding-left: 24px;
+          padding-right: 24px;
+        }
+
+        .email-content h2 {
+          font-size: 27px;
+          line-height: 33px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="gallery-header">
+      <h1>FCOP email previews</h1>
+      <p>Dummy content for reviewing the shared design across all current email templates.</p>
+    </header>
+
+    <main class="gallery">
+      <section class="preview-section">
+        <p class="preview-label">1. Invitation</p>
+        <div class="email-shell">
+          <article class="email-card">
+            <div class="email-brand"><img src="../src/assets/images/fcop.png" alt="FCOP" /></div>
+            <div class="email-content">
+              <h2>Join fanaticCoders</h2>
+              <p>Akshay invited ava@example.com to join fanaticCoders as Client.</p>
+              <p><a class="email-button" href="#">Accept invitation</a></p>
+              <p>If you did not expect this invitation, ignore this email.</p>
+            </div>
+            <footer class="email-footer">For more information, contact <a href="mailto:info@fanaticcoders.com">info@fanaticcoders.com</a></footer>
+          </article>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <p class="preview-label">2. Invitation accepted</p>
+        <div class="email-shell">
+          <article class="email-card">
+            <div class="email-brand"><img src="../src/assets/images/fcop.png" alt="FCOP" /></div>
+            <div class="email-content">
+              <h2>Invitation accepted</h2>
+              <p>Ava Reyes (ava@example.com) accepted the invitation to join fanaticCoders.</p>
+              <p><strong>Role:</strong> Client</p>
+              <p><strong>Member ID:</strong> member_12345</p>
+              <p><strong>Invitation ID:</strong> invitation_12345</p>
+            </div>
+            <footer class="email-footer">For more information, contact <a href="mailto:info@fanaticcoders.com">info@fanaticcoders.com</a></footer>
+          </article>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <p class="preview-label">3. New lead</p>
+        <div class="email-shell">
+          <article class="email-card">
+            <div class="email-brand"><img src="../src/assets/images/fcop.png" alt="FCOP" /></div>
+            <div class="email-content">
+              <h2>New lead captured</h2>
+              <p><strong>Name:</strong> Ava Reyes</p>
+              <p><strong>Email:</strong> ava@example.com</p>
+              <p><strong>Company:</strong> Northstar Studio</p>
+              <p><strong>Service:</strong> Web development</p>
+              <p><strong>Budget:</strong> $5,000 to $10,000</p>
+            </div>
+            <footer class="email-footer">For more information, contact <a href="mailto:info@fanaticcoders.com">info@fanaticcoders.com</a></footer>
+          </article>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <p class="preview-label">4. New service request</p>
+        <div class="email-shell">
+          <article class="email-card">
+            <div class="email-brand"><img src="../src/assets/images/fcop.png" alt="FCOP" /></div>
+            <div class="email-content">
+              <h2>New service request submitted</h2>
+              <p><strong>Client:</strong> Ava Reyes</p>
+              <p><strong>Email:</strong> ava@example.com</p>
+              <p><strong>Service:</strong> Web development</p>
+              <p><strong>Submitted:</strong> August 10, 2026 at 11:30 AM</p>
+              <p><strong>Request ID:</strong> request_12345</p>
+            </div>
+            <footer class="email-footer">For more information, contact <a href="mailto:info@fanaticcoders.com">info@fanaticcoders.com</a></footer>
+          </article>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <p class="preview-label">5. Project created</p>
+        <div class="email-shell">
+          <article class="email-card">
+            <div class="email-brand"><img src="../src/assets/images/fcop.png" alt="FCOP" /></div>
+            <div class="email-content">
+              <h2>Your project is ready</h2>
+              <p>Hi Ava, your Northstar website project is ready.</p>
+              <p><strong>Service:</strong> Web development</p>
+              <p><strong>Project manager:</strong> Rohan Mehta</p>
+              <p><strong>Start date:</strong> August 17, 2026</p>
+              <p><strong>Budget:</strong> USD 8,500</p>
+              <p><strong>Project ID:</strong> project_12345</p>
+            </div>
+            <footer class="email-footer">For more information, contact <a href="mailto:info@fanaticcoders.com">info@fanaticcoders.com</a></footer>
+          </article>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <p class="preview-label">6. Reset password</p>
+        <div class="email-shell">
+          <article class="email-card">
+            <div class="email-brand"><img src="../src/assets/images/fcop.png" alt="FCOP" /></div>
+            <div class="email-content">
+              <h2>Reset your password</h2>
+              <p>We received a request to reset your FCOP password.</p>
+              <p><a class="email-button" href="#">Reset password</a></p>
+              <p>If the button does not work, use this reset token:</p>
+              <p class="email-code">reset_token_8fb19a0d7521</p>
+              <p>If you did not request a password reset, ignore this email.</p>
+            </div>
+            <footer class="email-footer">For more information, contact <a href="mailto:info@fanaticcoders.com">info@fanaticcoders.com</a></footer>
+          </article>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <p class="preview-label">7. Task assigned</p>
+        <div class="email-shell">
+          <article class="email-card">
+            <div class="email-brand"><img src="../src/assets/images/fcop.png" alt="FCOP" /></div>
+            <div class="email-content">
+              <h2>New task assigned</h2>
+              <p>Hi Rohan, you were assigned a task in Northstar website.</p>
+              <p><strong>Task:</strong> Build responsive navigation</p>
+              <p><strong>Priority:</strong> High</p>
+              <p><strong>Due date:</strong> August 14, 2026</p>
+              <p><strong>Assigned by:</strong> Akshay</p>
+              <p><a class="email-link" href="#">Open project</a></p>
+            </div>
+            <footer class="email-footer">For more information, contact <a href="mailto:info@fanaticcoders.com">info@fanaticcoders.com</a></footer>
+          </article>
+        </div>
+      </section>
+
+      <section class="preview-section">
+        <p class="preview-label">8. Email setup test</p>
+        <div class="email-shell">
+          <article class="email-card">
+            <div class="email-brand"><img src="../src/assets/images/fcop.png" alt="FCOP" /></div>
+            <div class="email-content">
+              <h2>Email setup works</h2>
+              <p>Hi Ava,</p>
+              <p>Resend is configured and this message was sent through the FCOP backend email layer.</p>
+            </div>
+            <footer class="email-footer">For more information, contact <a href="mailto:info@fanaticcoders.com">info@fanaticcoders.com</a></footer>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
