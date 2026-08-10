@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.1](https://github.com/akshayfanatic/fcop/compare/v0.7.0...v0.7.1) (2026-08-10)
+
+### Features
+
+- **dockerfile:** update docker file and import assets to image when creating new container ([9ea32de](https://github.com/akshayfanatic/fcop/commit/9ea32ded045aaec9059e84d02661393058cc6b52))
+- **email:** added a new template for creating existing email request ([6cc7fe8](https://github.com/akshayfanatic/fcop/commit/6cc7fe8ca071fed029f053b23c515bda1de33f49))
+- **html:** created new email html template design and assets image ([a86bc79](https://github.com/akshayfanatic/fcop/commit/a86bc790ee4938e42616c8f44282e596bd086f57))
+
+### Code Refactoring
+
+- **lead:** prevent creating lead if email is already exist ([50e625e](https://github.com/akshayfanatic/fcop/commit/50e625e933a49708ddb8e09c01e006637d5e1e22))
+- **template:** updated all email templates with new design ([9d4b8cf](https://github.com/akshayfanatic/fcop/commit/9d4b8cfdcba7e29131e7b6b5876cb59355614708))
+
 ## [0.7.0](https://github.com/akshayfanatic/fcop/compare/v0.6.1...v0.7.0) (2026-08-08)
 
 ### Features
