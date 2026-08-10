@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express from 'express';
+import path from 'node:path';
 import { toNodeHandler } from 'better-auth/node';
 import { env } from './config/env.js';
 import { auth } from './lib/auth/auth.js';
@@ -23,6 +24,9 @@ app.use(
 );
 
 app.use(requestLogger);
+
+// Serve email brand assets from a stable public URL.
+app.use('/assets', express.static(path.join(process.cwd(), 'src/assets')));
 
 app.all('/api/auth/*', async (req, res) => {
   await authHandler(req, res);

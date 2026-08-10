@@ -47,16 +47,16 @@ export const createTaskAssignedEmailTemplate = ({ task, assigneeName, projectUrl
       <BaseEmail previewText={`You were assigned to ${task.title}.`}>
         <h1 style={emailStyles.heading}>New task assigned</h1>
         <p style={emailStyles.text}>Hi {assigneeName},</p>
-        <p style={emailStyles.text}>
-          You were assigned to a task in {task.project.name}. Review the details and update the
-          status when work starts.
-        </p>
+        <p style={emailStyles.text}>You were assigned to a task in {task.project.name}. Review the details and update the status when work starts.</p>
         <p style={emailStyles.text}>Task: {task.title}</p>
         <p style={emailStyles.text}>Priority: {priorityLabel}</p>
         <p style={emailStyles.text}>Due date: {formatDate(task.dueDate)}</p>
         <p style={emailStyles.text}>Assigned by: {task.createdBy.user.name}</p>
         <p style={emailStyles.text}>
-          Project link: <a href={projectUrl}>{projectUrl}</a>
+          Project link:{' '}
+          <a href={projectUrl} style={emailStyles.link}>
+            {projectUrl}
+          </a>
         </p>
         <p style={emailStyles.lastText}>Task ID: {task.id}</p>
       </BaseEmail>

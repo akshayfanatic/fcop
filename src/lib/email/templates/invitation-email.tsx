@@ -10,17 +10,6 @@ type InvitationEmailProps = {
   role: string;
 };
 
-const buttonStyle = {
-  display: 'inline-block',
-  backgroundColor: '#111827',
-  color: '#ffffff',
-  padding: '12px 18px',
-  borderRadius: '6px',
-  fontSize: '15px',
-  fontWeight: 700,
-  textDecoration: 'none'
-};
-
 export const createInvitationEmailTemplate = ({ acceptUrl, invitedEmail, inviterName, organizationName, role }: InvitationEmailProps): EmailTemplate => ({
   subject: `You're invited to ${organizationName}`,
   react: (
@@ -30,11 +19,16 @@ export const createInvitationEmailTemplate = ({ acceptUrl, invitedEmail, inviter
         {inviterName} invited {invitedEmail} to join {organizationName} as {role}.
       </p>
       <p style={emailStyles.text}>
-        <a href={acceptUrl} style={buttonStyle}>
+        <a href={acceptUrl} style={emailStyles.button}>
           Accept invitation
         </a>
       </p>
-      <p style={emailStyles.lastText}>If the button does not work, copy and paste this link into your browser: {acceptUrl}</p>
+      <p style={emailStyles.lastText}>
+        If the button does not work, use this link:{' '}
+        <a href={acceptUrl} style={emailStyles.link}>
+          {acceptUrl}
+        </a>
+      </p>
     </BaseEmail>
   ),
   text: [

@@ -7,17 +7,6 @@ type ResetPasswordEmailProps = {
   token: string;
 };
 
-const buttonStyle = {
-  display: 'inline-block',
-  backgroundColor: '#111827',
-  color: '#ffffff',
-  padding: '12px 18px',
-  borderRadius: '6px',
-  fontSize: '15px',
-  fontWeight: 700,
-  textDecoration: 'none'
-};
-
 const tokenStyle = {
   margin: '0 0 16px',
   padding: '12px',
@@ -38,7 +27,7 @@ export const createResetPasswordEmailTemplate = ({ resetUrl, token }: ResetPassw
       <h1 style={emailStyles.heading}>Reset your password</h1>
       <p style={emailStyles.text}>We received a request to reset your FCOP password. Use the button below to continue.</p>
       <p style={emailStyles.text}>
-        <a href={resetUrl} style={buttonStyle}>
+        <a href={resetUrl} style={emailStyles.button}>
           Reset password
         </a>
       </p>

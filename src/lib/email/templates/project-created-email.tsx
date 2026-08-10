@@ -60,10 +60,7 @@ export const createProjectCreatedEmailTemplate = ({ project }: ProjectCreatedEma
       <BaseEmail previewText={`Your project ${project.name} is now set up.`}>
         <h1 style={emailStyles.heading}>Your project is ready</h1>
         <p style={emailStyles.text}>Hi {project.client.member.user.name},</p>
-        <p style={emailStyles.text}>
-          We created your project workspace for {project.name}. Our team will use it to manage delivery,
-          updates, and next steps.
-        </p>
+        <p style={emailStyles.text}>We created your project workspace for {project.name}. Our team will use it to manage delivery, updates, and next steps.</p>
         <p style={emailStyles.text}>Service: {serviceLabel}</p>
         <p style={emailStyles.text}>Project manager: {manager?.name ?? 'To be assigned'}</p>
         <p style={emailStyles.text}>Start date: {formatDate(project.startDate)}</p>
