@@ -1,4 +1,4 @@
-export { sendInvitationEmail, sendMemberAcceptedInvitationEmail, sendResetPasswordEmail } from './services/auth-email.service.js';
+export { sendInvitationEmail, sendMemberAcceptedInvitationEmail, sendNewClientRegisteredEmail, sendResetPasswordEmail } from './services/auth-email.service.js';
 export { sendEmail, sendReactEmail, sendTemplateEmail } from './services/email.service.js';
 export { createNewLeadEmailTemplate } from './templates/new-lead-email.js';
 export { createExistingClientRequestEmailTemplate } from './templates/existing-client-request-email.js';
@@ -6,6 +6,7 @@ export { createNewServiceRequestEmailTemplate } from './templates/new-service-re
 export { createProjectCreatedEmailTemplate } from './templates/project-created-email.js';
 export { createInvitationEmailTemplate } from './templates/invitation-email.js';
 export { createMemberAcceptedInvitationEmailTemplate } from './templates/member-accepted-invitation-email.js';
+export { createNewClientRegisteredEmailTemplate } from './templates/new-client-registered-email.js';
 export { createResetPasswordEmailTemplate } from './templates/reset-password-email.js';
 export { createTaskAssignedEmailTemplate } from './templates/task-assigned-email.js';
 export { createTestEmailTemplate } from './templates/test-email.js';

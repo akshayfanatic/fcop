@@ -2,6 +2,7 @@ import { logger } from '../../logger.js';
 import { env } from '../../../config/env.js';
 import { createInvitationEmailTemplate } from '../templates/invitation-email.js';
 import { createMemberAcceptedInvitationEmailTemplate } from '../templates/member-accepted-invitation-email.js';
+import { createNewClientRegisteredEmailTemplate } from '../templates/new-client-registered-email.js';
 import { createResetPasswordEmailTemplate } from '../templates/reset-password-email.js';
 import { sendTemplateEmail } from './email.service.js';
 
@@ -47,6 +48,14 @@ type SendMemberAcceptedInvitationEmailParams = {
   organization: {
     name: string;
   };
+};
+
+type SendNewClientRegisteredEmailParams = {
+  clientId: string;
+  memberId: string;
+  userName: string;
+  userEmail: string;
+  organizationName: string;
 };
 
 export const sendResetPasswordEmail = async ({ user, url, token }: SendResetPasswordParams) => {
@@ -137,6 +146,38 @@ export const sendMemberAcceptedInvitationEmail = async ({ invitation, member, us
         userEmail: user.email
       },
       'Failed to send member accepted invitation email.'
+    );
+  }
+};
+
+export const sendNewClientRegisteredEmail = async (client: SendNewClientRegisteredEmailParams) => {
+  if (!env.adminEmail) {
+    logger.warn(
+      {
+        clientId: client.clientId,
+        memberId: client.memberId,
+        userEmail: client.userEmail
+      },
+      'ADMIN_EMAIL is not configured. Skipping new client registered email.'
+    );
+    return;
+  }
+
+  try {
+    // Send email to tell admin that a direct signup became a client.
+    await sendTemplateEmail({
+      to: env.adminEmail,
+      template: createNewClientRegisteredEmailTemplate(client)
+    });
+  } catch (error) {
+    logger.error(
+      {
+        err: error,
+        clientId: client.clientId,
+        memberId: client.memberId,
+        userEmail: client.userEmail
+      },
+      'Failed to send new client registered email.'
     );
   }
 };

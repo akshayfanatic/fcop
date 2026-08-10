@@ -58,7 +58,7 @@ export const clientService = {
         }),
         prisma.organization.findUnique({
           where: { slug: FCOP_ORGANIZATION_SLUG },
-          select: { id: true }
+          select: { id: true, name: true }
         })
       ]);
 
@@ -90,7 +90,10 @@ export const clientService = {
           });
         }
 
-        return organization.id;
+        return {
+          activeOrganizationId: organization.id,
+          newClient: null
+        };
       }
 
       const pendingInvitation = await prisma.invitation.findFirst({
@@ -104,11 +107,14 @@ export const clientService = {
 
       // Preserve the role selected by an invitation instead of defaulting invited staff to Client.
       if (pendingInvitation) {
-        return null;
+        return {
+          activeOrganizationId: null,
+          newClient: null
+        };
       }
 
       // Add direct signups to the existing organization with their required client profile.
-      await prisma.member.create({
+      const member = await prisma.member.create({
         data: {
           userId: user.id,
           organizationId: organization.id,
@@ -118,8 +124,20 @@ export const clientService = {
               name: user.name
             }
           }
+        },
+        select: {
+          id: true,
+          client: {
+            select: {
+              id: true
+            }
+          }
         }
       });
+
+      if (!member.client) {
+        throw new Error('Direct signup client profile was not created.');
+      }
 
       logger.info(
         {
@@ -129,7 +147,16 @@ export const clientService = {
         'Provisioned direct signup as an organization client.'
       );
 
-      return organization.id;
+      return {
+        activeOrganizationId: organization.id,
+        newClient: {
+          clientId: member.client.id,
+          memberId: member.id,
+          userName: user.name,
+          userEmail: user.email,
+          organizationName: organization.name
+        }
+      };
     } catch (error) {
       logger.error({ error, userId }, 'Failed to provision direct signup as an organization client.');
       throw error;
