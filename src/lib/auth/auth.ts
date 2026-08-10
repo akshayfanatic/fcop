@@ -3,7 +3,7 @@ import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { bearer, organization } from 'better-auth/plugins';
 import { env } from '../../config/env.js';
 import { LeadStatus } from '../../generated/prisma/client.js';
-import { sendInvitationEmail, sendMemberAcceptedInvitationEmail, sendNewClientRegisteredEmail, sendResetPasswordEmail } from '../email/index.js';
+import { sendClientWelcomeEmail, sendInvitationEmail, sendMemberAcceptedInvitationEmail, sendNewClientRegisteredEmail, sendResetPasswordEmail } from '../email/index.js';
 import { leadService } from '../../services/lead.service.js';
 import { clientService } from '../../services/client.service.js';
 import { logger } from '../logger.js';
@@ -75,7 +75,12 @@ export const auth = betterAuth({
 
           try {
             // Create client profile after invitation is accepted.
-            await clientService.createClient(payload);
+            const client = await clientService.createClient(payload);
+
+            if (client) {
+              // Send welcome email after the invited client profile is ready.
+              await sendClientWelcomeEmail(payload);
+            }
           } catch (error) {
             logger.error(
               {
