@@ -6,6 +6,7 @@ import { Role } from '../lib/auth/permissions.js';
 import { getSessionMember } from '../lib/auth/session.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
+import { notificationService } from './notification.service.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { getProjectAccessWhere } from '../utils/project/project-access.js';
@@ -285,6 +286,14 @@ export const taskService = {
         });
       });
 
+      // Notify assignees after task creation without coupling notification delivery to the task transaction.
+      await notificationService.createForMembers({
+        memberIds: assigneeMemberIds ?? [],
+        title: 'New task assigned',
+        message: `You were assigned to "${task.title}".`,
+        link: `/dashboard/projects/${projectId}`
+      });
+
       await sendTaskAssignedEmails(task, assigneeMemberIds ?? []);
 
       return task;
@@ -368,6 +377,14 @@ export const taskService = {
       });
 
       const newAssigneeIds = assigneeMemberIds?.filter((assigneeMemberId) => !previousAssigneeIds.includes(assigneeMemberId)) ?? [];
+
+      // Notify only newly added assignees without coupling notification delivery to the task transaction.
+      await notificationService.createForMembers({
+        memberIds: newAssigneeIds,
+        title: 'New task assigned',
+        message: `You were assigned to "${updatedTask.title}".`,
+        link: `/dashboard/projects/${task.projectId}`
+      });
 
       await sendTaskAssignedEmails(updatedTask, newAssigneeIds);
 

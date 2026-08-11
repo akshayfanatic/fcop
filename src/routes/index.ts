@@ -11,6 +11,7 @@ import { projectRouter } from './projects.js';
 import { serviceRequestRouter } from './service-requests.js';
 import { taskRouter } from './tasks.js';
 import { dashboardRouter } from './dashboard.js';
+import { notificationRouter } from './notifications.js';
 
 export const apiRouter = Router();
 
@@ -26,3 +27,4 @@ apiRouter.use('/api/v1/projects', projectRouter); // Project delivery management
 apiRouter.use('/api/v1/service-requests', serviceRequestRouter); // Service requests and consultation messages.
 apiRouter.use('/api/v1/tasks', taskRouter); // Task detail update and delete routes.
 apiRouter.use('/api/v1/dashboard', dashboardRouter);
+apiRouter.use('/api/v1/notifications', notificationRouter); // Current member notification inbox.
