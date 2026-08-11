@@ -8,7 +8,8 @@ export const serviceRequestProposalParamsSchema = z.object({
 export const createProposalSchema = z.object({
   description: z.string().trim().min(1).max(10000),
   amount: z.coerce.number().positive(),
-  currency: z.string().trim().toUpperCase().pipe(z.enum(ProjectCurrency))
+  currency: z.string().trim().toUpperCase().pipe(z.enum(ProjectCurrency)),
+  status: z.enum([ProposalStatus.DRAFT, ProposalStatus.SENT]).optional()
 });
 
 export const updateProposalSchema = createProposalSchema

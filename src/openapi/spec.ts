@@ -2894,6 +2894,11 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           },
           currency: {
             $ref: '#/components/schemas/ProjectCurrency'
+          },
+          status: {
+            type: 'string',
+            enum: [ProposalStatus.DRAFT, ProposalStatus.SENT],
+            example: ProposalStatus.DRAFT
           }
         }
       },

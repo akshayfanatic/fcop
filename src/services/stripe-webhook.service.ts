@@ -1,11 +1,16 @@
 import type Stripe from 'stripe';
+import { SERVICE_INTEREST_OPTIONS } from '../constants/enum.js';
 import { env } from '../config/env.js';
-import { ProposalPaymentStatus } from '../generated/prisma/client.js';
+import { ProposalPaymentStatus, type ProjectCurrency } from '../generated/prisma/client.js';
+import { Role } from '../lib/auth/permissions.js';
+import { createAdminPaymentReceivedEmailTemplate, createClientPaymentReceivedEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
 import { getStripeClient } from '../lib/stripe/client.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
+import { getOptionLabel } from '../utils/options.js';
+import { notificationService } from './notification.service.js';
 
 const constructStripeEvent = (payload: Buffer, signature: string) => {
   if (!env.stripeWebhookSecret) {
@@ -20,11 +25,95 @@ const constructStripeEvent = (payload: Buffer, signature: string) => {
   }
 };
 
+type PaymentRecipient = {
+  memberId: string;
+  name: string;
+  email: string;
+  audience: 'client' | 'admin';
+};
+
+type PaymentDetails = {
+  serviceRequestId: string;
+  clientName: string;
+  serviceLabel: string;
+  amount: string;
+  currency: ProjectCurrency;
+  invoiceNumber: string | null;
+};
+
+const sendPaymentReceivedEmails = async (recipients: PaymentRecipient[], payment: PaymentDetails) => {
+  const serviceRequestUrl = new URL(`/dashboard/services/${payment.serviceRequestId}`, env.frontendUrl).toString();
+
+  await Promise.all(
+    recipients.map(async (recipient) => {
+      try {
+        const templateInput = {
+          recipientName: recipient.name,
+          clientName: payment.clientName,
+          serviceLabel: payment.serviceLabel,
+          amount: payment.amount,
+          currency: payment.currency,
+          serviceRequestUrl,
+          invoiceNumber: payment.invoiceNumber
+        };
+
+        // Send payment confirmation to each affected customer or administrator.
+        await sendTemplateEmail({
+          to: recipient.email,
+          template: recipient.audience === 'client' ? createClientPaymentReceivedEmailTemplate(templateInput) : createAdminPaymentReceivedEmailTemplate(templateInput)
+        });
+      } catch (error) {
+        logger.error({ error, memberId: recipient.memberId, serviceRequestId: payment.serviceRequestId }, 'Failed to send payment received email.');
+      }
+    })
+  );
+};
+
+const createPaymentReceivedNotifications = async (clientMemberId: string, adminMemberIds: string[], payment: PaymentDetails) => {
+  const link = `/dashboard/services/${payment.serviceRequestId}`;
+  const amount = `${payment.currency} ${payment.amount}`;
+
+  await Promise.all([
+    notificationService.createForMembers({
+      memberIds: [clientMemberId],
+      title: 'Payment received',
+      message: `Your payment of ${amount} for ${payment.serviceLabel} was received successfully.`,
+      link
+    }),
+    notificationService.createForMembers({
+      memberIds: adminMemberIds,
+      title: 'Customer payment received',
+      message: `${payment.clientName} paid ${amount} for ${payment.serviceLabel}.`,
+      link
+    })
+  ]);
+};
+
 const handleInvoicePaid = async (event: Stripe.InvoicePaidEvent) => {
   const invoice = event.data.object;
   const proposal = await prisma.proposal.findUnique({
     where: {
       stripeInvoiceId: invoice.id
+    },
+    include: {
+      serviceRequest: {
+        include: {
+          client: {
+            include: {
+              member: {
+                include: {
+                  user: {
+                    select: {
+                      name: true,
+                      email: true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   });
 
@@ -44,6 +133,56 @@ const handleInvoicePaid = async (event: Stripe.InvoicePaidEvent) => {
       paidAt: new Date(event.created * 1000)
     }
   });
+
+  if (result.count === 1) {
+    const clientMember = proposal.serviceRequest.client.member;
+    const admins = await prisma.member.findMany({
+      where: {
+        organizationId: clientMember.organizationId,
+        role: Role.ADMIN
+      },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true
+          }
+        }
+      }
+    });
+    const payment = {
+      serviceRequestId: proposal.serviceRequestId,
+      clientName: proposal.serviceRequest.client.name,
+      serviceLabel: getOptionLabel(SERVICE_INTEREST_OPTIONS, proposal.serviceRequest.service),
+      amount: proposal.amount.toString(),
+      currency: proposal.currency,
+      invoiceNumber: invoice.number
+    } satisfies PaymentDetails;
+    const recipients: PaymentRecipient[] = [
+      {
+        memberId: clientMember.id,
+        name: clientMember.user.name,
+        email: clientMember.user.email,
+        audience: 'client'
+      },
+      ...admins.map((admin) => ({
+        memberId: admin.id,
+        name: admin.user.name,
+        email: admin.user.email,
+        audience: 'admin' as const
+      }))
+    ];
+
+    // Tell the client and organization administrators that payment completed.
+    await Promise.all([
+      sendPaymentReceivedEmails(recipients, payment),
+      createPaymentReceivedNotifications(
+        clientMember.id,
+        admins.map((admin) => admin.id),
+        payment
+      )
+    ]);
+  }
 
   logger.info(
     {
