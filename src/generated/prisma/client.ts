@@ -75,6 +75,11 @@ export type Organization = Prisma.OrganizationModel;
  */
 export type Member = Prisma.MemberModel;
 /**
+ * Model Notification
+ *
+ */
+export type Notification = Prisma.NotificationModel;
+/**
  * Model Invitation
  *
  */

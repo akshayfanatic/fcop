@@ -54,6 +54,7 @@ export const ModelName = {
   Verification: 'Verification',
   Organization: 'Organization',
   Member: 'Member',
+  Notification: 'Notification',
   Invitation: 'Invitation',
   OrganizationRole: 'OrganizationRole',
   Client: 'Client',
@@ -157,6 +158,18 @@ export const MemberScalarFieldEnum = {
 } as const;
 
 export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof MemberScalarFieldEnum];
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  memberId: 'memberId',
+  title: 'title',
+  message: 'message',
+  link: 'link',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const;
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum];
 
 export const InvitationScalarFieldEnum = {
   id: 'id',
@@ -397,6 +410,16 @@ export const MemberOrderByRelevanceFieldEnum = {
 } as const;
 
 export type MemberOrderByRelevanceFieldEnum = (typeof MemberOrderByRelevanceFieldEnum)[keyof typeof MemberOrderByRelevanceFieldEnum];
+
+export const NotificationOrderByRelevanceFieldEnum = {
+  id: 'id',
+  memberId: 'memberId',
+  title: 'title',
+  message: 'message',
+  link: 'link'
+} as const;
+
+export type NotificationOrderByRelevanceFieldEnum = (typeof NotificationOrderByRelevanceFieldEnum)[keyof typeof NotificationOrderByRelevanceFieldEnum];
 
 export const InvitationOrderByRelevanceFieldEnum = {
   id: 'id',
