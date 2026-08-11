@@ -19,7 +19,8 @@ const statement = {
   task: ['create', 'read', 'update', 'delete'],
   comment: ['create'],
   payment: ['read'],
-  dashboard: ['read']
+  dashboard: ['read'],
+  notification: ['read', 'update']
 } as const;
 
 export const ac = createAccessControl(statement);
@@ -37,7 +38,8 @@ export const rolePermissionStatements = {
     task: ['create', 'read', 'update', 'delete'],
     comment: ['create'],
     payment: ['read'],
-    dashboard: ['read']
+    dashboard: ['read'],
+    notification: ['read', 'update']
   },
   [Role.MANAGER]: {
     organization: ['update'],
@@ -51,14 +53,16 @@ export const rolePermissionStatements = {
     task: ['create', 'read', 'update', 'delete'],
     comment: ['create'],
     payment: ['read'],
-    dashboard: ['read']
+    dashboard: ['read'],
+    notification: ['read', 'update']
   },
   [Role.MEMBER]: {
     ac: ['read'],
     project: ['read'],
     task: ['read', 'update'],
     comment: ['create'],
-    dashboard: ['read']
+    dashboard: ['read'],
+    notification: ['read', 'update']
   },
   [Role.CLIENT]: {
     ac: ['read'],
@@ -68,7 +72,8 @@ export const rolePermissionStatements = {
     proposal: ['read', 'update'],
     comment: ['create'],
     payment: ['read'],
-    dashboard: ['read']
+    dashboard: ['read'],
+    notification: ['read', 'update']
   }
 } satisfies Record<Role, OrganizationPermission>;
 

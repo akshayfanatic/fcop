@@ -169,10 +169,25 @@ model Member {
   memberProjects   MemberProject[]
   createdTasks     Task[]          @relation("TaskCreator")
   taskAssignees    TaskAssignee[]
+  notifications    Notification[]
 
   @@index([userId])
   @@index([organizationId])
   @@map("member")
+}
+
+model Notification {
+  id        String    @id @default(cuid()) @db.VarChar(36)
+  memberId  String    @db.VarChar(36)
+  title     String    @db.VarChar(255)
+  message   String    @db.Text
+  link      String?   @db.VarChar(2048)
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+  member    Member    @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@index([memberId, readAt, createdAt])
+  @@map("notifications")
 }
 
 model Invitation {
