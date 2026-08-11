@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://github.com/akshayfanatic/fcop/compare/v0.7.0...v0.8.0) (2026-08-11)
+
+### Features
+
+- **admin email:** send email to admin when new member client is registered to org ([62eb429](https://github.com/akshayfanatic/fcop/commit/62eb429634bf826327eef1c5b328ce3ccc3fa88b))
+- **api:** added api route and mvc controller for managing notification ([f2bd74b](https://github.com/akshayfanatic/fcop/commit/f2bd74b7b9cb44eb8ccded8f591bc397f5094939))
+- **client:** send welcome email to client after accepted invitation ([e70b690](https://github.com/akshayfanatic/fcop/commit/e70b690835affe0075405206b431673a3062ad3a))
+- **dockerfile:** update docker file and import assets to image when creating new container ([9ea32de](https://github.com/akshayfanatic/fcop/commit/9ea32ded045aaec9059e84d02661393058cc6b52))
+- **email:** added a new template for creating existing email request ([6cc7fe8](https://github.com/akshayfanatic/fcop/commit/6cc7fe8ca071fed029f053b23c515bda1de33f49))
+- **html:** created new email html template design and assets image ([a86bc79](https://github.com/akshayfanatic/fcop/commit/a86bc790ee4938e42616c8f44282e596bd086f57))
+- **migration:** added new migration for notifications ([4abacc7](https://github.com/akshayfanatic/fcop/commit/4abacc70aaadf0070675594e465a3340dbe055dd))
+- **migration:** added new migration for notifications ([9be1e3a](https://github.com/akshayfanatic/fcop/commit/9be1e3a16ab2e0a9dbb8b0330ab3d95c4f74c4ba))
+- **permission:** added permission for managing resources ([e5743f7](https://github.com/akshayfanatic/fcop/commit/e5743f7e53143a6700696ab51603d0f44a7fe1e7))
+- **sign up:** when client sign up self send welcome email ([1b961a5](https://github.com/akshayfanatic/fcop/commit/1b961a58da6f70833109adeb5293945440ea122e))
+- **specs:** added specs for contracts ([c9458cc](https://github.com/akshayfanatic/fcop/commit/c9458cc68c794febdca47bd865b71225b6c6905f))
+
+### Code Refactoring
+
+- **lead:** prevent creating lead if email is already exist ([50e625e](https://github.com/akshayfanatic/fcop/commit/50e625e933a49708ddb8e09c01e006637d5e1e22))
+- **template:** updated all email templates with new design ([9d4b8cf](https://github.com/akshayfanatic/fcop/commit/9d4b8cfdcba7e29131e7b6b5876cb59355614708))
+
 ### [0.7.1](https://github.com/akshayfanatic/fcop/compare/v0.7.0...v0.7.1) (2026-08-10)
 
 ### Features
