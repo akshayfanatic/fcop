@@ -121,6 +121,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     {
       name: 'Dashboard',
       description: 'Administrative workspace analytics endpoints.'
+    },
+    {
+      name: 'Notifications',
+      description: 'Current member in-app notification inbox.'
     }
   ],
   paths: {
@@ -242,6 +246,131 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     },
     '/api/v1/dashboard/attention/tasks': {
       get: createDashboardGetOperation('Fetch admin dashboard attention tasks', 'getAdminDashboardAttentionTasks', 'AdminDashboardAttentionTask', true)
+    },
+    '/api/v1/notifications': {
+      get: {
+        tags: ['Notifications'],
+        summary: 'Fetch current member notifications',
+        operationId: 'getNotifications',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          notification: ['read']
+        },
+        parameters: [
+          {
+            name: 'unreadOnly',
+            in: 'query',
+            schema: {
+              type: 'boolean',
+              default: false
+            }
+          },
+          {
+            name: 'page',
+            in: 'query',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              default: DEFAULT_PAGE
+            }
+          },
+          {
+            name: 'pageSize',
+            in: 'query',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              maximum: MAX_PAGE_SIZE,
+              default: DEFAULT_PAGE_SIZE
+            }
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Notifications fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/NotificationsResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid notification filters.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' }
+        }
+      }
+    },
+    '/api/v1/notifications/read-all': {
+      patch: {
+        tags: ['Notifications'],
+        summary: 'Mark all current member notifications as read',
+        operationId: 'markAllNotificationsAsRead',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          notification: ['update']
+        },
+        responses: {
+          '200': {
+            description: 'All notifications marked as read.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/MarkAllNotificationsReadResponse'
+                }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' }
+        }
+      }
+    },
+    '/api/v1/notifications/{notificationId}/read': {
+      patch: {
+        tags: ['Notifications'],
+        summary: 'Mark one current member notification as read',
+        operationId: 'markNotificationAsRead',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          notification: ['update']
+        },
+        parameters: [{ $ref: '#/components/parameters/NotificationId' }],
+        responses: {
+          '200': {
+            description: 'Notification marked as read.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/NotificationResponse'
+                }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Notification was not found for the current member.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
     },
     '/api/v1/auth/request-password-reset': {
       post: {
@@ -1916,6 +2045,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           minLength: 1
         },
         example: 'clx0000000000000000000030'
+      },
+      NotificationId: {
+        name: 'notificationId',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000040'
       }
     },
     schemas: {
@@ -3466,6 +3605,104 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             example: 3
           }
         }
+      },
+      Notification: {
+        type: 'object',
+        required: ['id', 'memberId', 'title', 'message', 'link', 'readAt', 'createdAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000040'
+          },
+          memberId: {
+            type: 'string',
+            example: 'clx0000000000000000000002'
+          },
+          title: {
+            type: 'string',
+            example: 'New task assigned'
+          },
+          message: {
+            type: 'string',
+            example: 'You were assigned to "Design homepage".'
+          },
+          link: {
+            type: 'string',
+            nullable: true,
+            example: '/dashboard/projects/clx0000000000000000000010'
+          },
+          readAt: {
+            type: 'string',
+            format: 'date-time',
+            nullable: true,
+            example: null
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time'
+          }
+        }
+      },
+      NotificationResponse: {
+        allOf: [
+          { $ref: '#/components/schemas/ApiResponse' },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: { $ref: '#/components/schemas/Notification' }
+            }
+          }
+        ]
+      },
+      NotificationsResponse: {
+        allOf: [
+          { $ref: '#/components/schemas/ApiResponse' },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['items', 'pagination', 'unreadCount'],
+                properties: {
+                  items: {
+                    type: 'array',
+                    items: { $ref: '#/components/schemas/Notification' }
+                  },
+                  pagination: { $ref: '#/components/schemas/PaginationMeta' },
+                  unreadCount: {
+                    type: 'integer',
+                    minimum: 0,
+                    example: 3
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      MarkAllNotificationsReadResponse: {
+        allOf: [
+          { $ref: '#/components/schemas/ApiResponse' },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['updatedCount'],
+                properties: {
+                  updatedCount: {
+                    type: 'integer',
+                    minimum: 0,
+                    example: 3
+                  }
+                }
+              }
+            }
+          }
+        ]
       },
       PaginatedLeads: {
         type: 'object',
