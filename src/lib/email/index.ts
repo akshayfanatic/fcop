@@ -4,6 +4,7 @@ export { createNewLeadEmailTemplate } from './templates/new-lead-email.js';
 export { createExistingClientRequestEmailTemplate } from './templates/existing-client-request-email.js';
 export { createNewServiceRequestEmailTemplate } from './templates/new-service-request-email.js';
 export { createProjectCreatedEmailTemplate } from './templates/project-created-email.js';
+export { createAdminPaymentReceivedEmailTemplate, createClientPaymentReceivedEmailTemplate } from './templates/payment-received-email.js';
 export { createInvitationEmailTemplate } from './templates/invitation-email.js';
 export { createClientWelcomeEmailTemplate } from './templates/client-welcome-email.js';
 export { createMemberAcceptedInvitationEmailTemplate } from './templates/member-accepted-invitation-email.js';
