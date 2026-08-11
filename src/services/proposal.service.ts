@@ -1,14 +1,36 @@
 import type { IncomingHttpHeaders } from 'node:http';
-import { ProposalStatus } from '../generated/prisma/client.js';
+import { SERVICE_INTEREST_OPTIONS } from '../constants/enum.js';
+import { ProposalStatus, type ServiceInterest } from '../generated/prisma/client.js';
+import { Role } from '../lib/auth/permissions.js';
 import { getSessionMember } from '../lib/auth/session.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
 import { ensureStripeCustomer } from '../lib/stripe/customer.js';
 import { createAndSendProposalInvoice } from '../lib/stripe/invoice.js';
+import { notificationService } from './notification.service.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
+import { getOptionLabel } from '../utils/options.js';
 import { isClientRole } from '../utils/role.js';
 import type { CreateProposalInput, UpdateProposalInput } from '../validators/proposal.validator.js';
+
+type ProposalReadyNotificationInput = {
+  serviceRequestId: string;
+  clientMemberId: string;
+  service: ServiceInterest;
+};
+
+const notifyClientProposalReady = async (input: ProposalReadyNotificationInput) => {
+  const serviceLabel = getOptionLabel(SERVICE_INTEREST_OPTIONS, input.service);
+
+  // Notify the customer so their open request page loads the newly sent proposal.
+  await notificationService.createForMembers({
+    memberIds: [input.clientMemberId],
+    title: 'Proposal ready',
+    message: `Your ${serviceLabel} proposal is ready to review.`,
+    link: `/dashboard/services/${input.serviceRequestId}`
+  });
+};
 
 const getServiceRequestForProposal = async (serviceRequestId: string, headers: IncomingHttpHeaders) => {
   const member = await getSessionMember(headers);
@@ -68,15 +90,26 @@ export const proposalService = {
         throw createHttpError(HttpStatus.CONFLICT, 'A project already exists for this service request.', 'PROJECT_ALREADY_EXISTS');
       }
 
-      return await prisma.proposal.create({
+      const proposal = await prisma.proposal.create({
         data: {
           serviceRequestId: request.id,
           createdByMemberId: member.id,
           description: payload.description,
           amount: payload.amount,
-          currency: payload.currency
+          currency: payload.currency,
+          status: payload.status
         }
       });
+
+      if (proposal.status === ProposalStatus.SENT) {
+        await notifyClientProposalReady({
+          serviceRequestId: request.id,
+          clientMemberId: request.client.member.id,
+          service: request.service
+        });
+      }
+
+      return proposal;
     } catch (error) {
       logger.error({ error, serviceRequestId }, 'Failed to create proposal.');
       throw error;
@@ -164,7 +197,7 @@ export const proposalService = {
           currency: acceptedProposal.currency
         });
 
-        return await prisma.proposal.update({
+        const invoicedProposal = await prisma.proposal.update({
           where: {
             id: acceptedProposal.id
           },
@@ -175,6 +208,27 @@ export const proposalService = {
             stripeInvoicePdfUrl: invoice.invoice_pdf
           }
         });
+
+        const adminMembers = await prisma.member.findMany({
+          where: {
+            organizationId: request.client.member.organizationId,
+            role: Role.ADMIN
+          },
+          select: {
+            id: true
+          }
+        });
+        const serviceLabel = getOptionLabel(SERVICE_INTEREST_OPTIONS, request.service);
+
+        // Notify administrators so their open request page reflects the accepted proposal and invoice.
+        await notificationService.createForMembers({
+          memberIds: adminMembers.map((admin) => admin.id),
+          title: 'Proposal accepted',
+          message: `${request.client.name} accepted the ${serviceLabel} proposal. Stripe invoice ${invoice.number ?? invoice.id} was created.`,
+          link: `/dashboard/services/${request.id}`
+        });
+
+        return invoicedProposal;
       }
 
       // Lock the agreed commercial terms after the client accepts the proposal.
@@ -188,7 +242,7 @@ export const proposalService = {
         }
       }
 
-      return await prisma.proposal.update({
+      const updatedProposal = await prisma.proposal.update({
         where: {
           id: proposal.id
         },
@@ -200,6 +254,16 @@ export const proposalService = {
           status: payload.status ?? ProposalStatus.DRAFT
         }
       });
+
+      if (payload.status === ProposalStatus.SENT && proposal.status !== ProposalStatus.SENT) {
+        await notifyClientProposalReady({
+          serviceRequestId: request.id,
+          clientMemberId: request.client.member.id,
+          service: request.service
+        });
+      }
+
+      return updatedProposal;
     } catch (error) {
       logger.error({ error, serviceRequestId }, 'Failed to update proposal.');
       throw error;
