@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/akshayfanatic/fcop/compare/v0.8.0...v0.9.0) (2026-08-12)
+
+### Features
+
+- **config:** added configuraiton related to cloudniary ([441e887](https://github.com/akshayfanatic/fcop/commit/441e8879f314ee83f04383993103e6f033c232a3))
+- **media:** added services related to media handling and upload ([fdd769d](https://github.com/akshayfanatic/fcop/commit/fdd769df2a5bf52781cc2aee1038b30688ff6e67))
+- **notification:** email and notification regarding invoice paid ([82a92bf](https://github.com/akshayfanatic/fcop/commit/82a92bf1a48fc75fafd4d6c5857644743e32b153))
+- **package:** added cloudniary and multer support for managing files ([af70fd7](https://github.com/akshayfanatic/fcop/commit/af70fd7a4252c523430f6bef9bc4d9b0d2b1c86e))
+- **proposal:** added notification regarding proposals ([6198ac4](https://github.com/akshayfanatic/fcop/commit/6198ac4a4d35fb036855bc393837dee8ed4ad5dc))
+- **skills:** added claudinary skills related to uploads ([61c25aa](https://github.com/akshayfanatic/fcop/commit/61c25aa30090840c55ba71f1fdcc4c0fb06cdf1a))
+- **user:** added support of uploading profile image ([76e0f16](https://github.com/akshayfanatic/fcop/commit/76e0f1622822aeeaf6666b05347244281204e27a))
+
 ## [0.8.0](https://github.com/akshayfanatic/fcop/compare/v0.7.0...v0.8.0) (2026-08-11)
 
 ### Features
