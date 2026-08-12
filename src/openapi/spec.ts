@@ -450,6 +450,86 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/me/avatar': {
+      put: {
+        tags: ['Auth'],
+        summary: 'Update current user profile image',
+        operationId: 'updateAvatar',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'multipart/form-data': {
+              schema: {
+                type: 'object',
+                required: ['image'],
+                properties: {
+                  image: {
+                    type: 'string',
+                    format: 'binary',
+                    description: 'JPG, PNG, or WebP profile image up to 5 MB.'
+                  }
+                }
+              }
+            }
+          }
+        },
+        responses: {
+          '200': {
+            description: 'Profile image updated successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ProfileUserResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Missing, unsupported, or oversized profile image.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          }
+        }
+      },
+      delete: {
+        tags: ['Auth'],
+        summary: 'Delete current user profile image',
+        operationId: 'deleteAvatar',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Profile image deleted successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ProfileUserResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          }
+        }
+      }
+    },
     '/api/v1/invitations': {
       post: {
         tags: ['Invitations'],
@@ -2249,7 +2329,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       },
       MeUser: {
         type: 'object',
-        required: ['id', 'name', 'email'],
+        required: ['id', 'name', 'email', 'image'],
         properties: {
           id: {
             type: 'string',
@@ -2263,8 +2343,55 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             type: 'string',
             format: 'email',
             example: 'akshay@example.com'
+          },
+          image: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            example: 'https://res.cloudinary.com/example/image/upload/v1/fcop/users/user-id/avatar.webp'
           }
         }
+      },
+      ProfileUser: {
+        type: 'object',
+        required: ['id', 'name', 'email', 'image'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000000'
+          },
+          name: {
+            type: 'string',
+            example: 'Akshay'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'akshay@example.com'
+          },
+          image: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            example: 'https://res.cloudinary.com/example/image/upload/v1/fcop/users/user-id/avatar.webp'
+          }
+        }
+      },
+      ProfileUserResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/ProfileUser'
+              }
+            }
+          }
+        ]
       },
       PermissionStatements: {
         type: 'object',
