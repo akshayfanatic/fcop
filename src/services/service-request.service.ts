@@ -1,13 +1,17 @@
 import type { IncomingHttpHeaders } from 'node:http';
 import { type Prisma } from '../generated/prisma/client.js';
+import { SERVICE_INTEREST_OPTIONS } from '../constants/enum.js';
 import { env } from '../config/env.js';
+import { Role } from '../lib/auth/permissions.js';
 import { getSessionMember } from '../lib/auth/session.js';
 import { createNewServiceRequestEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
+import { getOptionLabel } from '../utils/options.js';
 import { isClientRole } from '../utils/role.js';
+import { notificationService } from './notification.service.js';
 import type { CreateServiceRequestInput, UpdateServiceRequestInput } from '../validators/service-request.validator.js';
 
 const includeClientRequestDetails = {
@@ -59,6 +63,27 @@ export const serviceRequestService = {
           data: payload.data as Prisma.InputJsonValue
         },
         include: includeClientRequestDetails
+      });
+
+      const managementMembers = await prisma.member.findMany({
+        where: {
+          organizationId: member.organizationId,
+          role: {
+            in: [Role.ADMIN, Role.MANAGER]
+          }
+        },
+        select: {
+          id: true
+        }
+      });
+      const serviceLabel = getOptionLabel(SERVICE_INTEREST_OPTIONS, request.service);
+
+      // Notify administrators and managers so the new client request enters their work queue.
+      await notificationService.createForMembers({
+        memberIds: managementMembers.map((managementMember) => managementMember.id),
+        title: 'New service request',
+        message: `${request?.client?.name} submitted a ${serviceLabel} request.`,
+        link: `/dashboard/services/${request.id}`
       });
 
       if (!env.adminEmail) {
