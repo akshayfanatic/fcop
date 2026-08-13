@@ -12,7 +12,7 @@ import { createHttpError } from '../utils/http-error.js';
 import { getOptionLabel } from '../utils/options.js';
 import { isClientRole } from '../utils/role.js';
 import { notificationService } from './notification.service.js';
-import type { CreateServiceRequestInput, UpdateServiceRequestInput } from '../validators/service-request.validator.js';
+import type { CreateServiceRequestInput, ServiceRequestFiltersInput, UpdateServiceRequestInput } from '../validators/service-request.validator.js';
 
 const includeClientRequestDetails = {
   proposal: true,
@@ -109,13 +109,29 @@ export const serviceRequestService = {
     }
   },
 
-  getServiceRequests: async (headers: IncomingHttpHeaders) => {
+  getServiceRequests: async (filters: ServiceRequestFiltersInput, headers: IncomingHttpHeaders) => {
     try {
       const member = await getSessionMember(headers);
+      const where = {
+        ...(filters.status ? { status: filters.status } : {}),
+        ...(filters.serviceType ? { service: filters.serviceType } : {}),
+        ...(filters.client && !isClientRole(member.role)
+          ? {
+              client: {
+                member: {
+                  user: {
+                    OR: [{ name: { contains: filters.client } }, { email: { contains: filters.client } }]
+                  }
+                }
+              }
+            }
+          : {})
+      } satisfies Prisma.ServiceRequestWhereInput;
 
       // Show non-client roles the full service request queue after permission middleware allows read access.
       if (!isClientRole(member.role)) {
         return await prisma.serviceRequest.findMany({
+          where,
           include: includeClientRequestDetails,
           orderBy: {
             createdAt: 'desc'
@@ -130,6 +146,7 @@ export const serviceRequestService = {
 
       return await prisma.serviceRequest.findMany({
         where: {
+          ...where,
           clientId: member.client.id
         },
         include: {

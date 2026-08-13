@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { serviceRequestService } from '../services/service-request.service.js';
 import { ApiResponse, HttpStatus } from '../utils/api-response.js';
 import { sendValidationError } from '../utils/http-error.js';
-import { createServiceRequestSchema, serviceRequestIdParamsSchema, updateServiceRequestSchema } from '../validators/service-request.validator.js';
+import { createServiceRequestSchema, serviceRequestFiltersSchema, serviceRequestIdParamsSchema, updateServiceRequestSchema } from '../validators/service-request.validator.js';
 
 export const serviceRequestController = {
   createServiceRequest: (async (req, res, next) => {
@@ -31,7 +31,8 @@ export const serviceRequestController = {
 
   getServiceRequests: (async (req, res, next) => {
     try {
-      const requests = await serviceRequestService.getServiceRequests(req.headers);
+      const filters = serviceRequestFiltersSchema.parse(req.query);
+      const requests = await serviceRequestService.getServiceRequests(filters, req.headers);
 
       res.status(HttpStatus.OK).json(
         ApiResponse({
@@ -42,6 +43,11 @@ export const serviceRequestController = {
         })
       );
     } catch (error) {
+      if (error instanceof z.ZodError) {
+        sendValidationError(res, error);
+        return;
+      }
+
       next(error);
     }
   }) satisfies RequestHandler,

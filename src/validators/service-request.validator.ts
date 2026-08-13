@@ -7,6 +7,12 @@ export const serviceRequestIdParamsSchema = z.object({
   id: z.string().trim().min(1)
 });
 
+export const serviceRequestFiltersSchema = z.object({
+  client: z.string().trim().min(1).max(255).optional(),
+  status: z.enum(ServiceRequestStatus).optional(),
+  serviceType: z.enum(ServiceInterest).optional()
+});
+
 export const createServiceRequestSchema = z.object({
   service: z.enum(ServiceInterest),
   data: requestDataSchema
@@ -22,5 +28,6 @@ export const updateServiceRequestSchema = z
   });
 
 export type CreateServiceRequestInput = z.infer<typeof createServiceRequestSchema>;
+export type ServiceRequestFiltersInput = z.infer<typeof serviceRequestFiltersSchema>;
 export type ServiceRequestIdParamsInput = z.infer<typeof serviceRequestIdParamsSchema>;
 export type UpdateServiceRequestInput = z.infer<typeof updateServiceRequestSchema>;

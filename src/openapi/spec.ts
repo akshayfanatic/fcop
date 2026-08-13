@@ -964,6 +964,34 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         'x-requiredPermissions': {
           serviceRequest: ['read']
         },
+        parameters: [
+          {
+            name: 'client',
+            in: 'query',
+            description: 'Filter management results by client name or email.',
+            schema: {
+              type: 'string',
+              minLength: 1,
+              maxLength: 255
+            }
+          },
+          {
+            name: 'status',
+            in: 'query',
+            description: 'Filter by service request status.',
+            schema: {
+              $ref: '#/components/schemas/ServiceRequestStatus'
+            }
+          },
+          {
+            name: 'serviceType',
+            in: 'query',
+            description: 'Filter by requested service.',
+            schema: {
+              $ref: '#/components/schemas/ServiceInterest'
+            }
+          }
+        ],
         responses: {
           '200': {
             description: 'Service requests fetched successfully.',
