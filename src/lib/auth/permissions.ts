@@ -32,7 +32,7 @@ export const rolePermissionStatements = {
   [Role.ADMIN]: {
     ...ownerAc.statements,
     lead: ['create', 'read', 'update', 'delete'],
-    serviceRequest: ['create', 'read', 'update', 'delete'],
+    serviceRequest: ['read', 'update', 'delete'],
     proposal: ['create', 'read', 'update', 'delete'],
     project: ['create', 'read', 'update', 'delete'],
     task: ['create', 'read', 'update', 'delete'],
@@ -47,7 +47,7 @@ export const rolePermissionStatements = {
     invitation: ['create'],
     ac: ['read'],
     lead: ['read', 'update'],
-    serviceRequest: ['create', 'read', 'update', 'delete'],
+    serviceRequest: ['read', 'update', 'delete'],
     proposal: ['create', 'read', 'update', 'delete'],
     project: ['create', 'read', 'update'],
     task: ['create', 'read', 'update', 'delete'],
