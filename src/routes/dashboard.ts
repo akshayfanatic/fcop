@@ -6,6 +6,7 @@ export const dashboardRouter = Router();
 
 dashboardRouter.use(requireOrgPermission({ dashboard: ['read'] }));
 
+dashboardRouter.get('/projects', requireOrgPermission({ project: ['read'] }), dashboardController.getCurrentProjects);
 dashboardRouter.get('/overview', dashboardController.getOverview);
 dashboardRouter.get('/leads', dashboardController.getLeadDistribution);
 dashboardRouter.get('/tasks', dashboardController.getTaskDistribution);

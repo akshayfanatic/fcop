@@ -1,4 +1,4 @@
-import type { LeadStatus, TaskPriority, TaskStatus } from '../generated/prisma/client.js';
+import type { LeadStatus, ProjectStatus, TaskPriority, TaskStatus } from '../generated/prisma/client.js';
 
 export type StatusDistribution<TStatus extends string> = Record<TStatus, number>;
 
@@ -36,4 +36,30 @@ export type AdminAttentionTask = {
   project: {
     name: string;
   };
+};
+
+export type DashboardProjectSummary = {
+  id: string;
+  name: string;
+  clientName: string;
+  status: ProjectStatus;
+  endDate: Date | null;
+  completedTasks: number;
+  totalTasks: number;
+  progressPercent: number;
+  nextTask: {
+    id: string;
+    title: string;
+    dueDate: Date | null;
+  } | null;
+};
+
+export type DashboardCurrentProjects = {
+  stats: {
+    active: number;
+    onHold: number;
+    averageProgress: number;
+    dueThisMonth: number;
+  };
+  projects: DashboardProjectSummary[];
 };
