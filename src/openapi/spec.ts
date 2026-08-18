@@ -235,6 +235,15 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     '/api/v1/dashboard/overview': {
       get: createDashboardGetOperation('Fetch admin dashboard overview', 'getAdminDashboardOverview', 'AdminDashboardOverview')
     },
+    '/api/v1/dashboard/projects': {
+      get: {
+        ...createDashboardGetOperation('Fetch current dashboard projects', 'getDashboardCurrentProjects', 'DashboardCurrentProjects'),
+        'x-requiredPermissions': {
+          dashboard: ['read'],
+          project: ['read']
+        }
+      }
+    },
     '/api/v1/dashboard/leads': {
       get: createDashboardGetOperation('Fetch admin lead status distribution', 'getAdminDashboardLeadDistribution', 'LeadStatusDistribution')
     },
@@ -2235,6 +2244,60 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           completedTasks: { type: 'integer', minimum: 0, example: 30 },
           totalServiceRequests: { type: 'integer', minimum: 0, example: 16 },
           openServiceRequests: { type: 'integer', minimum: 0, example: 4 }
+        }
+      },
+      DashboardCurrentProjects: {
+        type: 'object',
+        required: ['stats', 'projects'],
+        properties: {
+          stats: {
+            type: 'object',
+            required: ['active', 'onHold', 'averageProgress', 'dueThisMonth'],
+            properties: {
+              active: { type: 'integer', minimum: 0, example: 4 },
+              onHold: { type: 'integer', minimum: 0, example: 1 },
+              averageProgress: { type: 'integer', minimum: 0, maximum: 100, example: 68 },
+              dueThisMonth: { type: 'integer', minimum: 0, example: 3 }
+            }
+          },
+          projects: {
+            type: 'array',
+            maxItems: 5,
+            items: {
+              type: 'object',
+              required: ['id', 'name', 'clientName', 'status', 'endDate', 'completedTasks', 'totalTasks', 'progressPercent', 'nextTask'],
+              properties: {
+                id: { type: 'string', example: 'clx0000000000000000000010' },
+                name: { type: 'string', example: 'FCOP Client Portal' },
+                clientName: { type: 'string', example: 'Fanatic Coders' },
+                status: { $ref: '#/components/schemas/ProjectStatus' },
+                endDate: {
+                  type: 'string',
+                  format: 'date-time',
+                  nullable: true,
+                  example: '2026-08-30T00:00:00.000Z'
+                },
+                completedTasks: { type: 'integer', minimum: 0, example: 6 },
+                totalTasks: { type: 'integer', minimum: 0, example: 8 },
+                progressPercent: { type: 'integer', minimum: 0, maximum: 100, example: 75 },
+                nextTask: {
+                  type: 'object',
+                  nullable: true,
+                  required: ['id', 'title', 'dueDate'],
+                  properties: {
+                    id: { type: 'string', example: 'clx0000000000000000000030' },
+                    title: { type: 'string', example: 'Review responsive layouts' },
+                    dueDate: {
+                      type: 'string',
+                      format: 'date-time',
+                      nullable: true,
+                      example: '2026-08-20T00:00:00.000Z'
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       },
       LeadStatusDistribution: {

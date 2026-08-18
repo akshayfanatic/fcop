@@ -4,12 +4,14 @@ import { Role } from '../lib/auth/permissions.js';
 import { getSessionMember } from '../lib/auth/session.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
-import type { AdminAttentionTask, AdminDashboardOverview, AdminLeadDistribution, AdminRecentLead, AdminTaskDistribution, StatusDistribution } from '../types/dashboard.js';
+import type { AdminAttentionTask, AdminDashboardOverview, AdminLeadDistribution, AdminRecentLead, AdminTaskDistribution, DashboardCurrentProjects, StatusDistribution } from '../types/dashboard.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
+import { getProjectAccessWhere } from '../utils/project/project-access.js';
 import { hasRole } from '../utils/role.js';
 
 const DASHBOARD_LIST_LIMIT = 5;
+const CURRENT_PROJECT_STATUSES = [ProjectStatus.PLANNING, ProjectStatus.ACTIVE, ProjectStatus.ON_HOLD];
 
 const requireAdmin = async (headers: IncomingHttpHeaders) => {
   const member = await getSessionMember(headers);
@@ -41,6 +43,140 @@ const createDistribution = <TStatus extends string>(
 };
 
 export const dashboardService = {
+  getCurrentProjects: async (headers: IncomingHttpHeaders): Promise<DashboardCurrentProjects> => {
+    try {
+      const member = await getSessionMember(headers);
+      const where = {
+        AND: [
+          // Keep dashboard project data inside the member's active organization.
+          {
+            client: {
+              member: {
+                organizationId: member.organizationId
+              }
+            }
+          },
+          getProjectAccessWhere(member),
+          {
+            status: {
+              in: CURRENT_PROJECT_STATUSES
+            }
+          }
+        ]
+      };
+
+      const projects = await prisma.project.findMany({
+        where,
+        select: {
+          id: true,
+          name: true,
+          status: true,
+          endDate: true,
+          updatedAt: true,
+          client: {
+            select: {
+              name: true
+            }
+          },
+          tasks: {
+            where: {
+              status: {
+                not: TaskStatus.DONE
+              }
+            },
+            orderBy: [
+              {
+                dueDate: {
+                  sort: 'asc',
+                  nulls: 'last'
+                }
+              },
+              {
+                createdAt: 'asc'
+              }
+            ],
+            take: 1,
+            select: {
+              id: true,
+              title: true,
+              dueDate: true
+            }
+          }
+        }
+      });
+
+      const taskGroups = projects.length
+        ? await prisma.task.groupBy({
+            by: ['projectId', 'status'],
+            where: {
+              projectId: {
+                in: projects.map((project) => project.id)
+              }
+            },
+            _count: {
+              status: true
+            }
+          })
+        : [];
+
+      const taskTotals = new Map<string, { completed: number; total: number }>();
+      for (const group of taskGroups) {
+        const totals = taskTotals.get(group.projectId) ?? { completed: 0, total: 0 };
+        totals.total += group._count.status;
+        if (group.status === TaskStatus.DONE) {
+          totals.completed += group._count.status;
+        }
+        taskTotals.set(group.projectId, totals);
+      }
+
+      const summaries = projects.map((project) => {
+        const totals = taskTotals.get(project.id) ?? { completed: 0, total: 0 };
+        return {
+          id: project.id,
+          name: project.name,
+          clientName: project.client.name,
+          status: project.status,
+          endDate: project.endDate,
+          updatedAt: project.updatedAt,
+          completedTasks: totals.completed,
+          totalTasks: totals.total,
+          progressPercent: totals.total === 0 ? 0 : Math.round((totals.completed / totals.total) * 100),
+          nextTask: project.tasks[0] ?? null
+        };
+      });
+
+      const now = new Date();
+      const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
+      const nextMonthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1));
+      const averageProgress = summaries.length === 0 ? 0 : Math.round(summaries.reduce((total, project) => total + project.progressPercent, 0) / summaries.length);
+
+      const currentProjects = [...summaries]
+        .sort((first, second) => {
+          if (!first.endDate && !second.endDate) {
+            return second.updatedAt.getTime() - first.updatedAt.getTime();
+          }
+          if (!first.endDate) return 1;
+          if (!second.endDate) return -1;
+          return first.endDate.getTime() - second.endDate.getTime();
+        })
+        .slice(0, DASHBOARD_LIST_LIMIT)
+        .map(({ updatedAt: _updatedAt, ...project }) => project);
+
+      return {
+        stats: {
+          active: summaries.filter((project) => project.status === ProjectStatus.ACTIVE).length,
+          onHold: summaries.filter((project) => project.status === ProjectStatus.ON_HOLD).length,
+          averageProgress,
+          dueThisMonth: summaries.filter((project) => project.endDate && project.endDate >= monthStart && project.endDate < nextMonthStart).length
+        },
+        projects: currentProjects
+      };
+    } catch (error) {
+      logger.error({ error }, 'Failed to fetch current dashboard projects.');
+      throw error;
+    }
+  },
+
   getOverview: async (headers: IncomingHttpHeaders): Promise<AdminDashboardOverview> => {
     try {
       await requireAdmin(headers);

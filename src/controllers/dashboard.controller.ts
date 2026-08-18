@@ -14,6 +14,15 @@ const sendDashboardResponse = (res: Parameters<RequestHandler>[1], message: stri
 };
 
 export const dashboardController = {
+  getCurrentProjects: (async (req, res, next) => {
+    try {
+      const projects = await dashboardService.getCurrentProjects(req.headers);
+      sendDashboardResponse(res, 'Current dashboard projects fetched successfully.', projects);
+    } catch (error) {
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
   getOverview: (async (req, res, next) => {
     try {
       const overview = await dashboardService.getOverview(req.headers);
