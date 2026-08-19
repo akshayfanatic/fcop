@@ -32,6 +32,15 @@ export const dashboardController = {
     }
   }) satisfies RequestHandler,
 
+  getPaymentSummary: (async (req, res, next) => {
+    try {
+      const summary = await dashboardService.getPaymentSummary(req.headers);
+      sendDashboardResponse(res, 'Admin payment summary fetched successfully.', summary);
+    } catch (error) {
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
   getLeadDistribution: (async (req, res, next) => {
     try {
       const distribution = await dashboardService.getLeadDistribution(req.headers);

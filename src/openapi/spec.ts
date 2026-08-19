@@ -235,6 +235,9 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     '/api/v1/dashboard/overview': {
       get: createDashboardGetOperation('Fetch admin dashboard overview', 'getAdminDashboardOverview', 'AdminDashboardOverview')
     },
+    '/api/v1/dashboard/payment-summary': {
+      get: createDashboardGetOperation('Fetch admin payment summary', 'getAdminPaymentSummary', 'AdminPaymentSummary')
+    },
     '/api/v1/dashboard/projects': {
       get: {
         ...createDashboardGetOperation('Fetch current dashboard projects', 'getDashboardCurrentProjects', 'DashboardCurrentProjects'),
@@ -2244,6 +2247,46 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           completedTasks: { type: 'integer', minimum: 0, example: 30 },
           totalServiceRequests: { type: 'integer', minimum: 0, example: 16 },
           openServiceRequests: { type: 'integer', minimum: 0, example: 4 }
+        }
+      },
+      AdminPaymentSummary: {
+        type: 'object',
+        required: ['paidTransactions', 'unpaidTransactions', 'byCurrency', 'recentTransactions'],
+        properties: {
+          paidTransactions: { type: 'integer', minimum: 0, example: 24 },
+          unpaidTransactions: { type: 'integer', minimum: 0, example: 3 },
+          byCurrency: {
+            type: 'array',
+            items: {
+              type: 'object',
+              required: ['currency', 'totalAmount', 'averageAmount', 'transactionCount'],
+              properties: {
+                currency: { $ref: '#/components/schemas/ProjectCurrency' },
+                totalAmount: { type: 'string', example: '12500.00' },
+                averageAmount: { type: 'string', example: '520.83' },
+                transactionCount: { type: 'integer', minimum: 0, example: 24 }
+              }
+            }
+          },
+          recentTransactions: {
+            type: 'array',
+            maxItems: 5,
+            items: {
+              type: 'object',
+              required: ['id', 'serviceRequestId', 'clientName', 'description', 'amount', 'currency', 'status', 'paidAt', 'stripeInvoiceNumber'],
+              properties: {
+                id: { type: 'string' },
+                serviceRequestId: { type: 'string' },
+                clientName: { type: 'string' },
+                description: { type: 'string' },
+                amount: { type: 'string', example: '1500.00' },
+                currency: { $ref: '#/components/schemas/ProjectCurrency' },
+                status: { type: 'string', enum: ['PAID'] },
+                paidAt: { type: 'string', format: 'date-time' },
+                stripeInvoiceNumber: { type: 'string', nullable: true }
+              }
+            }
+          }
         }
       },
       DashboardCurrentProjects: {

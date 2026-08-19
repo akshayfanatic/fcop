@@ -1,4 +1,4 @@
-import type { LeadStatus, ProjectStatus, TaskPriority, TaskStatus } from '../generated/prisma/client.js';
+import type { LeadStatus, ProjectCurrency, ProjectStatus, TaskPriority, TaskStatus } from '../generated/prisma/client.js';
 
 export type StatusDistribution<TStatus extends string> = Record<TStatus, number>;
 
@@ -62,4 +62,26 @@ export type DashboardCurrentProjects = {
     dueThisMonth: number;
   };
   projects: DashboardProjectSummary[];
+};
+
+export type AdminPaymentSummary = {
+  paidTransactions: number;
+  unpaidTransactions: number;
+  byCurrency: Array<{
+    currency: ProjectCurrency;
+    totalAmount: string;
+    averageAmount: string;
+    transactionCount: number;
+  }>;
+  recentTransactions: Array<{
+    id: string;
+    serviceRequestId: string;
+    clientName: string;
+    description: string;
+    amount: string;
+    currency: ProjectCurrency;
+    status: 'PAID';
+    paidAt: Date;
+    stripeInvoiceNumber: string | null;
+  }>;
 };

@@ -1,10 +1,19 @@
 import type { IncomingHttpHeaders } from 'node:http';
-import { LeadStatus, ProjectStatus, ServiceRequestStatus, TaskPriority, TaskStatus } from '../generated/prisma/client.js';
+import { LeadStatus, ProposalPaymentStatus, ProjectStatus, ServiceRequestStatus, TaskPriority, TaskStatus } from '../generated/prisma/client.js';
 import { Role } from '../lib/auth/permissions.js';
 import { getSessionMember } from '../lib/auth/session.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
-import type { AdminAttentionTask, AdminDashboardOverview, AdminLeadDistribution, AdminRecentLead, AdminTaskDistribution, DashboardCurrentProjects, StatusDistribution } from '../types/dashboard.js';
+import type {
+  AdminAttentionTask,
+  AdminDashboardOverview,
+  AdminLeadDistribution,
+  AdminPaymentSummary,
+  AdminRecentLead,
+  AdminTaskDistribution,
+  DashboardCurrentProjects,
+  StatusDistribution
+} from '../types/dashboard.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { getProjectAccessWhere } from '../utils/project/project-access.js';
@@ -223,6 +232,73 @@ export const dashboardService = {
       };
     } catch (error) {
       logger.error({ error }, 'Failed to fetch admin dashboard overview.');
+      throw error;
+    }
+  },
+
+  getPaymentSummary: async (headers: IncomingHttpHeaders): Promise<AdminPaymentSummary> => {
+    try {
+      await requireAdmin(headers);
+
+      const [paidTransactions, unpaidTransactions, currencyGroups, recentTransactions] = await prisma.$transaction([
+        prisma.proposal.count({ where: { paymentStatus: ProposalPaymentStatus.PAID } }),
+        prisma.proposal.count({
+          where: { paymentStatus: ProposalPaymentStatus.UNPAID, stripeInvoiceId: { not: null } }
+        }),
+        prisma.proposal.groupBy({
+          by: ['currency'],
+          where: { paymentStatus: ProposalPaymentStatus.PAID },
+          orderBy: { currency: 'asc' },
+          _sum: { amount: true },
+          _avg: { amount: true },
+          _count: { _all: true }
+        }),
+        prisma.proposal.findMany({
+          where: { paymentStatus: ProposalPaymentStatus.PAID, paidAt: { not: null } },
+          orderBy: [{ paidAt: 'desc' }, { createdAt: 'desc' }],
+          take: DASHBOARD_LIST_LIMIT,
+          select: {
+            id: true,
+            serviceRequestId: true,
+            description: true,
+            amount: true,
+            currency: true,
+            paidAt: true,
+            stripeInvoiceNumber: true,
+            serviceRequest: { select: { client: { select: { name: true } } } }
+          }
+        })
+      ]);
+
+      return {
+        paidTransactions,
+        unpaidTransactions,
+        byCurrency: currencyGroups.map((group) => ({
+          currency: group.currency,
+          totalAmount: group._sum?.amount?.toFixed(2) ?? '0.00',
+          averageAmount: group._avg?.amount?.toFixed(2) ?? '0.00',
+          transactionCount: typeof group._count === 'object' ? (group._count?._all ?? 0) : 0
+        })),
+        recentTransactions: recentTransactions.flatMap((transaction) =>
+          transaction.paidAt
+            ? [
+                {
+                  id: transaction.id,
+                  serviceRequestId: transaction.serviceRequestId,
+                  clientName: transaction.serviceRequest.client.name,
+                  description: transaction.description,
+                  amount: transaction.amount.toFixed(2),
+                  currency: transaction.currency,
+                  status: 'PAID' as const,
+                  paidAt: transaction.paidAt,
+                  stripeInvoiceNumber: transaction.stripeInvoiceNumber
+                }
+              ]
+            : []
+        )
+      };
+    } catch (error) {
+      logger.error({ error }, 'Failed to fetch admin payment summary.');
       throw error;
     }
   },

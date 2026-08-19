@@ -8,6 +8,7 @@ dashboardRouter.use(requireOrgPermission({ dashboard: ['read'] }));
 
 dashboardRouter.get('/projects', requireOrgPermission({ project: ['read'] }), dashboardController.getCurrentProjects);
 dashboardRouter.get('/overview', dashboardController.getOverview);
+dashboardRouter.get('/payment-summary', dashboardController.getPaymentSummary);
 dashboardRouter.get('/leads', dashboardController.getLeadDistribution);
 dashboardRouter.get('/tasks', dashboardController.getTaskDistribution);
 dashboardRouter.get('/recent/leads', dashboardController.getRecentLeads);
