@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/akshayfanatic/fcop/compare/v0.9.0...v0.10.0) (2026-08-20)
+
+### Features
+
+- add dashboard payment summary ([33dbd58](https://github.com/akshayfanatic/fcop/commit/33dbd58f74944df8567af7c6ed1c84d5ed1727c3))
+- **controller:** added endpoints and controller for managing media ([99c787e](https://github.com/akshayfanatic/fcop/commit/99c787e18b82f06a729ce9945fc8c370007a19f8))
+- **filter:** added filter feature to services ([0e509e9](https://github.com/akshayfanatic/fcop/commit/0e509e9fe21b8c63fe912ab1bc4493a3d8794953))
+- **migration:** added schema migration for managing project media ([4142807](https://github.com/akshayfanatic/fcop/commit/4142807327ac02f8bbba821170b619aaa756b129))
+- **notification:** notify admin ,and manager regarding new request ([681d717](https://github.com/akshayfanatic/fcop/commit/681d7174ab772f666be5a324ae7a2bedec93b0b5))
+- **projects:** added porjects api to dashbaord endpoint to display projects related d overview and status ([36b6bc7](https://github.com/akshayfanatic/fcop/commit/36b6bc7a91bb8177ba88805ebac27d8d8c920198))
+- **upload:** added reusable media upload for parsing media content ([a7ffe37](https://github.com/akshayfanatic/fcop/commit/a7ffe37e20b6417b00e5cca42efb0815ee8bc889))
+
+### Bug Fixes
+
+- **chat:** fix image issue and return actuall image ([27cc3d4](https://github.com/akshayfanatic/fcop/commit/27cc3d4a9b5c2c5eb407f3356491409f6c66acbf))
+
 ## [0.9.0](https://github.com/akshayfanatic/fcop/compare/v0.8.0...v0.9.0) (2026-08-12)
 
 ### Features
