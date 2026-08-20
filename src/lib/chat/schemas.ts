@@ -27,7 +27,7 @@ export const chatMessageSchema = z.object({
       id: z.string(),
       name: z.string(),
       email: z.string(),
-      image: z.null()
+      image: z.string().nullable()
     })
   })
 });

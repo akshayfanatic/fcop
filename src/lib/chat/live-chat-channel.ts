@@ -104,7 +104,7 @@ function createChatMessage(payload: SendChatMessageInput, member: SessionMember)
         id: member.user.id,
         name: member.user.name,
         email: member.user.email,
-        image: null
+        image: member.user.image
       }
     }
   };
