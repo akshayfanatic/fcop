@@ -1,6 +1,7 @@
 import {
   LeadSource,
   LeadStatus,
+  MediaTargetType,
   ProjectCurrency,
   ProjectMemberRole,
   ProjectStatus,
@@ -1701,6 +1702,190 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/projects/{projectId}/media': {
+      post: {
+        tags: ['Projects'],
+        summary: 'Upload project media',
+        description: 'Uploads one image or PDF (maximum 5 MB) to the project media folder and saves its delivery metadata.',
+        operationId: 'uploadProjectMedia',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          project: ['update']
+        },
+        parameters: [{ $ref: '#/components/parameters/MediaProjectId' }],
+        requestBody: {
+          required: true,
+          content: {
+            'multipart/form-data': {
+              schema: {
+                type: 'object',
+                required: ['media'],
+                properties: {
+                  media: {
+                    type: 'string',
+                    format: 'binary',
+                    description: 'JPG, PNG, WebP, GIF, or PDF file. Maximum 5 MB.'
+                  }
+                }
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Project media uploaded successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/MediaResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Media file is missing, unsupported, or larger than 5 MB.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Project was not found or is unavailable to the current member.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '502': {
+            description: 'Cloudinary rejected the upload.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '504': {
+            description: 'Cloudinary upload timed out.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      },
+      get: {
+        tags: ['Projects'],
+        summary: 'Fetch project media',
+        description: 'Returns project media records newest first. The secureUrl field can be rendered directly by the frontend.',
+        operationId: 'getProjectMedia',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          project: ['read']
+        },
+        parameters: [
+          { $ref: '#/components/parameters/MediaProjectId' },
+          {
+            name: 'page',
+            in: 'query',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              default: DEFAULT_PAGE
+            }
+          },
+          {
+            name: 'pageSize',
+            in: 'query',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              maximum: MAX_PAGE_SIZE,
+              default: DEFAULT_PAGE_SIZE
+            }
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Project media fetched successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ProjectMediaListResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid project id or pagination parameters.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Project was not found or is unavailable to the current member.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/projects/{projectId}/media/{mediaId}': {
+      delete: {
+        tags: ['Projects'],
+        summary: 'Delete project media',
+        description: 'Deletes the Cloudinary asset and then removes its project media record.',
+        operationId: 'deleteProjectMedia',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          project: ['update']
+        },
+        parameters: [{ $ref: '#/components/parameters/MediaProjectId' }, { $ref: '#/components/parameters/MediaId' }],
+        responses: {
+          '200': {
+            description: 'Project media deleted successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/MediaResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid project or media id.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Project or media was not found.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '500': {
+            description: 'Cloudinary asset deletion failed.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      }
+    },
     '/api/v1/projects/{projectId}/tasks': {
       get: {
         tags: ['Tasks'],
@@ -2145,6 +2330,26 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           minLength: 1
         },
         example: 'clx0000000000000000000010'
+      },
+      MediaProjectId: {
+        name: 'projectId',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000010'
+      },
+      MediaId: {
+        name: 'mediaId',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000050'
       },
       TaskProjectId: {
         name: 'projectId',
@@ -3290,6 +3495,49 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       },
+      Media: {
+        type: 'object',
+        required: ['id', 'targetType', 'targetId', 'publicId', 'secureUrl', 'resourceType', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000050'
+          },
+          targetType: {
+            type: 'string',
+            enum: enumValues(MediaTargetType),
+            example: MediaTargetType.PROJECT
+          },
+          targetId: {
+            type: 'string',
+            example: 'clx0000000000000000000010'
+          },
+          publicId: {
+            type: 'string',
+            example: 'projects/clx0000000000000000000010/media/abc123'
+          },
+          secureUrl: {
+            type: 'string',
+            format: 'uri',
+            example: 'https://res.cloudinary.com/example/image/upload/v1/projects/clx0000000000000000000010/media/abc123.webp'
+          },
+          resourceType: {
+            type: 'string',
+            enum: ['image', 'raw'],
+            example: 'image'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-08-20T12:00:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-08-20T12:00:00.000Z'
+          }
+        }
+      },
       CreateProjectRequest: {
         type: 'object',
         required: ['clientId', 'name', 'service'],
@@ -4145,6 +4393,50 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             properties: {
               data: {
                 $ref: '#/components/schemas/Project'
+              }
+            }
+          }
+        ]
+      },
+      MediaResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/Media'
+              }
+            }
+          }
+        ]
+      },
+      ProjectMediaListResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['items', 'pagination'],
+                properties: {
+                  items: {
+                    type: 'array',
+                    items: {
+                      $ref: '#/components/schemas/Media'
+                    }
+                  },
+                  pagination: {
+                    $ref: '#/components/schemas/PaginationMeta'
+                  }
+                }
               }
             }
           }
