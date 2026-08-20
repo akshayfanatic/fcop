@@ -353,6 +353,23 @@ export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
 };
 
+export type EnumMediaTargetTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.MediaTargetType | Prisma.EnumMediaTargetTypeFieldRefInput<$PrismaModel>;
+  in?: $Enums.MediaTargetType[];
+  notIn?: $Enums.MediaTargetType[];
+  not?: Prisma.NestedEnumMediaTargetTypeFilter<$PrismaModel> | $Enums.MediaTargetType;
+};
+
+export type EnumMediaTargetTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MediaTargetType | Prisma.EnumMediaTargetTypeFieldRefInput<$PrismaModel>;
+  in?: $Enums.MediaTargetType[];
+  notIn?: $Enums.MediaTargetType[];
+  not?: Prisma.NestedEnumMediaTargetTypeWithAggregatesFilter<$PrismaModel> | $Enums.MediaTargetType;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumMediaTargetTypeFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumMediaTargetTypeFilter<$PrismaModel>;
+};
+
 export type EnumTaskStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.TaskStatus | Prisma.EnumTaskStatusFieldRefInput<$PrismaModel>;
   in?: $Enums.TaskStatus[];
@@ -815,6 +832,23 @@ export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
   _min?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
   _max?: Prisma.NestedDecimalNullableFilter<$PrismaModel>;
+};
+
+export type NestedEnumMediaTargetTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.MediaTargetType | Prisma.EnumMediaTargetTypeFieldRefInput<$PrismaModel>;
+  in?: $Enums.MediaTargetType[];
+  notIn?: $Enums.MediaTargetType[];
+  not?: Prisma.NestedEnumMediaTargetTypeFilter<$PrismaModel> | $Enums.MediaTargetType;
+};
+
+export type NestedEnumMediaTargetTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MediaTargetType | Prisma.EnumMediaTargetTypeFieldRefInput<$PrismaModel>;
+  in?: $Enums.MediaTargetType[];
+  notIn?: $Enums.MediaTargetType[];
+  not?: Prisma.NestedEnumMediaTargetTypeWithAggregatesFilter<$PrismaModel> | $Enums.MediaTargetType;
+  _count?: Prisma.NestedIntFilter<$PrismaModel>;
+  _min?: Prisma.NestedEnumMediaTargetTypeFilter<$PrismaModel>;
+  _max?: Prisma.NestedEnumMediaTargetTypeFilter<$PrismaModel>;
 };
 
 export type NestedEnumTaskStatusFilter<$PrismaModel = never> = {

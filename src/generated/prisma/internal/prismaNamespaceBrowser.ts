@@ -61,6 +61,7 @@ export const ModelName = {
   ServiceRequest: 'ServiceRequest',
   Proposal: 'Proposal',
   Project: 'Project',
+  Media: 'Media',
   Task: 'Task',
   TaskAssignee: 'TaskAssignee',
   MemberProject: 'MemberProject',
@@ -258,6 +259,19 @@ export const ProjectScalarFieldEnum = {
 } as const;
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum];
+
+export const MediaScalarFieldEnum = {
+  id: 'id',
+  targetType: 'targetType',
+  targetId: 'targetId',
+  publicId: 'publicId',
+  secureUrl: 'secureUrl',
+  resourceType: 'resourceType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type MediaScalarFieldEnum = (typeof MediaScalarFieldEnum)[keyof typeof MediaScalarFieldEnum];
 
 export const TaskScalarFieldEnum = {
   id: 'id',
@@ -496,6 +510,16 @@ export const ProjectOrderByRelevanceFieldEnum = {
 } as const;
 
 export type ProjectOrderByRelevanceFieldEnum = (typeof ProjectOrderByRelevanceFieldEnum)[keyof typeof ProjectOrderByRelevanceFieldEnum];
+
+export const MediaOrderByRelevanceFieldEnum = {
+  id: 'id',
+  targetId: 'targetId',
+  publicId: 'publicId',
+  secureUrl: 'secureUrl',
+  resourceType: 'resourceType'
+} as const;
+
+export type MediaOrderByRelevanceFieldEnum = (typeof MediaOrderByRelevanceFieldEnum)[keyof typeof MediaOrderByRelevanceFieldEnum];
 
 export const TaskOrderByRelevanceFieldEnum = {
   id: 'id',

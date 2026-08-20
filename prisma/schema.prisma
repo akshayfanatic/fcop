@@ -52,6 +52,10 @@ enum ProjectCurrency {
   AED
 }
 
+enum MediaTargetType {
+  PROJECT
+}
+
 enum ProposalStatus {
   DRAFT
   SENT
@@ -307,6 +311,20 @@ model Project {
   @@index([service])
   @@index([status])
   @@map("projects")
+}
+
+model Media {
+  id           String          @id @default(cuid()) @db.VarChar(36)
+  targetType   MediaTargetType
+  targetId     String          @db.VarChar(36)
+  publicId     String          @unique @db.VarChar(255)
+  secureUrl    String          @db.Text
+  resourceType String          @db.VarChar(16)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([targetType, targetId, createdAt])
+  @@map("media")
 }
 
 model Task {

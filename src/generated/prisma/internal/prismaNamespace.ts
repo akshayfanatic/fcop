@@ -353,6 +353,7 @@ export const ModelName = {
   ServiceRequest: 'ServiceRequest',
   Proposal: 'Proposal',
   Project: 'Project',
+  Media: 'Media',
   Task: 'Task',
   TaskAssignee: 'TaskAssignee',
   MemberProject: 'MemberProject',
@@ -385,6 +386,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
       | 'serviceRequest'
       | 'proposal'
       | 'project'
+      | 'media'
       | 'task'
       | 'taskAssignee'
       | 'memberProject'
@@ -1251,6 +1253,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         };
       };
     };
+    Media: {
+      payload: Prisma.$MediaPayload<ExtArgs>;
+      fields: Prisma.MediaFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.MediaFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.MediaFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaPayload>;
+        };
+        findFirst: {
+          args: Prisma.MediaFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.MediaFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaPayload>;
+        };
+        findMany: {
+          args: Prisma.MediaFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaPayload>[];
+        };
+        create: {
+          args: Prisma.MediaCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaPayload>;
+        };
+        createMany: {
+          args: Prisma.MediaCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.MediaDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaPayload>;
+        };
+        update: {
+          args: Prisma.MediaUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaPayload>;
+        };
+        deleteMany: {
+          args: Prisma.MediaDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.MediaUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.MediaUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MediaPayload>;
+        };
+        aggregate: {
+          args: Prisma.MediaAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMedia>;
+        };
+        groupBy: {
+          args: Prisma.MediaGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.MediaGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.MediaCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.MediaCountAggregateOutputType> | number;
+        };
+      };
+    };
     Task: {
       payload: Prisma.$TaskPayload<ExtArgs>;
       fields: Prisma.TaskFieldRefs;
@@ -1795,6 +1863,19 @@ export const ProjectScalarFieldEnum = {
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum];
 
+export const MediaScalarFieldEnum = {
+  id: 'id',
+  targetType: 'targetType',
+  targetId: 'targetId',
+  publicId: 'publicId',
+  secureUrl: 'secureUrl',
+  resourceType: 'resourceType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type MediaScalarFieldEnum = (typeof MediaScalarFieldEnum)[keyof typeof MediaScalarFieldEnum];
+
 export const TaskScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
@@ -2033,6 +2114,16 @@ export const ProjectOrderByRelevanceFieldEnum = {
 
 export type ProjectOrderByRelevanceFieldEnum = (typeof ProjectOrderByRelevanceFieldEnum)[keyof typeof ProjectOrderByRelevanceFieldEnum];
 
+export const MediaOrderByRelevanceFieldEnum = {
+  id: 'id',
+  targetId: 'targetId',
+  publicId: 'publicId',
+  secureUrl: 'secureUrl',
+  resourceType: 'resourceType'
+} as const;
+
+export type MediaOrderByRelevanceFieldEnum = (typeof MediaOrderByRelevanceFieldEnum)[keyof typeof MediaOrderByRelevanceFieldEnum];
+
 export const TaskOrderByRelevanceFieldEnum = {
   id: 'id',
   projectId: 'projectId',
@@ -2141,6 +2232,11 @@ export type EnumProposalPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInput
  * Reference to a field of type 'ProjectStatus'
  */
 export type EnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectStatus'>;
+
+/**
+ * Reference to a field of type 'MediaTargetType'
+ */
+export type EnumMediaTargetTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaTargetType'>;
 
 /**
  * Reference to a field of type 'TaskStatus'
@@ -2298,6 +2394,7 @@ export type GlobalOmitConfig = {
   serviceRequest?: Prisma.ServiceRequestOmit;
   proposal?: Prisma.ProposalOmit;
   project?: Prisma.ProjectOmit;
+  media?: Prisma.MediaOmit;
   task?: Prisma.TaskOmit;
   taskAssignee?: Prisma.TaskAssigneeOmit;
   memberProject?: Prisma.MemberProjectOmit;
