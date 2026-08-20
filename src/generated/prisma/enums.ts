@@ -67,6 +67,12 @@ export const ProjectCurrency = {
 
 export type ProjectCurrency = (typeof ProjectCurrency)[keyof typeof ProjectCurrency];
 
+export const MediaTargetType = {
+  PROJECT: 'PROJECT'
+} as const;
+
+export type MediaTargetType = (typeof MediaTargetType)[keyof typeof MediaTargetType];
+
 export const ProposalStatus = {
   DRAFT: 'DRAFT',
   SENT: 'SENT',

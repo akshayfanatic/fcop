@@ -82,6 +82,11 @@ export type Proposal = Prisma.ProposalModel;
  */
 export type Project = Prisma.ProjectModel;
 /**
+ * Model Media
+ *
+ */
+export type Media = Prisma.MediaModel;
+/**
  * Model Task
  *
  */

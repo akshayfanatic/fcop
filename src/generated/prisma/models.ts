@@ -20,6 +20,7 @@ export type * from './models/Client.js';
 export type * from './models/ServiceRequest.js';
 export type * from './models/Proposal.js';
 export type * from './models/Project.js';
+export type * from './models/Media.js';
 export type * from './models/Task.js';
 export type * from './models/TaskAssignee.js';
 export type * from './models/MemberProject.js';
