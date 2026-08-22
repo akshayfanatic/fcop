@@ -355,6 +355,7 @@ export const ModelName = {
   Project: 'Project',
   Media: 'Media',
   Task: 'Task',
+  AddOnTask: 'AddOnTask',
   TaskAssignee: 'TaskAssignee',
   MemberProject: 'MemberProject',
   ChatHistory: 'ChatHistory',
@@ -388,6 +389,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
       | 'project'
       | 'media'
       | 'task'
+      | 'addOnTask'
       | 'taskAssignee'
       | 'memberProject'
       | 'chatHistory'
@@ -1385,6 +1387,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         };
       };
     };
+    AddOnTask: {
+      payload: Prisma.$AddOnTaskPayload<ExtArgs>;
+      fields: Prisma.AddOnTaskFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.AddOnTaskFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AddOnTaskPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.AddOnTaskFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AddOnTaskPayload>;
+        };
+        findFirst: {
+          args: Prisma.AddOnTaskFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AddOnTaskPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.AddOnTaskFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AddOnTaskPayload>;
+        };
+        findMany: {
+          args: Prisma.AddOnTaskFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AddOnTaskPayload>[];
+        };
+        create: {
+          args: Prisma.AddOnTaskCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AddOnTaskPayload>;
+        };
+        createMany: {
+          args: Prisma.AddOnTaskCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.AddOnTaskDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AddOnTaskPayload>;
+        };
+        update: {
+          args: Prisma.AddOnTaskUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AddOnTaskPayload>;
+        };
+        deleteMany: {
+          args: Prisma.AddOnTaskDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.AddOnTaskUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.AddOnTaskUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AddOnTaskPayload>;
+        };
+        aggregate: {
+          args: Prisma.AddOnTaskAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAddOnTask>;
+        };
+        groupBy: {
+          args: Prisma.AddOnTaskGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AddOnTaskGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.AddOnTaskCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AddOnTaskCountAggregateOutputType> | number;
+        };
+      };
+    };
     TaskAssignee: {
       payload: Prisma.$TaskAssigneePayload<ExtArgs>;
       fields: Prisma.TaskAssigneeFieldRefs;
@@ -1892,6 +1960,18 @@ export const TaskScalarFieldEnum = {
 
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum];
 
+export const AddOnTaskScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  projectId: 'projectId',
+  name: 'name',
+  isCompleted: 'isCompleted',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type AddOnTaskScalarFieldEnum = (typeof AddOnTaskScalarFieldEnum)[keyof typeof AddOnTaskScalarFieldEnum];
+
 export const TaskAssigneeScalarFieldEnum = {
   id: 'id',
   taskId: 'taskId',
@@ -2133,6 +2213,15 @@ export const TaskOrderByRelevanceFieldEnum = {
 } as const;
 
 export type TaskOrderByRelevanceFieldEnum = (typeof TaskOrderByRelevanceFieldEnum)[keyof typeof TaskOrderByRelevanceFieldEnum];
+
+export const AddOnTaskOrderByRelevanceFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  projectId: 'projectId',
+  name: 'name'
+} as const;
+
+export type AddOnTaskOrderByRelevanceFieldEnum = (typeof AddOnTaskOrderByRelevanceFieldEnum)[keyof typeof AddOnTaskOrderByRelevanceFieldEnum];
 
 export const TaskAssigneeOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -2396,6 +2485,7 @@ export type GlobalOmitConfig = {
   project?: Prisma.ProjectOmit;
   media?: Prisma.MediaOmit;
   task?: Prisma.TaskOmit;
+  addOnTask?: Prisma.AddOnTaskOmit;
   taskAssignee?: Prisma.TaskAssigneeOmit;
   memberProject?: Prisma.MemberProjectOmit;
   chatHistory?: Prisma.ChatHistoryOmit;

@@ -305,6 +305,7 @@ model Project {
   memberProjects    MemberProject[]
   tasks             Task[]
   taskAssignees     TaskAssignee[]
+  addOnTasks        AddOnTask[]
 
   @@index([clientId])
   @@index([createdByMemberId])
@@ -342,12 +343,29 @@ model Task {
   project           Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
   createdBy         Member         @relation("TaskCreator", fields: [createdByMemberId], references: [id], onDelete: Restrict)
   assignees         TaskAssignee[]
+  addOnTasks        AddOnTask[]
 
   @@index([projectId])
   @@index([createdByMemberId])
   @@index([status])
   @@index([priority])
   @@map("tasks")
+}
+
+model AddOnTask {
+  id          String   @id @default(cuid()) @db.VarChar(36)
+  taskId      String   @db.VarChar(36)
+  projectId   String   @db.VarChar(36)
+  name        String
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  task        Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([taskId])
+  @@index([projectId])
+  @@map("addOnTasks")
 }
 
 model TaskAssignee {

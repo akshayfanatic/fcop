@@ -120,6 +120,11 @@ export type Media = Prisma.MediaModel;
  */
 export type Task = Prisma.TaskModel;
 /**
+ * Model AddOnTask
+ *
+ */
+export type AddOnTask = Prisma.AddOnTaskModel;
+/**
  * Model TaskAssignee
  *
  */

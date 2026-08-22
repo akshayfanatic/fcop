@@ -11,7 +11,7 @@ import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { getProjectAccessWhere } from '../utils/project/project-access.js';
 import { hasRole } from '../utils/role.js';
-import type { CreateTaskInput, UpdateTaskInput } from '../validators/task.validator.js';
+import type { CreateAddOnTaskInput, CreateTaskInput, UpdateAddOnTaskInput, UpdateTaskInput } from '../validators/task.validator.js';
 
 const includeTaskDetails = {
   project: {
@@ -46,6 +46,11 @@ const includeTaskDetails = {
           }
         }
       }
+    }
+  },
+  addOnTasks: {
+    orderBy: {
+      createdAt: 'asc'
     }
   }
 } satisfies Prisma.TaskInclude;
@@ -103,6 +108,23 @@ const assertTaskAccess = async (taskId: string, member: SessionMember) => {
   }
 
   return task;
+};
+
+const assertAddOnTaskAccess = async (taskId: string, addOnTaskId: string, member: SessionMember) => {
+  const task = await assertTaskAccess(taskId, member);
+  const addOnTask = await prisma.addOnTask.findFirst({
+    where: {
+      id: addOnTaskId,
+      taskId,
+      projectId: task.projectId
+    }
+  });
+
+  if (!addOnTask) {
+    throw createHttpError(HttpStatus.NOT_FOUND, 'Add-on task not found.', 'ADD_ON_TASK_NOT_FOUND');
+  }
+
+  return { addOnTask, task };
 };
 
 const getValidAssigneeMemberIds = async (projectId: string, member: SessionMember, payload: TaskWritePayload) => {
@@ -262,6 +284,7 @@ export const taskService = {
       const assigneeMemberIds = await getValidAssigneeMemberIds(projectId, member, payload);
 
       const task = await prisma.$transaction(async (tx) => {
+        // Create checklist items with the parent task so partial task setup cannot be saved.
         const task = await tx.task.create({
           data: {
             projectId,
@@ -271,7 +294,13 @@ export const taskService = {
             status: payload.status,
             priority: payload.priority,
             dueDate: payload.dueDate,
-            estimatedHours: payload.estimatedHours
+            estimatedHours: payload.estimatedHours,
+            addOnTasks: {
+              create: payload.addOnTasks.map((addOnTask) => ({
+                projectId,
+                name: addOnTask.name
+              }))
+            }
           }
         });
 
@@ -391,6 +420,83 @@ export const taskService = {
       return updatedTask;
     } catch (error) {
       logger.error({ error, taskId }, 'Failed to update task.');
+      throw error;
+    }
+  },
+
+  updateAddOnTaskById: async (taskId: string, addOnTaskId: string, payload: UpdateAddOnTaskInput, headers: IncomingHttpHeaders) => {
+    try {
+      const member = await getSessionMember(headers);
+      await assertAddOnTaskAccess(taskId, addOnTaskId, member);
+      const isManager = canManageTasks(member);
+
+      // Assigned members may update completion but cannot rename checklist work.
+      if (!isManager && (payload.name !== undefined || payload.isCompleted === undefined)) {
+        throw createHttpError(HttpStatus.FORBIDDEN, 'Members can only update add-on task completion.', 'ADD_ON_TASK_UPDATE_FORBIDDEN');
+      }
+
+      return await prisma.addOnTask.update({
+        where: {
+          id: addOnTaskId
+        },
+        data: {
+          ...(isManager && payload.name !== undefined ? { name: payload.name } : {}),
+          ...(payload.isCompleted !== undefined ? { isCompleted: payload.isCompleted } : {})
+        }
+      });
+    } catch (error) {
+      logger.error({ error, taskId, addOnTaskId }, 'Failed to update add-on task.');
+      throw error;
+    }
+  },
+
+  createAddOnTask: async (taskId: string, payload: CreateAddOnTaskInput, headers: IncomingHttpHeaders) => {
+    try {
+      const member = await getSessionMember(headers);
+
+      // Keep task structure under Admin and Manager control.
+      if (!canManageTasks(member)) {
+        throw createHttpError(HttpStatus.FORBIDDEN, 'Only Admin and Manager members can add add-on tasks.', 'ADD_ON_TASK_CREATE_FORBIDDEN');
+      }
+
+      const task = await assertTaskAccess(taskId, member);
+      const addOnTaskCount = await prisma.addOnTask.count({ where: { taskId } });
+
+      if (addOnTaskCount >= 5) {
+        throw createHttpError(HttpStatus.BAD_REQUEST, 'A task can have up to 5 add-on tasks.', 'ADD_ON_TASK_LIMIT_REACHED');
+      }
+
+      return await prisma.addOnTask.create({
+        data: {
+          taskId,
+          projectId: task.projectId,
+          name: payload.name
+        }
+      });
+    } catch (error) {
+      logger.error({ error, taskId }, 'Failed to create add-on task.');
+      throw error;
+    }
+  },
+
+  deleteAddOnTaskById: async (taskId: string, addOnTaskId: string, headers: IncomingHttpHeaders) => {
+    try {
+      const member = await getSessionMember(headers);
+
+      // Keep task structure under Admin and Manager control.
+      if (!canManageTasks(member)) {
+        throw createHttpError(HttpStatus.FORBIDDEN, 'Only Admin and Manager members can delete add-on tasks.', 'ADD_ON_TASK_DELETE_FORBIDDEN');
+      }
+
+      await assertAddOnTaskAccess(taskId, addOnTaskId, member);
+
+      return await prisma.addOnTask.delete({
+        where: {
+          id: addOnTaskId
+        }
+      });
+    } catch (error) {
+      logger.error({ error, taskId, addOnTaskId }, 'Failed to delete add-on task.');
       throw error;
     }
   },

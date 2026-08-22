@@ -22,6 +22,7 @@ export type * from './models/Proposal.js';
 export type * from './models/Project.js';
 export type * from './models/Media.js';
 export type * from './models/Task.js';
+export type * from './models/AddOnTask.js';
 export type * from './models/TaskAssignee.js';
 export type * from './models/MemberProject.js';
 export type * from './models/ChatHistory.js';
