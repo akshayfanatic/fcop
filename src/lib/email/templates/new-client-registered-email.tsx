@@ -1,5 +1,5 @@
 import { BaseEmail } from '../components/base-email.js';
-import { emailStyles } from '../styles.js';
+import { EmailIntro, EmailMetadata, EmailSummary } from '../components/email-content.js';
 import type { EmailTemplate } from '../types.js';
 
 type NewClientRegisteredEmailProps = {
@@ -13,13 +13,21 @@ type NewClientRegisteredEmailProps = {
 export const createNewClientRegisteredEmailTemplate = ({ clientId, memberId, userName, userEmail, organizationName }: NewClientRegisteredEmailProps): EmailTemplate => ({
   subject: `New client registered: ${userName}`,
   react: (
-    <BaseEmail previewText={`${userName} registered as a new client in ${organizationName}.`}>
-      <h1 style={emailStyles.heading}>New client registered</h1>
-      <p style={emailStyles.text}>
-        {userName} ({userEmail}) registered and joined {organizationName} as a client.
-      </p>
-      <p style={emailStyles.text}>Client ID: {clientId}</p>
-      <p style={emailStyles.lastText}>Member ID: {memberId}</p>
+    <BaseEmail previewText={`${userName} registered as a new client in ${organizationName}.`} category="CLIENT">
+      <EmailIntro context="Admin notification" title="New client registered">
+        A new client account was created and joined the {organizationName} workspace.
+      </EmailIntro>
+      <EmailSummary
+        label="CLIENT"
+        title={userName}
+        items={[
+          { label: 'Email', value: userEmail },
+          { label: 'Organization', value: organizationName }
+        ]}
+      />
+      <EmailMetadata>
+        Client ID: {clientId} · Member ID: {memberId}
+      </EmailMetadata>
     </BaseEmail>
   ),
   text: ['New client registered', `${userName} (${userEmail}) registered and joined ${organizationName} as a client.`, `Client ID: ${clientId}`, `Member ID: ${memberId}`].join('\n')

@@ -1,6 +1,6 @@
 import type { Lead } from '../../../generated/prisma/client.js';
 import { BaseEmail } from '../components/base-email.js';
-import { emailStyles } from '../styles.js';
+import { EmailIntro, EmailSummary } from '../components/email-content.js';
 import type { EmailTemplate } from '../types.js';
 
 type NewLeadEmailProps = {
@@ -10,13 +10,20 @@ type NewLeadEmailProps = {
 export const createNewLeadEmailTemplate = ({ lead }: NewLeadEmailProps): EmailTemplate => ({
   subject: `New FCOP lead: ${lead.name}`,
   react: (
-    <BaseEmail previewText={`New lead from ${lead.name}`}>
-      <h1 style={emailStyles.heading}>New lead captured</h1>
-      <p style={emailStyles.text}>Name: {lead.name}</p>
-      <p style={emailStyles.text}>Email: {lead.email}</p>
-      <p style={emailStyles.text}>Company: {lead.companyName ?? 'Not provided'}</p>
-      <p style={emailStyles.text}>Service: {lead.serviceInterest}</p>
-      <p style={emailStyles.lastText}>Budget: {lead.budgetRange ?? 'Not provided'}</p>
+    <BaseEmail previewText={`New lead from ${lead.name}`} category="LEAD">
+      <EmailIntro context="Admin notification" title="New lead captured">
+        A new contact-form lead is ready for qualification and follow-up.
+      </EmailIntro>
+      <EmailSummary
+        label="LEAD"
+        title={lead.name}
+        items={[
+          { label: 'Email', value: lead.email },
+          { label: 'Company', value: lead.companyName ?? 'Not provided' },
+          { label: 'Service', value: lead.serviceInterest },
+          { label: 'Budget', value: lead.budgetRange ?? 'Not provided' }
+        ]}
+      />
     </BaseEmail>
   ),
   text: [

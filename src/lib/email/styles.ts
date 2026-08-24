@@ -34,17 +34,29 @@ export const emailStyles = {
   },
   logo: {
     display: 'block',
-    width: '64px',
-    height: '64px',
-    margin: '0 auto',
+    width: '52px',
+    height: '52px',
     border: 0
+  },
+  brandCategory: {
+    color: '#9ca9bf',
+    fontSize: '12px',
+    lineHeight: '18px',
+    fontWeight: 700
   },
   contentCell: {
     padding: '40px',
-    textAlign: 'center'
+    textAlign: 'left'
+  },
+  context: {
+    margin: '0 0 10px',
+    color: '#087da5',
+    fontSize: '14px',
+    lineHeight: '20px',
+    fontWeight: 700
   },
   heading: {
-    margin: '0 0 18px',
+    margin: '0 0 14px',
     color: '#101828',
     fontSize: '30px',
     lineHeight: '36px',
@@ -52,7 +64,7 @@ export const emailStyles = {
     letterSpacing: '-0.6px'
   },
   text: {
-    margin: '0 0 16px',
+    margin: '0 0 24px',
     color: '#475467',
     fontSize: '16px',
     lineHeight: '25px'
@@ -78,6 +90,50 @@ export const emailStyles = {
     color: '#087da5',
     textDecoration: 'underline',
     wordBreak: 'break-all'
+  },
+  buttonRow: {
+    margin: '28px 0 20px'
+  },
+  summary: {
+    width: '100%',
+    border: '1px solid #dce5ed',
+    borderRadius: '10px',
+    borderCollapse: 'separate',
+    borderSpacing: 0
+  },
+  summaryTitleCell: {
+    padding: '22px 24px 14px'
+  },
+  summaryLabel: {
+    margin: '0 0 5px',
+    color: '#667085',
+    fontSize: '12px',
+    lineHeight: '18px',
+    fontWeight: 700
+  },
+  summaryTitle: {
+    margin: 0,
+    color: '#172033',
+    fontSize: '19px',
+    lineHeight: '27px',
+    fontWeight: 700
+  },
+  summaryDetailsCell: {
+    padding: '0 24px 20px'
+  },
+  detailLabel: {
+    width: '38%',
+    padding: '7px 0',
+    color: '#667085',
+    fontSize: '14px',
+    lineHeight: '20px'
+  },
+  detailValue: {
+    padding: '7px 0',
+    color: '#172033',
+    fontSize: '14px',
+    lineHeight: '20px',
+    fontWeight: 700
   },
   footerCell: {
     padding: '22px 40px',

@@ -2,7 +2,7 @@ import type { Prisma } from '../../../generated/prisma/client.js';
 import { SERVICE_INTEREST_OPTIONS } from '../../../constants/enum.js';
 import { getOptionLabel } from '../../../utils/options.js';
 import { BaseEmail } from '../components/base-email.js';
-import { emailStyles } from '../styles.js';
+import { EmailIntro, EmailMetadata, EmailSummary } from '../components/email-content.js';
 import type { EmailTemplate } from '../types.js';
 
 type NewServiceRequest = Prisma.ServiceRequestGetPayload<{
@@ -47,13 +47,20 @@ export const createNewServiceRequestEmailTemplate = ({ request }: NewServiceRequ
   return {
     subject: `New service request: ${serviceLabel}`,
     react: (
-      <BaseEmail previewText={`New service request from ${request.client.name}`}>
-        <h1 style={emailStyles.heading}>New service request submitted</h1>
-        <p style={emailStyles.text}>Client: {request.client.name}</p>
-        <p style={emailStyles.text}>Email: {user.email}</p>
-        <p style={emailStyles.text}>Service: {serviceLabel}</p>
-        <p style={emailStyles.text}>Submitted: {createdAt}</p>
-        <p style={emailStyles.lastText}>Request ID: {request.id}</p>
+      <BaseEmail previewText={`New service request from ${request.client.name}`} category="REQUEST">
+        <EmailIntro context="Admin notification" title="New service request submitted">
+          A client submitted a new service request that is ready for review.
+        </EmailIntro>
+        <EmailSummary
+          label="REQUEST"
+          title={serviceLabel}
+          items={[
+            { label: 'Client', value: request.client.name },
+            { label: 'Email', value: user.email },
+            { label: 'Submitted', value: createdAt }
+          ]}
+        />
+        <EmailMetadata>Request ID: {request.id}</EmailMetadata>
       </BaseEmail>
     ),
     text: ['New service request submitted', `Client: ${request.client.name}`, `Email: ${user.email}`, `Service: ${serviceLabel}`, `Submitted: ${createdAt}`, `Request ID: ${request.id}`].join('\n')

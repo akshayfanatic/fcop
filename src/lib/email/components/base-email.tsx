@@ -4,10 +4,11 @@ import { emailStyles } from '../styles.js';
 
 type BaseEmailProps = {
   previewText: string;
+  category: string;
   children: ReactNode;
 };
 
-export const BaseEmail = ({ previewText, children }: BaseEmailProps) => {
+export const BaseEmail = ({ previewText, category, children }: BaseEmailProps) => {
   const logoUrl = new URL('/assets/images/fcop.png', env.betterAuthUrl).toString();
 
   return (
@@ -26,22 +27,36 @@ export const BaseEmail = ({ previewText, children }: BaseEmailProps) => {
                 <table role="presentation" width="100%" cellSpacing="0" cellPadding="0" style={emailStyles.container}>
                   <tbody>
                     <tr>
-                      <td align="center" style={emailStyles.brandCell}>
-                        <img src={logoUrl} width="64" height="64" alt="FCOP" style={emailStyles.logo} />
+                      <td style={emailStyles.brandCell}>
+                        <table role="presentation" width="100%" cellSpacing="0" cellPadding="0">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <img src={logoUrl} width="52" height="52" alt="FCOP" style={emailStyles.logo} />
+                              </td>
+                              <td align="right" style={emailStyles.brandCategory}>
+                                {category}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </td>
                     </tr>
                     <tr>
-                      <td align="center" style={emailStyles.contentCell}>
-                        {children}
-                      </td>
+                      <td style={emailStyles.contentCell}>{children}</td>
                     </tr>
                     <tr>
-                      <td align="center" style={emailStyles.footerCell}>
+                      <td style={emailStyles.footerCell}>
                         <p style={emailStyles.footerContactText}>
-                          For more information, contact{' '}
+                          For more information, email{' '}
                           <a href="mailto:info@fanaticcoders.com" style={emailStyles.footerLink}>
                             info@fanaticcoders.com
+                          </a>{' '}
+                          or visit{' '}
+                          <a href="https://fanaticcoders.com" style={emailStyles.footerLink}>
+                            fanaticcoders.com
                           </a>
+                          .
                         </p>
                       </td>
                     </tr>

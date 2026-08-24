@@ -1,5 +1,5 @@
 import { BaseEmail } from '../components/base-email.js';
-import { emailStyles } from '../styles.js';
+import { EmailAction, EmailIntro, EmailMetadata } from '../components/email-content.js';
 import type { EmailTemplate } from '../types.js';
 
 type InvitationEmailProps = {
@@ -10,31 +10,21 @@ type InvitationEmailProps = {
   role: string;
 };
 
-export const createInvitationEmailTemplate = ({ acceptUrl, invitedEmail, inviterName, organizationName, role }: InvitationEmailProps): EmailTemplate => ({
+export const createInvitationEmailTemplate = ({ acceptUrl, organizationName }: InvitationEmailProps): EmailTemplate => ({
   subject: `You're invited to ${organizationName}`,
   react: (
-    <BaseEmail previewText={`You've been invited to join ${organizationName}.`}>
-      <h1 style={emailStyles.heading}>Join {organizationName}</h1>
-      <p style={emailStyles.text}>
-        {inviterName} invited {invitedEmail} to join {organizationName} as {role}.
-      </p>
-      <p style={emailStyles.text}>
-        <a href={acceptUrl} style={emailStyles.button}>
-          Accept invitation
-        </a>
-      </p>
-      <p style={emailStyles.lastText}>
-        If the button does not work, use this link:{' '}
-        <a href={acceptUrl} style={emailStyles.link}>
-          {acceptUrl}
-        </a>
-      </p>
+    <BaseEmail previewText={`You've been invited to join ${organizationName}.`} category="INVITATION">
+      <EmailIntro context={organizationName} title="You're invited">
+        You have been invited to join the {organizationName} workspace. Accept the invitation to get started.
+      </EmailIntro>
+      <EmailAction href={acceptUrl}>Accept invitation</EmailAction>
+      <EmailMetadata>If you were not expecting this invitation, you can ignore this email.</EmailMetadata>
     </BaseEmail>
   ),
   text: [
-    `Join ${organizationName}`,
+    `You're invited to ${organizationName}`,
     '',
-    `${inviterName} invited ${invitedEmail} to join ${organizationName} as ${role}.`,
+    `You have been invited to join the ${organizationName} workspace.`,
     `Accept invitation: ${acceptUrl}`,
     '',
     'If you did not expect this invitation, you can ignore this email.'
