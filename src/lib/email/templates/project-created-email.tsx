@@ -2,7 +2,7 @@ import type { Prisma } from '../../../generated/prisma/client.js';
 import { SERVICE_INTEREST_OPTIONS } from '../../../constants/enum.js';
 import { getOptionLabel } from '../../../utils/options.js';
 import { BaseEmail } from '../components/base-email.js';
-import { emailStyles } from '../styles.js';
+import { EmailIntro, EmailMetadata, EmailSummary } from '../components/email-content.js';
 import type { EmailTemplate } from '../types.js';
 
 type CreatedProject = Prisma.ProjectGetPayload<{
@@ -57,15 +57,21 @@ export const createProjectCreatedEmailTemplate = ({ project }: ProjectCreatedEma
   return {
     subject: `Your ${serviceLabel} project has been created`,
     react: (
-      <BaseEmail previewText={`Your project ${project.name} is now set up.`}>
-        <h1 style={emailStyles.heading}>Your project is ready</h1>
-        <p style={emailStyles.text}>Hi {project.client.member.user.name},</p>
-        <p style={emailStyles.text}>We created your project workspace for {project.name}. Our team will use it to manage delivery, updates, and next steps.</p>
-        <p style={emailStyles.text}>Service: {serviceLabel}</p>
-        <p style={emailStyles.text}>Project manager: {manager?.name ?? 'To be assigned'}</p>
-        <p style={emailStyles.text}>Start date: {formatDate(project.startDate)}</p>
-        <p style={emailStyles.text}>Budget: {budget}</p>
-        <p style={emailStyles.lastText}>Project ID: {project.id}</p>
+      <BaseEmail previewText={`Your project ${project.name} is now set up.`} category="PROJECT">
+        <EmailIntro context="Your workspace is ready" title="Your project is ready">
+          Hi {project.client.member.user.name}, we created your project workspace. Our team will use it to manage delivery, updates, and next steps.
+        </EmailIntro>
+        <EmailSummary
+          label="PROJECT"
+          title={project.name}
+          items={[
+            { label: 'Service', value: serviceLabel },
+            { label: 'Project manager', value: manager?.name ?? 'To be assigned' },
+            { label: 'Start date', value: formatDate(project.startDate) },
+            { label: 'Budget', value: budget }
+          ]}
+        />
+        <EmailMetadata>Project ID: {project.id}</EmailMetadata>
       </BaseEmail>
     ),
     text: [

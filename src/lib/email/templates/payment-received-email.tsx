@@ -1,6 +1,6 @@
 import type { ProjectCurrency } from '../../../generated/prisma/client.js';
 import { BaseEmail } from '../components/base-email.js';
-import { emailStyles } from '../styles.js';
+import { EmailAction, EmailIntro, EmailMetadata, EmailSummary } from '../components/email-content.js';
 import type { EmailTemplate } from '../types.js';
 
 type PaymentReceivedEmailProps = {
@@ -24,21 +24,17 @@ const paymentDetails = ({ clientName, serviceLabel, amount, currency, serviceReq
 export const createClientPaymentReceivedEmailTemplate = (props: PaymentReceivedEmailProps): EmailTemplate => ({
   subject: `Payment received for ${props.serviceLabel}`,
   react: (
-    <BaseEmail previewText={`We received your payment for ${props.serviceLabel}.`}>
-      <h1 style={emailStyles.heading}>Payment received</h1>
-      <p style={emailStyles.text}>Hi {props.recipientName},</p>
-      <p style={emailStyles.text}>We received your payment successfully. Your service request now reflects the completed payment.</p>
-      <p style={emailStyles.text}>Service: {props.serviceLabel}</p>
-      <p style={emailStyles.text}>
-        Amount: {props.currency} {props.amount}
-      </p>
-      {props.invoiceNumber && <p style={emailStyles.text}>Invoice: {props.invoiceNumber}</p>}
-      <p style={emailStyles.text}>
-        <a href={props.serviceRequestUrl} style={emailStyles.button}>
-          View service request
-        </a>
-      </p>
-      <p style={emailStyles.lastText}>Thank you for your payment.</p>
+    <BaseEmail previewText={`We received your payment for ${props.serviceLabel}.`} category="PAYMENT">
+      <EmailIntro context="Payment confirmed" title="Payment received">
+        Hi {props.recipientName}, your payment was received successfully. Your service request now shows the updated payment status.
+      </EmailIntro>
+      <EmailSummary
+        label="AMOUNT"
+        title={`${props.currency} ${props.amount}`}
+        items={[{ label: 'Status', value: 'Paid' }, ...(props.invoiceNumber ? [{ label: 'Invoice', value: props.invoiceNumber }] : []), { label: 'Service', value: props.serviceLabel }]}
+      />
+      <EmailAction href={props.serviceRequestUrl}>View payment</EmailAction>
+      <EmailMetadata>Thank you for your payment.</EmailMetadata>
     </BaseEmail>
   ),
   text: ['Payment received', `Hi ${props.recipientName},`, 'We received your payment successfully.', ...paymentDetails(props), 'Thank you for your payment.'].join('\n')
@@ -47,22 +43,17 @@ export const createClientPaymentReceivedEmailTemplate = (props: PaymentReceivedE
 export const createAdminPaymentReceivedEmailTemplate = (props: PaymentReceivedEmailProps): EmailTemplate => ({
   subject: `Payment received from ${props.clientName}`,
   react: (
-    <BaseEmail previewText={`${props.clientName} completed a payment for ${props.serviceLabel}.`}>
-      <h1 style={emailStyles.heading}>Customer payment received</h1>
-      <p style={emailStyles.text}>Hi {props.recipientName},</p>
-      <p style={emailStyles.text}>
-        {props.clientName} completed payment for {props.serviceLabel}.
-      </p>
-      <p style={emailStyles.text}>
-        Amount: {props.currency} {props.amount}
-      </p>
-      {props.invoiceNumber && <p style={emailStyles.text}>Invoice: {props.invoiceNumber}</p>}
-      <p style={emailStyles.text}>
-        <a href={props.serviceRequestUrl} style={emailStyles.button}>
-          Review service request
-        </a>
-      </p>
-      <p style={emailStyles.lastText}>The proposal payment status is now marked as paid.</p>
+    <BaseEmail previewText={`${props.clientName} completed a payment for ${props.serviceLabel}.`} category="PAYMENT">
+      <EmailIntro context="Admin notification" title="Customer payment received">
+        Hi {props.recipientName}, {props.clientName} completed payment for {props.serviceLabel}.
+      </EmailIntro>
+      <EmailSummary
+        label="PAYMENT"
+        title={`${props.currency} ${props.amount}`}
+        items={[{ label: 'Customer', value: props.clientName }, ...(props.invoiceNumber ? [{ label: 'Invoice', value: props.invoiceNumber }] : []), { label: 'Service', value: props.serviceLabel }]}
+      />
+      <EmailAction href={props.serviceRequestUrl}>Review payment</EmailAction>
+      <EmailMetadata>The proposal payment status is now marked as paid.</EmailMetadata>
     </BaseEmail>
   ),
   text: [

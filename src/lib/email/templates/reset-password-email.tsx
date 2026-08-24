@@ -1,4 +1,5 @@
 import { BaseEmail } from '../components/base-email.js';
+import { EmailAction, EmailIntro, EmailMetadata } from '../components/email-content.js';
 import { emailStyles } from '../styles.js';
 import type { EmailTemplate } from '../types.js';
 
@@ -23,17 +24,14 @@ const tokenStyle = {
 export const createResetPasswordEmailTemplate = ({ resetUrl, token }: ResetPasswordEmailProps): EmailTemplate => ({
   subject: 'Reset your FCOP password',
   react: (
-    <BaseEmail previewText="Use this secure link to reset your FCOP password.">
-      <h1 style={emailStyles.heading}>Reset your password</h1>
-      <p style={emailStyles.text}>We received a request to reset your FCOP password. Use the button below to continue.</p>
-      <p style={emailStyles.text}>
-        <a href={resetUrl} style={emailStyles.button}>
-          Reset password
-        </a>
-      </p>
+    <BaseEmail previewText="Use this secure link to reset your FCOP password." category="SECURITY">
+      <EmailIntro context="Account security" title="Reset your password">
+        We received a request to reset your FCOP password. Use the button below to continue.
+      </EmailIntro>
+      <EmailAction href={resetUrl}>Reset password</EmailAction>
       <p style={emailStyles.text}>If the button does not work, use this reset token:</p>
       <p style={tokenStyle}>{token}</p>
-      <p style={emailStyles.lastText}>If you did not request a password reset, you can ignore this email.</p>
+      <EmailMetadata>If you did not request a password reset, you can ignore this email.</EmailMetadata>
     </BaseEmail>
   ),
   text: [

@@ -1,5 +1,5 @@
 import { BaseEmail } from '../components/base-email.js';
-import { emailStyles } from '../styles.js';
+import { EmailAction, EmailIntro, EmailMetadata } from '../components/email-content.js';
 import type { EmailTemplate } from '../types.js';
 
 type ClientWelcomeEmailProps = {
@@ -11,16 +11,12 @@ type ClientWelcomeEmailProps = {
 export const createClientWelcomeEmailTemplate = ({ userName, organizationName, dashboardUrl }: ClientWelcomeEmailProps): EmailTemplate => ({
   subject: `Welcome to ${organizationName}, ${userName}`,
   react: (
-    <BaseEmail previewText={`Your ${organizationName} account is ready.`}>
-      <h1 style={emailStyles.heading}>Welcome to {organizationName}</h1>
-      <p style={emailStyles.text}>Hi {userName},</p>
-      <p style={emailStyles.text}>Your client account is ready. You can now submit service requests and follow your projects, tasks, proposals, and payments from one place.</p>
-      <p style={emailStyles.text}>
-        <a href={dashboardUrl} style={emailStyles.button}>
-          Open your dashboard
-        </a>
-      </p>
-      <p style={emailStyles.lastText}>We look forward to building with you.</p>
+    <BaseEmail previewText={`Your ${organizationName} account is ready.`} category="WELCOME">
+      <EmailIntro context="Your account is ready" title={`Welcome to ${organizationName}`}>
+        Hi {userName}, your client account is ready. You can now submit service requests and follow your projects, tasks, proposals, and payments.
+      </EmailIntro>
+      <EmailAction href={dashboardUrl}>Open your dashboard</EmailAction>
+      <EmailMetadata>We look forward to working with you.</EmailMetadata>
     </BaseEmail>
   ),
   text: [
