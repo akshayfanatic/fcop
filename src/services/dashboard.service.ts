@@ -303,10 +303,8 @@ export const dashboardService = {
     }
   },
 
-  getLeadDistribution: async (headers: IncomingHttpHeaders): Promise<AdminLeadDistribution> => {
+  getLeadDistribution: async (): Promise<AdminLeadDistribution> => {
     try {
-      await requireAdmin(headers);
-
       const groups = await prisma.lead.groupBy({
         by: ['status'],
         orderBy: {

@@ -286,6 +286,7 @@ export type ProjectWhereInput = {
   memberProjects?: Prisma.MemberProjectListRelationFilter;
   tasks?: Prisma.TaskListRelationFilter;
   taskAssignees?: Prisma.TaskAssigneeListRelationFilter;
+  addOnTasks?: Prisma.AddOnTaskListRelationFilter;
 };
 
 export type ProjectOrderByWithRelationInput = {
@@ -309,6 +310,7 @@ export type ProjectOrderByWithRelationInput = {
   memberProjects?: Prisma.MemberProjectOrderByRelationAggregateInput;
   tasks?: Prisma.TaskOrderByRelationAggregateInput;
   taskAssignees?: Prisma.TaskAssigneeOrderByRelationAggregateInput;
+  addOnTasks?: Prisma.AddOnTaskOrderByRelationAggregateInput;
   _relevance?: Prisma.ProjectOrderByRelevanceInput;
 };
 
@@ -337,6 +339,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<
     memberProjects?: Prisma.MemberProjectListRelationFilter;
     tasks?: Prisma.TaskListRelationFilter;
     taskAssignees?: Prisma.TaskAssigneeListRelationFilter;
+    addOnTasks?: Prisma.AddOnTaskListRelationFilter;
   },
   'id' | 'serviceRequestId'
 >;
@@ -401,6 +404,7 @@ export type ProjectCreateInput = {
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectUncheckedCreateInput = {
@@ -421,6 +425,7 @@ export type ProjectUncheckedCreateInput = {
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectUpdateInput = {
@@ -441,6 +446,7 @@ export type ProjectUpdateInput = {
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectUncheckedUpdateInput = {
@@ -461,6 +467,7 @@ export type ProjectUncheckedUpdateInput = {
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectCreateManyInput = {
@@ -768,6 +775,20 @@ export type ProjectUpdateOneRequiredWithoutTasksNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutTasksInput, Prisma.ProjectUpdateWithoutTasksInput>, Prisma.ProjectUncheckedUpdateWithoutTasksInput>;
 };
 
+export type ProjectCreateNestedOneWithoutAddOnTasksInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutAddOnTasksInput, Prisma.ProjectUncheckedCreateWithoutAddOnTasksInput>;
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutAddOnTasksInput;
+  connect?: Prisma.ProjectWhereUniqueInput;
+};
+
+export type ProjectUpdateOneRequiredWithoutAddOnTasksNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutAddOnTasksInput, Prisma.ProjectUncheckedCreateWithoutAddOnTasksInput>;
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutAddOnTasksInput;
+  upsert?: Prisma.ProjectUpsertWithoutAddOnTasksInput;
+  connect?: Prisma.ProjectWhereUniqueInput;
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutAddOnTasksInput, Prisma.ProjectUpdateWithoutAddOnTasksInput>, Prisma.ProjectUncheckedUpdateWithoutAddOnTasksInput>;
+};
+
 export type ProjectCreateNestedOneWithoutTaskAssigneesInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutTaskAssigneesInput, Prisma.ProjectUncheckedCreateWithoutTaskAssigneesInput>;
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutTaskAssigneesInput;
@@ -816,6 +837,7 @@ export type ProjectCreateWithoutCreatedByInput = {
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectUncheckedCreateWithoutCreatedByInput = {
@@ -835,6 +857,7 @@ export type ProjectUncheckedCreateWithoutCreatedByInput = {
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectCreateOrConnectWithoutCreatedByInput = {
@@ -900,6 +923,7 @@ export type ProjectCreateWithoutClientInput = {
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectUncheckedCreateWithoutClientInput = {
@@ -919,6 +943,7 @@ export type ProjectUncheckedCreateWithoutClientInput = {
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectCreateOrConnectWithoutClientInput = {
@@ -964,6 +989,7 @@ export type ProjectCreateWithoutServiceRequestInput = {
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectUncheckedCreateWithoutServiceRequestInput = {
@@ -983,6 +1009,7 @@ export type ProjectUncheckedCreateWithoutServiceRequestInput = {
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectCreateOrConnectWithoutServiceRequestInput = {
@@ -1018,6 +1045,7 @@ export type ProjectUpdateWithoutServiceRequestInput = {
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectUncheckedUpdateWithoutServiceRequestInput = {
@@ -1037,6 +1065,7 @@ export type ProjectUncheckedUpdateWithoutServiceRequestInput = {
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectCreateWithoutTasksInput = {
@@ -1056,6 +1085,7 @@ export type ProjectCreateWithoutTasksInput = {
   createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectUncheckedCreateWithoutTasksInput = {
@@ -1075,6 +1105,7 @@ export type ProjectUncheckedCreateWithoutTasksInput = {
   updatedAt?: Date | string;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectCreateOrConnectWithoutTasksInput = {
@@ -1110,6 +1141,7 @@ export type ProjectUpdateWithoutTasksInput = {
   createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProjectsNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectUncheckedUpdateWithoutTasksInput = {
@@ -1128,6 +1160,103 @@ export type ProjectUncheckedUpdateWithoutTasksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutProjectNestedInput;
+  taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedUpdateManyWithoutProjectNestedInput;
+};
+
+export type ProjectCreateWithoutAddOnTasksInput = {
+  id?: string;
+  name: string;
+  description?: string | null;
+  service: $Enums.ServiceInterest;
+  status?: $Enums.ProjectStatus;
+  startDate?: Date | string | null;
+  endDate?: Date | string | null;
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+  currency?: $Enums.ProjectCurrency;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  client: Prisma.ClientCreateNestedOneWithoutProjectsInput;
+  serviceRequest?: Prisma.ServiceRequestCreateNestedOneWithoutProjectInput;
+  createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
+  memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
+  tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
+  taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
+};
+
+export type ProjectUncheckedCreateWithoutAddOnTasksInput = {
+  id?: string;
+  clientId: string;
+  serviceRequestId?: string | null;
+  createdByMemberId: string;
+  name: string;
+  description?: string | null;
+  service: $Enums.ServiceInterest;
+  status?: $Enums.ProjectStatus;
+  startDate?: Date | string | null;
+  endDate?: Date | string | null;
+  budgetAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+  currency?: $Enums.ProjectCurrency;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutProjectInput;
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput;
+  taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutProjectInput;
+};
+
+export type ProjectCreateOrConnectWithoutAddOnTasksInput = {
+  where: Prisma.ProjectWhereUniqueInput;
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutAddOnTasksInput, Prisma.ProjectUncheckedCreateWithoutAddOnTasksInput>;
+};
+
+export type ProjectUpsertWithoutAddOnTasksInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutAddOnTasksInput, Prisma.ProjectUncheckedUpdateWithoutAddOnTasksInput>;
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutAddOnTasksInput, Prisma.ProjectUncheckedCreateWithoutAddOnTasksInput>;
+  where?: Prisma.ProjectWhereInput;
+};
+
+export type ProjectUpdateToOneWithWhereWithoutAddOnTasksInput = {
+  where?: Prisma.ProjectWhereInput;
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutAddOnTasksInput, Prisma.ProjectUncheckedUpdateWithoutAddOnTasksInput>;
+};
+
+export type ProjectUpdateWithoutAddOnTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  name?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+  budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput;
+  serviceRequest?: Prisma.ServiceRequestUpdateOneWithoutProjectNestedInput;
+  createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProjectsNestedInput;
+  memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
+  tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
+  taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
+};
+
+export type ProjectUncheckedUpdateWithoutAddOnTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string;
+  serviceRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  name?: Prisma.StringFieldUpdateOperationsInput | string;
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus;
+  startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+  endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+  budgetAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null;
+  currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutProjectNestedInput;
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutProjectNestedInput;
 };
 
@@ -1148,6 +1277,7 @@ export type ProjectCreateWithoutTaskAssigneesInput = {
   createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectUncheckedCreateWithoutTaskAssigneesInput = {
@@ -1167,6 +1297,7 @@ export type ProjectUncheckedCreateWithoutTaskAssigneesInput = {
   updatedAt?: Date | string;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectCreateOrConnectWithoutTaskAssigneesInput = {
@@ -1202,6 +1333,7 @@ export type ProjectUpdateWithoutTaskAssigneesInput = {
   createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProjectsNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectUncheckedUpdateWithoutTaskAssigneesInput = {
@@ -1221,6 +1353,7 @@ export type ProjectUncheckedUpdateWithoutTaskAssigneesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectCreateWithoutMemberProjectsInput = {
@@ -1240,6 +1373,7 @@ export type ProjectCreateWithoutMemberProjectsInput = {
   createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectUncheckedCreateWithoutMemberProjectsInput = {
@@ -1259,6 +1393,7 @@ export type ProjectUncheckedCreateWithoutMemberProjectsInput = {
   updatedAt?: Date | string;
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutProjectInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedCreateNestedManyWithoutProjectInput;
 };
 
 export type ProjectCreateOrConnectWithoutMemberProjectsInput = {
@@ -1294,6 +1429,7 @@ export type ProjectUpdateWithoutMemberProjectsInput = {
   createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProjectsNestedInput;
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectUncheckedUpdateWithoutMemberProjectsInput = {
@@ -1313,6 +1449,7 @@ export type ProjectUncheckedUpdateWithoutMemberProjectsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectCreateManyCreatedByInput = {
@@ -1348,6 +1485,7 @@ export type ProjectUpdateWithoutCreatedByInput = {
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectUncheckedUpdateWithoutCreatedByInput = {
@@ -1367,6 +1505,7 @@ export type ProjectUncheckedUpdateWithoutCreatedByInput = {
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectUncheckedUpdateManyWithoutCreatedByInput = {
@@ -1418,6 +1557,7 @@ export type ProjectUpdateWithoutClientInput = {
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectUncheckedUpdateWithoutClientInput = {
@@ -1437,6 +1577,7 @@ export type ProjectUncheckedUpdateWithoutClientInput = {
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutProjectNestedInput;
+  addOnTasks?: Prisma.AddOnTaskUncheckedUpdateManyWithoutProjectNestedInput;
 };
 
 export type ProjectUncheckedUpdateManyWithoutClientInput = {
@@ -1463,12 +1604,14 @@ export type ProjectCountOutputType = {
   memberProjects: number;
   tasks: number;
   taskAssignees: number;
+  addOnTasks: number;
 };
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberProjects?: boolean | ProjectCountOutputTypeCountMemberProjectsArgs;
   tasks?: boolean | ProjectCountOutputTypeCountTasksArgs;
   taskAssignees?: boolean | ProjectCountOutputTypeCountTaskAssigneesArgs;
+  addOnTasks?: boolean | ProjectCountOutputTypeCountAddOnTasksArgs;
 };
 
 /**
@@ -1502,6 +1645,13 @@ export type ProjectCountOutputTypeCountTaskAssigneesArgs<ExtArgs extends runtime
   where?: Prisma.TaskAssigneeWhereInput;
 };
 
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountAddOnTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AddOnTaskWhereInput;
+};
+
 export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
@@ -1524,6 +1674,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     memberProjects?: boolean | Prisma.Project$memberProjectsArgs<ExtArgs>;
     tasks?: boolean | Prisma.Project$tasksArgs<ExtArgs>;
     taskAssignees?: boolean | Prisma.Project$taskAssigneesArgs<ExtArgs>;
+    addOnTasks?: boolean | Prisma.Project$addOnTasksArgs<ExtArgs>;
     _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>;
   },
   ExtArgs['result']['project']
@@ -1557,6 +1708,7 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   memberProjects?: boolean | Prisma.Project$memberProjectsArgs<ExtArgs>;
   tasks?: boolean | Prisma.Project$tasksArgs<ExtArgs>;
   taskAssignees?: boolean | Prisma.Project$taskAssigneesArgs<ExtArgs>;
+  addOnTasks?: boolean | Prisma.Project$addOnTasksArgs<ExtArgs>;
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>;
 };
 
@@ -1569,6 +1721,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     memberProjects: Prisma.$MemberProjectPayload<ExtArgs>[];
     tasks: Prisma.$TaskPayload<ExtArgs>[];
     taskAssignees: Prisma.$TaskAssigneePayload<ExtArgs>[];
+    addOnTasks: Prisma.$AddOnTaskPayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
@@ -1947,6 +2100,9 @@ export interface Prisma__ProjectClient<
   taskAssignees<T extends Prisma.Project$taskAssigneesArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Project$taskAssigneesArgs<ExtArgs>>
   ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskAssigneePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
+  addOnTasks<T extends Prisma.Project$addOnTasksArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Project$addOnTasksArgs<ExtArgs>>
+  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AddOnTaskPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2425,6 +2581,30 @@ export type Project$taskAssigneesArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number;
   skip?: number;
   distinct?: Prisma.TaskAssigneeScalarFieldEnum | Prisma.TaskAssigneeScalarFieldEnum[];
+};
+
+/**
+ * Project.addOnTasks
+ */
+export type Project$addOnTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AddOnTask
+   */
+  select?: Prisma.AddOnTaskSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the AddOnTask
+   */
+  omit?: Prisma.AddOnTaskOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AddOnTaskInclude<ExtArgs> | null;
+  where?: Prisma.AddOnTaskWhereInput;
+  orderBy?: Prisma.AddOnTaskOrderByWithRelationInput | Prisma.AddOnTaskOrderByWithRelationInput[];
+  cursor?: Prisma.AddOnTaskWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: Prisma.AddOnTaskScalarFieldEnum | Prisma.AddOnTaskScalarFieldEnum[];
 };
 
 /**

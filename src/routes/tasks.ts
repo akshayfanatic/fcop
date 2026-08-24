@@ -10,4 +10,7 @@ projectTaskRouter.get('/', requireOrgPermission({ task: ['read'] }), taskControl
 
 taskRouter.put('/:taskId', requireOrgPermission({ task: ['update'] }), taskController.updateTaskById);
 taskRouter.delete('/:taskId', requireOrgPermission({ task: ['delete'] }), taskController.deleteTaskById);
+taskRouter.post('/:taskId/addon', requireOrgPermission({ task: ['create'] }), taskController.createAddOnTask);
+taskRouter.put('/:taskId/addon/:addOnTaskId', requireOrgPermission({ task: ['update'] }), taskController.updateAddOnTaskById);
+taskRouter.delete('/:taskId/addon/:addOnTaskId', requireOrgPermission({ task: ['delete'] }), taskController.deleteAddOnTaskById);
 taskRouter.get('/', requireOrgPermission({ task: ['read'] }), taskController.getTasks);

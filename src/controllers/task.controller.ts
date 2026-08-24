@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { taskService } from '../services/task.service.js';
 import { ApiResponse, HttpStatus } from '../utils/api-response.js';
 import { sendValidationError } from '../utils/http-error.js';
-import { createTaskSchema, projectTaskParamsSchema, taskIdParamsSchema, updateTaskSchema } from '../validators/task.validator.js';
+import { addOnTaskParamsSchema, createAddOnTaskSchema, createTaskSchema, projectTaskParamsSchema, taskIdParamsSchema, updateAddOnTaskSchema, updateTaskSchema } from '../validators/task.validator.js';
 
 export const taskController = {
   getTasks: (async (req, res, next) => {
@@ -82,6 +82,77 @@ export const taskController = {
           status: HttpStatus.OK,
           message: 'Task updated successfully.',
           data: task
+        })
+      );
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        sendValidationError(res, error);
+        return;
+      }
+
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
+  updateAddOnTaskById: (async (req, res, next) => {
+    try {
+      const { taskId, addOnTaskId } = addOnTaskParamsSchema.parse(req.params);
+      const payload = updateAddOnTaskSchema.parse(req.body);
+      const addOnTask = await taskService.updateAddOnTaskById(taskId, addOnTaskId, payload, req.headers);
+
+      res.status(HttpStatus.OK).json(
+        ApiResponse({
+          success: true,
+          status: HttpStatus.OK,
+          message: 'Add-on task updated successfully.',
+          data: addOnTask
+        })
+      );
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        sendValidationError(res, error);
+        return;
+      }
+
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
+  createAddOnTask: (async (req, res, next) => {
+    try {
+      const { taskId } = taskIdParamsSchema.parse(req.params);
+      const payload = createAddOnTaskSchema.parse(req.body);
+      const addOnTask = await taskService.createAddOnTask(taskId, payload, req.headers);
+
+      res.status(HttpStatus.CREATED).json(
+        ApiResponse({
+          success: true,
+          status: HttpStatus.CREATED,
+          message: 'Add-on task created successfully.',
+          data: addOnTask
+        })
+      );
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        sendValidationError(res, error);
+        return;
+      }
+
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
+  deleteAddOnTaskById: (async (req, res, next) => {
+    try {
+      const { taskId, addOnTaskId } = addOnTaskParamsSchema.parse(req.params);
+      const addOnTask = await taskService.deleteAddOnTaskById(taskId, addOnTaskId, req.headers);
+
+      res.status(HttpStatus.OK).json(
+        ApiResponse({
+          success: true,
+          status: HttpStatus.OK,
+          message: 'Add-on task deleted successfully.',
+          data: addOnTask
         })
       );
     } catch (error) {
