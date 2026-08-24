@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.10.1](https://github.com/akshayfanatic/fcop/compare/v0.10.0...v0.10.1) (2026-08-24)
+
+### Features
+
+- **tasks:** add task checklist CRUD support ([f4b4c7e](https://github.com/akshayfanatic/fcop/commit/f4b4c7ef635b7bc8e75426dad7f95a9b9e74081f))
+
+### Bug Fixes
+
+- **lead:** remove permission from leads admin also can see leads ([f0b89b8](https://github.com/akshayfanatic/fcop/commit/f0b89b853f17f7c9e23cde925dff90dda41d52bf))
+- **seed:** fix db seed file ([b295076](https://github.com/akshayfanatic/fcop/commit/b295076d9fd563ca43b46bcb22615167cde8b69e))
+
 ## [0.10.0](https://github.com/akshayfanatic/fcop/compare/v0.9.0...v0.10.0) (2026-08-20)
 
 ### Features
