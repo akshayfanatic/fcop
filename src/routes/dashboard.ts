@@ -9,7 +9,8 @@ dashboardRouter.use(requireOrgPermission({ dashboard: ['read'] }));
 dashboardRouter.get('/projects', requireOrgPermission({ project: ['read'] }), dashboardController.getCurrentProjects);
 dashboardRouter.get('/overview', dashboardController.getOverview);
 dashboardRouter.get('/payment-summary', dashboardController.getPaymentSummary);
-dashboardRouter.get('/leads', dashboardController.getLeadDistribution);
+// Lead totals belong to the lead workspace, so anyone allowed to read leads may view them.
+dashboardRouter.get('/leads', requireOrgPermission({ lead: ['read'] }), dashboardController.getLeadDistribution);
 dashboardRouter.get('/tasks', dashboardController.getTaskDistribution);
 dashboardRouter.get('/recent/leads', dashboardController.getRecentLeads);
 dashboardRouter.get('/attention/tasks', dashboardController.getAttentionTasks);

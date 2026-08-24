@@ -43,7 +43,7 @@ export const dashboardController = {
 
   getLeadDistribution: (async (req, res, next) => {
     try {
-      const distribution = await dashboardService.getLeadDistribution(req.headers);
+      const distribution = await dashboardService.getLeadDistribution();
       sendDashboardResponse(res, 'Admin lead distribution fetched successfully.', distribution);
     } catch (error) {
       next(error);
