@@ -2456,7 +2456,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       },
       AdminPaymentSummary: {
         type: 'object',
-        required: ['paidTransactions', 'unpaidTransactions', 'byCurrency', 'recentTransactions'],
+        required: ['paidTransactions', 'unpaidTransactions', 'byCurrency', 'revenueTrend', 'recentTransactions'],
         properties: {
           paidTransactions: { type: 'integer', minimum: 0, example: 24 },
           unpaidTransactions: { type: 'integer', minimum: 0, example: 3 },
@@ -2470,6 +2470,20 @@ export const createOpenApiDocument = (baseUrl: string) => ({
                 totalAmount: { type: 'string', example: '12500.00' },
                 averageAmount: { type: 'string', example: '520.83' },
                 transactionCount: { type: 'integer', minimum: 0, example: 24 }
+              }
+            }
+          },
+          revenueTrend: {
+            type: 'array',
+            description: 'Daily paid-invoice revenue for the trailing 365 days, grouped by currency.',
+            items: {
+              type: 'object',
+              required: ['date', 'currency', 'revenue', 'invoiceCount'],
+              properties: {
+                date: { type: 'string', format: 'date', example: '2026-08-25' },
+                currency: { $ref: '#/components/schemas/ProjectCurrency' },
+                revenue: { type: 'string', example: '1500.00' },
+                invoiceCount: { type: 'integer', minimum: 1, example: 2 }
               }
             }
           },
