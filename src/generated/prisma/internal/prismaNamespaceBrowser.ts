@@ -63,6 +63,7 @@ export const ModelName = {
   Project: 'Project',
   Media: 'Media',
   Task: 'Task',
+  TaskComment: 'TaskComment',
   AddOnTask: 'AddOnTask',
   TaskAssignee: 'TaskAssignee',
   MemberProject: 'MemberProject',
@@ -289,6 +290,17 @@ export const TaskScalarFieldEnum = {
 } as const;
 
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum];
+
+export const TaskCommentScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  memberId: 'memberId',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type TaskCommentScalarFieldEnum = (typeof TaskCommentScalarFieldEnum)[keyof typeof TaskCommentScalarFieldEnum];
 
 export const AddOnTaskScalarFieldEnum = {
   id: 'id',
@@ -543,6 +555,15 @@ export const TaskOrderByRelevanceFieldEnum = {
 } as const;
 
 export type TaskOrderByRelevanceFieldEnum = (typeof TaskOrderByRelevanceFieldEnum)[keyof typeof TaskOrderByRelevanceFieldEnum];
+
+export const TaskCommentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  memberId: 'memberId',
+  content: 'content'
+} as const;
+
+export type TaskCommentOrderByRelevanceFieldEnum = (typeof TaskCommentOrderByRelevanceFieldEnum)[keyof typeof TaskCommentOrderByRelevanceFieldEnum];
 
 export const AddOnTaskOrderByRelevanceFieldEnum = {
   id: 'id',
