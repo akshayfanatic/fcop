@@ -1,9 +1,10 @@
 import type { IncomingHttpHeaders } from 'node:http';
 import { env } from '../config/env.js';
-import { ProjectMemberRole, type Prisma } from '../generated/prisma/client.js';
+import { MediaTargetType, ProjectMemberRole, type Prisma } from '../generated/prisma/client.js';
 import { createTaskAssignedEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
 import { Role } from '../lib/auth/permissions.js';
 import { getSessionMember } from '../lib/auth/session.js';
+import { cloudinaryMedia, type StoredResourceType } from '../lib/cloudinary/media.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
 import { notificationService } from './notification.service.js';
@@ -510,12 +511,41 @@ export const taskService = {
       }
 
       await assertTaskAccess(taskId, member);
-
-      return await prisma.task.delete({
+      const attachments = await prisma.media.findMany({
         where: {
-          id: taskId
+          targetType: MediaTargetType.TASK,
+          targetId: taskId
         },
-        include: includeTaskDetails
+        select: {
+          publicId: true,
+          resourceType: true
+        }
+      });
+
+      // Remove task-owned provider assets before their database references disappear.
+      await Promise.all(
+        attachments.map((attachment) =>
+          cloudinaryMedia.delete({
+            publicId: attachment.publicId,
+            resourceType: attachment.resourceType as StoredResourceType
+          })
+        )
+      );
+
+      return await prisma.$transaction(async (tx) => {
+        await tx.media.deleteMany({
+          where: {
+            targetType: MediaTargetType.TASK,
+            targetId: taskId
+          }
+        });
+
+        return await tx.task.delete({
+          where: {
+            id: taskId
+          },
+          include: includeTaskDetails
+        });
       });
     } catch (error) {
       logger.error({ error, taskId }, 'Failed to delete task.');
