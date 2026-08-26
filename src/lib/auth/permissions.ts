@@ -18,6 +18,7 @@ const statement = {
   project: ['create', 'read', 'update', 'delete'],
   task: ['create', 'read', 'update', 'delete'],
   comment: ['create'],
+  taskComment: ['create', 'read', 'update', 'delete'],
   payment: ['read'],
   dashboard: ['read'],
   notification: ['read', 'update']
@@ -37,6 +38,7 @@ export const rolePermissionStatements = {
     project: ['create', 'read', 'update', 'delete'],
     task: ['create', 'read', 'update', 'delete'],
     comment: ['create'],
+    taskComment: ['create', 'read', 'update', 'delete'],
     payment: ['read'],
     dashboard: ['read'],
     notification: ['read', 'update']
@@ -52,6 +54,7 @@ export const rolePermissionStatements = {
     project: ['create', 'read', 'update'],
     task: ['create', 'read', 'update', 'delete'],
     comment: ['create'],
+    taskComment: ['create', 'read', 'update', 'delete'],
     payment: ['read'],
     dashboard: ['read'],
     notification: ['read', 'update']
@@ -61,6 +64,7 @@ export const rolePermissionStatements = {
     project: ['read'],
     task: ['read', 'update'],
     comment: ['create'],
+    taskComment: ['create', 'read', 'update', 'delete'],
     dashboard: ['read'],
     notification: ['read', 'update']
   },
@@ -71,6 +75,7 @@ export const rolePermissionStatements = {
     serviceRequest: ['create', 'read'],
     proposal: ['read', 'update'],
     comment: ['create'],
+    taskComment: ['create', 'read', 'update', 'delete'],
     payment: ['read'],
     dashboard: ['read'],
     notification: ['read', 'update']

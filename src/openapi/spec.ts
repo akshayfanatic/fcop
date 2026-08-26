@@ -2270,6 +2270,217 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/tasks/{taskId}/comments': {
+      post: {
+        tags: ['Tasks'],
+        summary: 'Create a task comment',
+        description: 'Creates a comment on a task visible to the current member.',
+        operationId: 'createTaskComment',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          taskComment: ['create']
+        },
+        parameters: [{ $ref: '#/components/parameters/TaskId' }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/CreateTaskCommentRequest' }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Task comment created successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TaskCommentResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid task id or comment payload.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Task was not found or is unavailable to the current member.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      },
+      get: {
+        tags: ['Tasks'],
+        summary: 'Fetch task comments',
+        description: 'Returns task comments newest first for a task visible to the current member.',
+        operationId: 'getTaskComments',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          taskComment: ['read']
+        },
+        parameters: [
+          { $ref: '#/components/parameters/TaskId' },
+          {
+            name: 'page',
+            in: 'query',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              default: DEFAULT_PAGE
+            }
+          },
+          {
+            name: 'pageSize',
+            in: 'query',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              maximum: MAX_PAGE_SIZE,
+              default: DEFAULT_PAGE_SIZE
+            }
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Task comments fetched successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TaskCommentsResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid task id or pagination parameters.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Task was not found or is unavailable to the current member.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/tasks/{taskId}/comments/{commentId}': {
+      put: {
+        tags: ['Tasks'],
+        summary: 'Update a task comment',
+        description: 'Updates a comment when the current member is its author or an Admin/Manager moderator.',
+        operationId: 'updateTaskComment',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          taskComment: ['update']
+        },
+        parameters: [{ $ref: '#/components/parameters/TaskId' }, { $ref: '#/components/parameters/TaskCommentId' }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: { $ref: '#/components/schemas/UpdateTaskCommentRequest' }
+            }
+          }
+        },
+        responses: {
+          '200': {
+            description: 'Task comment updated successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TaskCommentResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid task id, comment id, or comment payload.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': {
+            description: 'The current member cannot modify this comment.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '404': {
+            description: 'Task or comment was not found.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      },
+      delete: {
+        tags: ['Tasks'],
+        summary: 'Delete a task comment',
+        description: 'Deletes a comment when the current member is its author or an Admin/Manager moderator.',
+        operationId: 'deleteTaskComment',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          taskComment: ['delete']
+        },
+        parameters: [{ $ref: '#/components/parameters/TaskId' }, { $ref: '#/components/parameters/TaskCommentId' }],
+        responses: {
+          '200': {
+            description: 'Task comment deleted successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TaskCommentResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid task or comment id.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': {
+            description: 'The current member cannot delete this comment.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '404': {
+            description: 'Task or comment was not found.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      }
+    },
     '/api/v1/service-requests/{id}': {
       get: {
         tags: ['Service Requests'],
@@ -2554,6 +2765,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           minLength: 1
         },
         example: 'clx0000000000000000000030'
+      },
+      TaskCommentId: {
+        name: 'commentId',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'clx0000000000000000000060'
       },
       NotificationId: {
         name: 'notificationId',
@@ -3930,6 +4151,105 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       },
+      TaskCommentUser: {
+        type: 'object',
+        required: ['id', 'name'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'seed-user-member'
+          },
+          name: {
+            type: 'string',
+            example: 'Delivery Member'
+          },
+          image: {
+            type: 'string',
+            format: 'uri',
+            nullable: true,
+            example: 'https://example.com/avatar.png'
+          }
+        }
+      },
+      TaskCommentMember: {
+        type: 'object',
+        required: ['id', 'role', 'user'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'seed-member-member'
+          },
+          role: {
+            $ref: '#/components/schemas/OrganizationRole'
+          },
+          user: {
+            $ref: '#/components/schemas/TaskCommentUser'
+          }
+        }
+      },
+      TaskComment: {
+        type: 'object',
+        required: ['id', 'taskId', 'memberId', 'content', 'createdAt', 'updatedAt', 'member'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000060'
+          },
+          taskId: {
+            type: 'string',
+            example: 'clx0000000000000000000030'
+          },
+          memberId: {
+            type: 'string',
+            nullable: true,
+            example: 'seed-member-member'
+          },
+          content: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 5000,
+            example: 'The first draft is ready for review.'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-08-26T12:00:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-08-26T12:00:00.000Z'
+          },
+          member: {
+            allOf: [{ $ref: '#/components/schemas/TaskCommentMember' }],
+            nullable: true
+          }
+        }
+      },
+      CreateTaskCommentRequest: {
+        type: 'object',
+        required: ['content'],
+        properties: {
+          content: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 5000,
+            example: 'The first draft is ready for review.'
+          }
+        }
+      },
+      UpdateTaskCommentRequest: {
+        type: 'object',
+        required: ['content'],
+        properties: {
+          content: {
+            type: 'string',
+            minLength: 1,
+            maxLength: 5000,
+            example: 'The revised draft is ready for review.'
+          }
+        }
+      },
       TaskProjectReference: {
         type: 'object',
         required: ['id', 'name'],
@@ -4132,6 +4452,50 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             required: ['data'],
             properties: {
               data: { $ref: '#/components/schemas/Task' }
+            }
+          }
+        ]
+      },
+      TaskCommentResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                $ref: '#/components/schemas/TaskComment'
+              }
+            }
+          }
+        ]
+      },
+      TaskCommentsResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['items', 'pagination'],
+                properties: {
+                  items: {
+                    type: 'array',
+                    items: {
+                      $ref: '#/components/schemas/TaskComment'
+                    }
+                  },
+                  pagination: {
+                    $ref: '#/components/schemas/PaginationMeta'
+                  }
+                }
+              }
             }
           }
         ]
