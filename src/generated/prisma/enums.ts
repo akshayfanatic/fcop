@@ -68,7 +68,8 @@ export const ProjectCurrency = {
 export type ProjectCurrency = (typeof ProjectCurrency)[keyof typeof ProjectCurrency];
 
 export const MediaTargetType = {
-  PROJECT: 'PROJECT'
+  PROJECT: 'PROJECT',
+  TASK: 'TASK'
 } as const;
 
 export type MediaTargetType = (typeof MediaTargetType)[keyof typeof MediaTargetType];
