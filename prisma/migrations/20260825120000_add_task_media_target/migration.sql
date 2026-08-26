@@ -1,0 +1,2 @@
+ALTER TABLE `media`
+  MODIFY `targetType` ENUM('PROJECT', 'TASK') NOT NULL;

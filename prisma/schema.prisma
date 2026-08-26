@@ -54,6 +54,7 @@ enum ProjectCurrency {
 
 enum MediaTargetType {
   PROJECT
+  TASK
 }
 
 enum ProposalStatus {

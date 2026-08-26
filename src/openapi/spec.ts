@@ -2086,6 +2086,190 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/tasks/{taskId}/media': {
+      post: {
+        tags: ['Tasks'],
+        summary: 'Upload task attachment',
+        description: 'Uploads one image or PDF (maximum 5 MB) to the task media folder and saves its delivery metadata.',
+        operationId: 'uploadTaskMedia',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          task: ['update']
+        },
+        parameters: [{ $ref: '#/components/parameters/TaskId' }],
+        requestBody: {
+          required: true,
+          content: {
+            'multipart/form-data': {
+              schema: {
+                type: 'object',
+                required: ['media'],
+                properties: {
+                  media: {
+                    type: 'string',
+                    format: 'binary',
+                    description: 'JPG, PNG, WebP, GIF, or PDF file. Maximum 5 MB.'
+                  }
+                }
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Task attachment uploaded successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/MediaResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Media file is missing, unsupported, or larger than 5 MB.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Task was not found or is unavailable to the current member.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '502': {
+            description: 'Cloudinary rejected the upload.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '504': {
+            description: 'Cloudinary upload timed out.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      },
+      get: {
+        tags: ['Tasks'],
+        summary: 'Fetch task attachments',
+        description: 'Returns task attachment records newest first. The secureUrl field can be rendered directly by the frontend.',
+        operationId: 'getTaskMedia',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          task: ['read']
+        },
+        parameters: [
+          { $ref: '#/components/parameters/TaskId' },
+          {
+            name: 'page',
+            in: 'query',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              default: DEFAULT_PAGE
+            }
+          },
+          {
+            name: 'pageSize',
+            in: 'query',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              maximum: MAX_PAGE_SIZE,
+              default: DEFAULT_PAGE_SIZE
+            }
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Task attachments fetched successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TaskMediaListResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid task id or pagination parameters.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Task was not found or is unavailable to the current member.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/tasks/{taskId}/media/{mediaId}': {
+      delete: {
+        tags: ['Tasks'],
+        summary: 'Delete task attachment',
+        description: 'Deletes the Cloudinary asset and then removes its task attachment record.',
+        operationId: 'deleteTaskMedia',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          task: ['update']
+        },
+        parameters: [{ $ref: '#/components/parameters/TaskId' }, { $ref: '#/components/parameters/MediaId' }],
+        responses: {
+          '200': {
+            description: 'Task attachment deleted successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/MediaResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid task or media id.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Task or attachment was not found.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '500': {
+            description: 'Cloudinary asset deletion failed.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      }
+    },
     '/api/v1/service-requests/{id}': {
       get: {
         tags: ['Service Requests'],
@@ -4429,6 +4613,34 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         ]
       },
       ProjectMediaListResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['items', 'pagination'],
+                properties: {
+                  items: {
+                    type: 'array',
+                    items: {
+                      $ref: '#/components/schemas/Media'
+                    }
+                  },
+                  pagination: {
+                    $ref: '#/components/schemas/PaginationMeta'
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      TaskMediaListResponse: {
         allOf: [
           {
             $ref: '#/components/schemas/ApiResponse'
