@@ -1,4 +1,5 @@
 import type { IncomingHttpHeaders } from 'node:http';
+import { CURRENT_PROJECT_STATUSES, DASHBOARD_LIST_LIMIT, REVENUE_TREND_DAYS } from '../constants/dashboard.js';
 import { LeadStatus, ProposalPaymentStatus, ProjectStatus, ServiceRequestStatus, TaskPriority, TaskStatus } from '../generated/prisma/client.js';
 import { Role } from '../lib/auth/permissions.js';
 import { getSessionMember } from '../lib/auth/session.js';
@@ -15,12 +16,10 @@ import type {
   StatusDistribution
 } from '../types/dashboard.js';
 import { HttpStatus } from '../utils/api-response.js';
+import { toUtcDateKey } from '../utils/date.js';
 import { createHttpError } from '../utils/http-error.js';
 import { getProjectAccessWhere } from '../utils/project/project-access.js';
 import { hasRole } from '../utils/role.js';
-
-const DASHBOARD_LIST_LIMIT = 5;
-const CURRENT_PROJECT_STATUSES = [ProjectStatus.PLANNING, ProjectStatus.ACTIVE, ProjectStatus.ON_HOLD];
 
 const requireAdmin = async (headers: IncomingHttpHeaders) => {
   const member = await getSessionMember(headers);
@@ -240,7 +239,11 @@ export const dashboardService = {
     try {
       await requireAdmin(headers);
 
-      const [paidTransactions, unpaidTransactions, currencyGroups, recentTransactions] = await prisma.$transaction([
+      const trendStart = new Date();
+      trendStart.setUTCHours(0, 0, 0, 0);
+      trendStart.setUTCDate(trendStart.getUTCDate() - (REVENUE_TREND_DAYS - 1));
+
+      const [paidTransactions, unpaidTransactions, currencyGroups, revenuePayments, recentTransactions] = await prisma.$transaction([
         prisma.proposal.count({ where: { paymentStatus: ProposalPaymentStatus.PAID } }),
         prisma.proposal.count({
           where: { paymentStatus: ProposalPaymentStatus.UNPAID, stripeInvoiceId: { not: null } }
@@ -252,6 +255,17 @@ export const dashboardService = {
           _sum: { amount: true },
           _avg: { amount: true },
           _count: { _all: true }
+        }),
+        prisma.proposal.findMany({
+          where: {
+            paymentStatus: ProposalPaymentStatus.PAID,
+            paidAt: { gte: trendStart }
+          },
+          select: {
+            amount: true,
+            currency: true,
+            paidAt: true
+          }
         }),
         prisma.proposal.findMany({
           where: { paymentStatus: ProposalPaymentStatus.PAID, paidAt: { not: null } },
@@ -270,6 +284,23 @@ export const dashboardService = {
         })
       ]);
 
+      const revenueByDay = new Map<string, { date: string; currency: (typeof revenuePayments)[number]['currency']; revenue: number; invoiceCount: number }>();
+
+      for (const payment of revenuePayments) {
+        if (!payment.paidAt) continue;
+
+        const date = toUtcDateKey(payment.paidAt);
+        const key = `${payment.currency}:${date}`;
+        const current = revenueByDay.get(key);
+
+        revenueByDay.set(key, {
+          date,
+          currency: payment.currency,
+          revenue: (current?.revenue ?? 0) + Number(payment.amount),
+          invoiceCount: (current?.invoiceCount ?? 0) + 1
+        });
+      }
+
       return {
         paidTransactions,
         unpaidTransactions,
@@ -279,6 +310,14 @@ export const dashboardService = {
           averageAmount: group._avg?.amount?.toFixed(2) ?? '0.00',
           transactionCount: typeof group._count === 'object' ? (group._count?._all ?? 0) : 0
         })),
+        revenueTrend: [...revenueByDay.values()]
+          .sort((left, right) => left.date.localeCompare(right.date) || left.currency.localeCompare(right.currency))
+          .map((point) => ({
+            date: point.date,
+            currency: point.currency,
+            revenue: point.revenue.toFixed(2),
+            invoiceCount: point.invoiceCount
+          })),
         recentTransactions: recentTransactions.flatMap((transaction) =>
           transaction.paidAt
             ? [
