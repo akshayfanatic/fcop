@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.10.2](https://github.com/akshayfanatic/fcop/compare/v0.10.1...v0.10.2) (2026-08-27)
+
+### Features
+
+- **api:** added api endpoint, controller , routes and validators ([dac3ca7](https://github.com/akshayfanatic/fcop/commit/dac3ca7915d461a9811353594d6ba2a3e360b474))
+- **dashboard:** added payment related stats on dashboard page ([cda6092](https://github.com/akshayfanatic/fcop/commit/cda6092b88ea60b4da661cf630bbf74fb6822a11))
+- **db:** added migration for support for task media ([2e8ddd0](https://github.com/akshayfanatic/fcop/commit/2e8ddd03a7b3bca9bb94b6bb5a36caf1448274bd))
+- **migration:** added support of task comments ([b2f3d96](https://github.com/akshayfanatic/fcop/commit/b2f3d962bd7f86578654dec8ab0010a59ca595ec))
+- **task comments:** added task comments api endpoints and controller support ([92bf015](https://github.com/akshayfanatic/fcop/commit/92bf015143de8a5b4733f8029b6623c2ab7c0dde))
+
+### Code Refactoring
+
+- **email:** fix email template design to all email templates ([d532b11](https://github.com/akshayfanatic/fcop/commit/d532b11b771bb70e57f1160507b6d9830eddc6a5))
+
 ### [0.10.1](https://github.com/akshayfanatic/fcop/compare/v0.10.0...v0.10.1) (2026-08-24)
 
 ### Features
