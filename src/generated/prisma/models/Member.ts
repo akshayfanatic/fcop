@@ -178,6 +178,7 @@ export type MemberWhereInput = {
   memberProjects?: Prisma.MemberProjectListRelationFilter;
   createdTasks?: Prisma.TaskListRelationFilter;
   taskAssignees?: Prisma.TaskAssigneeListRelationFilter;
+  taskComments?: Prisma.TaskCommentListRelationFilter;
   notifications?: Prisma.NotificationListRelationFilter;
 };
 
@@ -195,6 +196,7 @@ export type MemberOrderByWithRelationInput = {
   memberProjects?: Prisma.MemberProjectOrderByRelationAggregateInput;
   createdTasks?: Prisma.TaskOrderByRelationAggregateInput;
   taskAssignees?: Prisma.TaskAssigneeOrderByRelationAggregateInput;
+  taskComments?: Prisma.TaskCommentOrderByRelationAggregateInput;
   notifications?: Prisma.NotificationOrderByRelationAggregateInput;
   _relevance?: Prisma.MemberOrderByRelevanceInput;
 };
@@ -217,6 +219,7 @@ export type MemberWhereUniqueInput = Prisma.AtLeast<
     memberProjects?: Prisma.MemberProjectListRelationFilter;
     createdTasks?: Prisma.TaskListRelationFilter;
     taskAssignees?: Prisma.TaskAssigneeListRelationFilter;
+    taskComments?: Prisma.TaskCommentListRelationFilter;
     notifications?: Prisma.NotificationListRelationFilter;
   },
   'id'
@@ -256,6 +259,7 @@ export type MemberCreateInput = {
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationCreateNestedManyWithoutMemberInput;
 };
 
@@ -271,6 +275,7 @@ export type MemberUncheckedCreateInput = {
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutMemberInput;
 };
 
@@ -286,6 +291,7 @@ export type MemberUpdateInput = {
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUpdateManyWithoutMemberNestedInput;
 };
 
@@ -301,6 +307,7 @@ export type MemberUncheckedUpdateInput = {
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUncheckedUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutMemberNestedInput;
 };
 
@@ -369,6 +376,11 @@ export type MemberMinOrderByAggregateInput = {
 export type MemberScalarRelationFilter = {
   is?: Prisma.MemberWhereInput;
   isNot?: Prisma.MemberWhereInput;
+};
+
+export type MemberNullableScalarRelationFilter = {
+  is?: Prisma.MemberWhereInput | null;
+  isNot?: Prisma.MemberWhereInput | null;
 };
 
 export type MemberCreateNestedManyWithoutUserInput = {
@@ -543,6 +555,22 @@ export type MemberUpdateOneRequiredWithoutCreatedTasksNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.MemberUpdateToOneWithWhereWithoutCreatedTasksInput, Prisma.MemberUpdateWithoutCreatedTasksInput>, Prisma.MemberUncheckedUpdateWithoutCreatedTasksInput>;
 };
 
+export type MemberCreateNestedOneWithoutTaskCommentsInput = {
+  create?: Prisma.XOR<Prisma.MemberCreateWithoutTaskCommentsInput, Prisma.MemberUncheckedCreateWithoutTaskCommentsInput>;
+  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutTaskCommentsInput;
+  connect?: Prisma.MemberWhereUniqueInput;
+};
+
+export type MemberUpdateOneWithoutTaskCommentsNestedInput = {
+  create?: Prisma.XOR<Prisma.MemberCreateWithoutTaskCommentsInput, Prisma.MemberUncheckedCreateWithoutTaskCommentsInput>;
+  connectOrCreate?: Prisma.MemberCreateOrConnectWithoutTaskCommentsInput;
+  upsert?: Prisma.MemberUpsertWithoutTaskCommentsInput;
+  disconnect?: Prisma.MemberWhereInput | boolean;
+  delete?: Prisma.MemberWhereInput | boolean;
+  connect?: Prisma.MemberWhereUniqueInput;
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MemberUpdateToOneWithWhereWithoutTaskCommentsInput, Prisma.MemberUpdateWithoutTaskCommentsInput>, Prisma.MemberUncheckedUpdateWithoutTaskCommentsInput>;
+};
+
 export type MemberCreateNestedOneWithoutTaskAssigneesInput = {
   create?: Prisma.XOR<Prisma.MemberCreateWithoutTaskAssigneesInput, Prisma.MemberUncheckedCreateWithoutTaskAssigneesInput>;
   connectOrCreate?: Prisma.MemberCreateOrConnectWithoutTaskAssigneesInput;
@@ -582,6 +610,7 @@ export type MemberCreateWithoutUserInput = {
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationCreateNestedManyWithoutMemberInput;
 };
 
@@ -596,6 +625,7 @@ export type MemberUncheckedCreateWithoutUserInput = {
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutMemberInput;
 };
 
@@ -647,6 +677,7 @@ export type MemberCreateWithoutOrganizationInput = {
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationCreateNestedManyWithoutMemberInput;
 };
 
@@ -661,6 +692,7 @@ export type MemberUncheckedCreateWithoutOrganizationInput = {
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutMemberInput;
 };
 
@@ -702,6 +734,7 @@ export type MemberCreateWithoutNotificationsInput = {
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentCreateNestedManyWithoutMemberInput;
 };
 
 export type MemberUncheckedCreateWithoutNotificationsInput = {
@@ -716,6 +749,7 @@ export type MemberUncheckedCreateWithoutNotificationsInput = {
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutMemberInput;
 };
 
 export type MemberCreateOrConnectWithoutNotificationsInput = {
@@ -746,6 +780,7 @@ export type MemberUpdateWithoutNotificationsInput = {
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUpdateManyWithoutMemberNestedInput;
 };
 
 export type MemberUncheckedUpdateWithoutNotificationsInput = {
@@ -760,6 +795,7 @@ export type MemberUncheckedUpdateWithoutNotificationsInput = {
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUncheckedUpdateManyWithoutMemberNestedInput;
 };
 
 export type MemberCreateWithoutClientInput = {
@@ -773,6 +809,7 @@ export type MemberCreateWithoutClientInput = {
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationCreateNestedManyWithoutMemberInput;
 };
 
@@ -787,6 +824,7 @@ export type MemberUncheckedCreateWithoutClientInput = {
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutMemberInput;
 };
 
@@ -817,6 +855,7 @@ export type MemberUpdateWithoutClientInput = {
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUpdateManyWithoutMemberNestedInput;
 };
 
@@ -831,6 +870,7 @@ export type MemberUncheckedUpdateWithoutClientInput = {
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUncheckedUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutMemberNestedInput;
 };
 
@@ -845,6 +885,7 @@ export type MemberCreateWithoutCreatedProposalsInput = {
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationCreateNestedManyWithoutMemberInput;
 };
 
@@ -859,6 +900,7 @@ export type MemberUncheckedCreateWithoutCreatedProposalsInput = {
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutMemberInput;
 };
 
@@ -889,6 +931,7 @@ export type MemberUpdateWithoutCreatedProposalsInput = {
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUpdateManyWithoutMemberNestedInput;
 };
 
@@ -903,6 +946,7 @@ export type MemberUncheckedUpdateWithoutCreatedProposalsInput = {
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUncheckedUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutMemberNestedInput;
 };
 
@@ -917,6 +961,7 @@ export type MemberCreateWithoutCreatedProjectsInput = {
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationCreateNestedManyWithoutMemberInput;
 };
 
@@ -931,6 +976,7 @@ export type MemberUncheckedCreateWithoutCreatedProjectsInput = {
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutMemberInput;
 };
 
@@ -961,6 +1007,7 @@ export type MemberUpdateWithoutCreatedProjectsInput = {
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUpdateManyWithoutMemberNestedInput;
 };
 
@@ -975,6 +1022,7 @@ export type MemberUncheckedUpdateWithoutCreatedProjectsInput = {
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUncheckedUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutMemberNestedInput;
 };
 
@@ -989,6 +1037,7 @@ export type MemberCreateWithoutCreatedTasksInput = {
   createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationCreateNestedManyWithoutMemberInput;
 };
 
@@ -1003,6 +1052,7 @@ export type MemberUncheckedCreateWithoutCreatedTasksInput = {
   createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutMemberInput;
 };
 
@@ -1033,6 +1083,7 @@ export type MemberUpdateWithoutCreatedTasksInput = {
   createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUpdateManyWithoutMemberNestedInput;
 };
 
@@ -1046,6 +1097,83 @@ export type MemberUncheckedUpdateWithoutCreatedTasksInput = {
   createdProposals?: Prisma.ProposalUncheckedUpdateManyWithoutCreatedByNestedInput;
   createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
+  taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUncheckedUpdateManyWithoutMemberNestedInput;
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutMemberNestedInput;
+};
+
+export type MemberCreateWithoutTaskCommentsInput = {
+  id?: string;
+  role: string;
+  createdAt?: Date | string;
+  user: Prisma.UserCreateNestedOneWithoutMembersInput;
+  organization: Prisma.OrganizationCreateNestedOneWithoutMembersInput;
+  client?: Prisma.ClientCreateNestedOneWithoutMemberInput;
+  createdProposals?: Prisma.ProposalCreateNestedManyWithoutCreatedByInput;
+  createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
+  memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
+  taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutMemberInput;
+  notifications?: Prisma.NotificationCreateNestedManyWithoutMemberInput;
+};
+
+export type MemberUncheckedCreateWithoutTaskCommentsInput = {
+  id?: string;
+  userId: string;
+  organizationId: string;
+  role: string;
+  createdAt?: Date | string;
+  client?: Prisma.ClientUncheckedCreateNestedOneWithoutMemberInput;
+  createdProposals?: Prisma.ProposalUncheckedCreateNestedManyWithoutCreatedByInput;
+  createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
+  memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
+  taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutMemberInput;
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutMemberInput;
+};
+
+export type MemberCreateOrConnectWithoutTaskCommentsInput = {
+  where: Prisma.MemberWhereUniqueInput;
+  create: Prisma.XOR<Prisma.MemberCreateWithoutTaskCommentsInput, Prisma.MemberUncheckedCreateWithoutTaskCommentsInput>;
+};
+
+export type MemberUpsertWithoutTaskCommentsInput = {
+  update: Prisma.XOR<Prisma.MemberUpdateWithoutTaskCommentsInput, Prisma.MemberUncheckedUpdateWithoutTaskCommentsInput>;
+  create: Prisma.XOR<Prisma.MemberCreateWithoutTaskCommentsInput, Prisma.MemberUncheckedCreateWithoutTaskCommentsInput>;
+  where?: Prisma.MemberWhereInput;
+};
+
+export type MemberUpdateToOneWithWhereWithoutTaskCommentsInput = {
+  where?: Prisma.MemberWhereInput;
+  data: Prisma.XOR<Prisma.MemberUpdateWithoutTaskCommentsInput, Prisma.MemberUncheckedUpdateWithoutTaskCommentsInput>;
+};
+
+export type MemberUpdateWithoutTaskCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  role?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  user?: Prisma.UserUpdateOneRequiredWithoutMembersNestedInput;
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutMembersNestedInput;
+  client?: Prisma.ClientUpdateOneWithoutMemberNestedInput;
+  createdProposals?: Prisma.ProposalUpdateManyWithoutCreatedByNestedInput;
+  createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
+  memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
+  taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutMemberNestedInput;
+  notifications?: Prisma.NotificationUpdateManyWithoutMemberNestedInput;
+};
+
+export type MemberUncheckedUpdateWithoutTaskCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  userId?: Prisma.StringFieldUpdateOperationsInput | string;
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string;
+  role?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  client?: Prisma.ClientUncheckedUpdateOneWithoutMemberNestedInput;
+  createdProposals?: Prisma.ProposalUncheckedUpdateManyWithoutCreatedByNestedInput;
+  createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
+  memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutMemberNestedInput;
 };
@@ -1061,6 +1189,7 @@ export type MemberCreateWithoutTaskAssigneesInput = {
   createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
+  taskComments?: Prisma.TaskCommentCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationCreateNestedManyWithoutMemberInput;
 };
 
@@ -1075,6 +1204,7 @@ export type MemberUncheckedCreateWithoutTaskAssigneesInput = {
   createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
   memberProjects?: Prisma.MemberProjectUncheckedCreateNestedManyWithoutMemberInput;
   createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
+  taskComments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutMemberInput;
 };
 
@@ -1105,6 +1235,7 @@ export type MemberUpdateWithoutTaskAssigneesInput = {
   createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
+  taskComments?: Prisma.TaskCommentUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUpdateManyWithoutMemberNestedInput;
 };
 
@@ -1119,6 +1250,7 @@ export type MemberUncheckedUpdateWithoutTaskAssigneesInput = {
   createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
+  taskComments?: Prisma.TaskCommentUncheckedUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutMemberNestedInput;
 };
 
@@ -1133,6 +1265,7 @@ export type MemberCreateWithoutMemberProjectsInput = {
   createdProjects?: Prisma.ProjectCreateNestedManyWithoutCreatedByInput;
   createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationCreateNestedManyWithoutMemberInput;
 };
 
@@ -1147,6 +1280,7 @@ export type MemberUncheckedCreateWithoutMemberProjectsInput = {
   createdProjects?: Prisma.ProjectUncheckedCreateNestedManyWithoutCreatedByInput;
   createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedCreateNestedManyWithoutMemberInput;
+  taskComments?: Prisma.TaskCommentUncheckedCreateNestedManyWithoutMemberInput;
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutMemberInput;
 };
 
@@ -1177,6 +1311,7 @@ export type MemberUpdateWithoutMemberProjectsInput = {
   createdProjects?: Prisma.ProjectUpdateManyWithoutCreatedByNestedInput;
   createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUpdateManyWithoutMemberNestedInput;
 };
 
@@ -1191,6 +1326,7 @@ export type MemberUncheckedUpdateWithoutMemberProjectsInput = {
   createdProjects?: Prisma.ProjectUncheckedUpdateManyWithoutCreatedByNestedInput;
   createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUncheckedUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutMemberNestedInput;
 };
 
@@ -1212,6 +1348,7 @@ export type MemberUpdateWithoutUserInput = {
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUpdateManyWithoutMemberNestedInput;
 };
 
@@ -1226,6 +1363,7 @@ export type MemberUncheckedUpdateWithoutUserInput = {
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUncheckedUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutMemberNestedInput;
 };
 
@@ -1254,6 +1392,7 @@ export type MemberUpdateWithoutOrganizationInput = {
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUpdateManyWithoutMemberNestedInput;
 };
 
@@ -1268,6 +1407,7 @@ export type MemberUncheckedUpdateWithoutOrganizationInput = {
   memberProjects?: Prisma.MemberProjectUncheckedUpdateManyWithoutMemberNestedInput;
   createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUncheckedUpdateManyWithoutMemberNestedInput;
+  taskComments?: Prisma.TaskCommentUncheckedUpdateManyWithoutMemberNestedInput;
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutMemberNestedInput;
 };
 
@@ -1288,6 +1428,7 @@ export type MemberCountOutputType = {
   memberProjects: number;
   createdTasks: number;
   taskAssignees: number;
+  taskComments: number;
   notifications: number;
 };
 
@@ -1297,6 +1438,7 @@ export type MemberCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   memberProjects?: boolean | MemberCountOutputTypeCountMemberProjectsArgs;
   createdTasks?: boolean | MemberCountOutputTypeCountCreatedTasksArgs;
   taskAssignees?: boolean | MemberCountOutputTypeCountTaskAssigneesArgs;
+  taskComments?: boolean | MemberCountOutputTypeCountTaskCommentsArgs;
   notifications?: boolean | MemberCountOutputTypeCountNotificationsArgs;
 };
 
@@ -1348,6 +1490,13 @@ export type MemberCountOutputTypeCountTaskAssigneesArgs<ExtArgs extends runtime.
 /**
  * MemberCountOutputType without action
  */
+export type MemberCountOutputTypeCountTaskCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskCommentWhereInput;
+};
+
+/**
+ * MemberCountOutputType without action
+ */
 export type MemberCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.NotificationWhereInput;
 };
@@ -1367,6 +1516,7 @@ export type MemberSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     memberProjects?: boolean | Prisma.Member$memberProjectsArgs<ExtArgs>;
     createdTasks?: boolean | Prisma.Member$createdTasksArgs<ExtArgs>;
     taskAssignees?: boolean | Prisma.Member$taskAssigneesArgs<ExtArgs>;
+    taskComments?: boolean | Prisma.Member$taskCommentsArgs<ExtArgs>;
     notifications?: boolean | Prisma.Member$notificationsArgs<ExtArgs>;
     _count?: boolean | Prisma.MemberCountOutputTypeDefaultArgs<ExtArgs>;
   },
@@ -1394,6 +1544,7 @@ export type MemberInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   memberProjects?: boolean | Prisma.Member$memberProjectsArgs<ExtArgs>;
   createdTasks?: boolean | Prisma.Member$createdTasksArgs<ExtArgs>;
   taskAssignees?: boolean | Prisma.Member$taskAssigneesArgs<ExtArgs>;
+  taskComments?: boolean | Prisma.Member$taskCommentsArgs<ExtArgs>;
   notifications?: boolean | Prisma.Member$notificationsArgs<ExtArgs>;
   _count?: boolean | Prisma.MemberCountOutputTypeDefaultArgs<ExtArgs>;
 };
@@ -1409,6 +1560,7 @@ export type $MemberPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     memberProjects: Prisma.$MemberProjectPayload<ExtArgs>[];
     createdTasks: Prisma.$TaskPayload<ExtArgs>[];
     taskAssignees: Prisma.$TaskAssigneePayload<ExtArgs>[];
+    taskComments: Prisma.$TaskCommentPayload<ExtArgs>[];
     notifications: Prisma.$NotificationPayload<ExtArgs>[];
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
@@ -1785,6 +1937,9 @@ export interface Prisma__MemberClient<
   taskAssignees<T extends Prisma.Member$taskAssigneesArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Member$taskAssigneesArgs<ExtArgs>>
   ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskAssigneePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
+  taskComments<T extends Prisma.Member$taskCommentsArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Member$taskCommentsArgs<ExtArgs>>
+  ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskCommentPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
   notifications<T extends Prisma.Member$notificationsArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Member$notificationsArgs<ExtArgs>>
   ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
@@ -2305,6 +2460,30 @@ export type Member$taskAssigneesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number;
   skip?: number;
   distinct?: Prisma.TaskAssigneeScalarFieldEnum | Prisma.TaskAssigneeScalarFieldEnum[];
+};
+
+/**
+ * Member.taskComments
+ */
+export type Member$taskCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TaskComment
+   */
+  select?: Prisma.TaskCommentSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the TaskComment
+   */
+  omit?: Prisma.TaskCommentOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskCommentInclude<ExtArgs> | null;
+  where?: Prisma.TaskCommentWhereInput;
+  orderBy?: Prisma.TaskCommentOrderByWithRelationInput | Prisma.TaskCommentOrderByWithRelationInput[];
+  cursor?: Prisma.TaskCommentWhereUniqueInput;
+  take?: number;
+  skip?: number;
+  distinct?: Prisma.TaskCommentScalarFieldEnum | Prisma.TaskCommentScalarFieldEnum[];
 };
 
 /**

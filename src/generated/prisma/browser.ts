@@ -92,6 +92,11 @@ export type Media = Prisma.MediaModel;
  */
 export type Task = Prisma.TaskModel;
 /**
+ * Model TaskComment
+ *
+ */
+export type TaskComment = Prisma.TaskCommentModel;
+/**
  * Model AddOnTask
  *
  */
