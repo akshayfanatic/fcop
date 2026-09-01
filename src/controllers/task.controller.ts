@@ -3,7 +3,16 @@ import { z } from 'zod';
 import { taskService } from '../services/task.service.js';
 import { ApiResponse, HttpStatus } from '../utils/api-response.js';
 import { sendValidationError } from '../utils/http-error.js';
-import { addOnTaskParamsSchema, createAddOnTaskSchema, createTaskSchema, projectTaskParamsSchema, taskIdParamsSchema, updateAddOnTaskSchema, updateTaskSchema } from '../validators/task.validator.js';
+import {
+  addOnTaskParamsSchema,
+  createAddOnTaskSchema,
+  createTaskSchema,
+  projectTaskParamsSchema,
+  taskIdParamsSchema,
+  taskMemberParamsSchema,
+  updateAddOnTaskSchema,
+  updateTaskSchema
+} from '../validators/task.validator.js';
 
 export const taskController = {
   getTasks: (async (req, res, next) => {
@@ -19,6 +28,52 @@ export const taskController = {
         })
       );
     } catch (error) {
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
+  getTasksByMemberId: (async (req, res, next) => {
+    try {
+      const { memberId } = taskMemberParamsSchema.parse(req.params);
+      const tasks = await taskService.getTasksByMemberId(memberId, req.headers);
+
+      res.status(HttpStatus.OK).json(
+        ApiResponse({
+          success: true,
+          status: HttpStatus.OK,
+          message: 'Member tasks fetched successfully.',
+          data: tasks
+        })
+      );
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        sendValidationError(res, error);
+        return;
+      }
+
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
+  getTaskStatsByMemberId: (async (req, res, next) => {
+    try {
+      const { memberId } = taskMemberParamsSchema.parse(req.params);
+      const stats = await taskService.getTaskStatsByMemberId(memberId, req.headers);
+
+      res.status(HttpStatus.OK).json(
+        ApiResponse({
+          success: true,
+          status: HttpStatus.OK,
+          message: 'Member task statistics fetched successfully.',
+          data: stats
+        })
+      );
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        sendValidationError(res, error);
+        return;
+      }
+
       next(error);
     }
   }) satisfies RequestHandler,
