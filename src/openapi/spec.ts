@@ -1998,6 +1998,88 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/tasks/member/{memberId}': {
+      get: {
+        tags: ['Tasks'],
+        summary: 'Fetch current tasks assigned to a member',
+        description: 'Returns non-completed tasks assigned to an organization member. Admin and Manager members can inspect team assignments; other roles can inspect only their own assignments.',
+        operationId: 'getTasksByMemberId',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          task: ['read']
+        },
+        parameters: [{ $ref: '#/components/parameters/TaskMemberId' }],
+        responses: {
+          '200': {
+            description: 'Member tasks fetched successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TasksResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid member id.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Organization member was not found.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/tasks/member/{memberId}/stats': {
+      get: {
+        tags: ['Tasks'],
+        summary: 'Fetch task statistics for a member',
+        description: 'Returns independent total, active, completed, and overdue task counts for an organization member. Overdue tasks are a subset of active tasks.',
+        operationId: 'getTaskStatsByMemberId',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          task: ['read']
+        },
+        parameters: [{ $ref: '#/components/parameters/TaskMemberId' }],
+        responses: {
+          '200': {
+            description: 'Member task statistics fetched successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TaskStatsResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid member id.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Organization member was not found.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      }
+    },
     '/api/v1/tasks/{taskId}': {
       put: {
         tags: ['Tasks'],
@@ -2765,6 +2847,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           minLength: 1
         },
         example: 'clx0000000000000000000030'
+      },
+      TaskMemberId: {
+        name: 'memberId',
+        in: 'path',
+        required: true,
+        schema: {
+          type: 'string',
+          minLength: 1
+        },
+        example: 'seed-member-member'
       },
       TaskCommentId: {
         name: 'commentId',
@@ -4511,6 +4603,45 @@ export const createOpenApiDocument = (baseUrl: string) => ({
                 type: 'array',
                 items: { $ref: '#/components/schemas/Task' }
               }
+            }
+          }
+        ]
+      },
+      TaskStats: {
+        type: 'object',
+        required: ['total', 'active', 'completed', 'overdue'],
+        properties: {
+          total: {
+            type: 'integer',
+            minimum: 0,
+            example: 18
+          },
+          active: {
+            type: 'integer',
+            minimum: 0,
+            example: 6
+          },
+          completed: {
+            type: 'integer',
+            minimum: 0,
+            example: 12
+          },
+          overdue: {
+            type: 'integer',
+            minimum: 0,
+            description: 'Active tasks whose due date is earlier than the current time.',
+            example: 2
+          }
+        }
+      },
+      TaskStatsResponse: {
+        allOf: [
+          { $ref: '#/components/schemas/ApiResponse' },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: { $ref: '#/components/schemas/TaskStats' }
             }
           }
         ]

@@ -14,6 +14,10 @@ export const taskIdParamsSchema = z.object({
   taskId: z.string().trim().min(1)
 });
 
+export const taskMemberParamsSchema = z.object({
+  memberId: z.string().trim().min(1)
+});
+
 export const addOnTaskParamsSchema = taskIdParamsSchema.extend({
   addOnTaskId: z.string().trim().min(1)
 });
@@ -59,6 +63,7 @@ export const createAddOnTaskSchema = z.object({
 export type CreateTaskInput = z.infer<typeof createTaskSchema>;
 export type ProjectTaskParamsInput = z.infer<typeof projectTaskParamsSchema>;
 export type TaskIdParamsInput = z.infer<typeof taskIdParamsSchema>;
+export type TaskMemberParamsInput = z.infer<typeof taskMemberParamsSchema>;
 export type UpdateTaskInput = z.infer<typeof updateTaskSchema>;
 export type UpdateAddOnTaskInput = z.infer<typeof updateAddOnTaskSchema>;
 export type CreateAddOnTaskInput = z.infer<typeof createAddOnTaskSchema>;

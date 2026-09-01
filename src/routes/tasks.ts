@@ -15,6 +15,10 @@ projectTaskRouter.get('/', requireOrgPermission({ task: ['read'] }), taskControl
 /* Visible task collection routes */
 taskRouter.get('/', requireOrgPermission({ task: ['read'] }), taskController.getTasks);
 
+/* Member task routes */
+taskRouter.get('/member/:memberId/stats', requireOrgPermission({ task: ['read'] }), taskController.getTaskStatsByMemberId);
+taskRouter.get('/member/:memberId', requireOrgPermission({ task: ['read'] }), taskController.getTasksByMemberId);
+
 /* Task lifecycle routes */
 taskRouter.put('/:taskId', requireOrgPermission({ task: ['update'] }), taskController.updateTaskById);
 taskRouter.delete('/:taskId', requireOrgPermission({ task: ['delete'] }), taskController.deleteTaskById);

@@ -1,6 +1,6 @@
 import type { IncomingHttpHeaders } from 'node:http';
 import { env } from '../config/env.js';
-import { MediaTargetType, ProjectMemberRole, type Prisma } from '../generated/prisma/client.js';
+import { MediaTargetType, ProjectMemberRole, TaskStatus, type Prisma } from '../generated/prisma/client.js';
 import { createTaskAssignedEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
 import { Role } from '../lib/auth/permissions.js';
 import { getSessionMember } from '../lib/auth/session.js';
@@ -12,6 +12,7 @@ import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { getProjectAccessWhere } from '../utils/project/project-access.js';
 import { hasRole } from '../utils/role.js';
+import { getMemberTaskWhere } from '../utils/task/member-task-access.js';
 import type { CreateAddOnTaskInput, CreateTaskInput, UpdateAddOnTaskInput, UpdateTaskInput } from '../validators/task.validator.js';
 
 const includeTaskDetails = {
@@ -269,6 +270,83 @@ export const taskService = {
       });
     } catch (error) {
       logger.error({ error }, 'Failed to fetch tasks.');
+      throw error;
+    }
+  },
+
+  getTasksByMemberId: async (memberId: string, headers: IncomingHttpHeaders) => {
+    try {
+      const currentMember = await getSessionMember(headers);
+      const memberTaskWhere = await getMemberTaskWhere(memberId, currentMember);
+
+      return await prisma.task.findMany({
+        where: {
+          ...memberTaskWhere,
+          status: {
+            not: TaskStatus.DONE
+          }
+        },
+        include: includeTaskDetails,
+        orderBy: [
+          {
+            dueDate: 'asc'
+          },
+          {
+            createdAt: 'desc'
+          }
+        ]
+      });
+    } catch (error) {
+      logger.error({ error, memberId }, 'Failed to fetch member tasks.');
+      throw error;
+    }
+  },
+
+  getTaskStatsByMemberId: async (memberId: string, headers: IncomingHttpHeaders) => {
+    try {
+      const currentMember = await getSessionMember(headers);
+      const memberTaskWhere = await getMemberTaskWhere(memberId, currentMember);
+      const now = new Date();
+
+      const [total, active, completed, overdue] = await Promise.all([
+        prisma.task.count({
+          where: memberTaskWhere
+        }),
+        prisma.task.count({
+          where: {
+            ...memberTaskWhere,
+            status: {
+              not: TaskStatus.DONE
+            }
+          }
+        }),
+        prisma.task.count({
+          where: {
+            ...memberTaskWhere,
+            status: TaskStatus.DONE
+          }
+        }),
+        prisma.task.count({
+          where: {
+            ...memberTaskWhere,
+            status: {
+              not: TaskStatus.DONE
+            },
+            dueDate: {
+              lt: now
+            }
+          }
+        })
+      ]);
+
+      return {
+        total,
+        active,
+        completed,
+        overdue
+      };
+    } catch (error) {
+      logger.error({ error, memberId }, 'Failed to fetch member task statistics.');
       throw error;
     }
   },
