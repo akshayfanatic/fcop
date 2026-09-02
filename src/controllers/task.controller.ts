@@ -32,6 +32,29 @@ export const taskController = {
     }
   }) satisfies RequestHandler,
 
+  getTaskById: (async (req, res, next) => {
+    try {
+      const { taskId } = taskIdParamsSchema.parse(req.params);
+      const task = await taskService.getTaskById(taskId, req.headers);
+
+      res.status(HttpStatus.OK).json(
+        ApiResponse({
+          success: true,
+          status: HttpStatus.OK,
+          message: 'Task fetched successfully.',
+          data: task
+        })
+      );
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        sendValidationError(res, error);
+        return;
+      }
+
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
   getTasksByMemberId: (async (req, res, next) => {
     try {
       const { memberId } = taskMemberParamsSchema.parse(req.params);

@@ -9,6 +9,7 @@ export const projectRouter = Router();
 
 projectRouter.post('/', requireOrgPermission({ project: ['create'] }), projectController.createProject);
 projectRouter.get('/', requireOrgPermission({ project: ['read'] }), projectController.getProjects);
+projectRouter.get('/options', requireOrgPermission({ project: ['read'] }), projectController.getProjectOptions);
 projectRouter.post('/:projectId/media', requireOrgPermission({ project: ['update'] }), parseMediaUpload, projectMediaController.uploadProjectMedia);
 projectRouter.get('/:projectId/media', requireOrgPermission({ project: ['read'] }), projectMediaController.getProjectMedia);
 projectRouter.delete('/:projectId/media/:mediaId', requireOrgPermission({ project: ['update'] }), projectMediaController.deleteProjectMedia);

@@ -83,6 +83,23 @@ export const projectController = {
     }
   }) satisfies RequestHandler,
 
+  getProjectOptions: (async (req, res, next) => {
+    try {
+      const projects = await projectService.getProjectOptions(req.headers);
+
+      res.status(HttpStatus.OK).json(
+        ApiResponse({
+          success: true,
+          status: HttpStatus.OK,
+          message: 'Project options fetched successfully.',
+          data: projects
+        })
+      );
+    } catch (error) {
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
   getProjectById: (async (req, res, next) => {
     try {
       const { id } = projectIdParamsSchema.parse(req.params);

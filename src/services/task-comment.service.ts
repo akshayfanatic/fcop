@@ -6,8 +6,8 @@ import { prisma } from '../lib/prisma.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { createPaginatedData, getPaginationOffset } from '../utils/pagination.js';
-import { getProjectAccessWhere } from '../utils/project/project-access.js';
 import { hasRole } from '../utils/role.js';
+import { getVisibleTaskWhere } from '../utils/task/task-access.js';
 import type { CreateTaskCommentInput, TaskCommentListQueryInput, UpdateTaskCommentInput } from '../validators/task-comment.validator.js';
 
 type SessionMember = Awaited<ReturnType<typeof getSessionMember>>;
@@ -32,7 +32,7 @@ const requireAccessibleTask = async (taskId: string, member: SessionMember) => {
   const task = await prisma.task.findFirst({
     where: {
       id: taskId,
-      project: getProjectAccessWhere(member)
+      ...getVisibleTaskWhere(member)
     },
     select: {
       id: true
