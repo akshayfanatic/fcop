@@ -7,7 +7,7 @@ import { prisma } from '../lib/prisma.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { createPaginatedData, getPaginationOffset } from '../utils/pagination.js';
-import { getProjectAccessWhere } from '../utils/project/project-access.js';
+import { getVisibleTaskWhere } from '../utils/task/task-access.js';
 import type { TaskMediaFiltersInput } from '../validators/task-media.validator.js';
 
 const requireAccessibleTask = async (taskId: string, headers: IncomingHttpHeaders) => {
@@ -15,7 +15,7 @@ const requireAccessibleTask = async (taskId: string, headers: IncomingHttpHeader
   const task = await prisma.task.findFirst({
     where: {
       id: taskId,
-      project: getProjectAccessWhere(member)
+      ...getVisibleTaskWhere(member)
     },
     select: {
       id: true

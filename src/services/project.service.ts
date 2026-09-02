@@ -247,6 +247,29 @@ export const projectService = {
     }
   },
 
+  getProjectOptions: async (headers: IncomingHttpHeaders) => {
+    try {
+      const member = await getSessionMember(headers);
+
+      const projects = await prisma.project.findMany({
+        where: getProjectAccessWhere(member),
+        select: {
+          id: true,
+          name: true
+        },
+        orderBy: [{ name: 'asc' }, { id: 'asc' }]
+      });
+
+      return projects.map(({ id, name }) => ({
+        value: id,
+        label: name
+      }));
+    } catch (error) {
+      logger.error({ error }, 'Failed to fetch project options.');
+      throw error;
+    }
+  },
+
   getProjectById: async (id: string, headers: IncomingHttpHeaders) => {
     try {
       const member = await getSessionMember(headers);

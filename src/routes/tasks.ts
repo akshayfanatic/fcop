@@ -19,7 +19,8 @@ taskRouter.get('/', requireOrgPermission({ task: ['read'] }), taskController.get
 taskRouter.get('/member/:memberId/stats', requireOrgPermission({ task: ['read'] }), taskController.getTaskStatsByMemberId);
 taskRouter.get('/member/:memberId', requireOrgPermission({ task: ['read'] }), taskController.getTasksByMemberId);
 
-/* Task lifecycle routes */
+/* Task resource routes */
+taskRouter.get('/:taskId', requireOrgPermission({ task: ['read'] }), taskController.getTaskById);
 taskRouter.put('/:taskId', requireOrgPermission({ task: ['update'] }), taskController.updateTaskById);
 taskRouter.delete('/:taskId', requireOrgPermission({ task: ['delete'] }), taskController.deleteTaskById);
 

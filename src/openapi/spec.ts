@@ -1541,6 +1541,30 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/projects/options': {
+      get: {
+        tags: ['Projects'],
+        summary: 'Fetch project options',
+        description: 'Returns lightweight value and label options for projects visible to the current member.',
+        operationId: 'getProjectOptions',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          project: ['read']
+        },
+        responses: {
+          '200': {
+            description: 'Project options fetched successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ProjectOptionsResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' }
+        }
+      }
+    },
     '/api/v1/projects/{id}': {
       get: {
         tags: ['Projects'],
@@ -2081,6 +2105,45 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       }
     },
     '/api/v1/tasks/{taskId}': {
+      get: {
+        tags: ['Tasks'],
+        summary: 'Fetch a task by id',
+        description: 'Returns one task visible to the current member without requiring project context. Members can fetch only tasks assigned to them.',
+        operationId: 'getTaskById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': {
+          task: ['read']
+        },
+        parameters: [{ $ref: '#/components/parameters/TaskId' }],
+        responses: {
+          '200': {
+            description: 'Task fetched successfully.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/TaskResponse' }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid task id.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': {
+            description: 'Task was not found or is unavailable to the current member.',
+            content: {
+              'application/json': {
+                schema: { $ref: '#/components/schemas/ApiResponse' }
+              }
+            }
+          }
+        }
+      },
       put: {
         tags: ['Tasks'],
         summary: 'Update a task',
@@ -5038,6 +5101,39 @@ export const createOpenApiDocument = (baseUrl: string) => ({
                   pagination: {
                     $ref: '#/components/schemas/PaginationMeta'
                   }
+                }
+              }
+            }
+          }
+        ]
+      },
+      ProjectOption: {
+        type: 'object',
+        required: ['value', 'label'],
+        properties: {
+          value: {
+            type: 'string',
+            example: 'clx0000000000000000000010'
+          },
+          label: {
+            type: 'string',
+            example: 'Website redesign'
+          }
+        }
+      },
+      ProjectOptionsResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/ProjectOption'
                 }
               }
             }

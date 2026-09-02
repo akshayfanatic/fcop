@@ -13,6 +13,7 @@ import { createHttpError } from '../utils/http-error.js';
 import { getProjectAccessWhere } from '../utils/project/project-access.js';
 import { hasRole } from '../utils/role.js';
 import { getMemberTaskWhere } from '../utils/task/member-task-access.js';
+import { getVisibleTaskWhere } from '../utils/task/task-access.js';
 import type { CreateAddOnTaskInput, CreateTaskInput, UpdateAddOnTaskInput, UpdateTaskInput } from '../validators/task.validator.js';
 
 const includeTaskDetails = {
@@ -64,7 +65,6 @@ type TaskDetails = Prisma.TaskGetPayload<{
 }>;
 
 const canManageTasks = (member: SessionMember) => hasRole(member.role, Role.ADMIN) || hasRole(member.role, Role.MANAGER);
-const canWorkOnTasks = (member: SessionMember) => hasRole(member.role, Role.MEMBER);
 
 const assertProjectAccess = async (projectId: string, member: SessionMember) => {
   const project = await prisma.project.findFirst({
@@ -240,16 +240,7 @@ export const taskService = {
       const member = await getSessionMember(headers);
 
       return await prisma.task.findMany({
-        where: {
-          project: getProjectAccessWhere(member),
-          ...(canWorkOnTasks(member) && {
-            assignees: {
-              some: {
-                memberId: member.id
-              }
-            }
-          })
-        },
+        where: getVisibleTaskWhere(member),
         include: {
           ...includeTaskDetails,
           project: {
@@ -270,6 +261,28 @@ export const taskService = {
       });
     } catch (error) {
       logger.error({ error }, 'Failed to fetch tasks.');
+      throw error;
+    }
+  },
+
+  getTaskById: async (taskId: string, headers: IncomingHttpHeaders) => {
+    try {
+      const member = await getSessionMember(headers);
+      const task = await prisma.task.findFirst({
+        where: {
+          id: taskId,
+          ...getVisibleTaskWhere(member)
+        },
+        include: includeTaskDetails
+      });
+
+      if (!task) {
+        throw createHttpError(HttpStatus.NOT_FOUND, 'Task not found.', 'TASK_NOT_FOUND');
+      }
+
+      return task;
+    } catch (error) {
+      logger.error({ error, taskId }, 'Failed to fetch task.');
       throw error;
     }
   },
@@ -420,13 +433,7 @@ export const taskService = {
       return await prisma.task.findMany({
         where: {
           projectId,
-          ...(canWorkOnTasks(member) && {
-            assignees: {
-              some: {
-                memberId: member.id
-              }
-            }
-          })
+          ...getVisibleTaskWhere(member)
         },
         include: includeTaskDetails,
         orderBy: [
