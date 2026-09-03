@@ -4,7 +4,7 @@ import { SERVICE_INTEREST_OPTIONS } from '../constants/enum.js';
 import { env } from '../config/env.js';
 import { Role } from '../lib/auth/permissions.js';
 import { getSessionMember } from '../lib/auth/session.js';
-import { createNewServiceRequestEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
+import { createNewServiceRequestEmailTemplate, createServiceRequestReceivedEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
 import { HttpStatus } from '../utils/api-response.js';
@@ -86,20 +86,37 @@ export const serviceRequestService = {
         link: `/dashboard/services/${request.id}`
       });
 
-      if (!env.adminEmail) {
-        logger.warn('ADMIN_EMAIL is not configured. Skipping new service request email notification.');
-        return request;
-      }
+      const requestUrl = new URL(`/dashboard/services/${request.id}?focus=request-chat#request-chat`, env.frontendUrl).toString();
 
-      // Send email to tell admin about the new service request.
+      // Send acknowledgement email so the client can follow the request and continue the chat.
       try {
         await sendTemplateEmail({
-          to: env.adminEmail,
-          replyTo: request.client.member.user.email,
-          template: createNewServiceRequestEmailTemplate({ request })
+          to: request.client.member.user.email,
+          template: createServiceRequestReceivedEmailTemplate({
+            recipientName: request.client.member.user.name,
+            requestId: request.id,
+            requestUrl,
+            service: request.service,
+            submittedAt: request.createdAt
+          })
         });
       } catch (error) {
-        logger.error({ error, serviceRequestId: request.id }, 'Failed to send new service request email notification.');
+        logger.error({ error, serviceRequestId: request.id }, 'Failed to send service request acknowledgement email.');
+      }
+
+      if (!env.adminEmail) {
+        logger.warn('ADMIN_EMAIL is not configured. Skipping new service request email notification.');
+      } else {
+        // Send email to tell admin about the new service request.
+        try {
+          await sendTemplateEmail({
+            to: env.adminEmail,
+            replyTo: request.client.member.user.email,
+            template: createNewServiceRequestEmailTemplate({ request })
+          });
+        } catch (error) {
+          logger.error({ error, serviceRequestId: request.id }, 'Failed to send new service request email notification.');
+        }
       }
 
       return request;
