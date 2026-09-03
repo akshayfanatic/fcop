@@ -28,11 +28,11 @@
     "node": ">=22.0.0"
   },
   "lint-staged": {
-    "*.{ts,js}": [
+    "*.{ts,tsx,js,jsx}": [
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{json,md,yml,yaml,prisma}": "prettier --write"
+    "*.{json,md,yml,yaml,prisma,html,css}": "prettier --write"
   },
   "keywords": [],
   "author": "",
@@ -57,6 +57,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
     "@eslint/js": "^10.0.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
