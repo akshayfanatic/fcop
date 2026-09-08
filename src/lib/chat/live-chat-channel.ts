@@ -2,8 +2,8 @@ import { randomUUID } from 'node:crypto';
 import type { IncomingHttpHeaders } from 'node:http';
 import type { Server, Socket } from 'socket.io';
 import { z } from 'zod';
-import type { getSessionMember } from '../auth/session.js';
-import { Role } from '../auth/permissions.js';
+import { getSessionMember } from '../auth/session.js';
+import { Role, hasResourcePermission } from '../auth/permissions.js';
 import { logger } from '../logger.js';
 import { prisma } from '../prisma.js';
 import { hasRole } from '../../utils/role.js';
@@ -39,6 +39,10 @@ function getSafeSocketError(error: unknown) {
 }
 
 async function getChatAccess(channel: ChatChannel, member: SessionMember) {
+  const parent = channel.type === 'project' ? 'project' : 'serviceRequest';
+  if (!hasResourcePermission(member.role, parent, 'read') || !hasResourcePermission(member.role, 'chat', 'read')) {
+    throw Object.assign(new Error('Chat not found.'), { code: 'CHAT_NOT_FOUND' });
+  }
   const isAdmin = hasRole(member.role, Role.ADMIN);
   const isManager = hasRole(member.role, Role.MANAGER);
   const isManagement = isAdmin || isManager;
@@ -114,7 +118,8 @@ export function registerLiveChatChannel(io: Server, socket: Socket<Record<string
   socket.on('chat:join', async (rawPayload: unknown, acknowledge: ChatAck<ChatMessage[]>) => {
     try {
       const { channel } = chatChannelSchema.parse(rawPayload);
-      const { isManagement } = await getChatAccess(channel, socket.data.member);
+      const member = await getSessionMember(socket.data.headers);
+      const { isManagement } = await getChatAccess(channel, member);
 
       await socket.join(publicRoom(channel));
 
@@ -148,14 +153,18 @@ export function registerLiveChatChannel(io: Server, socket: Socket<Record<string
   socket.on('chat:send', async (rawPayload: unknown, acknowledge: ChatAck<ChatMessage>) => {
     try {
       const payload = sendChatMessageSchema.parse(rawPayload);
-      const { isManagement } = await getChatAccess(payload.channel, socket.data.member);
+      const member = await getSessionMember(socket.data.headers);
+      const { isManagement } = await getChatAccess(payload.channel, member);
+      if (!hasResourcePermission(member.role, 'chat', 'create')) {
+        throw Object.assign(new Error('You cannot send chat messages.'), { code: 'CHAT_CREATE_FORBIDDEN' });
+      }
 
       // Keep internal live-chat notes hidden from clients.
       if (payload.isInternal && !isManagement) {
         throw Object.assign(new Error('Clients cannot send internal messages.'), { code: 'INTERNAL_MESSAGE_FORBIDDEN' });
       }
 
-      const message = createChatMessage(payload, socket.data.member);
+      const message = createChatMessage(payload, member);
       const room = message.isInternal ? managementRoom(payload.channel) : publicRoom(payload.channel);
 
       // Retain bounded history before confirming delivery to connected participants.

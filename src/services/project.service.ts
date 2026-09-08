@@ -1,14 +1,76 @@
 import type { IncomingHttpHeaders } from 'node:http';
-import { type Prisma, ServiceRequestStatus } from '../generated/prisma/client.js';
+import { type Prisma, ProjectMemberRole, ServiceRequestStatus } from '../generated/prisma/client.js';
 import { createProjectCreatedEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
+import { Role } from '../lib/auth/permissions.js';
+import { hasRole } from '../utils/role.js';
 import { getSessionMember } from '../lib/auth/session.js';
 import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { createPaginatedData, getPaginationOffset } from '../utils/pagination.js';
-import { getAssignableProjectManagerId, getProjectAccessWhere, upsertProjectManager } from '../utils/project/project-access.js';
+import { getProjectAccessWhere } from '../utils/project/project-access.js';
+import { getServiceRequestAccessWhere } from '../utils/service-request/service-request-access.js';
 import type { CreateProjectFromServiceRequestInput, CreateProjectInput, ProjectFiltersInput, UpdateProjectInput } from '../validators/project.validator.js';
+
+type SessionMember = Awaited<ReturnType<typeof getSessionMember>>;
+
+async function getAssignableProjectManagerId(currentMember: SessionMember, managerMemberId?: string | null) {
+  if (hasRole(currentMember.role, Role.ADMIN)) {
+    if (!managerMemberId) {
+      throw createHttpError(HttpStatus.BAD_REQUEST, 'Project manager is required.', 'PROJECT_MANAGER_REQUIRED');
+    }
+
+    const assignedManager = await prisma.member.findFirst({
+      where: {
+        id: managerMemberId,
+        organizationId: currentMember.organizationId
+      }
+    });
+
+    if (!assignedManager || !hasRole(assignedManager.role, Role.MANAGER)) {
+      throw createHttpError(HttpStatus.BAD_REQUEST, 'Assigned project manager must be a Manager in the active organization.', 'INVALID_PROJECT_MANAGER');
+    }
+
+    return assignedManager.id;
+  }
+
+  if (hasRole(currentMember.role, Role.MANAGER)) {
+    return currentMember.id;
+  }
+
+  throw createHttpError(HttpStatus.FORBIDDEN, 'Only Admin and Manager members can create or assign projects.', 'PROJECT_CREATE_FORBIDDEN');
+}
+
+async function upsertProjectManager(tx: Prisma.TransactionClient, projectId: string, managerMemberId: string) {
+  // Keep a single manager assignment row for project ownership checks.
+  await tx.memberProject.deleteMany({
+    where: {
+      projectId,
+      role: ProjectMemberRole.MANAGER,
+      memberId: {
+        not: managerMemberId
+      }
+    }
+  });
+
+  await tx.memberProject.upsert({
+    where: {
+      projectId_memberId: {
+        projectId,
+        memberId: managerMemberId
+      }
+    },
+    update: {
+      role: ProjectMemberRole.MANAGER
+    },
+    create: {
+      projectId,
+      memberId: managerMemberId,
+      role: ProjectMemberRole.MANAGER
+    }
+  });
+}
 
 const includeProjectDetails = {
   client: {
@@ -78,9 +140,10 @@ export const projectService = {
       const member = await getSessionMember(headers);
       const managerMemberId = await getAssignableProjectManagerId(member, payload.managerMemberId);
 
-      const client = await prisma.client.findUnique({
+      const client = await prisma.client.findFirst({
         where: {
-          id: payload.clientId
+          id: payload.clientId,
+          member: { organizationId: member.organizationId }
         }
       });
 
@@ -142,9 +205,10 @@ export const projectService = {
     try {
       const member = await getSessionMember(headers);
       const managerMemberId = await getAssignableProjectManagerId(member, payload.managerMemberId);
-      const request = await prisma.serviceRequest.findUnique({
+      const request = await prisma.serviceRequest.findFirst({
         where: {
-          id: serviceRequestId
+          id: serviceRequestId,
+          ...getServiceRequestAccessWhere(member)
         },
         include: {
           client: true,

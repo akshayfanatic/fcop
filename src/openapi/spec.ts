@@ -12,10 +12,27 @@ import {
   TaskPriority,
   TaskStatus
 } from '../generated/prisma/enums.js';
-import { Role } from '../lib/auth/permissions.js';
+import { Role, resourceStatements } from '../lib/auth/permissions.js';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from '../utils/pagination.js';
 
 const enumValues = <T extends Record<string, string>>(values: T) => Object.values(values);
+
+function createPermissionProperties() {
+  const properties: Record<string, { type: string; items: { type: string; enum: string[] }; uniqueItems: boolean }> = {};
+
+  for (const [resource, actions] of Object.entries(resourceStatements)) {
+    properties[resource] = {
+      type: 'array',
+      items: {
+        type: 'string',
+        enum: [...actions]
+      },
+      uniqueItems: true
+    };
+  }
+
+  return properties;
+}
 
 const createDashboardGetOperation = (summary: string, operationId: string, schemaName: string, isArray = false) => ({
   tags: ['Dashboard'],
@@ -3308,20 +3325,9 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       },
       PermissionStatements: {
         type: 'object',
-        description: 'Role permission statements keyed by resource. The values are allowed CRUD or domain actions.',
-        additionalProperties: {
-          type: 'array',
-          items: {
-            type: 'string',
-            example: 'read'
-          }
-        },
-        example: {
-          ac: ['read'],
-          serviceRequest: ['create', 'read'],
-          project: ['read'],
-          dashboard: ['read']
-        }
+        description: 'Allowed actions from the backend resource catalog. Application resources use CRUD; Better Auth resources retain their native actions.',
+        additionalProperties: false,
+        properties: createPermissionProperties()
       },
       Me: {
         type: 'object',
@@ -3339,7 +3345,8 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             example: 'seed-member-client'
           },
           role: {
-            $ref: '#/components/schemas/OrganizationRole'
+            type: 'string',
+            description: 'Organization role names, comma-separated when multiple roles are assigned.'
           },
           permissions: {
             $ref: '#/components/schemas/PermissionStatements'
@@ -4449,10 +4456,24 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       },
+      AddOnTask: {
+        type: 'object',
+        required: ['id', 'taskId', 'projectId', 'name', 'isCompleted', 'createdAt', 'updatedAt'],
+        properties: {
+          id: { type: 'string' },
+          taskId: { type: 'string' },
+          projectId: { type: 'string' },
+          name: { type: 'string' },
+          isCompleted: { type: 'boolean' },
+          createdAt: { type: 'string', format: 'date-time' },
+          updatedAt: { type: 'string', format: 'date-time' }
+        }
+      },
       Task: {
         type: 'object',
-        required: ['id', 'projectId', 'createdByMemberId', 'title', 'status', 'priority', 'createdAt', 'updatedAt', 'project', 'createdBy', 'assignees'],
+        required: ['id', 'projectId', 'createdByMemberId', 'title', 'status', 'priority', 'createdAt', 'updatedAt', 'project', 'createdBy', 'assignees', 'addOnTasks'],
         properties: {
+          addOnTasks: { type: 'array', items: { $ref: '#/components/schemas/AddOnTask' } },
           id: {
             type: 'string',
             example: 'clx0000000000000000000030'

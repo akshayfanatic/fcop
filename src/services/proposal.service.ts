@@ -11,6 +11,7 @@ import { notificationService } from './notification.service.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { getOptionLabel } from '../utils/options.js';
+import { getServiceRequestAccessWhere } from '../utils/service-request/service-request-access.js';
 import { isClientRole } from '../utils/role.js';
 import type { CreateProposalInput, UpdateProposalInput } from '../validators/proposal.validator.js';
 
@@ -34,9 +35,10 @@ const notifyClientProposalReady = async (input: ProposalReadyNotificationInput) 
 
 const getServiceRequestForProposal = async (serviceRequestId: string, headers: IncomingHttpHeaders) => {
   const member = await getSessionMember(headers);
-  const request = await prisma.serviceRequest.findUnique({
+  const request = await prisma.serviceRequest.findFirst({
     where: {
-      id: serviceRequestId
+      id: serviceRequestId,
+      ...getServiceRequestAccessWhere(member)
     },
     include: {
       proposal: true,

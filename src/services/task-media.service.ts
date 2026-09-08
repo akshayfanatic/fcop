@@ -7,27 +7,8 @@ import { prisma } from '../lib/prisma.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { createPaginatedData, getPaginationOffset } from '../utils/pagination.js';
-import { getVisibleTaskWhere } from '../utils/task/task-access.js';
+import { requireAccessibleTask } from '../utils/task/task-access.js';
 import type { TaskMediaFiltersInput } from '../validators/task-media.validator.js';
-
-const requireAccessibleTask = async (taskId: string, headers: IncomingHttpHeaders) => {
-  const member = await getSessionMember(headers);
-  const task = await prisma.task.findFirst({
-    where: {
-      id: taskId,
-      ...getVisibleTaskWhere(member)
-    },
-    select: {
-      id: true
-    }
-  });
-
-  if (!task) {
-    throw createHttpError(HttpStatus.NOT_FOUND, 'Task not found.', 'TASK_NOT_FOUND');
-  }
-
-  return task;
-};
 
 export const taskMediaService = {
   uploadTaskMedia: async (taskId: string, file: Express.Multer.File | undefined, headers: IncomingHttpHeaders) => {
@@ -35,7 +16,7 @@ export const taskMediaService = {
       throw createHttpError(HttpStatus.BAD_REQUEST, 'Media file is required.', 'MEDIA_FILE_REQUIRED');
     }
 
-    const task = await requireAccessibleTask(taskId, headers);
+    const task = await requireAccessibleTask(taskId, await getSessionMember(headers));
     const uploaded = await cloudinaryMedia.upload({
       buffer: file.buffer,
       folder: `tasks/${task.id}/media`,
@@ -69,7 +50,7 @@ export const taskMediaService = {
   },
 
   getTaskMedia: async (taskId: string, filters: TaskMediaFiltersInput, headers: IncomingHttpHeaders) => {
-    const task = await requireAccessibleTask(taskId, headers);
+    const task = await requireAccessibleTask(taskId, await getSessionMember(headers));
     const { page, pageSize } = filters;
     const where = {
       targetType: MediaTargetType.TASK,
@@ -89,7 +70,7 @@ export const taskMediaService = {
   },
 
   deleteTaskMedia: async (taskId: string, mediaId: string, headers: IncomingHttpHeaders) => {
-    const task = await requireAccessibleTask(taskId, headers);
+    const task = await requireAccessibleTask(taskId, await getSessionMember(headers));
     const media = await prisma.media.findFirst({
       where: {
         id: mediaId,
