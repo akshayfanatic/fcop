@@ -13,7 +13,7 @@ import { createHttpError } from '../utils/http-error.js';
 import { getProjectAccessWhere } from '../utils/project/project-access.js';
 import { hasRole } from '../utils/role.js';
 import { getMemberTaskWhere } from '../utils/task/member-task-access.js';
-import { getVisibleTaskWhere } from '../utils/task/task-access.js';
+import { getVisibleTaskWhere, requireAccessibleTask } from '../utils/task/task-access.js';
 import type { CreateAddOnTaskInput, CreateTaskInput, UpdateAddOnTaskInput, UpdateTaskInput } from '../validators/task.validator.js';
 
 const includeTaskDetails = {
@@ -90,20 +90,7 @@ const assertProjectAccess = async (projectId: string, member: SessionMember) => 
 };
 
 const assertTaskAccess = async (taskId: string, member: SessionMember) => {
-  const task = await prisma.task.findFirst({
-    where: {
-      id: taskId,
-      project: getProjectAccessWhere(member)
-    },
-    include: {
-      project: true,
-      assignees: true
-    }
-  });
-
-  if (!task) {
-    throw createHttpError(HttpStatus.NOT_FOUND, 'Task not found.', 'TASK_NOT_FOUND');
-  }
+  const task = await requireAccessibleTask(taskId, member);
 
   if (!canManageTasks(member) && !task.assignees.some((assignee) => assignee.memberId === member.id)) {
     throw createHttpError(HttpStatus.FORBIDDEN, 'You can only update tasks assigned to you.', 'TASK_UPDATE_FORBIDDEN');
@@ -540,12 +527,13 @@ export const taskService = {
     try {
       const member = await getSessionMember(headers);
 
+      const task = await assertTaskAccess(taskId, member);
+
       // Keep task structure under Admin and Manager control.
       if (!canManageTasks(member)) {
         throw createHttpError(HttpStatus.FORBIDDEN, 'Only Admin and Manager members can add add-on tasks.', 'ADD_ON_TASK_CREATE_FORBIDDEN');
       }
 
-      const task = await assertTaskAccess(taskId, member);
       const addOnTaskCount = await prisma.addOnTask.count({ where: { taskId } });
 
       if (addOnTaskCount >= 5) {
@@ -569,12 +557,12 @@ export const taskService = {
     try {
       const member = await getSessionMember(headers);
 
+      await assertAddOnTaskAccess(taskId, addOnTaskId, member);
+
       // Keep task structure under Admin and Manager control.
       if (!canManageTasks(member)) {
         throw createHttpError(HttpStatus.FORBIDDEN, 'Only Admin and Manager members can delete add-on tasks.', 'ADD_ON_TASK_DELETE_FORBIDDEN');
       }
-
-      await assertAddOnTaskAccess(taskId, addOnTaskId, member);
 
       return await prisma.addOnTask.delete({
         where: {

@@ -3,6 +3,7 @@ import { type Prisma } from '../generated/prisma/client.js';
 import { SERVICE_INTEREST_OPTIONS } from '../constants/enum.js';
 import { env } from '../config/env.js';
 import { Role } from '../lib/auth/permissions.js';
+import { getServiceRequestAccessWhere } from '../utils/service-request/service-request-access.js';
 import { getSessionMember } from '../lib/auth/session.js';
 import { createNewServiceRequestEmailTemplate, createServiceRequestReceivedEmailTemplate, sendTemplateEmail } from '../lib/email/index.js';
 import { logger } from '../lib/logger.js';
@@ -130,6 +131,7 @@ export const serviceRequestService = {
     try {
       const member = await getSessionMember(headers);
       const where = {
+        AND: [getServiceRequestAccessWhere(member)],
         ...(filters.status ? { status: filters.status } : {}),
         ...(filters.serviceType ? { service: filters.serviceType } : {}),
         ...(filters.client && !isClientRole(member.role)
@@ -145,7 +147,7 @@ export const serviceRequestService = {
           : {})
       } satisfies Prisma.ServiceRequestWhereInput;
 
-      // Show non-client roles the full service request queue after permission middleware allows read access.
+      // Show non-client roles the organization service request queue after permission middleware allows read access.
       if (!isClientRole(member.role)) {
         return await prisma.serviceRequest.findMany({
           where,
@@ -188,11 +190,12 @@ export const serviceRequestService = {
     try {
       const member = await getSessionMember(headers);
 
-      // Show non-client roles any service request detail after permission middleware allows read access.
+      // Show non-client roles service request details in their organization after permission middleware allows read access.
       if (!isClientRole(member.role)) {
-        const request = await prisma.serviceRequest.findUnique({
+        const request = await prisma.serviceRequest.findFirst({
           where: {
-            id
+            id,
+            ...getServiceRequestAccessWhere(member)
           },
           include: includeClientRequestDetails
         });
@@ -212,7 +215,8 @@ export const serviceRequestService = {
       const request = await prisma.serviceRequest.findFirst({
         where: {
           id,
-          clientId: member.client.id
+          clientId: member.client.id,
+          AND: [getServiceRequestAccessWhere(member)]
         },
         include: {
           proposal: true,
@@ -235,10 +239,12 @@ export const serviceRequestService = {
     }
   },
 
-  updateServiceRequestById: async (id: string, payload: UpdateServiceRequestInput, _headers: IncomingHttpHeaders) => {
+  updateServiceRequestById: async (id: string, payload: UpdateServiceRequestInput, headers: IncomingHttpHeaders) => {
     try {
-      const request = await prisma.serviceRequest.findUnique({
+      const member = await getSessionMember(headers);
+      const request = await prisma.serviceRequest.findFirst({
         where: {
+          ...getServiceRequestAccessWhere(member),
           id
         }
       });
@@ -250,6 +256,7 @@ export const serviceRequestService = {
 
       return await prisma.serviceRequest.update({
         where: {
+          ...getServiceRequestAccessWhere(member),
           id
         },
         data: {
@@ -264,10 +271,12 @@ export const serviceRequestService = {
     }
   },
 
-  deleteServiceRequestById: async (id: string, _headers: IncomingHttpHeaders) => {
+  deleteServiceRequestById: async (id: string, headers: IncomingHttpHeaders) => {
     try {
-      const request = await prisma.serviceRequest.findUnique({
+      const member = await getSessionMember(headers);
+      const request = await prisma.serviceRequest.findFirst({
         where: {
+          ...getServiceRequestAccessWhere(member),
           id
         }
       });
@@ -279,6 +288,7 @@ export const serviceRequestService = {
 
       return await prisma.serviceRequest.delete({
         where: {
+          ...getServiceRequestAccessWhere(member),
           id
         }
       });

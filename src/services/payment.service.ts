@@ -5,7 +5,7 @@ import { logger } from '../lib/logger.js';
 import { prisma } from '../lib/prisma.js';
 import type { PaymentListItem } from '../types/payment.js';
 import { createPaginatedData, getPaginationOffset } from '../utils/pagination.js';
-import { isClientRole } from '../utils/role.js';
+import { getServiceRequestAccessWhere } from '../utils/service-request/service-request-access.js';
 import type { PaymentFiltersInput } from '../validators/payment.validator.js';
 
 const paymentSelect = {
@@ -53,7 +53,7 @@ export const paymentService = {
         },
         paymentStatus: filters.status,
         serviceRequest: {
-          clientId: isClientRole(member.role) ? member.client?.id : undefined,
+          AND: [getServiceRequestAccessWhere(member)],
           client: filters.search
             ? {
                 OR: [

@@ -10,24 +10,27 @@ export const Role = {
 
 export type Role = (typeof Role)[keyof typeof Role];
 
-const statement = {
+export const resourceStatements = {
   ...defaultStatements,
   lead: ['create', 'read', 'update', 'delete'],
   serviceRequest: ['create', 'read', 'update', 'delete'],
   proposal: ['create', 'read', 'update', 'delete'],
   project: ['create', 'read', 'update', 'delete'],
   task: ['create', 'read', 'update', 'delete'],
-  comment: ['create'],
+  chat: ['create', 'read'],
   taskComment: ['create', 'read', 'update', 'delete'],
   payment: ['read'],
   dashboard: ['read'],
   notification: ['read', 'update']
 } as const;
 
-export const ac = createAccessControl(statement);
+export type Resource = keyof typeof resourceStatements;
+export type ResourceAction<R extends Resource> = (typeof resourceStatements)[R][number];
 export type OrganizationPermission = {
-  [Key in keyof typeof statement]?: ReadonlyArray<(typeof statement)[Key][number]>;
+  [R in Resource]?: ReadonlyArray<ResourceAction<R>>;
 };
+
+export const ac = createAccessControl(resourceStatements);
 
 export const rolePermissionStatements = {
   [Role.ADMIN]: {
@@ -37,7 +40,7 @@ export const rolePermissionStatements = {
     proposal: ['create', 'read', 'update', 'delete'],
     project: ['create', 'read', 'update', 'delete'],
     task: ['create', 'read', 'update', 'delete'],
-    comment: ['create'],
+    chat: ['create', 'read'],
     taskComment: ['create', 'read', 'update', 'delete'],
     payment: ['read'],
     dashboard: ['read'],
@@ -53,7 +56,7 @@ export const rolePermissionStatements = {
     proposal: ['create', 'read', 'update', 'delete'],
     project: ['create', 'read', 'update'],
     task: ['create', 'read', 'update', 'delete'],
-    comment: ['create'],
+    chat: ['create', 'read'],
     taskComment: ['create', 'read', 'update', 'delete'],
     payment: ['read'],
     dashboard: ['read'],
@@ -63,7 +66,7 @@ export const rolePermissionStatements = {
     ac: ['read'],
     project: ['read'],
     task: ['read', 'update'],
-    comment: ['create'],
+    chat: ['create', 'read'],
     taskComment: ['create', 'read', 'update', 'delete'],
     dashboard: ['read'],
     notification: ['read', 'update']
@@ -74,7 +77,7 @@ export const rolePermissionStatements = {
     task: ['read'],
     serviceRequest: ['create', 'read'],
     proposal: ['read', 'update'],
-    comment: ['create'],
+    chat: ['create', 'read'],
     taskComment: ['create', 'read', 'update', 'delete'],
     payment: ['read'],
     dashboard: ['read'],
@@ -82,22 +85,41 @@ export const rolePermissionStatements = {
   }
 } satisfies Record<Role, OrganizationPermission>;
 
-/**
- * Returns the permission statements configured for a FCOP organization role.
- *
- * @param role - Organization member role stored by Better Auth.
- * @returns Permission statements for known FCOP roles, or an empty map for unknown roles.
- *
- * @example
- * getRolePermissionStatements('CLIENT');
- * // { ac: ['read'], project: ['read'], serviceRequest: ['create', 'read'], ... }
- */
-export function getRolePermissionStatements(role: string): OrganizationPermission {
-  if (Object.values(Role).includes(role as Role)) {
-    return rolePermissionStatements[role as Role];
+export function getRolePermissionStatements(roles: string): OrganizationPermission {
+  const permissions: Record<string, string[]> = {};
+  const knownRoles = Object.values(Role);
+
+  for (const roleName of roles.split(',')) {
+    const role = roleName.trim();
+    if (!knownRoles.includes(role as Role)) {
+      continue;
+    }
+
+    const rolePermissions = rolePermissionStatements[role as Role];
+    for (const [resource, actions] of Object.entries(rolePermissions)) {
+      if (!permissions[resource]) {
+        permissions[resource] = [];
+      }
+
+      for (const action of actions) {
+        if (!permissions[resource].includes(action)) {
+          permissions[resource].push(action);
+        }
+      }
+    }
   }
 
-  return {};
+  return permissions as OrganizationPermission;
+}
+
+export function hasResourcePermission<R extends Resource>(roles: string, resource: R, action: ResourceAction<R>): boolean {
+  const permissions = getRolePermissionStatements(roles);
+  const allowedActions = permissions[resource] as readonly string[] | undefined;
+  if (!allowedActions) {
+    return false;
+  }
+
+  return allowedActions.includes(action);
 }
 
 export const admin = ac.newRole(rolePermissionStatements[Role.ADMIN]);

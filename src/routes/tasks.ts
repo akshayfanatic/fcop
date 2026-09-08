@@ -35,7 +35,7 @@ taskRouter.post('/:taskId/media', requireOrgPermission({ task: ['update'] }), pa
 taskRouter.get('/:taskId/media', requireOrgPermission({ task: ['read'] }), taskMediaController.getTaskMedia);
 taskRouter.delete('/:taskId/media/:mediaId', requireOrgPermission({ task: ['update'] }), taskMediaController.deleteTaskMedia);
 
-/* Task add-on routes */
-taskRouter.post('/:taskId/addon', requireOrgPermission({ task: ['create'] }), taskController.createAddOnTask);
+// Checklist changes update the parent task; service rules still limit structural edits to management.
+taskRouter.post('/:taskId/addon', requireOrgPermission({ task: ['update'] }), taskController.createAddOnTask);
 taskRouter.put('/:taskId/addon/:addOnTaskId', requireOrgPermission({ task: ['update'] }), taskController.updateAddOnTaskById);
-taskRouter.delete('/:taskId/addon/:addOnTaskId', requireOrgPermission({ task: ['delete'] }), taskController.deleteAddOnTaskById);
+taskRouter.delete('/:taskId/addon/:addOnTaskId', requireOrgPermission({ task: ['update'] }), taskController.deleteAddOnTaskById);
