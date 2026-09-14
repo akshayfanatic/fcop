@@ -33,6 +33,15 @@ export async function saveChatMessage(message: ChatMessage) {
 
   await prisma.$transaction(
     async (tx) => {
+      // Reject in-flight messages after account or channel deletion instead of recreating history.
+      const author = await tx.member.findUnique({ where: { id: message.authorMemberId }, select: { id: true } });
+      const parent =
+        message.channel.type === 'project'
+          ? await tx.project.findUnique({ where: { id: message.channel.id }, select: { id: true } })
+          : await tx.serviceRequest.findUnique({ where: { id: message.channel.id }, select: { id: true } });
+      if (!author || !parent) {
+        throw Object.assign(new Error('Chat is no longer available.'), { code: 'CHAT_NOT_FOUND' });
+      }
       const history = await tx.chatHistory.findUnique({
         where: { channelType_channelId: key },
         select: { messages: true, expiresAt: true }

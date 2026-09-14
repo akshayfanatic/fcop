@@ -39,6 +39,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@better-auth/core": "1.6.21",
     "@prisma/adapter-mariadb": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@react-email/render": "^2.0.9",

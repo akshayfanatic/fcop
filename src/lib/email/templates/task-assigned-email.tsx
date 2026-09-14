@@ -54,7 +54,7 @@ export const createTaskAssignedEmailTemplate = ({ task, assigneeName, projectUrl
           items={[
             { label: 'Priority', value: priorityLabel },
             { label: 'Due date', value: formatDate(task.dueDate) },
-            { label: 'Assigned by', value: task.createdBy.user.name }
+            { label: 'Assigned by', value: task.createdBy?.user.name ?? 'Deleted user' }
           ]}
         />
         <EmailAction href={projectUrl}>View task details</EmailAction>
@@ -68,7 +68,7 @@ export const createTaskAssignedEmailTemplate = ({ task, assigneeName, projectUrl
       `Project: ${task.project.name}`,
       `Priority: ${priorityLabel}`,
       `Due date: ${formatDate(task.dueDate)}`,
-      `Assigned by: ${task.createdBy.user.name}`,
+      `Assigned by: ${task.createdBy?.user.name ?? 'Deleted user'}`,
       `Project link: ${projectUrl}`,
       `Task ID: ${task.id}`
     ].join('\n')

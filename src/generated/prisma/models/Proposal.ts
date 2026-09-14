@@ -243,7 +243,7 @@ export type ProposalGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type ProposalGroupByOutputType = {
   id: string;
   serviceRequestId: string;
-  createdByMemberId: string;
+  createdByMemberId: string | null;
   description: string;
   amount: runtime.Decimal;
   currency: $Enums.ProjectCurrency;
@@ -282,7 +282,7 @@ export type ProposalWhereInput = {
   NOT?: Prisma.ProposalWhereInput | Prisma.ProposalWhereInput[];
   id?: Prisma.StringFilter<'Proposal'> | string;
   serviceRequestId?: Prisma.StringFilter<'Proposal'> | string;
-  createdByMemberId?: Prisma.StringFilter<'Proposal'> | string;
+  createdByMemberId?: Prisma.StringNullableFilter<'Proposal'> | string | null;
   description?: Prisma.StringFilter<'Proposal'> | string;
   amount?: Prisma.DecimalFilter<'Proposal'> | runtime.Decimal | runtime.DecimalJsLike | number | string;
   currency?: Prisma.EnumProjectCurrencyFilter<'Proposal'> | $Enums.ProjectCurrency;
@@ -297,13 +297,13 @@ export type ProposalWhereInput = {
   createdAt?: Prisma.DateTimeFilter<'Proposal'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Proposal'> | Date | string;
   serviceRequest?: Prisma.XOR<Prisma.ServiceRequestScalarRelationFilter, Prisma.ServiceRequestWhereInput>;
-  createdBy?: Prisma.XOR<Prisma.MemberScalarRelationFilter, Prisma.MemberWhereInput>;
+  createdBy?: Prisma.XOR<Prisma.MemberNullableScalarRelationFilter, Prisma.MemberWhereInput> | null;
 };
 
 export type ProposalOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
   serviceRequestId?: Prisma.SortOrder;
-  createdByMemberId?: Prisma.SortOrder;
+  createdByMemberId?: Prisma.SortOrderInput | Prisma.SortOrder;
   description?: Prisma.SortOrder;
   amount?: Prisma.SortOrder;
   currency?: Prisma.SortOrder;
@@ -330,7 +330,7 @@ export type ProposalWhereUniqueInput = Prisma.AtLeast<
     AND?: Prisma.ProposalWhereInput | Prisma.ProposalWhereInput[];
     OR?: Prisma.ProposalWhereInput[];
     NOT?: Prisma.ProposalWhereInput | Prisma.ProposalWhereInput[];
-    createdByMemberId?: Prisma.StringFilter<'Proposal'> | string;
+    createdByMemberId?: Prisma.StringNullableFilter<'Proposal'> | string | null;
     description?: Prisma.StringFilter<'Proposal'> | string;
     amount?: Prisma.DecimalFilter<'Proposal'> | runtime.Decimal | runtime.DecimalJsLike | number | string;
     currency?: Prisma.EnumProjectCurrencyFilter<'Proposal'> | $Enums.ProjectCurrency;
@@ -344,7 +344,7 @@ export type ProposalWhereUniqueInput = Prisma.AtLeast<
     createdAt?: Prisma.DateTimeFilter<'Proposal'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'Proposal'> | Date | string;
     serviceRequest?: Prisma.XOR<Prisma.ServiceRequestScalarRelationFilter, Prisma.ServiceRequestWhereInput>;
-    createdBy?: Prisma.XOR<Prisma.MemberScalarRelationFilter, Prisma.MemberWhereInput>;
+    createdBy?: Prisma.XOR<Prisma.MemberNullableScalarRelationFilter, Prisma.MemberWhereInput> | null;
   },
   'id' | 'serviceRequestId' | 'stripeInvoiceId'
 >;
@@ -352,7 +352,7 @@ export type ProposalWhereUniqueInput = Prisma.AtLeast<
 export type ProposalOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
   serviceRequestId?: Prisma.SortOrder;
-  createdByMemberId?: Prisma.SortOrder;
+  createdByMemberId?: Prisma.SortOrderInput | Prisma.SortOrder;
   description?: Prisma.SortOrder;
   amount?: Prisma.SortOrder;
   currency?: Prisma.SortOrder;
@@ -379,7 +379,7 @@ export type ProposalScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ProposalScalarWhereWithAggregatesInput | Prisma.ProposalScalarWhereWithAggregatesInput[];
   id?: Prisma.StringWithAggregatesFilter<'Proposal'> | string;
   serviceRequestId?: Prisma.StringWithAggregatesFilter<'Proposal'> | string;
-  createdByMemberId?: Prisma.StringWithAggregatesFilter<'Proposal'> | string;
+  createdByMemberId?: Prisma.StringNullableWithAggregatesFilter<'Proposal'> | string | null;
   description?: Prisma.StringWithAggregatesFilter<'Proposal'> | string;
   amount?: Prisma.DecimalWithAggregatesFilter<'Proposal'> | runtime.Decimal | runtime.DecimalJsLike | number | string;
   currency?: Prisma.EnumProjectCurrencyWithAggregatesFilter<'Proposal'> | $Enums.ProjectCurrency;
@@ -411,13 +411,13 @@ export type ProposalCreateInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   serviceRequest: Prisma.ServiceRequestCreateNestedOneWithoutProposalInput;
-  createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProposalsInput;
+  createdBy?: Prisma.MemberCreateNestedOneWithoutCreatedProposalsInput;
 };
 
 export type ProposalUncheckedCreateInput = {
   id?: string;
   serviceRequestId: string;
-  createdByMemberId: string;
+  createdByMemberId?: string | null;
   description: string;
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string;
   currency: $Enums.ProjectCurrency;
@@ -449,13 +449,13 @@ export type ProposalUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   serviceRequest?: Prisma.ServiceRequestUpdateOneRequiredWithoutProposalNestedInput;
-  createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProposalsNestedInput;
+  createdBy?: Prisma.MemberUpdateOneWithoutCreatedProposalsNestedInput;
 };
 
 export type ProposalUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   serviceRequestId?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdByMemberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   description?: Prisma.StringFieldUpdateOperationsInput | string;
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
   currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
@@ -474,7 +474,7 @@ export type ProposalUncheckedUpdateInput = {
 export type ProposalCreateManyInput = {
   id?: string;
   serviceRequestId: string;
-  createdByMemberId: string;
+  createdByMemberId?: string | null;
   description: string;
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string;
   currency: $Enums.ProjectCurrency;
@@ -510,7 +510,7 @@ export type ProposalUpdateManyMutationInput = {
 export type ProposalUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   serviceRequestId?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdByMemberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   description?: Prisma.StringFieldUpdateOperationsInput | string;
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
   currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
@@ -792,7 +792,7 @@ export type ProposalScalarWhereInput = {
   NOT?: Prisma.ProposalScalarWhereInput | Prisma.ProposalScalarWhereInput[];
   id?: Prisma.StringFilter<'Proposal'> | string;
   serviceRequestId?: Prisma.StringFilter<'Proposal'> | string;
-  createdByMemberId?: Prisma.StringFilter<'Proposal'> | string;
+  createdByMemberId?: Prisma.StringNullableFilter<'Proposal'> | string | null;
   description?: Prisma.StringFilter<'Proposal'> | string;
   amount?: Prisma.DecimalFilter<'Proposal'> | runtime.Decimal | runtime.DecimalJsLike | number | string;
   currency?: Prisma.EnumProjectCurrencyFilter<'Proposal'> | $Enums.ProjectCurrency;
@@ -823,12 +823,12 @@ export type ProposalCreateWithoutServiceRequestInput = {
   stripeInvoicePdfUrl?: string | null;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProposalsInput;
+  createdBy?: Prisma.MemberCreateNestedOneWithoutCreatedProposalsInput;
 };
 
 export type ProposalUncheckedCreateWithoutServiceRequestInput = {
   id?: string;
-  createdByMemberId: string;
+  createdByMemberId?: string | null;
   description: string;
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string;
   currency: $Enums.ProjectCurrency;
@@ -875,12 +875,12 @@ export type ProposalUpdateWithoutServiceRequestInput = {
   stripeInvoicePdfUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-  createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProposalsNestedInput;
+  createdBy?: Prisma.MemberUpdateOneWithoutCreatedProposalsNestedInput;
 };
 
 export type ProposalUncheckedUpdateWithoutServiceRequestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdByMemberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   description?: Prisma.StringFieldUpdateOperationsInput | string;
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
   currency?: Prisma.EnumProjectCurrencyFieldUpdateOperationsInput | $Enums.ProjectCurrency;
@@ -987,7 +987,7 @@ export type ProposalSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
     createdAt?: boolean;
     updatedAt?: boolean;
     serviceRequest?: boolean | Prisma.ServiceRequestDefaultArgs<ExtArgs>;
-    createdBy?: boolean | Prisma.MemberDefaultArgs<ExtArgs>;
+    createdBy?: boolean | Prisma.Proposal$createdByArgs<ExtArgs>;
   },
   ExtArgs['result']['proposal']
 >;
@@ -1032,20 +1032,20 @@ export type ProposalOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 >;
 export type ProposalInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   serviceRequest?: boolean | Prisma.ServiceRequestDefaultArgs<ExtArgs>;
-  createdBy?: boolean | Prisma.MemberDefaultArgs<ExtArgs>;
+  createdBy?: boolean | Prisma.Proposal$createdByArgs<ExtArgs>;
 };
 
 export type $ProposalPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: 'Proposal';
   objects: {
     serviceRequest: Prisma.$ServiceRequestPayload<ExtArgs>;
-    createdBy: Prisma.$MemberPayload<ExtArgs>;
+    createdBy: Prisma.$MemberPayload<ExtArgs> | null;
   };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
       id: string;
       serviceRequestId: string;
-      createdByMemberId: string;
+      createdByMemberId: string | null;
       description: string;
       amount: runtime.Decimal;
       currency: $Enums.ProjectCurrency;
@@ -1405,9 +1405,9 @@ export interface Prisma__ProposalClient<
   serviceRequest<T extends Prisma.ServiceRequestDefaultArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.ServiceRequestDefaultArgs<ExtArgs>>
   ): Prisma.Prisma__ServiceRequestClient<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
-  createdBy<T extends Prisma.MemberDefaultArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.MemberDefaultArgs<ExtArgs>>
-  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+  createdBy<T extends Prisma.Proposal$createdByArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Proposal$createdByArgs<ExtArgs>>
+  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1797,6 +1797,25 @@ export type ProposalDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Proposals to delete.
    */
   limit?: number;
+};
+
+/**
+ * Proposal.createdBy
+ */
+export type Proposal$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Member
+   */
+  select?: Prisma.MemberSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the Member
+   */
+  omit?: Prisma.MemberOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MemberInclude<ExtArgs> | null;
+  where?: Prisma.MemberWhereInput;
 };
 
 /**
