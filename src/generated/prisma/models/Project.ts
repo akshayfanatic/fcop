@@ -232,7 +232,7 @@ export type ProjectGroupByOutputType = {
   id: string;
   clientId: string;
   serviceRequestId: string | null;
-  createdByMemberId: string;
+  createdByMemberId: string | null;
   name: string;
   description: string | null;
   service: $Enums.ServiceInterest;
@@ -269,7 +269,7 @@ export type ProjectWhereInput = {
   id?: Prisma.StringFilter<'Project'> | string;
   clientId?: Prisma.StringFilter<'Project'> | string;
   serviceRequestId?: Prisma.StringNullableFilter<'Project'> | string | null;
-  createdByMemberId?: Prisma.StringFilter<'Project'> | string;
+  createdByMemberId?: Prisma.StringNullableFilter<'Project'> | string | null;
   name?: Prisma.StringFilter<'Project'> | string;
   description?: Prisma.StringNullableFilter<'Project'> | string | null;
   service?: Prisma.EnumServiceInterestFilter<'Project'> | $Enums.ServiceInterest;
@@ -282,7 +282,7 @@ export type ProjectWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<'Project'> | Date | string;
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>;
   serviceRequest?: Prisma.XOR<Prisma.ServiceRequestNullableScalarRelationFilter, Prisma.ServiceRequestWhereInput> | null;
-  createdBy?: Prisma.XOR<Prisma.MemberScalarRelationFilter, Prisma.MemberWhereInput>;
+  createdBy?: Prisma.XOR<Prisma.MemberNullableScalarRelationFilter, Prisma.MemberWhereInput> | null;
   memberProjects?: Prisma.MemberProjectListRelationFilter;
   tasks?: Prisma.TaskListRelationFilter;
   taskAssignees?: Prisma.TaskAssigneeListRelationFilter;
@@ -293,7 +293,7 @@ export type ProjectOrderByWithRelationInput = {
   id?: Prisma.SortOrder;
   clientId?: Prisma.SortOrder;
   serviceRequestId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  createdByMemberId?: Prisma.SortOrder;
+  createdByMemberId?: Prisma.SortOrderInput | Prisma.SortOrder;
   name?: Prisma.SortOrder;
   description?: Prisma.SortOrderInput | Prisma.SortOrder;
   service?: Prisma.SortOrder;
@@ -322,7 +322,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<
     OR?: Prisma.ProjectWhereInput[];
     NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[];
     clientId?: Prisma.StringFilter<'Project'> | string;
-    createdByMemberId?: Prisma.StringFilter<'Project'> | string;
+    createdByMemberId?: Prisma.StringNullableFilter<'Project'> | string | null;
     name?: Prisma.StringFilter<'Project'> | string;
     description?: Prisma.StringNullableFilter<'Project'> | string | null;
     service?: Prisma.EnumServiceInterestFilter<'Project'> | $Enums.ServiceInterest;
@@ -335,7 +335,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<
     updatedAt?: Prisma.DateTimeFilter<'Project'> | Date | string;
     client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>;
     serviceRequest?: Prisma.XOR<Prisma.ServiceRequestNullableScalarRelationFilter, Prisma.ServiceRequestWhereInput> | null;
-    createdBy?: Prisma.XOR<Prisma.MemberScalarRelationFilter, Prisma.MemberWhereInput>;
+    createdBy?: Prisma.XOR<Prisma.MemberNullableScalarRelationFilter, Prisma.MemberWhereInput> | null;
     memberProjects?: Prisma.MemberProjectListRelationFilter;
     tasks?: Prisma.TaskListRelationFilter;
     taskAssignees?: Prisma.TaskAssigneeListRelationFilter;
@@ -348,7 +348,7 @@ export type ProjectOrderByWithAggregationInput = {
   id?: Prisma.SortOrder;
   clientId?: Prisma.SortOrder;
   serviceRequestId?: Prisma.SortOrderInput | Prisma.SortOrder;
-  createdByMemberId?: Prisma.SortOrder;
+  createdByMemberId?: Prisma.SortOrderInput | Prisma.SortOrder;
   name?: Prisma.SortOrder;
   description?: Prisma.SortOrderInput | Prisma.SortOrder;
   service?: Prisma.SortOrder;
@@ -373,7 +373,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<'Project'> | string;
   clientId?: Prisma.StringWithAggregatesFilter<'Project'> | string;
   serviceRequestId?: Prisma.StringNullableWithAggregatesFilter<'Project'> | string | null;
-  createdByMemberId?: Prisma.StringWithAggregatesFilter<'Project'> | string;
+  createdByMemberId?: Prisma.StringNullableWithAggregatesFilter<'Project'> | string | null;
   name?: Prisma.StringWithAggregatesFilter<'Project'> | string;
   description?: Prisma.StringNullableWithAggregatesFilter<'Project'> | string | null;
   service?: Prisma.EnumServiceInterestWithAggregatesFilter<'Project'> | $Enums.ServiceInterest;
@@ -400,7 +400,7 @@ export type ProjectCreateInput = {
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput;
   serviceRequest?: Prisma.ServiceRequestCreateNestedOneWithoutProjectInput;
-  createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
+  createdBy?: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
@@ -411,7 +411,7 @@ export type ProjectUncheckedCreateInput = {
   id?: string;
   clientId: string;
   serviceRequestId?: string | null;
-  createdByMemberId: string;
+  createdByMemberId?: string | null;
   name: string;
   description?: string | null;
   service: $Enums.ServiceInterest;
@@ -442,7 +442,7 @@ export type ProjectUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput;
   serviceRequest?: Prisma.ServiceRequestUpdateOneWithoutProjectNestedInput;
-  createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProjectsNestedInput;
+  createdBy?: Prisma.MemberUpdateOneWithoutCreatedProjectsNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
@@ -453,7 +453,7 @@ export type ProjectUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   clientId?: Prisma.StringFieldUpdateOperationsInput | string;
   serviceRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdByMemberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
@@ -474,7 +474,7 @@ export type ProjectCreateManyInput = {
   id?: string;
   clientId: string;
   serviceRequestId?: string | null;
-  createdByMemberId: string;
+  createdByMemberId?: string | null;
   name: string;
   description?: string | null;
   service: $Enums.ServiceInterest;
@@ -505,7 +505,7 @@ export type ProjectUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   clientId?: Prisma.StringFieldUpdateOperationsInput | string;
   serviceRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdByMemberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
@@ -893,7 +893,7 @@ export type ProjectScalarWhereInput = {
   id?: Prisma.StringFilter<'Project'> | string;
   clientId?: Prisma.StringFilter<'Project'> | string;
   serviceRequestId?: Prisma.StringNullableFilter<'Project'> | string | null;
-  createdByMemberId?: Prisma.StringFilter<'Project'> | string;
+  createdByMemberId?: Prisma.StringNullableFilter<'Project'> | string | null;
   name?: Prisma.StringFilter<'Project'> | string;
   description?: Prisma.StringNullableFilter<'Project'> | string | null;
   service?: Prisma.EnumServiceInterestFilter<'Project'> | $Enums.ServiceInterest;
@@ -919,7 +919,7 @@ export type ProjectCreateWithoutClientInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   serviceRequest?: Prisma.ServiceRequestCreateNestedOneWithoutProjectInput;
-  createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
+  createdBy?: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
@@ -929,7 +929,7 @@ export type ProjectCreateWithoutClientInput = {
 export type ProjectUncheckedCreateWithoutClientInput = {
   id?: string;
   serviceRequestId?: string | null;
-  createdByMemberId: string;
+  createdByMemberId?: string | null;
   name: string;
   description?: string | null;
   service: $Enums.ServiceInterest;
@@ -985,7 +985,7 @@ export type ProjectCreateWithoutServiceRequestInput = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput;
-  createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
+  createdBy?: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
@@ -995,7 +995,7 @@ export type ProjectCreateWithoutServiceRequestInput = {
 export type ProjectUncheckedCreateWithoutServiceRequestInput = {
   id?: string;
   clientId: string;
-  createdByMemberId: string;
+  createdByMemberId?: string | null;
   name: string;
   description?: string | null;
   service: $Enums.ServiceInterest;
@@ -1041,7 +1041,7 @@ export type ProjectUpdateWithoutServiceRequestInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput;
-  createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProjectsNestedInput;
+  createdBy?: Prisma.MemberUpdateOneWithoutCreatedProjectsNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
@@ -1051,7 +1051,7 @@ export type ProjectUpdateWithoutServiceRequestInput = {
 export type ProjectUncheckedUpdateWithoutServiceRequestInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   clientId?: Prisma.StringFieldUpdateOperationsInput | string;
-  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdByMemberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
@@ -1082,7 +1082,7 @@ export type ProjectCreateWithoutTasksInput = {
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput;
   serviceRequest?: Prisma.ServiceRequestCreateNestedOneWithoutProjectInput;
-  createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
+  createdBy?: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
   addOnTasks?: Prisma.AddOnTaskCreateNestedManyWithoutProjectInput;
@@ -1092,7 +1092,7 @@ export type ProjectUncheckedCreateWithoutTasksInput = {
   id?: string;
   clientId: string;
   serviceRequestId?: string | null;
-  createdByMemberId: string;
+  createdByMemberId?: string | null;
   name: string;
   description?: string | null;
   service: $Enums.ServiceInterest;
@@ -1138,7 +1138,7 @@ export type ProjectUpdateWithoutTasksInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput;
   serviceRequest?: Prisma.ServiceRequestUpdateOneWithoutProjectNestedInput;
-  createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProjectsNestedInput;
+  createdBy?: Prisma.MemberUpdateOneWithoutCreatedProjectsNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
   addOnTasks?: Prisma.AddOnTaskUpdateManyWithoutProjectNestedInput;
@@ -1148,7 +1148,7 @@ export type ProjectUncheckedUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   clientId?: Prisma.StringFieldUpdateOperationsInput | string;
   serviceRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdByMemberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
@@ -1178,7 +1178,7 @@ export type ProjectCreateWithoutAddOnTasksInput = {
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput;
   serviceRequest?: Prisma.ServiceRequestCreateNestedOneWithoutProjectInput;
-  createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
+  createdBy?: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
@@ -1188,7 +1188,7 @@ export type ProjectUncheckedCreateWithoutAddOnTasksInput = {
   id?: string;
   clientId: string;
   serviceRequestId?: string | null;
-  createdByMemberId: string;
+  createdByMemberId?: string | null;
   name: string;
   description?: string | null;
   service: $Enums.ServiceInterest;
@@ -1234,7 +1234,7 @@ export type ProjectUpdateWithoutAddOnTasksInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput;
   serviceRequest?: Prisma.ServiceRequestUpdateOneWithoutProjectNestedInput;
-  createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProjectsNestedInput;
+  createdBy?: Prisma.MemberUpdateOneWithoutCreatedProjectsNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
@@ -1244,7 +1244,7 @@ export type ProjectUncheckedUpdateWithoutAddOnTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   clientId?: Prisma.StringFieldUpdateOperationsInput | string;
   serviceRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdByMemberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
@@ -1274,7 +1274,7 @@ export type ProjectCreateWithoutTaskAssigneesInput = {
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput;
   serviceRequest?: Prisma.ServiceRequestCreateNestedOneWithoutProjectInput;
-  createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
+  createdBy?: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
   memberProjects?: Prisma.MemberProjectCreateNestedManyWithoutProjectInput;
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
   addOnTasks?: Prisma.AddOnTaskCreateNestedManyWithoutProjectInput;
@@ -1284,7 +1284,7 @@ export type ProjectUncheckedCreateWithoutTaskAssigneesInput = {
   id?: string;
   clientId: string;
   serviceRequestId?: string | null;
-  createdByMemberId: string;
+  createdByMemberId?: string | null;
   name: string;
   description?: string | null;
   service: $Enums.ServiceInterest;
@@ -1330,7 +1330,7 @@ export type ProjectUpdateWithoutTaskAssigneesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput;
   serviceRequest?: Prisma.ServiceRequestUpdateOneWithoutProjectNestedInput;
-  createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProjectsNestedInput;
+  createdBy?: Prisma.MemberUpdateOneWithoutCreatedProjectsNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
   addOnTasks?: Prisma.AddOnTaskUpdateManyWithoutProjectNestedInput;
@@ -1340,7 +1340,7 @@ export type ProjectUncheckedUpdateWithoutTaskAssigneesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   clientId?: Prisma.StringFieldUpdateOperationsInput | string;
   serviceRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdByMemberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
@@ -1370,7 +1370,7 @@ export type ProjectCreateWithoutMemberProjectsInput = {
   updatedAt?: Date | string;
   client: Prisma.ClientCreateNestedOneWithoutProjectsInput;
   serviceRequest?: Prisma.ServiceRequestCreateNestedOneWithoutProjectInput;
-  createdBy: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
+  createdBy?: Prisma.MemberCreateNestedOneWithoutCreatedProjectsInput;
   tasks?: Prisma.TaskCreateNestedManyWithoutProjectInput;
   taskAssignees?: Prisma.TaskAssigneeCreateNestedManyWithoutProjectInput;
   addOnTasks?: Prisma.AddOnTaskCreateNestedManyWithoutProjectInput;
@@ -1380,7 +1380,7 @@ export type ProjectUncheckedCreateWithoutMemberProjectsInput = {
   id?: string;
   clientId: string;
   serviceRequestId?: string | null;
-  createdByMemberId: string;
+  createdByMemberId?: string | null;
   name: string;
   description?: string | null;
   service: $Enums.ServiceInterest;
@@ -1426,7 +1426,7 @@ export type ProjectUpdateWithoutMemberProjectsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   client?: Prisma.ClientUpdateOneRequiredWithoutProjectsNestedInput;
   serviceRequest?: Prisma.ServiceRequestUpdateOneWithoutProjectNestedInput;
-  createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProjectsNestedInput;
+  createdBy?: Prisma.MemberUpdateOneWithoutCreatedProjectsNestedInput;
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
   addOnTasks?: Prisma.AddOnTaskUpdateManyWithoutProjectNestedInput;
@@ -1436,7 +1436,7 @@ export type ProjectUncheckedUpdateWithoutMemberProjectsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   clientId?: Prisma.StringFieldUpdateOperationsInput | string;
   serviceRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdByMemberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
@@ -1527,7 +1527,7 @@ export type ProjectUncheckedUpdateManyWithoutCreatedByInput = {
 export type ProjectCreateManyClientInput = {
   id?: string;
   serviceRequestId?: string | null;
-  createdByMemberId: string;
+  createdByMemberId?: string | null;
   name: string;
   description?: string | null;
   service: $Enums.ServiceInterest;
@@ -1553,7 +1553,7 @@ export type ProjectUpdateWithoutClientInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   serviceRequest?: Prisma.ServiceRequestUpdateOneWithoutProjectNestedInput;
-  createdBy?: Prisma.MemberUpdateOneRequiredWithoutCreatedProjectsNestedInput;
+  createdBy?: Prisma.MemberUpdateOneWithoutCreatedProjectsNestedInput;
   memberProjects?: Prisma.MemberProjectUpdateManyWithoutProjectNestedInput;
   tasks?: Prisma.TaskUpdateManyWithoutProjectNestedInput;
   taskAssignees?: Prisma.TaskAssigneeUpdateManyWithoutProjectNestedInput;
@@ -1563,7 +1563,7 @@ export type ProjectUpdateWithoutClientInput = {
 export type ProjectUncheckedUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   serviceRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdByMemberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
@@ -1583,7 +1583,7 @@ export type ProjectUncheckedUpdateWithoutClientInput = {
 export type ProjectUncheckedUpdateManyWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string;
   serviceRequestId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-  createdByMemberId?: Prisma.StringFieldUpdateOperationsInput | string;
+  createdByMemberId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   name?: Prisma.StringFieldUpdateOperationsInput | string;
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
   service?: Prisma.EnumServiceInterestFieldUpdateOperationsInput | $Enums.ServiceInterest;
@@ -1670,7 +1670,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     updatedAt?: boolean;
     client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>;
     serviceRequest?: boolean | Prisma.Project$serviceRequestArgs<ExtArgs>;
-    createdBy?: boolean | Prisma.MemberDefaultArgs<ExtArgs>;
+    createdBy?: boolean | Prisma.Project$createdByArgs<ExtArgs>;
     memberProjects?: boolean | Prisma.Project$memberProjectsArgs<ExtArgs>;
     tasks?: boolean | Prisma.Project$tasksArgs<ExtArgs>;
     taskAssignees?: boolean | Prisma.Project$taskAssigneesArgs<ExtArgs>;
@@ -1704,7 +1704,7 @@ export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>;
   serviceRequest?: boolean | Prisma.Project$serviceRequestArgs<ExtArgs>;
-  createdBy?: boolean | Prisma.MemberDefaultArgs<ExtArgs>;
+  createdBy?: boolean | Prisma.Project$createdByArgs<ExtArgs>;
   memberProjects?: boolean | Prisma.Project$memberProjectsArgs<ExtArgs>;
   tasks?: boolean | Prisma.Project$tasksArgs<ExtArgs>;
   taskAssignees?: boolean | Prisma.Project$taskAssigneesArgs<ExtArgs>;
@@ -1717,7 +1717,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     client: Prisma.$ClientPayload<ExtArgs>;
     serviceRequest: Prisma.$ServiceRequestPayload<ExtArgs> | null;
-    createdBy: Prisma.$MemberPayload<ExtArgs>;
+    createdBy: Prisma.$MemberPayload<ExtArgs> | null;
     memberProjects: Prisma.$MemberProjectPayload<ExtArgs>[];
     tasks: Prisma.$TaskPayload<ExtArgs>[];
     taskAssignees: Prisma.$TaskAssigneePayload<ExtArgs>[];
@@ -1728,7 +1728,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
       id: string;
       clientId: string;
       serviceRequestId: string | null;
-      createdByMemberId: string;
+      createdByMemberId: string | null;
       name: string;
       description: string | null;
       service: $Enums.ServiceInterest;
@@ -2088,9 +2088,9 @@ export interface Prisma__ProjectClient<
   serviceRequest<T extends Prisma.Project$serviceRequestArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Project$serviceRequestArgs<ExtArgs>>
   ): Prisma.Prisma__ServiceRequestClient<runtime.Types.Result.GetResult<Prisma.$ServiceRequestPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
-  createdBy<T extends Prisma.MemberDefaultArgs<ExtArgs> = {}>(
-    args?: Prisma.Subset<T, Prisma.MemberDefaultArgs<ExtArgs>>
-  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+  createdBy<T extends Prisma.Project$createdByArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Project$createdByArgs<ExtArgs>>
+  ): Prisma.Prisma__MemberClient<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
   memberProjects<T extends Prisma.Project$memberProjectsArgs<ExtArgs> = {}>(
     args?: Prisma.Subset<T, Prisma.Project$memberProjectsArgs<ExtArgs>>
   ): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberProjectPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>;
@@ -2509,6 +2509,25 @@ export type Project$serviceRequestArgs<ExtArgs extends runtime.Types.Extensions.
    */
   include?: Prisma.ServiceRequestInclude<ExtArgs> | null;
   where?: Prisma.ServiceRequestWhereInput;
+};
+
+/**
+ * Project.createdBy
+ */
+export type Project$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Member
+   */
+  select?: Prisma.MemberSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the Member
+   */
+  omit?: Prisma.MemberOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MemberInclude<ExtArgs> | null;
+  where?: Prisma.MemberWhereInput;
 };
 
 /**

@@ -7,6 +7,8 @@ import { taskService } from '../src/services/task.service.js';
 import { taskMediaService } from '../src/services/task-media.service.js';
 import { projectMediaService } from '../src/services/project-media.service.js';
 import { proposalService } from '../src/services/proposal.service.js';
+import { saveChatMessage } from '../src/lib/chat/history.js';
+import type { ChatMessage } from '../src/lib/chat/schemas.js';
 import { getProjectAccessWhere } from '../src/utils/project/project-access.js';
 import { getVisibleTaskWhere } from '../src/utils/task/task-access.js';
 import { getServiceRequestAccessWhere } from '../src/utils/service-request/service-request-access.js';
@@ -42,6 +44,31 @@ const task = { id: 'task-a', projectId: 'project-a', assignees: [{ memberId: mem
 afterEach(() => {
   for (const restore of restoreStubs.splice(0).reverse()) restore();
   mock.restoreAll();
+});
+
+test('an in-flight message cannot recreate history for a deleted author or channel', async () => {
+  for (const missing of ['author', 'project', 'service-request']) {
+    const upsert = mock.fn();
+    stub(prisma, '$transaction', async (callback: (tx: unknown) => Promise<void>) =>
+      callback({
+        member: { findUnique: async () => (missing === 'author' ? null : { id: 'member-a' }) },
+        project: { findUnique: async () => (missing === 'project' ? null : { id: 'project-a' }) },
+        serviceRequest: { findUnique: async () => null },
+        chatHistory: { upsert }
+      })
+    );
+    await assert.rejects(
+      saveChatMessage({
+        authorMemberId: 'member-a',
+        channel: {
+          type: missing === 'service-request' ? 'service-request' : 'project',
+          id: 'parent-a'
+        }
+      } as ChatMessage),
+      { code: 'CHAT_NOT_FOUND' }
+    );
+    assert.equal(upsert.mock.callCount(), 0);
+  }
 });
 
 test('admin project filters and descendant task filters always contain the organization boundary', () => {

@@ -9,6 +9,7 @@ import { clientService } from '../../services/client.service.js';
 import { logger } from '../logger.js';
 import { prisma } from '../prisma.js';
 import { ac, organizationRoles, Role } from './permissions.js';
+import { organizationAdmin } from './organization-admin.js';
 
 export const auth = betterAuth({
   appName: 'FCOP',
@@ -52,6 +53,7 @@ export const auth = betterAuth({
   },
   plugins: [
     bearer(),
+    organizationAdmin(prisma),
     organization({
       ac,
       roles: organizationRoles,

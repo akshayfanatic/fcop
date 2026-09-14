@@ -3775,6 +3775,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           },
           createdByMemberId: {
             type: 'string',
+            nullable: true,
             example: 'seed-member-manager'
           },
           description: {
@@ -4020,6 +4021,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           },
           createdByMemberId: {
             type: 'string',
+            nullable: true,
             example: 'seed-member-admin'
           },
           name: {
@@ -4484,6 +4486,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           },
           createdByMemberId: {
             type: 'string',
+            nullable: true,
             example: 'seed-member-manager'
           },
           title: {
@@ -4528,7 +4531,8 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             $ref: '#/components/schemas/TaskProjectReference'
           },
           createdBy: {
-            $ref: '#/components/schemas/TaskMember'
+            nullable: true,
+            allOf: [{ $ref: '#/components/schemas/TaskMember' }]
           },
           assignees: {
             type: 'array',

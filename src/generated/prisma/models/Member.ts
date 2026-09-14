@@ -513,10 +513,12 @@ export type MemberCreateNestedOneWithoutCreatedProposalsInput = {
   connect?: Prisma.MemberWhereUniqueInput;
 };
 
-export type MemberUpdateOneRequiredWithoutCreatedProposalsNestedInput = {
+export type MemberUpdateOneWithoutCreatedProposalsNestedInput = {
   create?: Prisma.XOR<Prisma.MemberCreateWithoutCreatedProposalsInput, Prisma.MemberUncheckedCreateWithoutCreatedProposalsInput>;
   connectOrCreate?: Prisma.MemberCreateOrConnectWithoutCreatedProposalsInput;
   upsert?: Prisma.MemberUpsertWithoutCreatedProposalsInput;
+  disconnect?: Prisma.MemberWhereInput | boolean;
+  delete?: Prisma.MemberWhereInput | boolean;
   connect?: Prisma.MemberWhereUniqueInput;
   update?: Prisma.XOR<
     Prisma.XOR<Prisma.MemberUpdateToOneWithWhereWithoutCreatedProposalsInput, Prisma.MemberUpdateWithoutCreatedProposalsInput>,
@@ -530,10 +532,12 @@ export type MemberCreateNestedOneWithoutCreatedProjectsInput = {
   connect?: Prisma.MemberWhereUniqueInput;
 };
 
-export type MemberUpdateOneRequiredWithoutCreatedProjectsNestedInput = {
+export type MemberUpdateOneWithoutCreatedProjectsNestedInput = {
   create?: Prisma.XOR<Prisma.MemberCreateWithoutCreatedProjectsInput, Prisma.MemberUncheckedCreateWithoutCreatedProjectsInput>;
   connectOrCreate?: Prisma.MemberCreateOrConnectWithoutCreatedProjectsInput;
   upsert?: Prisma.MemberUpsertWithoutCreatedProjectsInput;
+  disconnect?: Prisma.MemberWhereInput | boolean;
+  delete?: Prisma.MemberWhereInput | boolean;
   connect?: Prisma.MemberWhereUniqueInput;
   update?: Prisma.XOR<
     Prisma.XOR<Prisma.MemberUpdateToOneWithWhereWithoutCreatedProjectsInput, Prisma.MemberUpdateWithoutCreatedProjectsInput>,
@@ -547,10 +551,12 @@ export type MemberCreateNestedOneWithoutCreatedTasksInput = {
   connect?: Prisma.MemberWhereUniqueInput;
 };
 
-export type MemberUpdateOneRequiredWithoutCreatedTasksNestedInput = {
+export type MemberUpdateOneWithoutCreatedTasksNestedInput = {
   create?: Prisma.XOR<Prisma.MemberCreateWithoutCreatedTasksInput, Prisma.MemberUncheckedCreateWithoutCreatedTasksInput>;
   connectOrCreate?: Prisma.MemberCreateOrConnectWithoutCreatedTasksInput;
   upsert?: Prisma.MemberUpsertWithoutCreatedTasksInput;
+  disconnect?: Prisma.MemberWhereInput | boolean;
+  delete?: Prisma.MemberWhereInput | boolean;
   connect?: Prisma.MemberWhereUniqueInput;
   update?: Prisma.XOR<Prisma.XOR<Prisma.MemberUpdateToOneWithWhereWithoutCreatedTasksInput, Prisma.MemberUpdateWithoutCreatedTasksInput>, Prisma.MemberUncheckedUpdateWithoutCreatedTasksInput>;
 };
