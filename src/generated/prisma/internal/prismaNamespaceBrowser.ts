@@ -68,7 +68,8 @@ export const ModelName = {
   TaskAssignee: 'TaskAssignee',
   MemberProject: 'MemberProject',
   ChatHistory: 'ChatHistory',
-  Lead: 'Lead'
+  Lead: 'Lead',
+  NewsletterSubscriber: 'NewsletterSubscriber'
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -362,6 +363,15 @@ export const LeadScalarFieldEnum = {
 
 export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum];
 
+export const NewsletterSubscriberScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type NewsletterSubscriberScalarFieldEnum = (typeof NewsletterSubscriberScalarFieldEnum)[keyof typeof NewsletterSubscriberScalarFieldEnum];
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -608,3 +618,10 @@ export const LeadOrderByRelevanceFieldEnum = {
 } as const;
 
 export type LeadOrderByRelevanceFieldEnum = (typeof LeadOrderByRelevanceFieldEnum)[keyof typeof LeadOrderByRelevanceFieldEnum];
+
+export const NewsletterSubscriberOrderByRelevanceFieldEnum = {
+  id: 'id',
+  email: 'email'
+} as const;
+
+export type NewsletterSubscriberOrderByRelevanceFieldEnum = (typeof NewsletterSubscriberOrderByRelevanceFieldEnum)[keyof typeof NewsletterSubscriberOrderByRelevanceFieldEnum];

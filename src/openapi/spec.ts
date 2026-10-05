@@ -117,6 +117,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       description: 'Lead management endpoints.'
     },
     {
+      name: 'Newsletter',
+      description: 'Public newsletter subscription endpoints.'
+    },
+    {
       name: 'Service Requests',
       description: 'Client service request endpoints.'
     },
@@ -744,6 +748,64 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           },
           '400': {
             description: 'Invalid lead filters.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/api/v1/newsletter/subscriptions': {
+      post: {
+        tags: ['Newsletter'],
+        summary: 'Subscribe an email address to the newsletter',
+        description: 'Accepts unauthenticated newsletter signups. Repeat submissions receive the same response and do not create duplicate rows.',
+        operationId: 'createNewsletterSubscription',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/CreateNewsletterSubscriptionRequest'
+              }
+            }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Subscription received.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/NewsletterSubscriptionResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid newsletter subscription payload.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '429': {
+            description: 'Too many subscription attempts.',
+            headers: {
+              'Retry-After': {
+                schema: {
+                  type: 'integer',
+                  minimum: 1
+                }
+              }
+            },
             content: {
               'application/json': {
                 schema: {
@@ -3632,6 +3694,25 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       },
+      CreateNewsletterSubscriptionRequest: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['email'],
+        properties: {
+          email: {
+            type: 'string',
+            format: 'email',
+            maxLength: 255,
+            example: 'reader@example.com'
+          },
+          website: {
+            type: 'string',
+            maxLength: 255,
+            description: 'Honeypot field. Browsers should leave this empty.',
+            example: ''
+          }
+        }
+      },
       UpdateLeadRequest: {
         type: 'object',
         minProperties: 1,
@@ -5031,6 +5112,29 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         ]
       },
       LeadSubmissionResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['accepted'],
+                properties: {
+                  accepted: {
+                    type: 'boolean',
+                    enum: [true]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      NewsletterSubscriptionResponse: {
         allOf: [
           {
             $ref: '#/components/schemas/ApiResponse'
