@@ -118,7 +118,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     },
     {
       name: 'Newsletter',
-      description: 'Public newsletter subscription endpoints.'
+      description: 'Public newsletter signup and protected subscriber management endpoints.'
     },
     {
       name: 'Service Requests',
@@ -813,6 +813,81 @@ export const createOpenApiDocument = (baseUrl: string) => ({
                 }
               }
             }
+          }
+        }
+      },
+      get: {
+        tags: ['Newsletter'],
+        summary: 'Fetch newsletter subscriptions',
+        description: 'Requires newsletter:read permission in the active organization.',
+        operationId: 'getNewsletterSubscriptions',
+        security: [
+          {
+            cookieAuth: []
+          }
+        ],
+        'x-requiredPermissions': {
+          newsletter: ['read']
+        },
+        parameters: [
+          {
+            name: 'email',
+            in: 'query',
+            description: 'Filter by full or partial subscriber email.',
+            schema: {
+              type: 'string',
+              minLength: 1,
+              maxLength: 255
+            }
+          },
+          {
+            name: 'page',
+            in: 'query',
+            description: 'One-based page number.',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              default: DEFAULT_PAGE
+            }
+          },
+          {
+            name: 'pageSize',
+            in: 'query',
+            description: 'Number of newsletter subscriptions per page.',
+            schema: {
+              type: 'integer',
+              minimum: 1,
+              maximum: MAX_PAGE_SIZE,
+              default: DEFAULT_PAGE_SIZE
+            }
+          }
+        ],
+        responses: {
+          '200': {
+            description: 'Newsletter subscriptions fetched successfully.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/NewsletterSubscriptionsResponse'
+                }
+              }
+            }
+          },
+          '400': {
+            description: 'Invalid newsletter subscription filters.',
+            content: {
+              'application/json': {
+                schema: {
+                  $ref: '#/components/schemas/ApiResponse'
+                }
+              }
+            }
+          },
+          '401': {
+            $ref: '#/components/responses/Unauthorized'
+          },
+          '403': {
+            $ref: '#/components/responses/Forbidden'
           }
         }
       }
@@ -3713,6 +3788,31 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       },
+      NewsletterSubscriber: {
+        type: 'object',
+        required: ['id', 'email', 'createdAt', 'updatedAt'],
+        properties: {
+          id: {
+            type: 'string',
+            example: 'clx0000000000000000000050'
+          },
+          email: {
+            type: 'string',
+            format: 'email',
+            example: 'reader@example.com'
+          },
+          createdAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-10-05T10:30:00.000Z'
+          },
+          updatedAt: {
+            type: 'string',
+            format: 'date-time',
+            example: '2026-10-05T10:30:00.000Z'
+          }
+        }
+      },
       UpdateLeadRequest: {
         type: 'object',
         minProperties: 1,
@@ -5150,6 +5250,34 @@ export const createOpenApiDocument = (baseUrl: string) => ({
                   accepted: {
                     type: 'boolean',
                     enum: [true]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      NewsletterSubscriptionsResponse: {
+        allOf: [
+          {
+            $ref: '#/components/schemas/ApiResponse'
+          },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['items', 'pagination'],
+                properties: {
+                  items: {
+                    type: 'array',
+                    items: {
+                      $ref: '#/components/schemas/NewsletterSubscriber'
+                    }
+                  },
+                  pagination: {
+                    $ref: '#/components/schemas/PaginationMeta'
                   }
                 }
               }

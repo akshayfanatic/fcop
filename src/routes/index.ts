@@ -29,4 +29,4 @@ apiRouter.use('/api/v1/service-requests', serviceRequestRouter); // Service requ
 apiRouter.use('/api/v1/tasks', taskRouter); // Task resources and nested task content.
 apiRouter.use('/api/v1/dashboard', dashboardRouter);
 apiRouter.use('/api/v1/notifications', notificationRouter); // Current member notification inbox.
-apiRouter.use('/api/v1/newsletter', newsletterRouter); // Public newsletter subscriptions.
+apiRouter.use('/api/v1/newsletter', newsletterRouter); // Public signup and protected newsletter subscriber management.

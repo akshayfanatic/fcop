@@ -13,6 +13,7 @@ export type Role = (typeof Role)[keyof typeof Role];
 export const resourceStatements = {
   ...defaultStatements,
   lead: ['create', 'read', 'update', 'delete'],
+  newsletter: ['read'],
   serviceRequest: ['create', 'read', 'update', 'delete'],
   proposal: ['create', 'read', 'update', 'delete'],
   project: ['create', 'read', 'update', 'delete'],
@@ -36,6 +37,7 @@ export const rolePermissionStatements = {
   [Role.ADMIN]: {
     ...ownerAc.statements,
     lead: ['create', 'read', 'update', 'delete'],
+    newsletter: ['read'],
     serviceRequest: ['read', 'update', 'delete'],
     proposal: ['create', 'read', 'update', 'delete'],
     project: ['create', 'read', 'update', 'delete'],
