@@ -450,3 +450,12 @@ model Lead {
   @@index([serviceInterest])
   @@map("leads")
 }
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid()) @db.VarChar(36)
+  email     String   @unique @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("newsletterSubscribers")
+}

@@ -7,7 +7,7 @@ import { createOpenApiDocument } from '../src/openapi/spec.js';
 test('application resources keep CRUD and chat replaces the misleading comment permission', () => {
   assert.equal('comment' in resourceStatements, false);
   assert.equal('addOnTask' in resourceStatements, false);
-  for (const resource of ['lead', 'serviceRequest', 'proposal', 'project', 'task', 'chat', 'taskComment', 'payment', 'dashboard', 'notification'] as const) {
+  for (const resource of ['lead', 'newsletter', 'serviceRequest', 'proposal', 'project', 'task', 'chat', 'taskComment', 'payment', 'dashboard', 'notification'] as const) {
     assert.ok(resourceStatements[resource].every((action) => ['create', 'read', 'update', 'delete'].includes(action)));
   }
   for (const permissions of Object.values(rolePermissionStatements)) {
@@ -22,6 +22,13 @@ test('clients can comment on visible tasks without updating the task', () => {
   assert.equal(hasResourcePermission('CLIENT', 'taskComment', 'create'), true);
   assert.equal(hasResourcePermission('CLIENT', 'task', 'update'), false);
   assert.equal(hasResourcePermission('unknown', 'taskComment', 'create'), false);
+});
+
+test('only administrators can read newsletter subscriptions', () => {
+  assert.equal(hasResourcePermission('ADMIN', 'newsletter', 'read'), true);
+  assert.equal(hasResourcePermission('MANAGER', 'newsletter', 'read'), false);
+  assert.equal(hasResourcePermission('MEMBER', 'newsletter', 'read'), false);
+  assert.equal(hasResourcePermission('CLIENT', 'newsletter', 'read'), false);
 });
 
 test('permission output merges multiple roles and fails closed for unknown roles', () => {

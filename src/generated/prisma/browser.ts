@@ -121,3 +121,8 @@ export type ChatHistory = Prisma.ChatHistoryModel;
  *
  */
 export type Lead = Prisma.LeadModel;
+/**
+ * Model NewsletterSubscriber
+ *
+ */
+export type NewsletterSubscriber = Prisma.NewsletterSubscriberModel;
