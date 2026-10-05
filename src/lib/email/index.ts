@@ -1,6 +1,7 @@
 export { sendClientWelcomeEmail, sendInvitationEmail, sendMemberAcceptedInvitationEmail, sendNewClientRegisteredEmail, sendResetPasswordEmail } from './services/auth-email.service.js';
 export { sendEmail, sendReactEmail, sendTemplateEmail } from './services/email.service.js';
 export { createNewLeadEmailTemplate } from './templates/new-lead-email.js';
+export { createNewNewsletterSubscriptionEmailTemplate } from './templates/new-newsletter-subscription-email.js';
 export { createExistingClientRequestEmailTemplate } from './templates/existing-client-request-email.js';
 export { createNewServiceRequestEmailTemplate } from './templates/new-service-request-email.js';
 export { createServiceRequestReceivedEmailTemplate } from './templates/service-request-received-email.js';
