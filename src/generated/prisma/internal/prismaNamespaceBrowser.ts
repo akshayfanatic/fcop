@@ -69,7 +69,8 @@ export const ModelName = {
   MemberProject: 'MemberProject',
   ChatHistory: 'ChatHistory',
   Lead: 'Lead',
-  NewsletterSubscriber: 'NewsletterSubscriber'
+  NewsletterSubscriber: 'NewsletterSubscriber',
+  Blog: 'Blog'
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -372,6 +373,20 @@ export const NewsletterSubscriberScalarFieldEnum = {
 
 export type NewsletterSubscriberScalarFieldEnum = (typeof NewsletterSubscriberScalarFieldEnum)[keyof typeof NewsletterSubscriberScalarFieldEnum];
 
+export const BlogScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  slug: 'slug',
+  featureImage: 'featureImage',
+  excerpt: 'excerpt',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof BlogScalarFieldEnum];
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -625,3 +640,13 @@ export const NewsletterSubscriberOrderByRelevanceFieldEnum = {
 } as const;
 
 export type NewsletterSubscriberOrderByRelevanceFieldEnum = (typeof NewsletterSubscriberOrderByRelevanceFieldEnum)[keyof typeof NewsletterSubscriberOrderByRelevanceFieldEnum];
+
+export const BlogOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  featureImage: 'featureImage',
+  excerpt: 'excerpt'
+} as const;
+
+export type BlogOrderByRelevanceFieldEnum = (typeof BlogOrderByRelevanceFieldEnum)[keyof typeof BlogOrderByRelevanceFieldEnum];

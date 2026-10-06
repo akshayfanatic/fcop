@@ -459,3 +459,18 @@ model NewsletterSubscriber {
 
   @@map("newsletterSubscribers")
 }
+
+model Blog {
+  id           String   @id @default(cuid()) @db.VarChar(36)
+  title        String   @db.VarChar(255)
+  content      Json
+  slug         String   @unique @db.VarChar(191)
+  featureImage String?  @db.Text
+  excerpt      String?  @db.Text
+  isPublished  Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([isPublished, createdAt])
+  @@map("blog")
+}
