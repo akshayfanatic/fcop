@@ -1,5 +1,6 @@
 import { type Prisma } from '../generated/prisma/client.js';
 import { prisma } from '../lib/prisma.js';
+import { cloudinaryMedia } from '../lib/cloudinary/media.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { createPaginatedData, getPaginationOffset } from '../utils/pagination.js';
@@ -15,6 +16,10 @@ const blogSummarySelect = {
   createdAt: true,
   updatedAt: true
 } satisfies Prisma.BlogSelect;
+
+const featureImagePublicId = (id: string) => `fcop/blogs/${id}/feature-image`;
+
+const hasManagedFeatureImage = (id: string, url: string | null) => Boolean(url?.includes(`/${featureImagePublicId(id)}.`));
 
 export const blogService = {
   getPublishedBlogs: async (filters: PublishedBlogFiltersInput) => {
@@ -81,8 +86,33 @@ export const blogService = {
     return prisma.blog.findUniqueOrThrow({ where: { id } });
   },
 
+  updateBlogFeatureImageById: async (id: string, file: Express.Multer.File) => {
+    await blogService.getBlogById(id);
+    const uploaded = await cloudinaryMedia.upload({
+      buffer: file.buffer,
+      folder: `fcop/blogs/${id}`,
+      publicId: 'feature-image',
+      resourceType: 'image',
+      overwrite: true
+    });
+
+    // The versioned delivery URL points readers to the replacement image.
+    return prisma.blog.update({ where: { id }, data: { featureImage: uploaded.secureUrl } });
+  },
+
+  deleteBlogFeatureImageById: async (id: string) => {
+    const blog = await blogService.getBlogById(id);
+    if (hasManagedFeatureImage(id, blog.featureImage)) {
+      await cloudinaryMedia.delete({ publicId: featureImagePublicId(id), resourceType: 'image' });
+    }
+    return prisma.blog.update({ where: { id }, data: { featureImage: null } });
+  },
+
   deleteBlogById: async (id: string) => {
     const blog = await blogService.getBlogById(id);
+    if (hasManagedFeatureImage(id, blog.featureImage)) {
+      await cloudinaryMedia.delete({ publicId: featureImagePublicId(id), resourceType: 'image' });
+    }
     await prisma.blog.delete({ where: { id } });
     return blog;
   }

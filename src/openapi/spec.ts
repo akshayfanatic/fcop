@@ -874,6 +874,49 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/blogs/{id}/feature-image': {
+      put: {
+        tags: ['Blogs'],
+        summary: 'Upload or replace a blog feature image',
+        operationId: 'updateBlogFeatureImageById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['update'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        requestBody: {
+          required: true,
+          content: {
+            'multipart/form-data': {
+              schema: {
+                type: 'object',
+                required: ['image'],
+                properties: { image: { type: 'string', format: 'binary', description: 'JPG, PNG, or WebP image up to 5 MB.' } }
+              }
+            }
+          }
+        },
+        responses: {
+          '200': { description: 'Blog feature image updated successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      },
+      delete: {
+        tags: ['Blogs'],
+        summary: 'Remove a blog feature image',
+        operationId: 'deleteBlogFeatureImageById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['update'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        responses: {
+          '200': { description: 'Blog feature image deleted successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogResponse' } } } },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      }
+    },
     '/api/v1/newsletter/subscriptions': {
       post: {
         tags: ['Newsletter'],

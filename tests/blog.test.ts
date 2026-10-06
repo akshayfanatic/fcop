@@ -4,6 +4,7 @@ import { prisma } from '../src/lib/prisma.js';
 import { hasResourcePermission } from '../src/lib/auth/permissions.js';
 import { createOpenApiDocument } from '../src/openapi/spec.js';
 import { blogService } from '../src/services/blog.service.js';
+import { cloudinaryMedia } from '../src/lib/cloudinary/media.js';
 import { blogFiltersSchema, createBlogSchema, updateBlogSchema } from '../src/validators/blog.validator.js';
 
 const restoreStubs: Array<() => void> = [];
@@ -75,6 +76,33 @@ test('OpenAPI follows resource routes', () => {
   assert.ok(paths['/api/v1/blogs/published/{slug}'].get);
   assert.deepEqual(paths['/api/v1/blogs'].post['x-requiredPermissions'], { blog: ['create'] });
   assert.deepEqual(paths['/api/v1/blogs/{id}'].delete['x-requiredPermissions'], { blog: ['delete'] });
+  assert.deepEqual(paths['/api/v1/blogs/{id}/feature-image'].put['x-requiredPermissions'], { blog: ['update'] });
+  assert.deepEqual(paths['/api/v1/blogs/{id}/feature-image'].delete['x-requiredPermissions'], { blog: ['update'] });
+  assert.deepEqual(paths['/api/v1/blogs/{id}/feature-image'].put.requestBody.content['multipart/form-data'].schema.required, ['image']);
+});
+
+test('blog feature image replaces and removes its managed Cloudinary asset', async () => {
+  const id = 'blog-id';
+  const current = { id, ...payload, featureImage: 'https://res.cloudinary.com/demo/image/upload/v1/fcop/blogs/blog-id/feature-image.jpg' };
+  stub(prisma.blog, 'findUnique', async () => current);
+  const update = stub(prisma.blog, 'update', async ({ data }: { data: { featureImage: string | null } }) => ({ ...current, ...data }));
+  const upload = stub(cloudinaryMedia, 'upload', async () => ({ secureUrl: 'https://res.cloudinary.com/demo/image/upload/v2/fcop/blogs/blog-id/feature-image.webp' }));
+  const remove = stub(cloudinaryMedia, 'delete', async () => undefined);
+
+  const uploaded = await blogService.updateBlogFeatureImageById(id, { buffer: Buffer.from('image') } as Express.Multer.File);
+  assert.equal(uploaded.featureImage, 'https://res.cloudinary.com/demo/image/upload/v2/fcop/blogs/blog-id/feature-image.webp');
+  assert.deepEqual(upload.mock.calls[0].arguments[0], {
+    buffer: Buffer.from('image'),
+    folder: 'fcop/blogs/blog-id',
+    publicId: 'feature-image',
+    resourceType: 'image',
+    overwrite: true
+  });
+
+  const deleted = await blogService.deleteBlogFeatureImageById(id);
+  assert.equal(deleted.featureImage, null);
+  assert.deepEqual(remove.mock.calls[0].arguments[0], { publicId: 'fcop/blogs/blog-id/feature-image', resourceType: 'image' });
+  assert.deepEqual(update.mock.calls[1].arguments[0], { where: { id }, data: { featureImage: null } });
 });
 
 test('OpenAPI exposes the complete blog entity and optional publish flag', () => {

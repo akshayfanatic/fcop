@@ -2,7 +2,7 @@ import type { RequestHandler } from 'express';
 import { z } from 'zod';
 import { blogService } from '../services/blog.service.js';
 import { ApiResponse, HttpStatus } from '../utils/api-response.js';
-import { sendValidationError } from '../utils/http-error.js';
+import { createHttpError, sendValidationError } from '../utils/http-error.js';
 import { blogFiltersSchema, blogIdParamsSchema, blogSlugParamsSchema, createBlogSchema, publishedBlogFiltersSchema, updateBlogSchema } from '../validators/blog.validator.js';
 
 export const blogController = {
@@ -58,6 +58,37 @@ export const blogController = {
       const blog = await blogService.updateBlogById(id, payload);
 
       res.status(HttpStatus.OK).json(ApiResponse({ success: true, status: HttpStatus.OK, message: 'Blog updated successfully.', data: blog }));
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        sendValidationError(res, error);
+        return;
+      }
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
+  updateBlogFeatureImageById: (async (req, res, next) => {
+    try {
+      const { id } = blogIdParamsSchema.parse(req.params);
+      if (!req.file) {
+        throw createHttpError(HttpStatus.BAD_REQUEST, 'Feature image is required.', 'BLOG_IMAGE_REQUIRED');
+      }
+      const blog = await blogService.updateBlogFeatureImageById(id, req.file);
+      res.status(HttpStatus.OK).json(ApiResponse({ success: true, status: HttpStatus.OK, message: 'Blog feature image updated successfully.', data: blog }));
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        sendValidationError(res, error);
+        return;
+      }
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
+  deleteBlogFeatureImageById: (async (req, res, next) => {
+    try {
+      const { id } = blogIdParamsSchema.parse(req.params);
+      const blog = await blogService.deleteBlogFeatureImageById(id);
+      res.status(HttpStatus.OK).json(ApiResponse({ success: true, status: HttpStatus.OK, message: 'Blog feature image deleted successfully.', data: blog }));
     } catch (error) {
       if (error instanceof z.ZodError) {
         sendValidationError(res, error);
