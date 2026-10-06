@@ -76,3 +76,13 @@ test('OpenAPI follows resource routes', () => {
   assert.deepEqual(paths['/api/v1/blogs'].post['x-requiredPermissions'], { blog: ['create'] });
   assert.deepEqual(paths['/api/v1/blogs/{id}'].delete['x-requiredPermissions'], { blog: ['delete'] });
 });
+
+test('OpenAPI exposes the complete blog entity and optional publish flag', () => {
+  const schemas = createOpenApiDocument('http://localhost:3000').components.schemas;
+
+  assert.deepEqual(schemas.CreateBlogRequest.required, ['title', 'content', 'slug']);
+  assert.equal(schemas.CreateBlogRequest.properties.isPublished.description, 'Defaults to false when omitted.');
+  assert.deepEqual(schemas.CreateBlogRequest.properties.content, { $ref: '#/components/schemas/TiptapDocument' });
+  assert.deepEqual(schemas.Blog.allOf[1].properties.content, { $ref: '#/components/schemas/TiptapDocument' });
+  assert.deepEqual(schemas.BlogSummary.required, ['id', 'title', 'slug', 'featureImage', 'excerpt', 'isPublished', 'createdAt', 'updatedAt']);
+});

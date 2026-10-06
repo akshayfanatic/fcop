@@ -3896,17 +3896,26 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           }
         }
       },
+      TiptapDocument: {
+        type: 'object',
+        required: ['type'],
+        properties: {
+          type: { type: 'string', enum: ['doc'] },
+          content: { type: 'array', items: {} }
+        },
+        additionalProperties: true
+      },
       CreateBlogRequest: {
         type: 'object',
         additionalProperties: false,
         required: ['title', 'content', 'slug'],
         properties: {
           title: { type: 'string', minLength: 1, maxLength: 255 },
-          content: { type: 'object', required: ['type'], properties: { type: { type: 'string', enum: ['doc'] }, content: { type: 'array', items: {} } }, additionalProperties: true },
+          content: { $ref: '#/components/schemas/TiptapDocument' },
           slug: { type: 'string', maxLength: 191, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' },
           featureImage: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
           excerpt: { type: 'string', nullable: true, maxLength: 1000 },
-          isPublished: { type: 'boolean', default: false }
+          isPublished: { type: 'boolean', description: 'Defaults to false when omitted.' }
         }
       },
       UpdateBlogRequest: {
@@ -3915,7 +3924,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         minProperties: 1,
         properties: {
           title: { type: 'string', minLength: 1, maxLength: 255 },
-          content: { type: 'object', required: ['type'], properties: { type: { type: 'string', enum: ['doc'] }, content: { type: 'array', items: {} } }, additionalProperties: true },
+          content: { $ref: '#/components/schemas/TiptapDocument' },
           slug: { type: 'string', maxLength: 191, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' },
           featureImage: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
           excerpt: { type: 'string', nullable: true, maxLength: 1000 },
@@ -3927,17 +3936,17 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         required: ['id', 'title', 'slug', 'featureImage', 'excerpt', 'isPublished', 'createdAt', 'updatedAt'],
         properties: {
           id: { type: 'string' },
-          title: { type: 'string' },
-          slug: { type: 'string' },
-          featureImage: { type: 'string', nullable: true },
-          excerpt: { type: 'string', nullable: true },
+          title: { type: 'string', maxLength: 255 },
+          slug: { type: 'string', maxLength: 191, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' },
+          featureImage: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
+          excerpt: { type: 'string', nullable: true, maxLength: 1000 },
           isPublished: { type: 'boolean' },
           createdAt: { type: 'string', format: 'date-time' },
           updatedAt: { type: 'string', format: 'date-time' }
         }
       },
       Blog: {
-        allOf: [{ $ref: '#/components/schemas/BlogSummary' }, { type: 'object', required: ['content'], properties: { content: { type: 'object', additionalProperties: true } } }]
+        allOf: [{ $ref: '#/components/schemas/BlogSummary' }, { type: 'object', required: ['content'], properties: { content: { $ref: '#/components/schemas/TiptapDocument' } } }]
       },
       BlogResponse: {
         allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { $ref: '#/components/schemas/Blog' } } }]
