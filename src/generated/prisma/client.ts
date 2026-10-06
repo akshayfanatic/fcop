@@ -154,3 +154,13 @@ export type Lead = Prisma.LeadModel;
  *
  */
 export type NewsletterSubscriber = Prisma.NewsletterSubscriberModel;
+/**
+ * Model Blog
+ *
+ */
+export type Blog = Prisma.BlogModel;
+/**
+ * Model BlogSeo
+ *
+ */
+export type BlogSeo = Prisma.BlogSeoModel;

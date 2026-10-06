@@ -361,7 +361,9 @@ export const ModelName = {
   MemberProject: 'MemberProject',
   ChatHistory: 'ChatHistory',
   Lead: 'Lead',
-  NewsletterSubscriber: 'NewsletterSubscriber'
+  NewsletterSubscriber: 'NewsletterSubscriber',
+  Blog: 'Blog',
+  BlogSeo: 'BlogSeo'
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -397,7 +399,9 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
       | 'memberProject'
       | 'chatHistory'
       | 'lead'
-      | 'newsletterSubscriber';
+      | 'newsletterSubscriber'
+      | 'blog'
+      | 'blogSeo';
     txIsolationLevel: TransactionIsolationLevel;
   };
   model: {
@@ -1853,6 +1857,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         };
       };
     };
+    Blog: {
+      payload: Prisma.$BlogPayload<ExtArgs>;
+      fields: Prisma.BlogFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.BlogFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.BlogFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogPayload>;
+        };
+        findFirst: {
+          args: Prisma.BlogFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.BlogFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogPayload>;
+        };
+        findMany: {
+          args: Prisma.BlogFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogPayload>[];
+        };
+        create: {
+          args: Prisma.BlogCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogPayload>;
+        };
+        createMany: {
+          args: Prisma.BlogCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.BlogDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogPayload>;
+        };
+        update: {
+          args: Prisma.BlogUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogPayload>;
+        };
+        deleteMany: {
+          args: Prisma.BlogDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.BlogUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.BlogUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogPayload>;
+        };
+        aggregate: {
+          args: Prisma.BlogAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBlog>;
+        };
+        groupBy: {
+          args: Prisma.BlogGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.BlogGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.BlogCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.BlogCountAggregateOutputType> | number;
+        };
+      };
+    };
+    BlogSeo: {
+      payload: Prisma.$BlogSeoPayload<ExtArgs>;
+      fields: Prisma.BlogSeoFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.BlogSeoFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogSeoPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.BlogSeoFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogSeoPayload>;
+        };
+        findFirst: {
+          args: Prisma.BlogSeoFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogSeoPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.BlogSeoFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogSeoPayload>;
+        };
+        findMany: {
+          args: Prisma.BlogSeoFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogSeoPayload>[];
+        };
+        create: {
+          args: Prisma.BlogSeoCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogSeoPayload>;
+        };
+        createMany: {
+          args: Prisma.BlogSeoCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.BlogSeoDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogSeoPayload>;
+        };
+        update: {
+          args: Prisma.BlogSeoUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogSeoPayload>;
+        };
+        deleteMany: {
+          args: Prisma.BlogSeoDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.BlogSeoUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.BlogSeoUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogSeoPayload>;
+        };
+        aggregate: {
+          args: Prisma.BlogSeoAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBlogSeo>;
+        };
+        groupBy: {
+          args: Prisma.BlogSeoGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.BlogSeoGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.BlogSeoCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.BlogSeoCountAggregateOutputType> | number;
+        };
+      };
+    };
   };
 } & {
   other: {
@@ -2176,6 +2312,31 @@ export const NewsletterSubscriberScalarFieldEnum = {
 
 export type NewsletterSubscriberScalarFieldEnum = (typeof NewsletterSubscriberScalarFieldEnum)[keyof typeof NewsletterSubscriberScalarFieldEnum];
 
+export const BlogScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  slug: 'slug',
+  featureImage: 'featureImage',
+  excerpt: 'excerpt',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof BlogScalarFieldEnum];
+
+export const BlogSeoScalarFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  metaTitle: 'metaTitle',
+  metaDescription: 'metaDescription',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type BlogSeoScalarFieldEnum = (typeof BlogSeoScalarFieldEnum)[keyof typeof BlogSeoScalarFieldEnum];
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2430,6 +2591,25 @@ export const NewsletterSubscriberOrderByRelevanceFieldEnum = {
 
 export type NewsletterSubscriberOrderByRelevanceFieldEnum = (typeof NewsletterSubscriberOrderByRelevanceFieldEnum)[keyof typeof NewsletterSubscriberOrderByRelevanceFieldEnum];
 
+export const BlogOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  featureImage: 'featureImage',
+  excerpt: 'excerpt'
+} as const;
+
+export type BlogOrderByRelevanceFieldEnum = (typeof BlogOrderByRelevanceFieldEnum)[keyof typeof BlogOrderByRelevanceFieldEnum];
+
+export const BlogSeoOrderByRelevanceFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  metaTitle: 'metaTitle',
+  metaDescription: 'metaDescription'
+} as const;
+
+export type BlogSeoOrderByRelevanceFieldEnum = (typeof BlogSeoOrderByRelevanceFieldEnum)[keyof typeof BlogSeoOrderByRelevanceFieldEnum];
+
 /**
  * Field references
  */
@@ -2664,6 +2844,8 @@ export type GlobalOmitConfig = {
   chatHistory?: Prisma.ChatHistoryOmit;
   lead?: Prisma.LeadOmit;
   newsletterSubscriber?: Prisma.NewsletterSubscriberOmit;
+  blog?: Prisma.BlogOmit;
+  blogSeo?: Prisma.BlogSeoOmit;
 };
 
 /* Types for Logging */

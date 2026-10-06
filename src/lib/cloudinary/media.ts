@@ -2,6 +2,7 @@ import type { UploadApiResponse } from 'cloudinary';
 import { env } from '../../config/env.js';
 import { HttpStatus } from '../../utils/api-response.js';
 import { createHttpError } from '../../utils/http-error.js';
+import { logger } from '../logger.js';
 import { getCloudinaryClient } from './client.js';
 
 export type StoredResourceType = 'image' | 'video' | 'raw';
@@ -69,6 +70,8 @@ const isCloudinaryTimeout = (error: unknown): error is CloudinaryError => {
   return cloudinaryError.http_code === 499 || cloudinaryError.name === 'TimeoutError';
 };
 
+const isCloudinaryUploadError = (error: unknown): error is CloudinaryError => typeof error === 'object' && error !== null && 'http_code' in error && typeof error.http_code === 'number';
+
 const uploadBuffer = async ({
   buffer,
   folder,
@@ -123,6 +126,16 @@ const upload = async ({ buffer, folder, publicId, resourceType = 'auto', overwri
 
     if (typeof error === 'object' && error && 'statusCode' in error) {
       throw error;
+    }
+
+    if (isCloudinaryUploadError(error)) {
+      logger.warn({ providerStatus: error.http_code, providerMessage: error.message }, 'Cloudinary rejected a media upload.');
+
+      if (error.http_code === HttpStatus.BAD_REQUEST) {
+        throw createHttpError(HttpStatus.BAD_REQUEST, error.message ?? 'The selected file could not be processed.', 'MEDIA_UPLOAD_REJECTED');
+      }
+    } else {
+      logger.error({ error }, 'Cloudinary media upload failed before receiving a provider response.');
     }
 
     throw createHttpError(HttpStatus.BAD_GATEWAY, 'Media provider rejected the upload.', 'MEDIA_UPLOAD_FAILED');

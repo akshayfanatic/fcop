@@ -69,7 +69,9 @@ export const ModelName = {
   MemberProject: 'MemberProject',
   ChatHistory: 'ChatHistory',
   Lead: 'Lead',
-  NewsletterSubscriber: 'NewsletterSubscriber'
+  NewsletterSubscriber: 'NewsletterSubscriber',
+  Blog: 'Blog',
+  BlogSeo: 'BlogSeo'
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -372,6 +374,31 @@ export const NewsletterSubscriberScalarFieldEnum = {
 
 export type NewsletterSubscriberScalarFieldEnum = (typeof NewsletterSubscriberScalarFieldEnum)[keyof typeof NewsletterSubscriberScalarFieldEnum];
 
+export const BlogScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  slug: 'slug',
+  featureImage: 'featureImage',
+  excerpt: 'excerpt',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof BlogScalarFieldEnum];
+
+export const BlogSeoScalarFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  metaTitle: 'metaTitle',
+  metaDescription: 'metaDescription',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type BlogSeoScalarFieldEnum = (typeof BlogSeoScalarFieldEnum)[keyof typeof BlogSeoScalarFieldEnum];
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -625,3 +652,22 @@ export const NewsletterSubscriberOrderByRelevanceFieldEnum = {
 } as const;
 
 export type NewsletterSubscriberOrderByRelevanceFieldEnum = (typeof NewsletterSubscriberOrderByRelevanceFieldEnum)[keyof typeof NewsletterSubscriberOrderByRelevanceFieldEnum];
+
+export const BlogOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  featureImage: 'featureImage',
+  excerpt: 'excerpt'
+} as const;
+
+export type BlogOrderByRelevanceFieldEnum = (typeof BlogOrderByRelevanceFieldEnum)[keyof typeof BlogOrderByRelevanceFieldEnum];
+
+export const BlogSeoOrderByRelevanceFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  metaTitle: 'metaTitle',
+  metaDescription: 'metaDescription'
+} as const;
+
+export type BlogSeoOrderByRelevanceFieldEnum = (typeof BlogSeoOrderByRelevanceFieldEnum)[keyof typeof BlogSeoOrderByRelevanceFieldEnum];

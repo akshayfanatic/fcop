@@ -13,6 +13,7 @@ import { taskRouter } from './tasks.js';
 import { dashboardRouter } from './dashboard.js';
 import { notificationRouter } from './notifications.js';
 import { newsletterRouter } from './newsletter.js';
+import { blogRouter } from './blogs.js';
 
 export const apiRouter = Router();
 
@@ -30,3 +31,4 @@ apiRouter.use('/api/v1/tasks', taskRouter); // Task resources and nested task co
 apiRouter.use('/api/v1/dashboard', dashboardRouter);
 apiRouter.use('/api/v1/notifications', notificationRouter); // Current member notification inbox.
 apiRouter.use('/api/v1/newsletter', newsletterRouter); // Public signup and protected newsletter subscriber management.
+apiRouter.use('/api/v1/blogs', blogRouter); // Published posts and protected blog management.
