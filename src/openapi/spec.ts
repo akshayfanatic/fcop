@@ -121,6 +121,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       description: 'Public newsletter signup and protected subscriber management endpoints.'
     },
     {
+      name: 'Blogs',
+      description: 'Published blog posts and protected blog management endpoints.'
+    },
+    {
       name: 'Service Requests',
       description: 'Client service request endpoints.'
     },
@@ -756,6 +760,117 @@ export const createOpenApiDocument = (baseUrl: string) => ({
               }
             }
           }
+        }
+      }
+    },
+    '/api/v1/blogs/published': {
+      get: {
+        tags: ['Blogs'],
+        summary: 'Fetch published blogs',
+        operationId: 'getPublishedBlogs',
+        parameters: [
+          { name: 'page', in: 'query', schema: { type: 'integer', minimum: 1, default: DEFAULT_PAGE } },
+          { name: 'pageSize', in: 'query', schema: { type: 'integer', minimum: 1, maximum: MAX_PAGE_SIZE, default: DEFAULT_PAGE_SIZE } }
+        ],
+        responses: {
+          '200': { description: 'Published blogs fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogsResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' }
+        }
+      }
+    },
+    '/api/v1/blogs/published/{slug}': {
+      get: {
+        tags: ['Blogs'],
+        summary: 'Fetch a published blog by slug',
+        operationId: 'getPublishedBlogBySlug',
+        parameters: [{ name: 'slug', in: 'path', required: true, schema: { type: 'string', maxLength: 191 } }],
+        responses: {
+          '200': { description: 'Blog fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      }
+    },
+    '/api/v1/blogs': {
+      get: {
+        tags: ['Blogs'],
+        summary: 'Fetch blogs',
+        operationId: 'getBlogs',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['read'] },
+        parameters: [
+          { name: 'isPublished', in: 'query', schema: { type: 'boolean' } },
+          { name: 'page', in: 'query', schema: { type: 'integer', minimum: 1, default: DEFAULT_PAGE } },
+          { name: 'pageSize', in: 'query', schema: { type: 'integer', minimum: 1, maximum: MAX_PAGE_SIZE, default: DEFAULT_PAGE_SIZE } }
+        ],
+        responses: {
+          '200': { description: 'Blogs fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogsResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' }
+        }
+      },
+      post: {
+        tags: ['Blogs'],
+        summary: 'Create a blog',
+        operationId: 'createBlog',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['create'] },
+        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/CreateBlogRequest' } } } },
+        responses: {
+          '201': { description: 'Blog created successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '409': { $ref: '#/components/responses/Conflict' }
+        }
+      }
+    },
+    '/api/v1/blogs/{id}': {
+      get: {
+        tags: ['Blogs'],
+        summary: 'Fetch a blog by id',
+        operationId: 'getBlogById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['read'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        responses: {
+          '200': { description: 'Blog fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      },
+      put: {
+        tags: ['Blogs'],
+        summary: 'Update a blog by id',
+        operationId: 'updateBlogById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['update'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/UpdateBlogRequest' } } } },
+        responses: {
+          '200': { description: 'Blog updated successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' },
+          '409': { $ref: '#/components/responses/Conflict' }
+        }
+      },
+      delete: {
+        tags: ['Blogs'],
+        summary: 'Delete a blog by id',
+        operationId: 'deleteBlogById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['delete'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        responses: {
+          '200': { description: 'Blog deleted successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogResponse' } } } },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' }
         }
       }
     },
@@ -2953,6 +3068,18 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       }
     },
     responses: {
+      BadRequest: {
+        description: 'Invalid request.',
+        content: { 'application/json': { schema: { $ref: '#/components/schemas/ApiResponse' } } }
+      },
+      NotFound: {
+        description: 'Resource not found.',
+        content: { 'application/json': { schema: { $ref: '#/components/schemas/ApiResponse' } } }
+      },
+      Conflict: {
+        description: 'Resource already exists.',
+        content: { 'application/json': { schema: { $ref: '#/components/schemas/ApiResponse' } } }
+      },
       Unauthorized: {
         description: 'Authentication is required.',
         content: {
@@ -3768,6 +3895,71 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             example: 'AED 10,000 - AED 25,000'
           }
         }
+      },
+      CreateBlogRequest: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['title', 'content', 'slug'],
+        properties: {
+          title: { type: 'string', minLength: 1, maxLength: 255 },
+          content: { type: 'object', required: ['type'], properties: { type: { type: 'string', enum: ['doc'] }, content: { type: 'array', items: {} } }, additionalProperties: true },
+          slug: { type: 'string', maxLength: 191, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' },
+          featureImage: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
+          excerpt: { type: 'string', nullable: true, maxLength: 1000 },
+          isPublished: { type: 'boolean', default: false }
+        }
+      },
+      UpdateBlogRequest: {
+        type: 'object',
+        additionalProperties: false,
+        minProperties: 1,
+        properties: {
+          title: { type: 'string', minLength: 1, maxLength: 255 },
+          content: { type: 'object', required: ['type'], properties: { type: { type: 'string', enum: ['doc'] }, content: { type: 'array', items: {} } }, additionalProperties: true },
+          slug: { type: 'string', maxLength: 191, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' },
+          featureImage: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
+          excerpt: { type: 'string', nullable: true, maxLength: 1000 },
+          isPublished: { type: 'boolean' }
+        }
+      },
+      BlogSummary: {
+        type: 'object',
+        required: ['id', 'title', 'slug', 'featureImage', 'excerpt', 'isPublished', 'createdAt', 'updatedAt'],
+        properties: {
+          id: { type: 'string' },
+          title: { type: 'string' },
+          slug: { type: 'string' },
+          featureImage: { type: 'string', nullable: true },
+          excerpt: { type: 'string', nullable: true },
+          isPublished: { type: 'boolean' },
+          createdAt: { type: 'string', format: 'date-time' },
+          updatedAt: { type: 'string', format: 'date-time' }
+        }
+      },
+      Blog: {
+        allOf: [{ $ref: '#/components/schemas/BlogSummary' }, { type: 'object', required: ['content'], properties: { content: { type: 'object', additionalProperties: true } } }]
+      },
+      BlogResponse: {
+        allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { $ref: '#/components/schemas/Blog' } } }]
+      },
+      BlogsResponse: {
+        allOf: [
+          { $ref: '#/components/schemas/ApiResponse' },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['items', 'pagination'],
+                properties: {
+                  items: { type: 'array', items: { $ref: '#/components/schemas/BlogSummary' } },
+                  pagination: { $ref: '#/components/schemas/PaginationMeta' }
+                }
+              }
+            }
+          }
+        ]
       },
       CreateNewsletterSubscriptionRequest: {
         type: 'object',
