@@ -30,4 +30,5 @@ export type * from './models/ChatHistory.js';
 export type * from './models/Lead.js';
 export type * from './models/NewsletterSubscriber.js';
 export type * from './models/Blog.js';
+export type * from './models/BlogSeo.js';
 export type * from './commonInputTypes.js';

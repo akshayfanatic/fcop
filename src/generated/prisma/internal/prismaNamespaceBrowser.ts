@@ -70,7 +70,8 @@ export const ModelName = {
   ChatHistory: 'ChatHistory',
   Lead: 'Lead',
   NewsletterSubscriber: 'NewsletterSubscriber',
-  Blog: 'Blog'
+  Blog: 'Blog',
+  BlogSeo: 'BlogSeo'
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -387,6 +388,17 @@ export const BlogScalarFieldEnum = {
 
 export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof BlogScalarFieldEnum];
 
+export const BlogSeoScalarFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  metaTitle: 'metaTitle',
+  metaDescription: 'metaDescription',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type BlogSeoScalarFieldEnum = (typeof BlogSeoScalarFieldEnum)[keyof typeof BlogSeoScalarFieldEnum];
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -650,3 +662,12 @@ export const BlogOrderByRelevanceFieldEnum = {
 } as const;
 
 export type BlogOrderByRelevanceFieldEnum = (typeof BlogOrderByRelevanceFieldEnum)[keyof typeof BlogOrderByRelevanceFieldEnum];
+
+export const BlogSeoOrderByRelevanceFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  metaTitle: 'metaTitle',
+  metaDescription: 'metaDescription'
+} as const;
+
+export type BlogSeoOrderByRelevanceFieldEnum = (typeof BlogSeoOrderByRelevanceFieldEnum)[keyof typeof BlogSeoOrderByRelevanceFieldEnum];

@@ -159,3 +159,8 @@ export type NewsletterSubscriber = Prisma.NewsletterSubscriberModel;
  *
  */
 export type Blog = Prisma.BlogModel;
+/**
+ * Model BlogSeo
+ *
+ */
+export type BlogSeo = Prisma.BlogSeoModel;

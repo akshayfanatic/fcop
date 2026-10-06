@@ -198,6 +198,7 @@ export type BlogWhereInput = {
   isPublished?: Prisma.BoolFilter<'Blog'> | boolean;
   createdAt?: Prisma.DateTimeFilter<'Blog'> | Date | string;
   updatedAt?: Prisma.DateTimeFilter<'Blog'> | Date | string;
+  blogSeo?: Prisma.XOR<Prisma.BlogSeoNullableScalarRelationFilter, Prisma.BlogSeoWhereInput> | null;
 };
 
 export type BlogOrderByWithRelationInput = {
@@ -210,6 +211,7 @@ export type BlogOrderByWithRelationInput = {
   isPublished?: Prisma.SortOrder;
   createdAt?: Prisma.SortOrder;
   updatedAt?: Prisma.SortOrder;
+  blogSeo?: Prisma.BlogSeoOrderByWithRelationInput;
   _relevance?: Prisma.BlogOrderByRelevanceInput;
 };
 
@@ -227,6 +229,7 @@ export type BlogWhereUniqueInput = Prisma.AtLeast<
     isPublished?: Prisma.BoolFilter<'Blog'> | boolean;
     createdAt?: Prisma.DateTimeFilter<'Blog'> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<'Blog'> | Date | string;
+    blogSeo?: Prisma.XOR<Prisma.BlogSeoNullableScalarRelationFilter, Prisma.BlogSeoWhereInput> | null;
   },
   'id' | 'slug'
 >;
@@ -271,6 +274,7 @@ export type BlogCreateInput = {
   isPublished?: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  blogSeo?: Prisma.BlogSeoCreateNestedOneWithoutBlogInput;
 };
 
 export type BlogUncheckedCreateInput = {
@@ -283,6 +287,7 @@ export type BlogUncheckedCreateInput = {
   isPublished?: boolean;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  blogSeo?: Prisma.BlogSeoUncheckedCreateNestedOneWithoutBlogInput;
 };
 
 export type BlogUpdateInput = {
@@ -295,6 +300,7 @@ export type BlogUpdateInput = {
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  blogSeo?: Prisma.BlogSeoUpdateOneWithoutBlogNestedInput;
 };
 
 export type BlogUncheckedUpdateInput = {
@@ -307,6 +313,7 @@ export type BlogUncheckedUpdateInput = {
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean;
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  blogSeo?: Prisma.BlogSeoUncheckedUpdateOneWithoutBlogNestedInput;
 };
 
 export type BlogCreateManyInput = {
@@ -385,6 +392,89 @@ export type BlogMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder;
 };
 
+export type BlogScalarRelationFilter = {
+  is?: Prisma.BlogWhereInput;
+  isNot?: Prisma.BlogWhereInput;
+};
+
+export type BlogCreateNestedOneWithoutBlogSeoInput = {
+  create?: Prisma.XOR<Prisma.BlogCreateWithoutBlogSeoInput, Prisma.BlogUncheckedCreateWithoutBlogSeoInput>;
+  connectOrCreate?: Prisma.BlogCreateOrConnectWithoutBlogSeoInput;
+  connect?: Prisma.BlogWhereUniqueInput;
+};
+
+export type BlogUpdateOneRequiredWithoutBlogSeoNestedInput = {
+  create?: Prisma.XOR<Prisma.BlogCreateWithoutBlogSeoInput, Prisma.BlogUncheckedCreateWithoutBlogSeoInput>;
+  connectOrCreate?: Prisma.BlogCreateOrConnectWithoutBlogSeoInput;
+  upsert?: Prisma.BlogUpsertWithoutBlogSeoInput;
+  connect?: Prisma.BlogWhereUniqueInput;
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BlogUpdateToOneWithWhereWithoutBlogSeoInput, Prisma.BlogUpdateWithoutBlogSeoInput>, Prisma.BlogUncheckedUpdateWithoutBlogSeoInput>;
+};
+
+export type BlogCreateWithoutBlogSeoInput = {
+  id?: string;
+  title: string;
+  content: Prisma.JsonNullValueInput | runtime.InputJsonValue;
+  slug: string;
+  featureImage?: string | null;
+  excerpt?: string | null;
+  isPublished?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+};
+
+export type BlogUncheckedCreateWithoutBlogSeoInput = {
+  id?: string;
+  title: string;
+  content: Prisma.JsonNullValueInput | runtime.InputJsonValue;
+  slug: string;
+  featureImage?: string | null;
+  excerpt?: string | null;
+  isPublished?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+};
+
+export type BlogCreateOrConnectWithoutBlogSeoInput = {
+  where: Prisma.BlogWhereUniqueInput;
+  create: Prisma.XOR<Prisma.BlogCreateWithoutBlogSeoInput, Prisma.BlogUncheckedCreateWithoutBlogSeoInput>;
+};
+
+export type BlogUpsertWithoutBlogSeoInput = {
+  update: Prisma.XOR<Prisma.BlogUpdateWithoutBlogSeoInput, Prisma.BlogUncheckedUpdateWithoutBlogSeoInput>;
+  create: Prisma.XOR<Prisma.BlogCreateWithoutBlogSeoInput, Prisma.BlogUncheckedCreateWithoutBlogSeoInput>;
+  where?: Prisma.BlogWhereInput;
+};
+
+export type BlogUpdateToOneWithWhereWithoutBlogSeoInput = {
+  where?: Prisma.BlogWhereInput;
+  data: Prisma.XOR<Prisma.BlogUpdateWithoutBlogSeoInput, Prisma.BlogUncheckedUpdateWithoutBlogSeoInput>;
+};
+
+export type BlogUpdateWithoutBlogSeoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  title?: Prisma.StringFieldUpdateOperationsInput | string;
+  content?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
+  slug?: Prisma.StringFieldUpdateOperationsInput | string;
+  featureImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+
+export type BlogUncheckedUpdateWithoutBlogSeoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string;
+  title?: Prisma.StringFieldUpdateOperationsInput | string;
+  content?: Prisma.JsonNullValueInput | runtime.InputJsonValue;
+  slug?: Prisma.StringFieldUpdateOperationsInput | string;
+  featureImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  excerpt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+
 export type BlogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<
   {
     id?: boolean;
@@ -396,6 +486,7 @@ export type BlogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     isPublished?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    blogSeo?: boolean | Prisma.Blog$blogSeoArgs<ExtArgs>;
   },
   ExtArgs['result']['blog']
 >;
@@ -416,10 +507,15 @@ export type BlogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
   'id' | 'title' | 'content' | 'slug' | 'featureImage' | 'excerpt' | 'isPublished' | 'createdAt' | 'updatedAt',
   ExtArgs['result']['blog']
 >;
+export type BlogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  blogSeo?: boolean | Prisma.Blog$blogSeoArgs<ExtArgs>;
+};
 
 export type $BlogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: 'Blog';
-  objects: {};
+  objects: {
+    blogSeo: Prisma.$BlogSeoPayload<ExtArgs> | null;
+  };
   scalars: runtime.Types.Extensions.GetPayloadResult<
     {
       id: string;
@@ -774,6 +870,9 @@ export interface Prisma__BlogClient<
   GlobalOmitOptions = {}
 > extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: 'PrismaPromise';
+  blogSeo<T extends Prisma.Blog$blogSeoArgs<ExtArgs> = {}>(
+    args?: Prisma.Subset<T, Prisma.Blog$blogSeoArgs<ExtArgs>>
+  ): Prisma.Prisma__BlogSeoClient<runtime.Types.Result.GetResult<Prisma.$BlogSeoPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -828,6 +927,10 @@ export type BlogFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.BlogOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogInclude<ExtArgs> | null;
+  /**
    * Filter, which Blog to fetch.
    */
   where: Prisma.BlogWhereUniqueInput;
@@ -846,6 +949,10 @@ export type BlogFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.BlogOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogInclude<ExtArgs> | null;
+  /**
    * Filter, which Blog to fetch.
    */
   where: Prisma.BlogWhereUniqueInput;
@@ -863,6 +970,10 @@ export type BlogFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Blog
    */
   omit?: Prisma.BlogOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogInclude<ExtArgs> | null;
   /**
    * Filter, which Blog to fetch.
    */
@@ -912,6 +1023,10 @@ export type BlogFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.BlogOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogInclude<ExtArgs> | null;
+  /**
    * Filter, which Blog to fetch.
    */
   where?: Prisma.BlogWhereInput;
@@ -959,6 +1074,10 @@ export type BlogFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the Blog
    */
   omit?: Prisma.BlogOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogInclude<ExtArgs> | null;
   /**
    * Filter, which Blogs to fetch.
    */
@@ -1008,6 +1127,10 @@ export type BlogCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.BlogOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogInclude<ExtArgs> | null;
+  /**
    * The data needed to create a Blog.
    */
   data: Prisma.XOR<Prisma.BlogCreateInput, Prisma.BlogUncheckedCreateInput>;
@@ -1036,6 +1159,10 @@ export type BlogUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the Blog
    */
   omit?: Prisma.BlogOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogInclude<ExtArgs> | null;
   /**
    * The data needed to update a Blog.
    */
@@ -1077,6 +1204,10 @@ export type BlogUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.BlogOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogInclude<ExtArgs> | null;
+  /**
    * The filter to search for the Blog to update in case it exists.
    */
   where: Prisma.BlogWhereUniqueInput;
@@ -1103,6 +1234,10 @@ export type BlogDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.BlogOmit<ExtArgs> | null;
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogInclude<ExtArgs> | null;
+  /**
    * Filter which Blog to delete.
    */
   where: Prisma.BlogWhereUniqueInput;
@@ -1123,6 +1258,25 @@ export type BlogDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 };
 
 /**
+ * Blog.blogSeo
+ */
+export type Blog$blogSeoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BlogSeo
+   */
+  select?: Prisma.BlogSeoSelect<ExtArgs> | null;
+  /**
+   * Omit specific fields from the BlogSeo
+   */
+  omit?: Prisma.BlogSeoOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogSeoInclude<ExtArgs> | null;
+  where?: Prisma.BlogSeoWhereInput;
+};
+
+/**
  * Blog without action
  */
 export type BlogDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1134,4 +1288,8 @@ export type BlogDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the Blog
    */
   omit?: Prisma.BlogOmit<ExtArgs> | null;
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BlogInclude<ExtArgs> | null;
 };

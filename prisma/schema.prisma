@@ -470,7 +470,20 @@ model Blog {
   isPublished  Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  blogSeo      BlogSeo?
 
   @@index([isPublished, createdAt])
   @@map("blog")
+}
+
+model BlogSeo {
+  id              String   @id @default(cuid()) @db.VarChar(36)
+  blogId          String   @unique @db.VarChar(36)
+  metaTitle       String   @db.VarChar(255)
+  metaDescription String   @db.Text
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  blog            Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  @@map("blogSeo")
 }
