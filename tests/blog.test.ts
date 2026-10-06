@@ -64,9 +64,9 @@ test('blog CRUD uses ids and reports missing records', async () => {
   assert.deepEqual(findUnique.mock.calls[0].arguments[0], { where: { id: 'missing-id' } });
 });
 
-test('blog write permission belongs to admins and OpenAPI follows resource routes', () => {
+test('OpenAPI follows resource routes', () => {
   assert.equal(hasResourcePermission('ADMIN', 'blog', 'create'), true);
-  assert.equal(hasResourcePermission('MANAGER', 'blog', 'create'), false);
+  assert.equal(hasResourcePermission('MANAGER', 'blog', 'create'), true);
   assert.equal(hasResourcePermission('CLIENT', 'blog', 'delete'), false);
 
   const paths = createOpenApiDocument('http://localhost:3000').paths;

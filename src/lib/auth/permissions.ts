@@ -56,6 +56,7 @@ export const rolePermissionStatements = {
     invitation: ['create'],
     ac: ['read'],
     lead: ['read', 'update'],
+    blog: ['create', 'read', 'update', 'delete'],
     serviceRequest: ['read', 'update', 'delete'],
     proposal: ['create', 'read', 'update', 'delete'],
     project: ['create', 'read', 'update'],

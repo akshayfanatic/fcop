@@ -31,6 +31,20 @@ test('only administrators can read newsletter subscriptions', () => {
   assert.equal(hasResourcePermission('CLIENT', 'newsletter', 'read'), false);
 });
 
+test('only administrators and managers can manage blogs', () => {
+  for (const role of ['ADMIN', 'MANAGER']) {
+    for (const action of ['create', 'read', 'update', 'delete'] as const) {
+      assert.equal(hasResourcePermission(role, 'blog', action), true);
+    }
+  }
+
+  for (const role of ['MEMBER', 'CLIENT', 'unknown']) {
+    for (const action of ['create', 'read', 'update', 'delete'] as const) {
+      assert.equal(hasResourcePermission(role, 'blog', action), false);
+    }
+  }
+});
+
 test('permission output merges multiple roles and fails closed for unknown roles', () => {
   assert.deepEqual(getRolePermissionStatements('unknown'), {});
   const merged = getRolePermissionStatements(' MEMBER, CLIENT, MEMBER ');
