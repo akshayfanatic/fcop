@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.0](https://github.com/akshayfanatic/fcop/compare/v0.10.2...v0.11.0) (2026-10-06)
+
+### Features
+
+- **api:** added api endpoint for displaying newsletters data ([3422896](https://github.com/akshayfanatic/fcop/commit/34228963294776b5315ba4e2f6f92d744ffd1348))
+- **api:** added api endpoints for CRUD related blogs ([bb79fef](https://github.com/akshayfanatic/fcop/commit/bb79fef3ce7841cbd6f7b9ac658f751dcd2d5157))
+- **db:** added new migration for blogs ([480dc18](https://github.com/akshayfanatic/fcop/commit/480dc1859e74858594d8cf557891e6c56a81ef7d))
+- **email:** notifiy admin about news letter subscriber ([b218b50](https://github.com/akshayfanatic/fcop/commit/b218b50c8b25c35bf4b284bbce09b28c8822f8a7))
+- **hooks:** added hooks and config setup in backend ([23929f6](https://github.com/akshayfanatic/fcop/commit/23929f6d08e4f664df5ac3f7418508a08f9a473c))
+- **media:** added media support for blog ([e39a7ff](https://github.com/akshayfanatic/fcop/commit/e39a7ffab61c7b6b635bb69972b0f772f2b716c8))
+- **member:** display member details ([97a6967](https://github.com/akshayfanatic/fcop/commit/97a6967c0e0f2eca9177dd0a882ea4c52ec1f3f3))
+- **migration:** added migration for blogSeo ([0a1d5b7](https://github.com/akshayfanatic/fcop/commit/0a1d5b7d6bdbe27256d813f1f270691516d10912))
+- **migration:** added new migration for newsletter ([89d8d6d](https://github.com/akshayfanatic/fcop/commit/89d8d6db6a707f0ae3e5c910a0b6488967f8a020))
+- **permission:** update permissions MANAGER role also can create blogs ([b6bff78](https://github.com/akshayfanatic/fcop/commit/b6bff783ccbf0007c924cd597040493816e85379))
+- **routes:** added api routes endpoint and seo skill ([c4f156e](https://github.com/akshayfanatic/fcop/commit/c4f156e3b7ac1d8442faf48b1bdf2edb1e860a41))
+- **service:** added acknowledgement email when new request coming ([1985cee](https://github.com/akshayfanatic/fcop/commit/1985ceea9df57f036451fdc99e29adfed524efa0))
+- **task,project:** added list based options regarding projects ([325f0ee](https://github.com/akshayfanatic/fcop/commit/325f0ee0a811de5a78f9be51fc82d00355b54333))
+- **webhook:** testing webhook ([757221c](https://github.com/akshayfanatic/fcop/commit/757221c4db73fdcac7b550eb025f0ecd4cab4ead))
+
+### Bug Fixes
+
+- **ci:** sync package lock for npm 10 ([43a3e35](https://github.com/akshayfanatic/fcop/commit/43a3e3555ddda67ec94f4834df674d7341d6fff7))
+- **member:** added data support work on staff member delete ([0c7b84c](https://github.com/akshayfanatic/fcop/commit/0c7b84c2cbd79b6ecd5cbf93c4f2d9a076ee1006))
+- **types:** added tiptap editory types to api ([c365201](https://github.com/akshayfanatic/fcop/commit/c3652010c6a13d5c9f4da965a990a79ab9c1de73))
+
+### Code Refactoring
+
+- **permissions:** enhance permission statement for chat ([94f374b](https://github.com/akshayfanatic/fcop/commit/94f374b247fff9c5726f94a716c0224499649ab8))
+
 ### [0.10.2](https://github.com/akshayfanatic/fcop/compare/v0.10.1...v0.10.2) (2026-08-27)
 
 ### Features
