@@ -40,7 +40,7 @@ export const blogService = {
 
   getPublishedBlogBySlug: async (slug: string) => {
     // Keep unpublished drafts out of the public blog even when their slug is known.
-    const blog = await prisma.blog.findFirst({ where: { slug, isPublished: true } });
+    const blog = await prisma.blog.findFirst({ where: { slug, isPublished: true }, include: { blogSeo: true } });
     if (!blog) {
       throw createHttpError(HttpStatus.NOT_FOUND, 'Blog not found.', 'NOT_FOUND');
     }
@@ -66,7 +66,7 @@ export const blogService = {
   },
 
   getBlogById: async (id: string) => {
-    const blog = await prisma.blog.findUnique({ where: { id } });
+    const blog = await prisma.blog.findUnique({ where: { id }, include: { blogSeo: true } });
     if (!blog) {
       throw createHttpError(HttpStatus.NOT_FOUND, 'Blog not found.', 'NOT_FOUND');
     }

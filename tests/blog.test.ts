@@ -4,7 +4,9 @@ import { prisma } from '../src/lib/prisma.js';
 import { hasResourcePermission } from '../src/lib/auth/permissions.js';
 import { createOpenApiDocument } from '../src/openapi/spec.js';
 import { blogService } from '../src/services/blog.service.js';
+import { blogSeoService } from '../src/services/blog-seo.service.js';
 import { cloudinaryMedia } from '../src/lib/cloudinary/media.js';
+import { upsertBlogSeoSchema } from '../src/validators/blog-seo.validator.js';
 import { blogFiltersSchema, createBlogSchema, updateBlogSchema } from '../src/validators/blog.validator.js';
 
 const restoreStubs: Array<() => void> = [];
@@ -46,7 +48,7 @@ test('public blog queries only return published posts', async () => {
   assert.deepEqual(findMany.mock.calls[0].arguments[0].where, { isPublished: true });
   assert.deepEqual(count.mock.calls[0].arguments[0], { where: { isPublished: true } });
   await assert.rejects(blogService.getPublishedBlogBySlug('draft-post'), { statusCode: 404 });
-  assert.deepEqual(findFirst.mock.calls[0].arguments[0], { where: { slug: 'draft-post', isPublished: true } });
+  assert.deepEqual(findFirst.mock.calls[0].arguments[0], { where: { slug: 'draft-post', isPublished: true }, include: { blogSeo: true } });
 });
 
 test('blog CRUD uses ids and reports missing records', async () => {
@@ -62,7 +64,47 @@ test('blog CRUD uses ids and reports missing records', async () => {
   assert.deepEqual(updateMany.mock.calls[0].arguments[0], { where: { id: 'blog-id' }, data: { isPublished: true } });
   assert.deepEqual(findUniqueOrThrow.mock.calls[0].arguments[0], { where: { id: 'blog-id' } });
   await assert.rejects(blogService.deleteBlogById('missing-id'), { statusCode: 404 });
-  assert.deepEqual(findUnique.mock.calls[0].arguments[0], { where: { id: 'missing-id' } });
+  assert.deepEqual(findUnique.mock.calls[0].arguments[0], { where: { id: 'missing-id' }, include: { blogSeo: true } });
+});
+
+test('blog SEO validates both fields and saves one record per blog', async () => {
+  const seo = { metaTitle: 'Hello world', metaDescription: 'A useful blog post.' };
+  assert.deepEqual(upsertBlogSeoSchema.parse(seo), seo);
+  assert.equal(upsertBlogSeoSchema.safeParse({ ...seo, metaDescription: ' ' }).success, false);
+  assert.equal(upsertBlogSeoSchema.safeParse({ ...seo, extra: true }).success, false);
+
+  stub(prisma.blog, 'findUnique', async () => ({ id: 'blog-id' }));
+  const upsert = stub(prisma.blogSeo, 'upsert', async () => ({ id: 'seo-id', blogId: 'blog-id', ...seo }));
+  const saved = await blogSeoService.upsertBlogSeoByBlogId('blog-id', seo);
+
+  assert.equal(saved.blogId, 'blog-id');
+  assert.deepEqual(upsert.mock.calls[0].arguments[0], {
+    where: { blogId: 'blog-id' },
+    create: { blogId: 'blog-id', ...seo },
+    update: seo
+  });
+});
+
+test('blog SEO reports missing blogs and SEO records', async () => {
+  const seo = { metaTitle: 'Hello world', metaDescription: 'A useful blog post.' };
+  stub(prisma.blog, 'findUnique', async () => null);
+  stub(prisma.blogSeo, 'findUnique', async () => null);
+  const upsert = stub(prisma.blogSeo, 'upsert', async () => ({}));
+
+  await assert.rejects(blogSeoService.upsertBlogSeoByBlogId('missing-id', seo), { statusCode: 404 });
+  await assert.rejects(blogSeoService.getBlogSeoByBlogId('missing-id'), { statusCode: 404 });
+  await assert.rejects(blogSeoService.deleteBlogSeoByBlogId('missing-id'), { statusCode: 404 });
+  assert.equal(upsert.mock.callCount(), 0);
+});
+
+test('blog SEO can be fetched and removed by blog id', async () => {
+  const blogSeo = { id: 'seo-id', blogId: 'blog-id', metaTitle: 'Hello world', metaDescription: 'A useful blog post.' };
+  stub(prisma.blogSeo, 'findUnique', async () => blogSeo);
+  const remove = stub(prisma.blogSeo, 'delete', async () => blogSeo);
+
+  assert.deepEqual(await blogSeoService.getBlogSeoByBlogId('blog-id'), blogSeo);
+  assert.deepEqual(await blogSeoService.deleteBlogSeoByBlogId('blog-id'), blogSeo);
+  assert.deepEqual(remove.mock.calls[0].arguments[0], { where: { blogId: 'blog-id' } });
 });
 
 test('OpenAPI follows resource routes', () => {
@@ -79,6 +121,10 @@ test('OpenAPI follows resource routes', () => {
   assert.deepEqual(paths['/api/v1/blogs/{id}/feature-image'].put['x-requiredPermissions'], { blog: ['update'] });
   assert.deepEqual(paths['/api/v1/blogs/{id}/feature-image'].delete['x-requiredPermissions'], { blog: ['update'] });
   assert.deepEqual(paths['/api/v1/blogs/{id}/feature-image'].put.requestBody.content['multipart/form-data'].schema.required, ['image']);
+  assert.deepEqual(paths['/api/v1/blogs/{id}/seo'].get['x-requiredPermissions'], { blog: ['read'] });
+  assert.deepEqual(paths['/api/v1/blogs/{id}/seo'].put['x-requiredPermissions'], { blog: ['update'] });
+  assert.deepEqual(paths['/api/v1/blogs/{id}/seo'].delete['x-requiredPermissions'], { blog: ['update'] });
+  assert.deepEqual(paths['/api/v1/blogs/{id}/seo'].put.requestBody.content['application/json'].schema, { $ref: '#/components/schemas/UpsertBlogSeoRequest' });
 });
 
 test('blog feature image replaces and removes its managed Cloudinary asset', async () => {
@@ -113,4 +159,6 @@ test('OpenAPI exposes the complete blog entity and optional publish flag', () =>
   assert.deepEqual(schemas.CreateBlogRequest.properties.content, { $ref: '#/components/schemas/TiptapDocument' });
   assert.deepEqual(schemas.Blog.allOf[1].properties.content, { $ref: '#/components/schemas/TiptapDocument' });
   assert.deepEqual(schemas.BlogSummary.required, ['id', 'title', 'slug', 'featureImage', 'excerpt', 'isPublished', 'createdAt', 'updatedAt']);
+  assert.deepEqual(schemas.UpsertBlogSeoRequest.required, ['metaTitle', 'metaDescription']);
+  assert.equal(schemas.Blog.allOf[1].properties.blogSeo.nullable, true);
 });
