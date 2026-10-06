@@ -363,7 +363,11 @@ export const ModelName = {
   Lead: 'Lead',
   NewsletterSubscriber: 'NewsletterSubscriber',
   Blog: 'Blog',
-  BlogSeo: 'BlogSeo'
+  BlogSeo: 'BlogSeo',
+  Category: 'Category',
+  Tag: 'Tag',
+  BlogCategory: 'BlogCategory',
+  BlogTag: 'BlogTag'
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -401,7 +405,11 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
       | 'lead'
       | 'newsletterSubscriber'
       | 'blog'
-      | 'blogSeo';
+      | 'blogSeo'
+      | 'category'
+      | 'tag'
+      | 'blogCategory'
+      | 'blogTag';
     txIsolationLevel: TransactionIsolationLevel;
   };
   model: {
@@ -1989,6 +1997,270 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         };
       };
     };
+    Category: {
+      payload: Prisma.$CategoryPayload<ExtArgs>;
+      fields: Prisma.CategoryFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.CategoryFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.CategoryFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>;
+        };
+        findFirst: {
+          args: Prisma.CategoryFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.CategoryFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>;
+        };
+        findMany: {
+          args: Prisma.CategoryFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>[];
+        };
+        create: {
+          args: Prisma.CategoryCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>;
+        };
+        createMany: {
+          args: Prisma.CategoryCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.CategoryDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>;
+        };
+        update: {
+          args: Prisma.CategoryUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>;
+        };
+        deleteMany: {
+          args: Prisma.CategoryDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.CategoryUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.CategoryUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>;
+        };
+        aggregate: {
+          args: Prisma.CategoryAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCategory>;
+        };
+        groupBy: {
+          args: Prisma.CategoryGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.CategoryGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.CategoryCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.CategoryCountAggregateOutputType> | number;
+        };
+      };
+    };
+    Tag: {
+      payload: Prisma.$TagPayload<ExtArgs>;
+      fields: Prisma.TagFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.TagFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.TagFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>;
+        };
+        findFirst: {
+          args: Prisma.TagFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.TagFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>;
+        };
+        findMany: {
+          args: Prisma.TagFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>[];
+        };
+        create: {
+          args: Prisma.TagCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>;
+        };
+        createMany: {
+          args: Prisma.TagCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.TagDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>;
+        };
+        update: {
+          args: Prisma.TagUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>;
+        };
+        deleteMany: {
+          args: Prisma.TagDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.TagUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.TagUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TagPayload>;
+        };
+        aggregate: {
+          args: Prisma.TagAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTag>;
+        };
+        groupBy: {
+          args: Prisma.TagGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.TagGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.TagCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.TagCountAggregateOutputType> | number;
+        };
+      };
+    };
+    BlogCategory: {
+      payload: Prisma.$BlogCategoryPayload<ExtArgs>;
+      fields: Prisma.BlogCategoryFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.BlogCategoryFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogCategoryPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.BlogCategoryFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogCategoryPayload>;
+        };
+        findFirst: {
+          args: Prisma.BlogCategoryFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogCategoryPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.BlogCategoryFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogCategoryPayload>;
+        };
+        findMany: {
+          args: Prisma.BlogCategoryFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogCategoryPayload>[];
+        };
+        create: {
+          args: Prisma.BlogCategoryCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogCategoryPayload>;
+        };
+        createMany: {
+          args: Prisma.BlogCategoryCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.BlogCategoryDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogCategoryPayload>;
+        };
+        update: {
+          args: Prisma.BlogCategoryUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogCategoryPayload>;
+        };
+        deleteMany: {
+          args: Prisma.BlogCategoryDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.BlogCategoryUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.BlogCategoryUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogCategoryPayload>;
+        };
+        aggregate: {
+          args: Prisma.BlogCategoryAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBlogCategory>;
+        };
+        groupBy: {
+          args: Prisma.BlogCategoryGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.BlogCategoryGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.BlogCategoryCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.BlogCategoryCountAggregateOutputType> | number;
+        };
+      };
+    };
+    BlogTag: {
+      payload: Prisma.$BlogTagPayload<ExtArgs>;
+      fields: Prisma.BlogTagFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.BlogTagFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogTagPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.BlogTagFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogTagPayload>;
+        };
+        findFirst: {
+          args: Prisma.BlogTagFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogTagPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.BlogTagFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogTagPayload>;
+        };
+        findMany: {
+          args: Prisma.BlogTagFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogTagPayload>[];
+        };
+        create: {
+          args: Prisma.BlogTagCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogTagPayload>;
+        };
+        createMany: {
+          args: Prisma.BlogTagCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.BlogTagDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogTagPayload>;
+        };
+        update: {
+          args: Prisma.BlogTagUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogTagPayload>;
+        };
+        deleteMany: {
+          args: Prisma.BlogTagDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.BlogTagUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.BlogTagUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BlogTagPayload>;
+        };
+        aggregate: {
+          args: Prisma.BlogTagAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBlogTag>;
+        };
+        groupBy: {
+          args: Prisma.BlogTagGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.BlogTagGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.BlogTagCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.BlogTagCountAggregateOutputType> | number;
+        };
+      };
+    };
   };
 } & {
   other: {
@@ -2337,6 +2609,44 @@ export const BlogSeoScalarFieldEnum = {
 
 export type BlogSeoScalarFieldEnum = (typeof BlogSeoScalarFieldEnum)[keyof typeof BlogSeoScalarFieldEnum];
 
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum];
+
+export const TagScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum];
+
+export const BlogCategoryScalarFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt'
+} as const;
+
+export type BlogCategoryScalarFieldEnum = (typeof BlogCategoryScalarFieldEnum)[keyof typeof BlogCategoryScalarFieldEnum];
+
+export const BlogTagScalarFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  tagId: 'tagId',
+  createdAt: 'createdAt'
+} as const;
+
+export type BlogTagScalarFieldEnum = (typeof BlogTagScalarFieldEnum)[keyof typeof BlogTagScalarFieldEnum];
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2610,6 +2920,38 @@ export const BlogSeoOrderByRelevanceFieldEnum = {
 
 export type BlogSeoOrderByRelevanceFieldEnum = (typeof BlogSeoOrderByRelevanceFieldEnum)[keyof typeof BlogSeoOrderByRelevanceFieldEnum];
 
+export const CategoryOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug'
+} as const;
+
+export type CategoryOrderByRelevanceFieldEnum = (typeof CategoryOrderByRelevanceFieldEnum)[keyof typeof CategoryOrderByRelevanceFieldEnum];
+
+export const TagOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug'
+} as const;
+
+export type TagOrderByRelevanceFieldEnum = (typeof TagOrderByRelevanceFieldEnum)[keyof typeof TagOrderByRelevanceFieldEnum];
+
+export const BlogCategoryOrderByRelevanceFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  categoryId: 'categoryId'
+} as const;
+
+export type BlogCategoryOrderByRelevanceFieldEnum = (typeof BlogCategoryOrderByRelevanceFieldEnum)[keyof typeof BlogCategoryOrderByRelevanceFieldEnum];
+
+export const BlogTagOrderByRelevanceFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  tagId: 'tagId'
+} as const;
+
+export type BlogTagOrderByRelevanceFieldEnum = (typeof BlogTagOrderByRelevanceFieldEnum)[keyof typeof BlogTagOrderByRelevanceFieldEnum];
+
 /**
  * Field references
  */
@@ -2846,6 +3188,10 @@ export type GlobalOmitConfig = {
   newsletterSubscriber?: Prisma.NewsletterSubscriberOmit;
   blog?: Prisma.BlogOmit;
   blogSeo?: Prisma.BlogSeoOmit;
+  category?: Prisma.CategoryOmit;
+  tag?: Prisma.TagOmit;
+  blogCategory?: Prisma.BlogCategoryOmit;
+  blogTag?: Prisma.BlogTagOmit;
 };
 
 /* Types for Logging */
