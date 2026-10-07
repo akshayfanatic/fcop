@@ -5,6 +5,7 @@ import { hasResourcePermission } from '../src/lib/auth/permissions.js';
 import { createOpenApiDocument } from '../src/openapi/spec.js';
 import { blogService } from '../src/services/blog.service.js';
 import { categoryRouter } from '../src/routes/categories.js';
+import { tagRouter } from '../src/routes/tags.js';
 import { categoryService } from '../src/services/category.service.js';
 import { tagService } from '../src/services/tag.service.js';
 import { updateBlogSchema } from '../src/validators/blog.validator.js';
@@ -60,6 +61,25 @@ test('category options include every category ordered by name and id', async () 
 
 test('category options route is public', () => {
   const route = categoryRouter.stack.find((layer) => layer.route?.path === '/options');
+  assert.equal(route?.route?.stack.length, 1);
+});
+
+test('tag options include every tag ordered by name and id', async () => {
+  const findMany = stub(prisma.tag, 'findMany', async () => [
+    { id: 'tag-1', name: 'Design' },
+    { id: 'tag-2', name: 'Design' },
+    { id: 'tag-3', name: 'Engineering' }
+  ]);
+  assert.deepEqual(await tagService.getTagOptions(), [
+    { label: 'Design', value: 'tag-1' },
+    { label: 'Design', value: 'tag-2' },
+    { label: 'Engineering', value: 'tag-3' }
+  ]);
+  assert.deepEqual(findMany.mock.calls[0].arguments[0], { select: { id: true, name: true }, orderBy: [{ name: 'asc' }, { id: 'asc' }] });
+});
+
+test('tag options route is public', () => {
+  const route = tagRouter.stack.find((layer) => layer.route?.path === '/options');
   assert.equal(route?.route?.stack.length, 1);
 });
 
@@ -163,6 +183,9 @@ test('taxonomy routes reuse blog permissions and publish complete contract', () 
   assert.equal(paths['/api/v1/categories/options'].get.responses['200'].content['application/json'].schema.$ref, '#/components/schemas/CategoryOptionsResponse');
   assert.deepEqual(paths['/api/v1/categories/{id}'].delete['x-requiredPermissions'], { blog: ['delete'] });
   assert.deepEqual(paths['/api/v1/tags'].post['x-requiredPermissions'], { blog: ['create'] });
+  assert.equal(paths['/api/v1/tags/options'].get.security, undefined);
+  assert.equal(paths['/api/v1/tags/options'].get['x-requiredPermissions'], undefined);
+  assert.equal(paths['/api/v1/tags/options'].get.responses['200'].content['application/json'].schema.$ref, '#/components/schemas/TagOptionsResponse');
   assert.deepEqual(paths['/api/v1/tags/{id}'].delete['x-requiredPermissions'], { blog: ['delete'] });
   assert.equal(paths['/api/v1/blogs/{id}/categories'], undefined);
   assert.equal(paths['/api/v1/blogs/{id}/tags'], undefined);

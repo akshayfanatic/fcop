@@ -34,6 +34,15 @@ export const tagController = {
     }
   }) satisfies RequestHandler,
 
+  getTagOptions: (async (_req, res, next) => {
+    try {
+      const options = await tagService.getTagOptions();
+      res.status(HttpStatus.OK).json(ApiResponse({ success: true, status: HttpStatus.OK, message: 'Tag options fetched successfully.', data: options }));
+    } catch (error) {
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
   getTagById: (async (req, res, next) => {
     try {
       const { id } = tagIdParamsSchema.parse(req.params);

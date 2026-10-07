@@ -1053,6 +1053,17 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/tags/options': {
+      get: {
+        tags: ['Tags'],
+        summary: 'Fetch tag options',
+        description: 'Returns all tags as label and value options.',
+        operationId: 'getTagOptions',
+        responses: {
+          '200': { description: 'Tag options fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/TagOptionsResponse' } } } }
+        }
+      }
+    },
     '/api/v1/tags/{id}': {
       get: {
         tags: ['Tags'],
@@ -4311,6 +4322,17 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       },
       CategoryResponse: {
         allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { $ref: '#/components/schemas/Category' } } }]
+      },
+      TagOption: {
+        type: 'object',
+        required: ['label', 'value'],
+        properties: {
+          label: { type: 'string' },
+          value: { type: 'string' }
+        }
+      },
+      TagOptionsResponse: {
+        allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { type: 'array', items: { $ref: '#/components/schemas/TagOption' } } } }]
       },
       TagResponse: {
         allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { $ref: '#/components/schemas/Tag' } } }]

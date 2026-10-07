@@ -6,6 +6,11 @@ import { createPaginatedData, getPaginationOffset } from '../utils/pagination.js
 import type { CreateTagInput, TagFiltersInput, UpdateTagInput } from '../validators/tag.validator.js';
 
 export const tagService = {
+  getTagOptions: async () => {
+    const tags = await prisma.tag.findMany({ select: { id: true, name: true }, orderBy: [{ name: 'asc' }, { id: 'asc' }] });
+    return tags.map(({ id, name }) => ({ label: name, value: id }));
+  },
+
   getTags: async (filters: TagFiltersInput) => {
     const [items, totalItems] = await Promise.all([prisma.tag.findMany({ orderBy: { name: 'asc' }, skip: getPaginationOffset(filters), take: filters.pageSize }), prisma.tag.count()]);
 
