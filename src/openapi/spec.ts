@@ -125,6 +125,14 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       description: 'Published blog posts and protected blog management endpoints.'
     },
     {
+      name: 'Categories',
+      description: 'Protected blog category management endpoints.'
+    },
+    {
+      name: 'Tags',
+      description: 'Protected blog tag management endpoints.'
+    },
+    {
       name: 'Service Requests',
       description: 'Client service request endpoints.'
     },
@@ -785,7 +793,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         operationId: 'getPublishedBlogBySlug',
         parameters: [{ name: 'slug', in: 'path', required: true, schema: { type: 'string', maxLength: 191 } }],
         responses: {
-          '200': { description: 'Blog fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogResponse' } } } },
+          '200': { description: 'Blog fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogDetailResponse' } } } },
           '400': { $ref: '#/components/responses/BadRequest' },
           '404': { $ref: '#/components/responses/NotFound' }
         }
@@ -818,7 +826,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         'x-requiredPermissions': { blog: ['create'] },
         requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/CreateBlogRequest' } } } },
         responses: {
-          '201': { description: 'Blog created successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogResponse' } } } },
+          '201': { description: 'Blog created successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogDetailResponse' } } } },
           '400': { $ref: '#/components/responses/BadRequest' },
           '401': { $ref: '#/components/responses/Unauthorized' },
           '403': { $ref: '#/components/responses/Forbidden' },
@@ -835,7 +843,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         'x-requiredPermissions': { blog: ['read'] },
         parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
         responses: {
-          '200': { description: 'Blog fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogResponse' } } } },
+          '200': { description: 'Blog fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogDetailResponse' } } } },
           '400': { $ref: '#/components/responses/BadRequest' },
           '401': { $ref: '#/components/responses/Unauthorized' },
           '403': { $ref: '#/components/responses/Forbidden' },
@@ -851,7 +859,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
         requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/UpdateBlogRequest' } } } },
         responses: {
-          '200': { description: 'Blog updated successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogResponse' } } } },
+          '200': { description: 'Blog updated successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogDetailResponse' } } } },
           '400': { $ref: '#/components/responses/BadRequest' },
           '401': { $ref: '#/components/responses/Unauthorized' },
           '403': { $ref: '#/components/responses/Forbidden' },
@@ -917,16 +925,50 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
-    '/api/v1/blogs/{id}/seo': {
+    '/api/v1/categories': {
       get: {
-        tags: ['Blogs'],
-        summary: 'Fetch SEO metadata for a blog',
-        operationId: 'getBlogSeoByBlogId',
+        tags: ['Categories'],
+        summary: 'Fetch categories',
+        operationId: 'getCategories',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['read'] },
+        parameters: [
+          { name: 'page', in: 'query', schema: { type: 'integer', minimum: 1, default: DEFAULT_PAGE } },
+          { name: 'pageSize', in: 'query', schema: { type: 'integer', minimum: 1, maximum: MAX_PAGE_SIZE, default: DEFAULT_PAGE_SIZE } }
+        ],
+        responses: {
+          '200': { description: 'Categories fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/CategoriesResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' }
+        }
+      },
+      post: {
+        tags: ['Categories'],
+        summary: 'Create a category',
+        operationId: 'createCategory',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['create'] },
+        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/CreateCategoryRequest' } } } },
+        responses: {
+          '201': { description: 'Category created successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/CategoryResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '409': { $ref: '#/components/responses/Conflict' }
+        }
+      }
+    },
+    '/api/v1/categories/{id}': {
+      get: {
+        tags: ['Categories'],
+        summary: 'Fetch a category by id',
+        operationId: 'getCategoryById',
         security: [{ cookieAuth: [] }],
         'x-requiredPermissions': { blog: ['read'] },
         parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
         responses: {
-          '200': { description: 'Blog SEO fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogSeoResponse' } } } },
+          '200': { description: 'Category fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/CategoryResponse' } } } },
           '400': { $ref: '#/components/responses/BadRequest' },
           '401': { $ref: '#/components/responses/Unauthorized' },
           '403': { $ref: '#/components/responses/Forbidden' },
@@ -934,30 +976,114 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       },
       put: {
-        tags: ['Blogs'],
-        summary: 'Create or update SEO metadata for a blog',
-        operationId: 'upsertBlogSeoByBlogId',
+        tags: ['Categories'],
+        summary: 'Update a category by id',
+        operationId: 'updateCategoryById',
         security: [{ cookieAuth: [] }],
         'x-requiredPermissions': { blog: ['update'] },
         parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
-        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/UpsertBlogSeoRequest' } } } },
+        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/UpdateCategoryRequest' } } } },
         responses: {
-          '200': { description: 'Blog SEO saved successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogSeoResponse' } } } },
+          '200': { description: 'Category updated successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/CategoryResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' },
+          '409': { $ref: '#/components/responses/Conflict' }
+        }
+      },
+      delete: {
+        tags: ['Categories'],
+        summary: 'Delete a category by id',
+        operationId: 'deleteCategoryById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['delete'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        responses: {
+          '200': { description: 'Category deleted successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/CategoryResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      }
+    },
+    '/api/v1/tags': {
+      get: {
+        tags: ['Tags'],
+        summary: 'Fetch tags',
+        operationId: 'getTags',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['read'] },
+        parameters: [
+          { name: 'page', in: 'query', schema: { type: 'integer', minimum: 1, default: DEFAULT_PAGE } },
+          { name: 'pageSize', in: 'query', schema: { type: 'integer', minimum: 1, maximum: MAX_PAGE_SIZE, default: DEFAULT_PAGE_SIZE } }
+        ],
+        responses: {
+          '200': { description: 'Tags fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/TagsResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' }
+        }
+      },
+      post: {
+        tags: ['Tags'],
+        summary: 'Create a tag',
+        operationId: 'createTag',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['create'] },
+        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/CreateTagRequest' } } } },
+        responses: {
+          '201': { description: 'Tag created successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/TagResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '409': { $ref: '#/components/responses/Conflict' }
+        }
+      }
+    },
+    '/api/v1/tags/{id}': {
+      get: {
+        tags: ['Tags'],
+        summary: 'Fetch a tag by id',
+        operationId: 'getTagById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['read'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        responses: {
+          '200': { description: 'Tag fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/TagResponse' } } } },
           '400': { $ref: '#/components/responses/BadRequest' },
           '401': { $ref: '#/components/responses/Unauthorized' },
           '403': { $ref: '#/components/responses/Forbidden' },
           '404': { $ref: '#/components/responses/NotFound' }
         }
       },
-      delete: {
-        tags: ['Blogs'],
-        summary: 'Delete SEO metadata for a blog',
-        operationId: 'deleteBlogSeoByBlogId',
+      put: {
+        tags: ['Tags'],
+        summary: 'Update a tag by id',
+        operationId: 'updateTagById',
         security: [{ cookieAuth: [] }],
         'x-requiredPermissions': { blog: ['update'] },
         parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/UpdateTagRequest' } } } },
         responses: {
-          '200': { description: 'Blog SEO deleted successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogSeoResponse' } } } },
+          '200': { description: 'Tag updated successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/TagResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' },
+          '409': { $ref: '#/components/responses/Conflict' }
+        }
+      },
+      delete: {
+        tags: ['Tags'],
+        summary: 'Delete a tag by id',
+        operationId: 'deleteTagById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { blog: ['delete'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        responses: {
+          '200': { description: 'Tag deleted successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/TagResponse' } } } },
           '400': { $ref: '#/components/responses/BadRequest' },
           '401': { $ref: '#/components/responses/Unauthorized' },
           '403': { $ref: '#/components/responses/Forbidden' },
@@ -4006,6 +4132,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           slug: { type: 'string', maxLength: 191, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' },
           featureImage: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
           excerpt: { type: 'string', nullable: true, maxLength: 1000 },
+          blogSeo: { $ref: '#/components/schemas/BlogSeoInput' },
           isPublished: { type: 'boolean', description: 'Defaults to false when omitted.' }
         }
       },
@@ -4019,10 +4146,18 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           slug: { type: 'string', maxLength: 191, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' },
           featureImage: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
           excerpt: { type: 'string', nullable: true, maxLength: 1000 },
-          isPublished: { type: 'boolean' }
+          isPublished: { type: 'boolean' },
+          blogSeo: { allOf: [{ $ref: '#/components/schemas/BlogSeoInput' }], nullable: true, description: 'When null, removes SEO metadata; when omitted, leaves it unchanged.' },
+          categoryIds: {
+            type: 'array',
+            maxItems: 100,
+            items: { type: 'string', minLength: 1 },
+            description: 'When provided, replaces all categories attached to the blog. An empty array clears them.'
+          },
+          tagIds: { type: 'array', maxItems: 100, items: { type: 'string', minLength: 1 }, description: 'When provided, replaces all tags attached to the blog. An empty array clears them.' }
         }
       },
-      UpsertBlogSeoRequest: {
+      BlogSeoInput: {
         type: 'object',
         additionalProperties: false,
         required: ['metaTitle', 'metaDescription'],
@@ -4041,6 +4176,86 @@ export const createOpenApiDocument = (baseUrl: string) => ({
           metaDescription: { type: 'string', minLength: 1, maxLength: 1000 },
           createdAt: { type: 'string', format: 'date-time' },
           updatedAt: { type: 'string', format: 'date-time' }
+        }
+      },
+      CreateCategoryRequest: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['name', 'slug'],
+        properties: {
+          name: { type: 'string', minLength: 1, maxLength: 100 },
+          slug: { type: 'string', minLength: 1, maxLength: 191, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' }
+        }
+      },
+      UpdateCategoryRequest: {
+        type: 'object',
+        additionalProperties: false,
+        minProperties: 1,
+        properties: {
+          name: { type: 'string', minLength: 1, maxLength: 100 },
+          slug: { type: 'string', minLength: 1, maxLength: 191, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' }
+        }
+      },
+      Category: {
+        type: 'object',
+        required: ['id', 'name', 'slug', 'createdAt', 'updatedAt'],
+        properties: {
+          id: { type: 'string' },
+          name: { type: 'string', maxLength: 100 },
+          slug: { type: 'string', maxLength: 191 },
+          createdAt: { type: 'string', format: 'date-time' },
+          updatedAt: { type: 'string', format: 'date-time' }
+        }
+      },
+      CreateTagRequest: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['name', 'slug'],
+        properties: {
+          name: { type: 'string', minLength: 1, maxLength: 100 },
+          slug: { type: 'string', minLength: 1, maxLength: 191, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' }
+        }
+      },
+      UpdateTagRequest: {
+        type: 'object',
+        additionalProperties: false,
+        minProperties: 1,
+        properties: {
+          name: { type: 'string', minLength: 1, maxLength: 100 },
+          slug: { type: 'string', minLength: 1, maxLength: 191, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' }
+        }
+      },
+      Tag: {
+        type: 'object',
+        required: ['id', 'name', 'slug', 'createdAt', 'updatedAt'],
+        properties: {
+          id: { type: 'string' },
+          name: { type: 'string', maxLength: 100 },
+          slug: { type: 'string', maxLength: 191 },
+          createdAt: { type: 'string', format: 'date-time' },
+          updatedAt: { type: 'string', format: 'date-time' }
+        }
+      },
+      BlogCategory: {
+        type: 'object',
+        required: ['id', 'blogId', 'categoryId', 'createdAt', 'category'],
+        properties: {
+          id: { type: 'string' },
+          blogId: { type: 'string' },
+          categoryId: { type: 'string' },
+          createdAt: { type: 'string', format: 'date-time' },
+          category: { $ref: '#/components/schemas/Category' }
+        }
+      },
+      BlogTag: {
+        type: 'object',
+        required: ['id', 'blogId', 'tagId', 'createdAt', 'tag'],
+        properties: {
+          id: { type: 'string' },
+          blogId: { type: 'string' },
+          tagId: { type: 'string' },
+          createdAt: { type: 'string', format: 'date-time' },
+          tag: { $ref: '#/components/schemas/Tag' }
         }
       },
       BlogSummary: {
@@ -4065,16 +4280,70 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             required: ['content'],
             properties: {
               content: { $ref: '#/components/schemas/TiptapDocument' },
-              blogSeo: { allOf: [{ $ref: '#/components/schemas/BlogSeo' }], nullable: true, description: 'Included when fetching a blog by ID or published slug.' }
+              blogSeo: { allOf: [{ $ref: '#/components/schemas/BlogSeo' }], nullable: true, description: 'Included in blog detail, create, and update responses.' },
+              blogCategories: { type: 'array', items: { $ref: '#/components/schemas/BlogCategory' }, description: 'Included in blog detail, create, and update responses.' },
+              blogTags: { type: 'array', items: { $ref: '#/components/schemas/BlogTag' }, description: 'Included in blog detail, create, and update responses.' }
             }
           }
         ]
       },
-      BlogSeoResponse: {
-        allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { $ref: '#/components/schemas/BlogSeo' } } }]
+      CategoryResponse: {
+        allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { $ref: '#/components/schemas/Category' } } }]
+      },
+      TagResponse: {
+        allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { $ref: '#/components/schemas/Tag' } } }]
+      },
+      CategoriesResponse: {
+        allOf: [
+          { $ref: '#/components/schemas/ApiResponse' },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['items', 'pagination'],
+                properties: { items: { type: 'array', items: { $ref: '#/components/schemas/Category' } }, pagination: { $ref: '#/components/schemas/PaginationMeta' } }
+              }
+            }
+          }
+        ]
+      },
+      TagsResponse: {
+        allOf: [
+          { $ref: '#/components/schemas/ApiResponse' },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['items', 'pagination'],
+                properties: { items: { type: 'array', items: { $ref: '#/components/schemas/Tag' } }, pagination: { $ref: '#/components/schemas/PaginationMeta' } }
+              }
+            }
+          }
+        ]
       },
       BlogResponse: {
         allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { $ref: '#/components/schemas/Blog' } } }]
+      },
+      BlogDetail: {
+        allOf: [
+          { $ref: '#/components/schemas/Blog' },
+          {
+            type: 'object',
+            required: ['blogSeo', 'blogCategories', 'blogTags'],
+            properties: {
+              blogSeo: { allOf: [{ $ref: '#/components/schemas/BlogSeo' }], nullable: true },
+              blogCategories: { type: 'array', items: { $ref: '#/components/schemas/BlogCategory' } },
+              blogTags: { type: 'array', items: { $ref: '#/components/schemas/BlogTag' } }
+            }
+          }
+        ]
+      },
+      BlogDetailResponse: {
+        allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { $ref: '#/components/schemas/BlogDetail' } } }]
       },
       BlogsResponse: {
         allOf: [
