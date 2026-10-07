@@ -86,6 +86,38 @@ const createDashboardGetOperation = (summary: string, operationId: string, schem
   }
 });
 
+const portfolioAddonProperties = {
+  type: { type: 'string', enum: ['CHALLENGE', 'APPROACH', 'DELIVERY', 'RESULTS'] },
+  title: { type: 'string', minLength: 1, maxLength: 255 },
+  content: { type: 'string', nullable: true, maxLength: 10000 },
+  imageUrl: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
+  cards: {
+    type: 'array',
+    maxItems: 30,
+    description: 'DELIVERY cards: title, duration, desc. RESULTS cards: label, value, caption.',
+    items: { oneOf: [{ $ref: '#/components/schemas/PortfolioStepCard' }, { $ref: '#/components/schemas/PortfolioMetricCard' }] }
+  }
+};
+
+const portfolioRequestProperties = {
+  slug: { type: 'string', maxLength: 191, pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$' },
+  title: { type: 'string', minLength: 1, maxLength: 255 },
+  description: { type: 'string', minLength: 1, maxLength: 2000 },
+  overview: { type: 'string', nullable: true, maxLength: 10000 },
+  imageUrl: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
+  client: { type: 'string', nullable: true, maxLength: 255 },
+  year: { type: 'string', nullable: true, pattern: '^\\d{4}$' },
+  industry: { type: 'string', nullable: true, maxLength: 100 },
+  duration: { type: 'string', nullable: true, maxLength: 100 },
+  tags: { type: 'array', maxItems: 30, items: { type: 'string', maxLength: 100 } },
+  services: { type: 'array', maxItems: 30, items: { type: 'string', maxLength: 100 } },
+  tech: { type: 'array', maxItems: 30, items: { type: 'string', maxLength: 100 } },
+  isPublished: { type: 'boolean' },
+  isFeatured: { type: 'boolean' },
+  sortOrder: { type: 'integer', minimum: 0 },
+  addons: { type: 'array', maxItems: 30, items: { $ref: '#/components/schemas/PortfolioAddonInput' }, description: 'Array order sets each addon sortOrder.' }
+};
+
 export const createOpenApiDocument = (baseUrl: string) => ({
   openapi: '3.0.3',
   info: {
@@ -123,6 +155,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     {
       name: 'Blogs',
       description: 'Published blog posts and protected blog management endpoints.'
+    },
+    {
+      name: 'Portfolios',
+      description: 'Published case studies and protected portfolio management endpoints.'
     },
     {
       name: 'Categories',
@@ -919,6 +955,235 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
         responses: {
           '200': { description: 'Blog feature image deleted successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/BlogResponse' } } } },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      }
+    },
+    '/api/v1/portfolios/published': {
+      get: {
+        tags: ['Portfolios'],
+        summary: 'Fetch published portfolios',
+        operationId: 'getPublishedPortfolios',
+        parameters: [
+          { name: 'page', in: 'query', schema: { type: 'integer', minimum: 1, default: DEFAULT_PAGE } },
+          { name: 'pageSize', in: 'query', schema: { type: 'integer', minimum: 1, maximum: MAX_PAGE_SIZE, default: DEFAULT_PAGE_SIZE } }
+        ],
+        responses: {
+          '200': { description: 'Portfolios fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfoliosResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' }
+        }
+      }
+    },
+    '/api/v1/portfolios/published/{slug}': {
+      get: {
+        tags: ['Portfolios'],
+        summary: 'Fetch a published portfolio by slug',
+        operationId: 'getPublishedPortfolioBySlug',
+        parameters: [{ name: 'slug', in: 'path', required: true, schema: { type: 'string', maxLength: 191 } }],
+        responses: {
+          '200': { description: 'Portfolio fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      }
+    },
+    '/api/v1/portfolios': {
+      get: {
+        tags: ['Portfolios'],
+        summary: 'Fetch portfolios',
+        operationId: 'getPortfolios',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { portfolio: ['read'] },
+        parameters: [
+          { name: 'title', in: 'query', schema: { type: 'string', minLength: 1, maxLength: 255 }, description: 'Filter by portfolio title.' },
+          { name: 'isPublished', in: 'query', schema: { type: 'boolean' } },
+          { name: 'page', in: 'query', schema: { type: 'integer', minimum: 1, default: DEFAULT_PAGE } },
+          { name: 'pageSize', in: 'query', schema: { type: 'integer', minimum: 1, maximum: MAX_PAGE_SIZE, default: DEFAULT_PAGE_SIZE } }
+        ],
+        responses: {
+          '200': { description: 'Portfolios fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfoliosResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' }
+        }
+      },
+      post: {
+        tags: ['Portfolios'],
+        summary: 'Create a portfolio',
+        operationId: 'createPortfolio',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { portfolio: ['create'] },
+        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/CreatePortfolioRequest' } } } },
+        responses: {
+          '201': { description: 'Portfolio created successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '409': { $ref: '#/components/responses/Conflict' }
+        }
+      }
+    },
+    '/api/v1/portfolios/{id}': {
+      get: {
+        tags: ['Portfolios'],
+        summary: 'Fetch a portfolio by id',
+        operationId: 'getPortfolioById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { portfolio: ['read'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        responses: {
+          '200': { description: 'Portfolio fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      },
+      put: {
+        tags: ['Portfolios'],
+        summary: 'Update a portfolio by id',
+        operationId: 'updatePortfolioById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { portfolio: ['update'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/UpdatePortfolioRequest' } } } },
+        responses: {
+          '200': { description: 'Portfolio updated successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' },
+          '409': { $ref: '#/components/responses/Conflict' }
+        }
+      },
+      delete: {
+        tags: ['Portfolios'],
+        summary: 'Delete a portfolio by id',
+        operationId: 'deletePortfolioById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { portfolio: ['delete'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        responses: {
+          '200': { description: 'Portfolio deleted successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioResponse' } } } },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      }
+    },
+    '/api/v1/portfolios/{id}/cover-image': {
+      put: {
+        tags: ['Portfolios'],
+        summary: 'Upload or replace a portfolio cover image',
+        operationId: 'updatePortfolioCoverImageById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { portfolio: ['update'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        requestBody: {
+          required: true,
+          content: {
+            'multipart/form-data': {
+              schema: {
+                type: 'object',
+                required: ['image'],
+                properties: { image: { type: 'string', format: 'binary', description: 'JPG, PNG, or WebP image up to 5 MB.' } }
+              }
+            }
+          }
+        },
+        responses: {
+          '200': { description: 'Portfolio cover image updated successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      },
+      delete: {
+        tags: ['Portfolios'],
+        summary: 'Remove a portfolio cover image',
+        operationId: 'deletePortfolioCoverImageById',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { portfolio: ['update'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        responses: {
+          '200': { description: 'Portfolio cover image deleted successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioResponse' } } } },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      }
+    },
+    '/api/v1/portfolios/{id}/addons': {
+      post: {
+        tags: ['Portfolios'],
+        summary: 'Create a portfolio add-on',
+        operationId: 'createPortfolioAddon',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { portfolio: ['update'] },
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }],
+        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioAddonInput' } } } },
+        responses: {
+          '201': { description: 'Portfolio add-on created successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioAddonResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' },
+          '409': { $ref: '#/components/responses/Conflict' }
+        }
+      }
+    },
+    '/api/v1/portfolios/{id}/addons/{addonId}': {
+      get: {
+        tags: ['Portfolios'],
+        summary: 'Fetch a portfolio add-on by id',
+        operationId: 'getPortfolioAddon',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { portfolio: ['read'] },
+        parameters: [
+          { name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } },
+          { name: 'addonId', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }
+        ],
+        responses: {
+          '200': { description: 'Portfolio add-on fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioAddonResponse' } } } },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      },
+      put: {
+        tags: ['Portfolios'],
+        summary: 'Update a portfolio add-on by id',
+        operationId: 'updatePortfolioAddon',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { portfolio: ['update'] },
+        parameters: [
+          { name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } },
+          { name: 'addonId', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }
+        ],
+        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioAddonInput' } } } },
+        responses: {
+          '200': { description: 'Portfolio add-on updated successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioAddonResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' },
+          '404': { $ref: '#/components/responses/NotFound' }
+        }
+      },
+      delete: {
+        tags: ['Portfolios'],
+        summary: 'Delete a portfolio add-on by id',
+        operationId: 'deletePortfolioAddon',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { portfolio: ['update'] },
+        parameters: [
+          { name: 'id', in: 'path', required: true, schema: { type: 'string', minLength: 1 } },
+          { name: 'addonId', in: 'path', required: true, schema: { type: 'string', minLength: 1 } }
+        ],
+        responses: {
+          '200': { description: 'Portfolio add-on deleted successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PortfolioAddonResponse' } } } },
           '401': { $ref: '#/components/responses/Unauthorized' },
           '403': { $ref: '#/components/responses/Forbidden' },
           '404': { $ref: '#/components/responses/NotFound' }
@@ -4134,6 +4399,89 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             example: 'AED 10,000 - AED 25,000'
           }
         }
+      },
+      PortfolioStepCard: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['title', 'duration', 'desc'],
+        properties: { title: { type: 'string', minLength: 1, maxLength: 255 }, duration: { type: 'string', maxLength: 100 }, desc: { type: 'string', minLength: 1, maxLength: 2000 } }
+      },
+      PortfolioMetricCard: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['label', 'value'],
+        properties: {
+          label: { type: 'string', minLength: 1, maxLength: 255 },
+          value: { type: 'string', minLength: 1, maxLength: 255 },
+          caption: { type: 'string', nullable: true, maxLength: 255 }
+        }
+      },
+      PortfolioAddonInput: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['type', 'title'],
+        properties: portfolioAddonProperties
+      },
+      PortfolioAddon: {
+        type: 'object',
+        required: ['id', 'portfolioId', 'type', 'title', 'sortOrder', 'createdAt', 'updatedAt'],
+        properties: {
+          ...portfolioAddonProperties,
+          id: { type: 'string' },
+          portfolioId: { type: 'string' },
+          sortOrder: { type: 'integer' },
+          createdAt: { type: 'string', format: 'date-time' },
+          updatedAt: { type: 'string', format: 'date-time' }
+        }
+      },
+      PortfolioAddonResponse: {
+        allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { $ref: '#/components/schemas/PortfolioAddon' } } }]
+      },
+      CreatePortfolioRequest: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['slug', 'title', 'description'],
+        properties: portfolioRequestProperties
+      },
+      UpdatePortfolioRequest: {
+        type: 'object',
+        additionalProperties: false,
+        minProperties: 1,
+        properties: portfolioRequestProperties,
+        description: 'All properties are optional. When addons is supplied it replaces the complete ordered addon list; [] clears it.'
+      },
+      Portfolio: {
+        type: 'object',
+        required: ['id', 'slug', 'title', 'description', 'tags', 'isPublished', 'isFeatured', 'sortOrder', 'addons', 'createdAt', 'updatedAt'],
+        properties: {
+          ...portfolioRequestProperties,
+          id: { type: 'string' },
+          addons: { type: 'array', items: { $ref: '#/components/schemas/PortfolioAddon' } },
+          createdAt: { type: 'string', format: 'date-time' },
+          updatedAt: { type: 'string', format: 'date-time' }
+        }
+      },
+      PortfolioResponse: {
+        allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { $ref: '#/components/schemas/Portfolio' } } }]
+      },
+      PortfoliosResponse: {
+        allOf: [
+          { $ref: '#/components/schemas/ApiResponse' },
+          {
+            type: 'object',
+            required: ['data'],
+            properties: {
+              data: {
+                type: 'object',
+                required: ['items', 'pagination'],
+                properties: {
+                  items: { type: 'array', items: { $ref: '#/components/schemas/Portfolio' } },
+                  pagination: { $ref: '#/components/schemas/PaginationMeta' }
+                }
+              }
+            }
+          }
+        ]
       },
       TiptapDocument: {
         type: 'object',
