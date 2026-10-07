@@ -34,6 +34,15 @@ export const categoryController = {
     }
   }) satisfies RequestHandler,
 
+  getCategoryOptions: (async (_req, res, next) => {
+    try {
+      const options = await categoryService.getCategoryOptions();
+      res.status(HttpStatus.OK).json(ApiResponse({ success: true, status: HttpStatus.OK, message: 'Category options fetched successfully.', data: options }));
+    } catch (error) {
+      next(error);
+    }
+  }) satisfies RequestHandler,
+
   getCategoryById: (async (req, res, next) => {
     try {
       const { id } = categoryIdParamsSchema.parse(req.params);

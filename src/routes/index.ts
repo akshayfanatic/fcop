@@ -34,5 +34,5 @@ apiRouter.use('/api/v1/dashboard', dashboardRouter);
 apiRouter.use('/api/v1/notifications', notificationRouter); // Current member notification inbox.
 apiRouter.use('/api/v1/newsletter', newsletterRouter); // Public signup and protected newsletter subscriber management.
 apiRouter.use('/api/v1/blogs', blogRouter); // Published posts and protected blog management.
-apiRouter.use('/api/v1/categories', categoryRouter); // Protected blog category management.
+apiRouter.use('/api/v1/categories', categoryRouter); // Public options and protected blog category management.
 apiRouter.use('/api/v1/tags', tagRouter); // Protected blog tag management.

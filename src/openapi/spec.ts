@@ -959,6 +959,17 @@ export const createOpenApiDocument = (baseUrl: string) => ({
         }
       }
     },
+    '/api/v1/categories/options': {
+      get: {
+        tags: ['Categories'],
+        summary: 'Fetch category options',
+        description: 'Returns all categories as label and value options.',
+        operationId: 'getCategoryOptions',
+        responses: {
+          '200': { description: 'Category options fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/CategoryOptionsResponse' } } } }
+        }
+      }
+    },
     '/api/v1/categories/{id}': {
       get: {
         tags: ['Categories'],
@@ -4286,6 +4297,17 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             }
           }
         ]
+      },
+      CategoryOption: {
+        type: 'object',
+        required: ['label', 'value'],
+        properties: {
+          label: { type: 'string' },
+          value: { type: 'string' }
+        }
+      },
+      CategoryOptionsResponse: {
+        allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { type: 'array', items: { $ref: '#/components/schemas/CategoryOption' } } } }]
       },
       CategoryResponse: {
         allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { $ref: '#/components/schemas/Category' } } }]

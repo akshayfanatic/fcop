@@ -6,6 +6,11 @@ import { createPaginatedData, getPaginationOffset } from '../utils/pagination.js
 import type { CategoryFiltersInput, CreateCategoryInput, UpdateCategoryInput } from '../validators/category.validator.js';
 
 export const categoryService = {
+  getCategoryOptions: async () => {
+    const categories = await prisma.category.findMany({ select: { id: true, name: true }, orderBy: [{ name: 'asc' }, { id: 'asc' }] });
+    return categories.map(({ id, name }) => ({ label: name, value: id }));
+  },
+
   getCategories: async (filters: CategoryFiltersInput) => {
     const [items, totalItems] = await Promise.all([prisma.category.findMany({ orderBy: { name: 'asc' }, skip: getPaginationOffset(filters), take: filters.pageSize }), prisma.category.count()]);
 
