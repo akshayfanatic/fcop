@@ -31,4 +31,8 @@ export type * from './models/Lead.js';
 export type * from './models/NewsletterSubscriber.js';
 export type * from './models/Blog.js';
 export type * from './models/BlogSeo.js';
+export type * from './models/Category.js';
+export type * from './models/Tag.js';
+export type * from './models/BlogCategory.js';
+export type * from './models/BlogTag.js';
 export type * from './commonInputTypes.js';

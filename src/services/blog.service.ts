@@ -17,6 +17,8 @@ const blogSummarySelect = {
   updatedAt: true
 } satisfies Prisma.BlogSelect;
 
+const blogDetailInclude = { blogSeo: true, blogCategories: { include: { category: true } }, blogTags: { include: { tag: true } } } satisfies Prisma.BlogInclude;
+
 const featureImagePublicId = (id: string) => `fcop/blogs/${id}/feature-image`;
 
 const hasManagedFeatureImage = (id: string, url: string | null) => Boolean(url?.includes(`/${featureImagePublicId(id)}.`));
@@ -40,7 +42,10 @@ export const blogService = {
 
   getPublishedBlogBySlug: async (slug: string) => {
     // Keep unpublished drafts out of the public blog even when their slug is known.
-    const blog = await prisma.blog.findFirst({ where: { slug, isPublished: true }, include: { blogSeo: true } });
+    const blog = await prisma.blog.findFirst({
+      where: { slug, isPublished: true },
+      include: blogDetailInclude
+    });
     if (!blog) {
       throw createHttpError(HttpStatus.NOT_FOUND, 'Blog not found.', 'NOT_FOUND');
     }
@@ -66,24 +71,58 @@ export const blogService = {
   },
 
   getBlogById: async (id: string) => {
-    const blog = await prisma.blog.findUnique({ where: { id }, include: { blogSeo: true } });
+    const blog = await prisma.blog.findUnique({
+      where: { id },
+      include: blogDetailInclude
+    });
     if (!blog) {
       throw createHttpError(HttpStatus.NOT_FOUND, 'Blog not found.', 'NOT_FOUND');
     }
     return blog;
   },
 
-  createBlog: async (payload: CreateBlogInput) =>
-    prisma.blog.create({
-      data: payload satisfies Prisma.BlogCreateInput
-    }),
+  createBlog: async (payload: CreateBlogInput) => {
+    const { blogSeo, ...blogData } = payload;
+    return prisma.blog.create({
+      data: { ...blogData, ...(blogSeo === undefined ? {} : { blogSeo: { create: blogSeo } }) } satisfies Prisma.BlogCreateInput,
+      include: blogDetailInclude
+    });
+  },
 
   updateBlogById: async (id: string, payload: UpdateBlogInput) => {
-    const result = await prisma.blog.updateMany({ where: { id }, data: payload });
-    if (result.count === 0) {
-      throw createHttpError(HttpStatus.NOT_FOUND, 'Blog not found.', 'NOT_FOUND');
-    }
-    return prisma.blog.findUniqueOrThrow({ where: { id } });
+    const { categoryIds, tagIds, blogSeo, ...blogData } = payload;
+
+    return prisma.$transaction(async (tx) => {
+      const blog = await tx.blog.findUnique({ where: { id }, select: { id: true } });
+      if (!blog) throw createHttpError(HttpStatus.NOT_FOUND, 'Blog not found.', 'NOT_FOUND');
+
+      const uniqueCategoryIds = categoryIds === undefined ? undefined : [...new Set(categoryIds)];
+      const uniqueTagIds = tagIds === undefined ? undefined : [...new Set(tagIds)];
+
+      if (uniqueCategoryIds !== undefined) {
+        const count = await tx.category.count({ where: { id: { in: uniqueCategoryIds } } });
+        if (count !== uniqueCategoryIds.length) throw createHttpError(HttpStatus.BAD_REQUEST, 'One or more categories were not found.', 'INVALID_BLOG_CATEGORY');
+      }
+      if (uniqueTagIds !== undefined) {
+        const count = await tx.tag.count({ where: { id: { in: uniqueTagIds } } });
+        if (count !== uniqueTagIds.length) throw createHttpError(HttpStatus.BAD_REQUEST, 'One or more tags were not found.', 'INVALID_BLOG_TAG');
+      }
+
+      // Update the blog and its selections together so invalid IDs cannot leave partial changes.
+      if (Object.keys(blogData).length > 0) await tx.blog.update({ where: { id }, data: blogData });
+      if (blogSeo === null) await tx.blogSeo.deleteMany({ where: { blogId: id } });
+      else if (blogSeo !== undefined) await tx.blogSeo.upsert({ where: { blogId: id }, create: { blogId: id, ...blogSeo }, update: blogSeo });
+      if (uniqueCategoryIds !== undefined) {
+        await tx.blogCategory.deleteMany({ where: { blogId: id } });
+        if (uniqueCategoryIds.length > 0) await tx.blogCategory.createMany({ data: uniqueCategoryIds.map((categoryId) => ({ blogId: id, categoryId })) });
+      }
+      if (uniqueTagIds !== undefined) {
+        await tx.blogTag.deleteMany({ where: { blogId: id } });
+        if (uniqueTagIds.length > 0) await tx.blogTag.createMany({ data: uniqueTagIds.map((tagId) => ({ blogId: id, tagId })) });
+      }
+
+      return tx.blog.findUniqueOrThrow({ where: { id }, include: blogDetailInclude });
+    });
   },
 
   updateBlogFeatureImageById: async (id: string, file: Express.Multer.File) => {

@@ -71,7 +71,11 @@ export const ModelName = {
   Lead: 'Lead',
   NewsletterSubscriber: 'NewsletterSubscriber',
   Blog: 'Blog',
-  BlogSeo: 'BlogSeo'
+  BlogSeo: 'BlogSeo',
+  Category: 'Category',
+  Tag: 'Tag',
+  BlogCategory: 'BlogCategory',
+  BlogTag: 'BlogTag'
 } as const;
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -399,6 +403,44 @@ export const BlogSeoScalarFieldEnum = {
 
 export type BlogSeoScalarFieldEnum = (typeof BlogSeoScalarFieldEnum)[keyof typeof BlogSeoScalarFieldEnum];
 
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum];
+
+export const TagScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum];
+
+export const BlogCategoryScalarFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt'
+} as const;
+
+export type BlogCategoryScalarFieldEnum = (typeof BlogCategoryScalarFieldEnum)[keyof typeof BlogCategoryScalarFieldEnum];
+
+export const BlogTagScalarFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  tagId: 'tagId',
+  createdAt: 'createdAt'
+} as const;
+
+export type BlogTagScalarFieldEnum = (typeof BlogTagScalarFieldEnum)[keyof typeof BlogTagScalarFieldEnum];
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -671,3 +713,35 @@ export const BlogSeoOrderByRelevanceFieldEnum = {
 } as const;
 
 export type BlogSeoOrderByRelevanceFieldEnum = (typeof BlogSeoOrderByRelevanceFieldEnum)[keyof typeof BlogSeoOrderByRelevanceFieldEnum];
+
+export const CategoryOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug'
+} as const;
+
+export type CategoryOrderByRelevanceFieldEnum = (typeof CategoryOrderByRelevanceFieldEnum)[keyof typeof CategoryOrderByRelevanceFieldEnum];
+
+export const TagOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug'
+} as const;
+
+export type TagOrderByRelevanceFieldEnum = (typeof TagOrderByRelevanceFieldEnum)[keyof typeof TagOrderByRelevanceFieldEnum];
+
+export const BlogCategoryOrderByRelevanceFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  categoryId: 'categoryId'
+} as const;
+
+export type BlogCategoryOrderByRelevanceFieldEnum = (typeof BlogCategoryOrderByRelevanceFieldEnum)[keyof typeof BlogCategoryOrderByRelevanceFieldEnum];
+
+export const BlogTagOrderByRelevanceFieldEnum = {
+  id: 'id',
+  blogId: 'blogId',
+  tagId: 'tagId'
+} as const;
+
+export type BlogTagOrderByRelevanceFieldEnum = (typeof BlogTagOrderByRelevanceFieldEnum)[keyof typeof BlogTagOrderByRelevanceFieldEnum];

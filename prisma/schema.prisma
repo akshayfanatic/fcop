@@ -461,16 +461,18 @@ model NewsletterSubscriber {
 }
 
 model Blog {
-  id           String   @id @default(cuid()) @db.VarChar(36)
-  title        String   @db.VarChar(255)
-  content      Json
-  slug         String   @unique @db.VarChar(191)
-  featureImage String?  @db.Text
-  excerpt      String?  @db.Text
-  isPublished  Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  blogSeo      BlogSeo?
+  id             String         @id @default(cuid()) @db.VarChar(36)
+  title          String         @db.VarChar(255)
+  content        Json
+  slug           String         @unique @db.VarChar(191)
+  featureImage   String?        @db.Text
+  excerpt        String?        @db.Text
+  isPublished    Boolean        @default(false)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  blogSeo        BlogSeo?
+  blogCategories BlogCategory[]
+  blogTags       BlogTag[]
 
   @@index([isPublished, createdAt])
   @@map("blog")
@@ -486,4 +488,52 @@ model BlogSeo {
   blog            Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
 
   @@map("blogSeo")
+}
+
+model Category {
+  id             String         @id @default(cuid()) @db.VarChar(36)
+  name           String         @db.VarChar(100)
+  slug           String         @unique @db.VarChar(191)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  blogCategories BlogCategory[]
+
+  @@map("category")
+}
+
+model Tag {
+  id        String    @id @default(cuid()) @db.VarChar(36)
+  name      String    @db.VarChar(100)
+  slug      String    @unique @db.VarChar(191)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  blogTags  BlogTag[]
+
+  @@map("tag")
+}
+
+model BlogCategory {
+  id         String   @id @default(cuid()) @db.VarChar(36)
+  blogId     String   @db.VarChar(36)
+  categoryId String   @db.VarChar(36)
+  createdAt  DateTime @default(now())
+  blog       Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([blogId, categoryId])
+  @@index([categoryId])
+  @@map("blogCategory")
+}
+
+model BlogTag {
+  id        String   @id @default(cuid()) @db.VarChar(36)
+  blogId    String   @db.VarChar(36)
+  tagId     String   @db.VarChar(36)
+  createdAt DateTime @default(now())
+  blog      Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  tag       Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([blogId, tagId])
+  @@index([tagId])
+  @@map("blogTag")
 }

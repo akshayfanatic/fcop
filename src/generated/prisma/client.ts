@@ -164,3 +164,23 @@ export type Blog = Prisma.BlogModel;
  *
  */
 export type BlogSeo = Prisma.BlogSeoModel;
+/**
+ * Model Category
+ *
+ */
+export type Category = Prisma.CategoryModel;
+/**
+ * Model Tag
+ *
+ */
+export type Tag = Prisma.TagModel;
+/**
+ * Model BlogCategory
+ *
+ */
+export type BlogCategory = Prisma.BlogCategoryModel;
+/**
+ * Model BlogTag
+ *
+ */
+export type BlogTag = Prisma.BlogTagModel;
