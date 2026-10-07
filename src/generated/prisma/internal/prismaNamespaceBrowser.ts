@@ -71,6 +71,8 @@ export const ModelName = {
   Lead: 'Lead',
   NewsletterSubscriber: 'NewsletterSubscriber',
   Blog: 'Blog',
+  Portfolio: 'Portfolio',
+  PortfolioAddon: 'PortfolioAddon',
   BlogSeo: 'BlogSeo',
   Category: 'Category',
   Tag: 'Tag',
@@ -392,6 +394,46 @@ export const BlogScalarFieldEnum = {
 
 export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof BlogScalarFieldEnum];
 
+export const PortfolioScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  description: 'description',
+  overview: 'overview',
+  imageUrl: 'imageUrl',
+  client: 'client',
+  year: 'year',
+  industry: 'industry',
+  duration: 'duration',
+  tags: 'tags',
+  services: 'services',
+  tech: 'tech',
+  isPublished: 'isPublished',
+  isFeatured: 'isFeatured',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type PortfolioScalarFieldEnum = (typeof PortfolioScalarFieldEnum)[keyof typeof PortfolioScalarFieldEnum];
+
+export const PortfolioAddonScalarFieldEnum = {
+  id: 'id',
+  portfolioId: 'portfolioId',
+  type: 'type',
+  title: 'title',
+  content: 'content',
+  imageUrl: 'imageUrl',
+  cards: 'cards',
+  author: 'author',
+  authorRole: 'authorRole',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type PortfolioAddonScalarFieldEnum = (typeof PortfolioAddonScalarFieldEnum)[keyof typeof PortfolioAddonScalarFieldEnum];
+
 export const BlogSeoScalarFieldEnum = {
   id: 'id',
   blogId: 'blogId',
@@ -704,6 +746,34 @@ export const BlogOrderByRelevanceFieldEnum = {
 } as const;
 
 export type BlogOrderByRelevanceFieldEnum = (typeof BlogOrderByRelevanceFieldEnum)[keyof typeof BlogOrderByRelevanceFieldEnum];
+
+export const PortfolioOrderByRelevanceFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  description: 'description',
+  overview: 'overview',
+  imageUrl: 'imageUrl',
+  client: 'client',
+  year: 'year',
+  industry: 'industry',
+  duration: 'duration'
+} as const;
+
+export type PortfolioOrderByRelevanceFieldEnum = (typeof PortfolioOrderByRelevanceFieldEnum)[keyof typeof PortfolioOrderByRelevanceFieldEnum];
+
+export const PortfolioAddonOrderByRelevanceFieldEnum = {
+  id: 'id',
+  portfolioId: 'portfolioId',
+  type: 'type',
+  title: 'title',
+  content: 'content',
+  imageUrl: 'imageUrl',
+  author: 'author',
+  authorRole: 'authorRole'
+} as const;
+
+export type PortfolioAddonOrderByRelevanceFieldEnum = (typeof PortfolioAddonOrderByRelevanceFieldEnum)[keyof typeof PortfolioAddonOrderByRelevanceFieldEnum];
 
 export const BlogSeoOrderByRelevanceFieldEnum = {
   id: 'id',

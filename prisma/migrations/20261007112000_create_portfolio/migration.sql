@@ -1,0 +1,30 @@
+-- CreateTable
+CREATE TABLE `portfolio` (
+    `id` VARCHAR(36) NOT NULL,
+    `slug` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(255) NOT NULL,
+    `description` TEXT NOT NULL,
+    `overview` TEXT NULL,
+    `imageUrl` TEXT NULL,
+    `client` VARCHAR(255) NULL,
+    `year` VARCHAR(4) NULL,
+    `industry` VARCHAR(100) NULL,
+    `duration` VARCHAR(100) NULL,
+    `tags` JSON NOT NULL,
+    `services` JSON NULL,
+    `tech` JSON NULL,
+    `stats` JSON NOT NULL,
+    `sections` JSON NULL,
+    `approach` JSON NULL,
+    `gallery` JSON NULL,
+    `quote` JSON NULL,
+    `isPublished` BOOLEAN NOT NULL DEFAULT false,
+    `isFeatured` BOOLEAN NOT NULL DEFAULT false,
+    `sortOrder` INTEGER NOT NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    UNIQUE INDEX `portfolio_slug_key`(`slug`),
+    INDEX `portfolio_isPublished_sortOrder_idx`(`isPublished`, `sortOrder`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

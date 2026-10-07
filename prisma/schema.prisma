@@ -478,6 +478,51 @@ model Blog {
   @@map("blog")
 }
 
+model Portfolio {
+  id          String           @id @default(cuid()) @db.VarChar(36)
+  slug        String           @unique @db.VarChar(191)
+  title       String           @db.VarChar(255)
+  description String           @db.Text
+  overview    String?          @db.Text
+  imageUrl    String?          @db.Text
+  client      String?          @db.VarChar(255)
+  year        String?          @db.VarChar(4)
+  industry    String?          @db.VarChar(100)
+  duration    String?          @db.VarChar(100)
+  tags        Json
+  services    Json?
+  tech        Json?
+  isPublished Boolean          @default(false)
+  isFeatured  Boolean          @default(false)
+  sortOrder   Int              @default(0)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  addons      PortfolioAddon[]
+
+  @@index([isPublished, sortOrder])
+  @@map("portfolio")
+}
+
+model PortfolioAddon {
+  id          String    @id @default(cuid()) @db.VarChar(36)
+  portfolioId String    @db.VarChar(36)
+  type        String    @db.VarChar(50)
+  title       String    @db.VarChar(255)
+  content     String?   @db.Text
+  imageUrl    String?   @db.Text
+  cards       Json?
+  author      String?   @db.VarChar(255)
+  authorRole  String?   @db.VarChar(255)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+
+  @@index([portfolioId, sortOrder])
+  @@index([portfolioId, type])
+  @@map("portfolioAddon")
+}
+
 model BlogSeo {
   id              String   @id @default(cuid()) @db.VarChar(36)
   blogId          String   @unique @db.VarChar(36)
