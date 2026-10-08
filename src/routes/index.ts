@@ -18,6 +18,7 @@ import { categoryRouter } from './categories.js';
 import { tagRouter } from './tags.js';
 import { portfolioRouter } from './portfolios.js';
 import { teamRouter } from './team.js';
+import { siteSettingRouter } from './site-settings.js';
 
 export const apiRouter = Router();
 
@@ -40,3 +41,4 @@ apiRouter.use('/api/v1/categories', categoryRouter); // Public options and prote
 apiRouter.use('/api/v1/tags', tagRouter); // Public options and protected blog tag management.
 apiRouter.use('/api/v1/portfolios', portfolioRouter); // Public case studies and protected portfolio management.
 apiRouter.use('/api/v1/team', teamRouter); // Public staff profiles for the team section.
+apiRouter.use('/api/v1/site-settings', siteSettingRouter); // Public contact details and admin updates.
