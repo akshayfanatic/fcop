@@ -4027,7 +4027,7 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       },
       MeUser: {
         type: 'object',
-        required: ['id', 'name', 'email', 'image'],
+        required: ['id', 'name', 'email', 'image', 'designation', 'bio'],
         properties: {
           id: {
             type: 'string',
@@ -4047,12 +4047,24 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             format: 'uri',
             nullable: true,
             example: 'https://res.cloudinary.com/example/image/upload/v1/fcop/users/user-id/avatar.webp'
+          },
+          designation: {
+            type: 'string',
+            nullable: true,
+            maxLength: 191,
+            example: 'Product Designer'
+          },
+          bio: {
+            type: 'string',
+            nullable: true,
+            maxLength: 5000,
+            example: 'I design digital products and work with cross-functional teams.'
           }
         }
       },
       ProfileUser: {
         type: 'object',
-        required: ['id', 'name', 'email', 'image'],
+        required: ['id', 'name', 'email', 'image', 'designation', 'bio'],
         properties: {
           id: {
             type: 'string',
@@ -4072,6 +4084,18 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             format: 'uri',
             nullable: true,
             example: 'https://res.cloudinary.com/example/image/upload/v1/fcop/users/user-id/avatar.webp'
+          },
+          designation: {
+            type: 'string',
+            nullable: true,
+            maxLength: 191,
+            example: 'Product Designer'
+          },
+          bio: {
+            type: 'string',
+            nullable: true,
+            maxLength: 5000,
+            example: 'I design digital products and work with cross-functional teams.'
           }
         }
       },
@@ -4162,6 +4186,18 @@ export const createOpenApiDocument = (baseUrl: string) => ({
             type: 'string',
             nullable: true,
             example: 'https://example.com/avatar.png'
+          },
+          designation: {
+            type: 'string',
+            nullable: true,
+            maxLength: 191,
+            example: 'Product Designer'
+          },
+          bio: {
+            type: 'string',
+            nullable: true,
+            maxLength: 5000,
+            example: 'I design digital products and work with cross-functional teams.'
           },
           createdAt: {
             type: 'string',

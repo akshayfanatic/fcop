@@ -14,6 +14,8 @@ export type CurrentUserAccess = {
     name: string;
     email: string;
     image: string | null;
+    designation: string | null;
+    bio: string | null;
   };
   organizationId: string;
   memberId: string;
@@ -31,7 +33,9 @@ export const meService = {
         id: member.userId,
         name: member.user.name,
         email: member.user.email,
-        image: member.user.image
+        image: member.user.image,
+        designation: member.user.designation,
+        bio: member.user.bio
       },
       organizationId: member.organizationId,
       memberId: member.id,
@@ -63,7 +67,9 @@ export const meService = {
         id: true,
         name: true,
         email: true,
-        image: true
+        image: true,
+        designation: true,
+        bio: true
       }
     });
   },
@@ -88,7 +94,9 @@ export const meService = {
         id: true,
         name: true,
         email: true,
-        image: true
+        image: true,
+        designation: true,
+        bio: true
       }
     });
   }

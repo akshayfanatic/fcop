@@ -25,7 +25,9 @@ export const getSessionMember = async (headers: IncomingHttpHeaders) => {
           id: true,
           name: true,
           email: true,
-          image: true
+          image: true,
+          designation: true,
+          bio: true
         }
       },
       client: true
