@@ -161,6 +161,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       description: 'Published case studies and protected portfolio management endpoints.'
     },
     {
+      name: 'Team',
+      description: 'Public staff profiles for the about page.'
+    },
+    {
       name: 'Categories',
       description: 'Protected blog category management endpoints.'
     },
@@ -198,6 +202,16 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     }
   ],
   paths: {
+    '/api/v1/team': {
+      get: {
+        tags: ['Team'],
+        summary: 'Fetch public team members',
+        operationId: 'getPublicTeam',
+        responses: {
+          '200': { description: 'Team fetched successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/PublicTeamResponse' } } } }
+        }
+      }
+    },
     '/api/health': {
       get: {
         tags: ['System'],
@@ -3728,6 +3742,21 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       }
     },
     schemas: {
+      PublicTeamMember: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['id', 'name', 'image', 'designation', 'bio'],
+        properties: {
+          id: { type: 'string' },
+          name: { type: 'string' },
+          image: { type: 'string', nullable: true },
+          designation: { type: 'string', nullable: true },
+          bio: { type: 'string', nullable: true }
+        }
+      },
+      PublicTeamResponse: {
+        allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { type: 'array', items: { $ref: '#/components/schemas/PublicTeamMember' } } } }]
+      },
       LeadStatus: {
         type: 'string',
         enum: enumValues(LeadStatus),
