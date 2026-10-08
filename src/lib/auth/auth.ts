@@ -1,6 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { bearer, organization } from 'better-auth/plugins';
+import { z } from 'zod';
 import { env } from '../../config/env.js';
 import { LeadStatus } from '../../generated/prisma/client.js';
 import { sendClientWelcomeEmail, sendInvitationEmail, sendMemberAcceptedInvitationEmail, sendNewClientRegisteredEmail, sendResetPasswordEmail } from '../email/index.js';
@@ -19,6 +20,22 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'mysql'
   }),
+  user: {
+    additionalFields: {
+      designation: {
+        type: 'string',
+        required: false,
+        input: true,
+        validator: { input: z.string().trim().max(191).nullable() }
+      },
+      bio: {
+        type: 'string',
+        required: false,
+        input: true,
+        validator: { input: z.string().trim().max(5000).nullable() }
+      }
+    }
+  },
   databaseHooks: {
     session: {
       create: {
