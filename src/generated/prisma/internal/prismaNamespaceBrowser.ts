@@ -53,6 +53,7 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Organization: 'Organization',
+  SiteSetting: 'SiteSetting',
   Member: 'Member',
   Notification: 'Notification',
   Invitation: 'Invitation',
@@ -162,6 +163,24 @@ export const OrganizationScalarFieldEnum = {
 } as const;
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum];
+
+export const SiteSettingScalarFieldEnum = {
+  id: 'id',
+  contactEmail: 'contactEmail',
+  phone: 'phone',
+  whatsapp: 'whatsapp',
+  address: 'address',
+  businessHours: 'businessHours',
+  facebookUrl: 'facebookUrl',
+  twitterUrl: 'twitterUrl',
+  instagramUrl: 'instagramUrl',
+  linkedinUrl: 'linkedinUrl',
+  githubUrl: 'githubUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type SiteSettingScalarFieldEnum = (typeof SiteSettingScalarFieldEnum)[keyof typeof SiteSettingScalarFieldEnum];
 
 export const MemberScalarFieldEnum = {
   id: 'id',
@@ -565,6 +584,22 @@ export const OrganizationOrderByRelevanceFieldEnum = {
 } as const;
 
 export type OrganizationOrderByRelevanceFieldEnum = (typeof OrganizationOrderByRelevanceFieldEnum)[keyof typeof OrganizationOrderByRelevanceFieldEnum];
+
+export const SiteSettingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  contactEmail: 'contactEmail',
+  phone: 'phone',
+  whatsapp: 'whatsapp',
+  address: 'address',
+  businessHours: 'businessHours',
+  facebookUrl: 'facebookUrl',
+  twitterUrl: 'twitterUrl',
+  instagramUrl: 'instagramUrl',
+  linkedinUrl: 'linkedinUrl',
+  githubUrl: 'githubUrl'
+} as const;
+
+export type SiteSettingOrderByRelevanceFieldEnum = (typeof SiteSettingOrderByRelevanceFieldEnum)[keyof typeof SiteSettingOrderByRelevanceFieldEnum];
 
 export const MemberOrderByRelevanceFieldEnum = {
   id: 'id',

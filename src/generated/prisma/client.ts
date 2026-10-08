@@ -70,6 +70,11 @@ export type Verification = Prisma.VerificationModel;
  */
 export type Organization = Prisma.OrganizationModel;
 /**
+ * Model SiteSetting
+ *
+ */
+export type SiteSetting = Prisma.SiteSettingModel;
+/**
  * Model Member
  *
  */

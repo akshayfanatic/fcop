@@ -345,6 +345,7 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Organization: 'Organization',
+  SiteSetting: 'SiteSetting',
   Member: 'Member',
   Notification: 'Notification',
   Invitation: 'Invitation',
@@ -389,6 +390,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
       | 'account'
       | 'verification'
       | 'organization'
+      | 'siteSetting'
       | 'member'
       | 'notification'
       | 'invitation'
@@ -744,6 +746,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.OrganizationCountArgs<ExtArgs>;
           result: runtime.Types.Utils.Optional<Prisma.OrganizationCountAggregateOutputType> | number;
+        };
+      };
+    };
+    SiteSetting: {
+      payload: Prisma.$SiteSettingPayload<ExtArgs>;
+      fields: Prisma.SiteSettingFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.SiteSettingFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteSettingPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.SiteSettingFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteSettingPayload>;
+        };
+        findFirst: {
+          args: Prisma.SiteSettingFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteSettingPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.SiteSettingFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteSettingPayload>;
+        };
+        findMany: {
+          args: Prisma.SiteSettingFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteSettingPayload>[];
+        };
+        create: {
+          args: Prisma.SiteSettingCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteSettingPayload>;
+        };
+        createMany: {
+          args: Prisma.SiteSettingCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.SiteSettingDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteSettingPayload>;
+        };
+        update: {
+          args: Prisma.SiteSettingUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteSettingPayload>;
+        };
+        deleteMany: {
+          args: Prisma.SiteSettingDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.SiteSettingUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.SiteSettingUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SiteSettingPayload>;
+        };
+        aggregate: {
+          args: Prisma.SiteSettingAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSiteSetting>;
+        };
+        groupBy: {
+          args: Prisma.SiteSettingGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.SiteSettingGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.SiteSettingCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.SiteSettingCountAggregateOutputType> | number;
         };
       };
     };
@@ -2503,6 +2571,24 @@ export const OrganizationScalarFieldEnum = {
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum];
 
+export const SiteSettingScalarFieldEnum = {
+  id: 'id',
+  contactEmail: 'contactEmail',
+  phone: 'phone',
+  whatsapp: 'whatsapp',
+  address: 'address',
+  businessHours: 'businessHours',
+  facebookUrl: 'facebookUrl',
+  twitterUrl: 'twitterUrl',
+  instagramUrl: 'instagramUrl',
+  linkedinUrl: 'linkedinUrl',
+  githubUrl: 'githubUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type SiteSettingScalarFieldEnum = (typeof SiteSettingScalarFieldEnum)[keyof typeof SiteSettingScalarFieldEnum];
+
 export const MemberScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -2905,6 +2991,22 @@ export const OrganizationOrderByRelevanceFieldEnum = {
 } as const;
 
 export type OrganizationOrderByRelevanceFieldEnum = (typeof OrganizationOrderByRelevanceFieldEnum)[keyof typeof OrganizationOrderByRelevanceFieldEnum];
+
+export const SiteSettingOrderByRelevanceFieldEnum = {
+  id: 'id',
+  contactEmail: 'contactEmail',
+  phone: 'phone',
+  whatsapp: 'whatsapp',
+  address: 'address',
+  businessHours: 'businessHours',
+  facebookUrl: 'facebookUrl',
+  twitterUrl: 'twitterUrl',
+  instagramUrl: 'instagramUrl',
+  linkedinUrl: 'linkedinUrl',
+  githubUrl: 'githubUrl'
+} as const;
+
+export type SiteSettingOrderByRelevanceFieldEnum = (typeof SiteSettingOrderByRelevanceFieldEnum)[keyof typeof SiteSettingOrderByRelevanceFieldEnum];
 
 export const MemberOrderByRelevanceFieldEnum = {
   id: 'id',
@@ -3382,6 +3484,7 @@ export type GlobalOmitConfig = {
   account?: Prisma.AccountOmit;
   verification?: Prisma.VerificationOmit;
   organization?: Prisma.OrganizationOmit;
+  siteSetting?: Prisma.SiteSettingOmit;
   member?: Prisma.MemberOmit;
   notification?: Prisma.NotificationOmit;
   invitation?: Prisma.InvitationOmit;
