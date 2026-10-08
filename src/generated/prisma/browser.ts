@@ -132,6 +132,16 @@ export type NewsletterSubscriber = Prisma.NewsletterSubscriberModel;
  */
 export type Blog = Prisma.BlogModel;
 /**
+ * Model Portfolio
+ *
+ */
+export type Portfolio = Prisma.PortfolioModel;
+/**
+ * Model PortfolioAddon
+ *
+ */
+export type PortfolioAddon = Prisma.PortfolioAddonModel;
+/**
  * Model BlogSeo
  *
  */

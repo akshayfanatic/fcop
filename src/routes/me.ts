@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { meController } from '../controllers/me.controller.js';
-import { parseAvatarUpload } from '../middleware/avatar-upload.js';
+import { parseAvatarUpload } from '../middleware/image-upload.js';
 import { requireAuth } from '../middleware/require-auth.js';
 
 export const meRouter = Router();

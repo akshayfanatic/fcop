@@ -16,6 +16,7 @@ import { newsletterRouter } from './newsletter.js';
 import { blogRouter } from './blogs.js';
 import { categoryRouter } from './categories.js';
 import { tagRouter } from './tags.js';
+import { portfolioRouter } from './portfolios.js';
 
 export const apiRouter = Router();
 
@@ -36,3 +37,4 @@ apiRouter.use('/api/v1/newsletter', newsletterRouter); // Public signup and prot
 apiRouter.use('/api/v1/blogs', blogRouter); // Published posts and protected blog management.
 apiRouter.use('/api/v1/categories', categoryRouter); // Public options and protected blog category management.
 apiRouter.use('/api/v1/tags', tagRouter); // Public options and protected blog tag management.
+apiRouter.use('/api/v1/portfolios', portfolioRouter); // Public case studies and protected portfolio management.

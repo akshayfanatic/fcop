@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { blogController } from '../controllers/blog.controller.js';
-import { parseBlogFeatureImageUpload } from '../middleware/blog-feature-image-upload.js';
+import { parseBlogFeatureImageUpload } from '../middleware/image-upload.js';
 import { requireOrgPermission } from '../middleware/require-org-permission.js';
 
 export const blogRouter = Router();

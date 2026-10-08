@@ -363,6 +363,8 @@ export const ModelName = {
   Lead: 'Lead',
   NewsletterSubscriber: 'NewsletterSubscriber',
   Blog: 'Blog',
+  Portfolio: 'Portfolio',
+  PortfolioAddon: 'PortfolioAddon',
   BlogSeo: 'BlogSeo',
   Category: 'Category',
   Tag: 'Tag',
@@ -405,6 +407,8 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
       | 'lead'
       | 'newsletterSubscriber'
       | 'blog'
+      | 'portfolio'
+      | 'portfolioAddon'
       | 'blogSeo'
       | 'category'
       | 'tag'
@@ -1931,6 +1935,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         };
       };
     };
+    Portfolio: {
+      payload: Prisma.$PortfolioPayload<ExtArgs>;
+      fields: Prisma.PortfolioFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.PortfolioFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.PortfolioFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>;
+        };
+        findFirst: {
+          args: Prisma.PortfolioFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.PortfolioFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>;
+        };
+        findMany: {
+          args: Prisma.PortfolioFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>[];
+        };
+        create: {
+          args: Prisma.PortfolioCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>;
+        };
+        createMany: {
+          args: Prisma.PortfolioCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.PortfolioDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>;
+        };
+        update: {
+          args: Prisma.PortfolioUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>;
+        };
+        deleteMany: {
+          args: Prisma.PortfolioDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.PortfolioUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.PortfolioUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioPayload>;
+        };
+        aggregate: {
+          args: Prisma.PortfolioAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePortfolio>;
+        };
+        groupBy: {
+          args: Prisma.PortfolioGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.PortfolioGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.PortfolioCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.PortfolioCountAggregateOutputType> | number;
+        };
+      };
+    };
+    PortfolioAddon: {
+      payload: Prisma.$PortfolioAddonPayload<ExtArgs>;
+      fields: Prisma.PortfolioAddonFieldRefs;
+      operations: {
+        findUnique: {
+          args: Prisma.PortfolioAddonFindUniqueArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioAddonPayload> | null;
+        };
+        findUniqueOrThrow: {
+          args: Prisma.PortfolioAddonFindUniqueOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioAddonPayload>;
+        };
+        findFirst: {
+          args: Prisma.PortfolioAddonFindFirstArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioAddonPayload> | null;
+        };
+        findFirstOrThrow: {
+          args: Prisma.PortfolioAddonFindFirstOrThrowArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioAddonPayload>;
+        };
+        findMany: {
+          args: Prisma.PortfolioAddonFindManyArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioAddonPayload>[];
+        };
+        create: {
+          args: Prisma.PortfolioAddonCreateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioAddonPayload>;
+        };
+        createMany: {
+          args: Prisma.PortfolioAddonCreateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        delete: {
+          args: Prisma.PortfolioAddonDeleteArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioAddonPayload>;
+        };
+        update: {
+          args: Prisma.PortfolioAddonUpdateArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioAddonPayload>;
+        };
+        deleteMany: {
+          args: Prisma.PortfolioAddonDeleteManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        updateMany: {
+          args: Prisma.PortfolioAddonUpdateManyArgs<ExtArgs>;
+          result: BatchPayload;
+        };
+        upsert: {
+          args: Prisma.PortfolioAddonUpsertArgs<ExtArgs>;
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortfolioAddonPayload>;
+        };
+        aggregate: {
+          args: Prisma.PortfolioAddonAggregateArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePortfolioAddon>;
+        };
+        groupBy: {
+          args: Prisma.PortfolioAddonGroupByArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.PortfolioAddonGroupByOutputType>[];
+        };
+        count: {
+          args: Prisma.PortfolioAddonCountArgs<ExtArgs>;
+          result: runtime.Types.Utils.Optional<Prisma.PortfolioAddonCountAggregateOutputType> | number;
+        };
+      };
+    };
     BlogSeo: {
       payload: Prisma.$BlogSeoPayload<ExtArgs>;
       fields: Prisma.BlogSeoFieldRefs;
@@ -2598,6 +2734,46 @@ export const BlogScalarFieldEnum = {
 
 export type BlogScalarFieldEnum = (typeof BlogScalarFieldEnum)[keyof typeof BlogScalarFieldEnum];
 
+export const PortfolioScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  description: 'description',
+  overview: 'overview',
+  imageUrl: 'imageUrl',
+  client: 'client',
+  year: 'year',
+  industry: 'industry',
+  duration: 'duration',
+  tags: 'tags',
+  services: 'services',
+  tech: 'tech',
+  isPublished: 'isPublished',
+  isFeatured: 'isFeatured',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type PortfolioScalarFieldEnum = (typeof PortfolioScalarFieldEnum)[keyof typeof PortfolioScalarFieldEnum];
+
+export const PortfolioAddonScalarFieldEnum = {
+  id: 'id',
+  portfolioId: 'portfolioId',
+  type: 'type',
+  title: 'title',
+  content: 'content',
+  imageUrl: 'imageUrl',
+  cards: 'cards',
+  author: 'author',
+  authorRole: 'authorRole',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const;
+
+export type PortfolioAddonScalarFieldEnum = (typeof PortfolioAddonScalarFieldEnum)[keyof typeof PortfolioAddonScalarFieldEnum];
+
 export const BlogSeoScalarFieldEnum = {
   id: 'id',
   blogId: 'blogId',
@@ -2911,6 +3087,34 @@ export const BlogOrderByRelevanceFieldEnum = {
 
 export type BlogOrderByRelevanceFieldEnum = (typeof BlogOrderByRelevanceFieldEnum)[keyof typeof BlogOrderByRelevanceFieldEnum];
 
+export const PortfolioOrderByRelevanceFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  description: 'description',
+  overview: 'overview',
+  imageUrl: 'imageUrl',
+  client: 'client',
+  year: 'year',
+  industry: 'industry',
+  duration: 'duration'
+} as const;
+
+export type PortfolioOrderByRelevanceFieldEnum = (typeof PortfolioOrderByRelevanceFieldEnum)[keyof typeof PortfolioOrderByRelevanceFieldEnum];
+
+export const PortfolioAddonOrderByRelevanceFieldEnum = {
+  id: 'id',
+  portfolioId: 'portfolioId',
+  type: 'type',
+  title: 'title',
+  content: 'content',
+  imageUrl: 'imageUrl',
+  author: 'author',
+  authorRole: 'authorRole'
+} as const;
+
+export type PortfolioAddonOrderByRelevanceFieldEnum = (typeof PortfolioAddonOrderByRelevanceFieldEnum)[keyof typeof PortfolioAddonOrderByRelevanceFieldEnum];
+
 export const BlogSeoOrderByRelevanceFieldEnum = {
   id: 'id',
   blogId: 'blogId',
@@ -3052,6 +3256,11 @@ export type EnumLeadSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>;
 
 /**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>;
+
+/**
  * Batch Payload for updateMany & deleteMany & createMany
  */
 export type BatchPayload = {
@@ -3187,6 +3396,8 @@ export type GlobalOmitConfig = {
   lead?: Prisma.LeadOmit;
   newsletterSubscriber?: Prisma.NewsletterSubscriberOmit;
   blog?: Prisma.BlogOmit;
+  portfolio?: Prisma.PortfolioOmit;
+  portfolioAddon?: Prisma.PortfolioAddonOmit;
   blogSeo?: Prisma.BlogSeoOmit;
   category?: Prisma.CategoryOmit;
   tag?: Prisma.TagOmit;
