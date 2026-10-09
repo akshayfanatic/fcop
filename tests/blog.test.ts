@@ -5,6 +5,7 @@ import { hasResourcePermission } from '../src/lib/auth/permissions.js';
 import { createOpenApiDocument } from '../src/openapi/spec.js';
 import { blogService } from '../src/services/blog.service.js';
 import { cloudinaryMedia } from '../src/lib/cloudinary/media.js';
+import { blogAnnouncementService } from '../src/services/blog-announcement.service.js';
 import { blogFiltersSchema, createBlogSchema, updateBlogSchema } from '../src/validators/blog.validator.js';
 
 const restoreStubs: Array<() => void> = [];
@@ -75,6 +76,20 @@ test('blog create includes SEO metadata in the same request', async () => {
   const create = stub(prisma.blog, 'create', async () => ({ id: 'blog-id', ...payload, blogSeo: seo, blogCategories: [], blogTags: [] }));
   await blogService.createBlog({ ...payload, blogSeo: seo });
   assert.deepEqual(create.mock.calls[0].arguments[0].data, { ...payload, blogSeo: { create: seo } });
+});
+
+test('publishing a new blog starts the subscriber announcement after it is saved', async () => {
+  stub(prisma.blog, 'create', async ({ data }: { data: typeof payload }) => ({ id: 'blog-id', excerpt: null, ...data }));
+  const send = stub(blogAnnouncementService, 'sendToSubscribers', async () => undefined);
+
+  await blogService.createBlog(payload);
+  await new Promise<void>((resolve) => setImmediate(resolve));
+  assert.equal(send.mock.callCount(), 0);
+
+  await blogService.createBlog({ ...payload, isPublished: true });
+  await new Promise<void>((resolve) => setImmediate(resolve));
+  assert.equal(send.mock.callCount(), 1);
+  assert.deepEqual(send.mock.calls[0].arguments[0], { id: 'blog-id', excerpt: null, ...payload, isPublished: true });
 });
 
 test('OpenAPI follows resource routes', () => {
