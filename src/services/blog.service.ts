@@ -1,10 +1,12 @@
 import { type Prisma } from '../generated/prisma/client.js';
 import { prisma } from '../lib/prisma.js';
 import { cloudinaryMedia } from '../lib/cloudinary/media.js';
+import { logger } from '../lib/logger.js';
 import { HttpStatus } from '../utils/api-response.js';
 import { createHttpError } from '../utils/http-error.js';
 import { createPaginatedData, getPaginationOffset } from '../utils/pagination.js';
 import type { BlogFiltersInput, CreateBlogInput, PublishedBlogFiltersInput, UpdateBlogInput } from '../validators/blog.validator.js';
+import { blogAnnouncementService } from './blog-announcement.service.js';
 
 const blogSummarySelect = {
   id: true,
@@ -22,6 +24,15 @@ const blogDetailInclude = { blogSeo: true, blogCategories: { include: { category
 const featureImagePublicId = (id: string) => `fcop/blogs/${id}/feature-image`;
 
 const hasManagedFeatureImage = (id: string, url: string | null) => Boolean(url?.includes(`/${featureImagePublicId(id)}.`));
+
+const announcePublishedBlog = (blog: { id: string; title: string; slug: string; excerpt: string | null }) => {
+  // Email delivery runs after the blog is saved so a provider failure cannot undo publication.
+  setImmediate(() => {
+    void blogAnnouncementService.sendToSubscribers(blog).catch((error) => {
+      logger.error({ error, blogId: blog.id }, 'Failed to send blog announcement.');
+    });
+  });
+};
 
 export const blogService = {
   getPublishedBlogs: async (filters: PublishedBlogFiltersInput) => {
@@ -83,17 +94,19 @@ export const blogService = {
 
   createBlog: async (payload: CreateBlogInput) => {
     const { blogSeo, ...blogData } = payload;
-    return prisma.blog.create({
+    const blog = await prisma.blog.create({
       data: { ...blogData, ...(blogSeo === undefined ? {} : { blogSeo: { create: blogSeo } }) } satisfies Prisma.BlogCreateInput,
       include: blogDetailInclude
     });
+    if (blog.isPublished) announcePublishedBlog(blog);
+    return blog;
   },
 
   updateBlogById: async (id: string, payload: UpdateBlogInput) => {
     const { categoryIds, tagIds, blogSeo, ...blogData } = payload;
 
-    return prisma.$transaction(async (tx) => {
-      const blog = await tx.blog.findUnique({ where: { id }, select: { id: true } });
+    const { updatedBlog, becamePublished } = await prisma.$transaction(async (tx) => {
+      const blog = await tx.blog.findUnique({ where: { id }, select: { id: true, isPublished: true } });
       if (!blog) throw createHttpError(HttpStatus.NOT_FOUND, 'Blog not found.', 'NOT_FOUND');
 
       const uniqueCategoryIds = categoryIds === undefined ? undefined : [...new Set(categoryIds)];
@@ -121,8 +134,11 @@ export const blogService = {
         if (uniqueTagIds.length > 0) await tx.blogTag.createMany({ data: uniqueTagIds.map((tagId) => ({ blogId: id, tagId })) });
       }
 
-      return tx.blog.findUniqueOrThrow({ where: { id }, include: blogDetailInclude });
+      const updatedBlog = await tx.blog.findUniqueOrThrow({ where: { id }, include: blogDetailInclude });
+      return { updatedBlog, becamePublished: !blog.isPublished && updatedBlog.isPublished };
     });
+    if (becamePublished) announcePublishedBlog(updatedBlog);
+    return updatedBlog;
   },
 
   updateBlogFeatureImageById: async (id: string, file: Express.Multer.File) => {
