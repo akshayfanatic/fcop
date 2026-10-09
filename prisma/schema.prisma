@@ -162,6 +162,24 @@ model Organization {
   @@map("organization")
 }
 
+model SiteSetting {
+  id            String   @id @default("main") @db.VarChar(36)
+  contactEmail  String   @db.VarChar(320)
+  phone         String?  @db.VarChar(30)
+  whatsapp      String?  @db.VarChar(30)
+  address       String?  @db.Text
+  businessHours String?  @db.Text
+  facebookUrl   String?  @db.VarChar(2048)
+  twitterUrl    String?  @db.VarChar(2048)
+  instagramUrl  String?  @db.VarChar(2048)
+  linkedinUrl   String?  @db.VarChar(2048)
+  githubUrl     String?  @db.VarChar(2048)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
 model Member {
   id               String          @id @default(cuid()) @db.VarChar(36)
   userId           String          @db.VarChar(36)

@@ -165,6 +165,10 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       description: 'Public staff profiles for the about page.'
     },
     {
+      name: 'Site Settings',
+      description: 'Public contact details and protected site settings updates.'
+    },
+    {
       name: 'Categories',
       description: 'Protected blog category management endpoints.'
     },
@@ -202,6 +206,30 @@ export const createOpenApiDocument = (baseUrl: string) => ({
     }
   ],
   paths: {
+    '/api/v1/site-settings': {
+      get: {
+        tags: ['Site Settings'],
+        summary: 'Fetch public contact details',
+        operationId: 'getSiteSetting',
+        responses: {
+          '200': { description: 'Site settings fetched; data is null until configured.', content: { 'application/json': { schema: { $ref: '#/components/schemas/SiteSettingResponse' } } } }
+        }
+      },
+      put: {
+        tags: ['Site Settings'],
+        summary: 'Replace public contact details',
+        operationId: 'updateSiteSetting',
+        security: [{ cookieAuth: [] }],
+        'x-requiredPermissions': { siteSetting: ['update'] },
+        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/UpdateSiteSettingRequest' } } } },
+        responses: {
+          '200': { description: 'Site settings updated successfully.', content: { 'application/json': { schema: { $ref: '#/components/schemas/SiteSettingResponse' } } } },
+          '400': { $ref: '#/components/responses/BadRequest' },
+          '401': { $ref: '#/components/responses/Unauthorized' },
+          '403': { $ref: '#/components/responses/Forbidden' }
+        }
+      }
+    },
     '/api/v1/team': {
       get: {
         tags: ['Team'],
@@ -3742,6 +3770,43 @@ export const createOpenApiDocument = (baseUrl: string) => ({
       }
     },
     schemas: {
+      UpdateSiteSettingRequest: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['contactEmail'],
+        properties: {
+          contactEmail: { type: 'string', format: 'email', maxLength: 320 },
+          phone: { type: 'string', nullable: true, minLength: 1, maxLength: 30 },
+          whatsapp: { type: 'string', nullable: true, minLength: 1, maxLength: 30 },
+          address: { type: 'string', nullable: true, minLength: 1, maxLength: 5000 },
+          businessHours: { type: 'string', nullable: true, minLength: 1, maxLength: 2000 },
+          facebookUrl: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
+          twitterUrl: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
+          instagramUrl: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
+          linkedinUrl: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 },
+          githubUrl: { type: 'string', format: 'uri', nullable: true, maxLength: 2048 }
+        }
+      },
+      SiteSetting: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['contactEmail', 'phone', 'whatsapp', 'address', 'businessHours', 'facebookUrl', 'twitterUrl', 'instagramUrl', 'linkedinUrl', 'githubUrl'],
+        properties: {
+          contactEmail: { type: 'string', format: 'email' },
+          phone: { type: 'string', nullable: true },
+          whatsapp: { type: 'string', nullable: true },
+          address: { type: 'string', nullable: true },
+          businessHours: { type: 'string', nullable: true },
+          facebookUrl: { type: 'string', format: 'uri', nullable: true },
+          twitterUrl: { type: 'string', format: 'uri', nullable: true },
+          instagramUrl: { type: 'string', format: 'uri', nullable: true },
+          linkedinUrl: { type: 'string', format: 'uri', nullable: true },
+          githubUrl: { type: 'string', format: 'uri', nullable: true }
+        }
+      },
+      SiteSettingResponse: {
+        allOf: [{ $ref: '#/components/schemas/ApiResponse' }, { type: 'object', required: ['data'], properties: { data: { allOf: [{ $ref: '#/components/schemas/SiteSetting' }], nullable: true } } }]
+      },
       PublicTeamMember: {
         type: 'object',
         additionalProperties: false,
